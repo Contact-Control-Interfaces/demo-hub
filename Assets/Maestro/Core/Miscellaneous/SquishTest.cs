@@ -7,7 +7,7 @@ public class SquishTest : MonoBehaviour {
     public int size;
     public float radius = 0.2f;
     public float colliderRadius = 0.008f;
-    private FingerTipCollider[] shell;
+    private FingerCollider[] shell;
     private Vector3[] shellSpawn;
     
     public bool reset;
@@ -15,7 +15,7 @@ public class SquishTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        shell = new FingerTipCollider[size];
+        shell = new FingerCollider[size];
         shellSpawn = new Vector3[size];
         if (size > 0)
             SpawnColliders();
@@ -34,7 +34,7 @@ public class SquishTest : MonoBehaviour {
             shellSpawn[i] = spawnLocation;
             g.transform.localPosition = spawnLocation;
             g.AddComponent<Rigidbody>();
-            shell[i] = g.AddComponent<FingerTipCollider>();
+            shell[i] = g.AddComponent<FingerCollider>();
             shell[i].index = i;
             shell[i].hpi = null;
             shell[i].rb = shell[i].GetComponent<Rigidbody>();

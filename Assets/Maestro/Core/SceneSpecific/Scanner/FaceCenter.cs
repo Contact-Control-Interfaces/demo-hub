@@ -44,8 +44,6 @@ public class FaceCenter : MonoBehaviour {
     void Update () {
 
 
-        //face.transform.forward;
-        //Vector3 pos = face.transform.position + face.transform.forward * radius;
 
         Vector3 pos;
         if (target.HasValue && Vector3.Dot(face.transform.forward.normalized, (target.Value - face.transform.position).normalized) > dotTarget)
@@ -63,16 +61,9 @@ public class FaceCenter : MonoBehaviour {
 
         while (positions.Count > smoothing) positions.RemoveAt(0);
 
-        //Vector3 center = new Vector3(0, face.transform.position.y, 0);
-
-        //transform.position = //center + (Vector3.Scale(face.transform.forward, new Vector3(1, 0, 1)) * radius); //  * radius);\
         transform.position = Centroid(positions);
         transform.LookAt(face.transform.position, Vector3.up);
 
-        //if (target.HasValue)
-        //{
-        //    transform.Translate((target.Value - transform.position).normalized * Time.deltaTime);
-        //}
 	}
 
     Vector3 Centroid(List<Vector3> list)

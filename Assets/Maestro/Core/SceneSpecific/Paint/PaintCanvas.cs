@@ -68,10 +68,10 @@ public class PaintCanvas : MonoBehaviour {
     private void OnCollisionStay(Collision collision)
     {
 
-        FingerTipCollider ftc = collision.gameObject.GetComponent<FingerTipCollider>();
-        if (ftc != null /*&& ftc.PaintColor != Color.clear*/)
+        FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
+        if (fc != null /*&& fc.PaintColor != Color.clear*/)
         {
-            if (ftc.PaintColor != Color.clear && ftc.PaintColor != FingerPaint.eraseColor)
+            if (fc.PaintColor != Color.clear && fc.PaintColor != FingerPaint.eraseColor)
             {
                 if (!source.isPlaying)
                 {
@@ -85,7 +85,7 @@ public class PaintCanvas : MonoBehaviour {
                 //brushObject.layer = paintLayer;
                 brushObject.transform.parent = null;
                 SpriteRenderer sr = brushObject.GetComponent<SpriteRenderer>();
-                sr.color = ftc.PaintColor;
+                sr.color = fc.PaintColor;
                 sr.sortingOrder = this.transform.childCount;
 
                 //Find canvas plane
@@ -99,23 +99,10 @@ public class PaintCanvas : MonoBehaviour {
                 brushObject.transform.localScale = Vector3.one * brushSize;
             }
 
-            if (ftc.vocb != null)
-            {
-                ftc.vocb.PaintEffect = effect;
-            }
-
-            //ftc.pocb.Amplitude = (byte)(80 + ftc.rb.velocity.magnitude * scale);
-            if (ftc.pocb != null)
-            {
-                ftc.pocb.PaintAmp = 255;
-                ftc.rend.enabled = false;
-            }
         }
 
         if (this.transform.childCount > maxDots)
         { //If we reach the max brushes available, flatten the texture and clear the brushes
-            //brushCursor.SetActive(false);
-            //saving = true;
             Invoke("SaveTexture", 0.1f);
 
         }
@@ -123,17 +110,9 @@ public class PaintCanvas : MonoBehaviour {
 
     private void OnCollisionExit(Collision collision)
     {
-        FingerTipCollider ftc = collision.gameObject.GetComponent<FingerTipCollider>();
-        if (ftc != null/*&& ftc.PaintColor != Color.clear*/)
+        FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
+        if (fc != null/*&& fc.PaintColor != Color.clear*/)
         {
-            if (ftc.vocb != null)
-                ftc.vocb.PaintEffect = null;
-
-            if (ftc.pocb != null)
-            {
-                ftc.pocb.Amplitude = null;
-                ftc.pocb.PaintAmp = null;
-            }
         }
     }
 
@@ -157,21 +136,6 @@ public class PaintCanvas : MonoBehaviour {
 
 
         Clear();
-        //StartCoroutine ("SaveTextureToFile"); //Do you want to save the texture? This is your method!
-        //Invoke("ShowCursor", 0.1f);
     }
 
-    /*IEnumerator SaveTextureToFile(Texture2D savedTexture)
-    {
-        //brushCounter = 0;
-        string fullPath = System.IO.Directory.GetCurrentDirectory() + "\\UserCanvas\\";
-        System.DateTime date = System.DateTime.Now;
-        string fileName = "CanvasTexture.png";
-        if (!System.IO.Directory.Exists(fullPath))
-            System.IO.Directory.CreateDirectory(fullPath);
-        var bytes = savedTexture.EncodeToPNG();
-        System.IO.File.WriteAllBytes(fullPath + fileName, bytes);
-        Debug.Log("<color=orange>Saved Successfully!</color>" + fullPath + fileName);
-        yield return null;
-    }*/
 }

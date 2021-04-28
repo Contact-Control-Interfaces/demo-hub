@@ -69,7 +69,6 @@ public class NetGenerator : MonoBehaviour
 
 
                 for (int j = 0; j < pointsPerTier; j++) {
-                    //tiers[0].transform.GetChild(j).gameObject.AddComponent<FixedJoint>();
                     Destroy(tiers[0].transform.GetChild(j).gameObject.GetComponent<Collider>());
                     tiers[0].transform.GetChild(j).gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 }
@@ -118,19 +117,15 @@ public class NetGenerator : MonoBehaviour
         rb.useGravity = false;
         result.layer = layer;
         cylinders.Add(result);
-        //Collider temp = result.GetComponent<Collider>(); //TODO remove
         CylinderBetween cb = result.AddComponent<CylinderBetween>();
         MaestroInteractable mi = result.AddComponent<MaestroInteractable>();
         mi.type = InteractionType.Static;
         mi.IgnoreTaps = true;
         mi.Amplitude = 255;
         mi.VibrationEffect = 2;
-        //Physics.IgnoreCollision(temp, a.GetComponent<Collider>(), true);
-        //Physics.IgnoreCollision(temp, b.GetComponent<Collider>(), true);
         cb.a = a;
         cb.b = b;
         cb.size = size;
-        //cb.Init();
 
         SpringJoint sj = a.gameObject.AddComponent<SpringJoint>();
         sj.damper = damper;

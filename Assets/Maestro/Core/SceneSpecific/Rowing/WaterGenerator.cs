@@ -108,13 +108,8 @@ public class WaterGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //elapsed += Time.deltaTime;
-        //if (elapsed > tick)
-        //{
-        //    elapsed %= tick;
 
             CalculateVertices();
-        //}
     }
 
     private void AddAdjacent(List<int> toMend, int x, int y)
@@ -139,12 +134,10 @@ public class WaterGenerator : MonoBehaviour
             FromIndex(i, out x, out y);
 
             levels[i] = this.transform.position + (size * (new Vector3(x - (width / 2f), 0, y - (height / 2f)))) + amp * Vector3.up * (Mathf.Sin(-Time.time * 2 + Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2))) + Mathf.Sin(-Time.time * 2 + Mathf.Sqrt(Mathf.Pow(width - x, 2) + Mathf.Pow(y, 2))));
-            //levels[i].y = this.transform.position.y + amp * Mathf.Sin(-Time.time*2 + Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2))) + amp * Mathf.Sin(-Time.time*2 + Mathf.Sqrt(Mathf.Pow(width - x, 2) + Mathf.Pow(y, 2)));
         }
 
 
 
-        //FlipInCanoe();
 
         List<int> toMend = new List<int>();
         List<int> removed = new List<int>();
@@ -172,16 +165,6 @@ public class WaterGenerator : MonoBehaviour
                 removed.Add(k);
 
 
-                /* // Top left of quad
-                 otherTris.Add(k);
-                 otherTris.Add(Index(i, j + 1));
-                 otherTris.Add(Index(i + 1, j));
-
-                 //Bottom right of quad
-                 otherTris.Add(Index(i + 1, j + 1));
-                 otherTris.Add(Index(i + 1, j));
-                 otherTris.Add(Index(i, j + 1));*/
-
                 tris.Add(-1);
                 tris.Add(-1);
                 tris.Add(-1);
@@ -206,8 +189,6 @@ public class WaterGenerator : MonoBehaviour
             }
         }
         
-        //levels[0].y += 1;
-
 
         if (mend) {
             toMend.Sort();
@@ -223,28 +204,7 @@ public class WaterGenerator : MonoBehaviour
                 int u, v;
                 FromIndex(toMend[i], out u, out v);
 
-                /*if (removed.Contains(Index(u,v)))
-                {
-                    //remove these
-                    tris.RemoveAt(6 * toMend[i]);
-                    tris.RemoveAt(6 * toMend[i]);
-                    tris.RemoveAt(6 * toMend[i]);
-                    tris.RemoveAt(6 * toMend[i]);
-                    tris.RemoveAt(6 * toMend[i]);
-                    tris.RemoveAt(6 * toMend[i]);
-                }*/
                 levels[toMend[i]] = newPos;
-                //levels[toMend[i]] = canoe.ClosestPoint(levels[toMend[i]] - Vector3.one);
-
-                /*if ((newPos - levels[toMend[i]]).magnitude < 0.001)
-                {
-                    levels[toMend[i]].y = y+1;
-                } else
-                {*/
-
-                //}
-                //levels[toMend[i]].x -= threshold;
-                //levels[toMend[i]].z -= threshold;
 
                 lastRadix = radix;
             }

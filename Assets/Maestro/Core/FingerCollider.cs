@@ -6,14 +6,12 @@
 
 using UnityEngine;
 using System.Collections;
-using Maestro.Haptics.ForceFeedback;
-using Maestro.Haptics.Vibration;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FingerTipCollider : MonoBehaviour
+public class FingerCollider : MonoBehaviour
 {
-    public MaestroHand hpi; // the parent hand's interaction script.
+    public IMaestroHand hpi; // the parent hand's interaction script.
 
     public Rigidbody rb; // my rigidbody
 
@@ -41,12 +39,6 @@ public class FingerTipCollider : MonoBehaviour
             return AllTouching.Count > 0;
         } 
     }
-
-    public PullOnCollideBehaviour pocb;
-    public VibrateOnCollideBehaviour vocb;
-
-    public PullOnCollideBehaviour[] pocbs;
-    public VibrateOnCollideBehaviour[] vocbs;
 
     public AudioSource source;
 
@@ -80,8 +72,6 @@ public class FingerTipCollider : MonoBehaviour
     void Awake() {
         netImpulse = Vector3.zero;
         rb = GetComponent<Rigidbody>();
-        vocb = GetComponent<VibrateOnCollideBehaviour>();
-        pocb = GetComponent<PullOnCollideBehaviour>();
 
         lastLocation = this.transform.position;
 
@@ -117,7 +107,7 @@ public class FingerTipCollider : MonoBehaviour
             }*/
 
             if (ints.Count > 1) {
-                Debug.Log(string.Format("Detected {0} different interactables, need to decide", ints.Count));
+                //Debug.Log(string.Format("Detected {0} different interactables, need to decide", ints.Count));
             }
 
             if (ints.Count > 0)
@@ -156,20 +146,6 @@ public class FingerTipCollider : MonoBehaviour
                 float scale = 1.50f;
                 float helper = Mathf.Max(0.20f, Mathf.Min(1.0f, this.rb.velocity.magnitude * scale));
 
-                if (vocb) {
-                    vocb.PulseEffect = (byte)(128 * source.volume);
-                    vocb.pulseHalfLife = 0.3f;
-                }
-
-                if (vocbs != null && vocbs.Length > 0) {
-                    foreach (VibrateOnCollideBehaviour v in vocbs) {
-                        if (v != null && source != null) {
-                            v.PulseEffect = (byte)(128 * source.volume);
-                            v.pulseHalfLife = 0.3f;
-                        }
-                    }
-                }
-
                 if (source != null && interactable.type == InteractionType.Static) {
                     source.volume = helper;
                     source.Play();
@@ -177,17 +153,6 @@ public class FingerTipCollider : MonoBehaviour
             }
         }
     }
-
-    /*void OnCollisionStay(Collision c) {
-        if (isvalid(c.collider)) {
-            //colnrm = c.contacts[0].normal;
-            MaestroInteractable temp = c.collider.attachedRigidbody.GetComponent<MaestroInteractable>();
-            //if (temp.type != InteractionType.Static)
-            //{ // make sure we're actually allowed to pick this up
-            TriggerTouching = true;
-            //}
-        }
-    }*/
 
     void OnCollisionExit(Collision c) {
         if (AllTouching.Remove(c.collider)) {
@@ -200,26 +165,6 @@ public class FingerTipCollider : MonoBehaviour
 
         netImpulse += c.impulse;
     }
-    #endregion
-
-    #region On Trigger
-    /*private void OnTriggerStay(Collider other) {
-        if (lastTouching != null && lastTouching.gameObject.Equals(other.gameObject)) {
-            TriggerTouching = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        TriggerTouching = false;
-        lastTouching = null;
-        // TODO does this help?
-        if (other.attachedRigidbody) {
-            MaestroInteractable mi = other.attachedRigidbody.GetComponent<MaestroInteractable>();
-            if (mi && mi.Equals(touching))
-                touching = null;
-        }
-        //Debug.Log("EXIT");
-    }*/
     #endregion
 
     public void AddAudioSource() {
@@ -244,17 +189,6 @@ public class FingerTipCollider : MonoBehaviour
         g.GetComponent<Renderer>().material = (Material)Resources.Load("ContactAccent", typeof(Material));
         rend = g.GetComponent<Renderer>();
 
-        /*GameObject k = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        releaseCol = k.GetComponent<Collider>();
-        releaseCol.isTrigger = true;
-
-        k.transform.parent = transform;
-        k.transform.localPosition = Vector3.zero;
-        k.transform.localRotation = Quaternion.identity;
-        k.transform.localScale = radius * Vector3.one * 4f; //* 6; //4 //* 6;
-        k.GetComponent<Renderer>().material = (Material)Resources.Load("ContactAccent", typeof(Material));
-        Destroy(k.GetComponent<Renderer>());*/
-        //k.gameObject.SetActive(false);
 
 
         //Ignore all collisions with the hand itself
@@ -276,16 +210,6 @@ public class FingerTipCollider : MonoBehaviour
         g.GetComponent<Renderer>().material = (Material)Resources.Load("colliderDebug", typeof(Material));
         rend = g.GetComponent<Renderer>();
 
-        /*GameObject k = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        releaseCol = k.GetComponent<Collider>();
-        releaseCol.isTrigger = true;
-
-        k.transform.parent = transform;
-        k.transform.localPosition = Vector3.zero;
-        k.transform.localRotation = Quaternion.identity;
-        k.transform.localScale = size * 2f;
-        k.GetComponent<Renderer>().material = (Material)Resources.Load("ContactAccent", typeof(Material));
-        Destroy(k.GetComponent<Renderer>());*/
 
 
         if (hpi != null) {
@@ -312,6 +236,6 @@ public class FingerTipCollider : MonoBehaviour
                 mapper.Add(c, parentInteractable);
         }
 
-        return parentInteractable != null && c.GetComponentInParent<FingerTipCollider>() == null;
+        return parentInteractable != null && c.GetComponentInParent<FingerCollider>() == null;
     }
 }

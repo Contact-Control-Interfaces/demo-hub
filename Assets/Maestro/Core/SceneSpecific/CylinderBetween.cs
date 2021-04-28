@@ -56,8 +56,5 @@ public class CylinderBetween : MonoBehaviour
             br.AddForce(-collision.impulse, ForceMode.Impulse);
     }
 
-    /*public void Init()
-    {
-        Update();
-    }*/
+
 }

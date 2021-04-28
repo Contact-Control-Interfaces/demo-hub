@@ -106,7 +106,6 @@ namespace Leap.Unity {
           }
           else {
             /** Initialize toBeDeleted with a value to be deleted */
-            //Debug.Log("Finishing");
             toBeDeleted = r.Value;
           }
         }

@@ -15,7 +15,6 @@ public class SpawnPyramid : MonoBehaviour {
         {
             SpawnSquare(i, (((levels - i) + 0.5f) * between) * 0.75f, (levels - i) * (between/2) * (this.transform.right + this.transform.forward));
         }
-        //SpawnSquare(1, between / 2);
 	}
 
     private void SpawnSquare(int n, float height, Vector3 offset)

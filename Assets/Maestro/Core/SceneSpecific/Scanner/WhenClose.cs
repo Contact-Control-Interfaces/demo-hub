@@ -15,11 +15,6 @@ public class WhenClose : MonoBehaviour {
 		
 	}
 
-    /*private void OnEnable()
-    {
-        Update();
-    }*/
-
     // Update is called once per frame
     void Update () {
         if (!Ignore)
