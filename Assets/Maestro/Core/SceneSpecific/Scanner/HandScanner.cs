@@ -32,24 +32,20 @@ public class HandScanner : MonoBehaviour {
         {
             Debug.Log("SCANNING!");
             elapsedTime = 0f;
-            /*for (int i = 0; i < scanner.childCount; i++)
-            {
-                scanner.GetChild(i).gameObject.SetActive(true);
-            }*/
             scanner.gameObject.SetActive(true);
         }
     }
 
-    public void Register(FingerTipCollider ftc){ RegisterHelper(ftc, true); }
+    public void Register(FingerCollider fc){ RegisterHelper(fc, true); }
 
-    public void Unregister(FingerTipCollider ftc) { RegisterHelper(ftc, false); }
+    public void Unregister(FingerCollider fc) { RegisterHelper(fc, false); }
 
-    private void RegisterHelper(FingerTipCollider ftc, bool whatever)
+    private void RegisterHelper(FingerCollider fc, bool whatever)
     {
-        if (ftc.index % 2 == 1 && ftc.index < 10)
+        if (fc.index % 2 == 1 && fc.index < 10)
         {
-            touching[ftc.index / 2] = whatever;
-            pulse[ftc.index / 2].gameObject.SetActive(whatever);
+            touching[fc.index / 2] = whatever;
+            pulse[fc.index / 2].gameObject.SetActive(whatever);
         }
     }
 

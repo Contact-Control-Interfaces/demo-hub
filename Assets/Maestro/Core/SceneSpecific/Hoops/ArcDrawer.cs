@@ -25,15 +25,6 @@ public class ArcDrawer : MonoBehaviour
         line = this.GetComponent<LineRenderer>();
         line.startWidth = line.endWidth = width;
 
-        /*if (crossHatch)
-        {
-            line2 = this.gameObject.AddComponent<LineRenderer>();
-            line2.material = line.material;
-            line2.startWidth = line2.endWidth = width;
-            line2.receiveShadows = line.receiveShadows;
-            line2.shadowCastingMode = line.shadowCastingMode;
-            line2.generateLightingData = line.generateLightingData;
-        }*/
     }
 
     // Update is called once per frame

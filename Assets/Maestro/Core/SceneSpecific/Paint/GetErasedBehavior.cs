@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class GetErasedBehavior : MonoBehaviour
 {
-    /*void OnTriggerEnter(Collider other)
-    {
-        FingerTipCollider ftc = other.gameObject.GetComponent<FingerTipCollider>();
-        if (ftc != null && ftc.PaintColor == FingerPaint.eraseColor)
-        {
-
-            Debug.Log("ERASED");
-            Destroy(this.gameObject);
-        }
-    }*/
 
     void OnCollisionEnter(Collision collision)
     {
@@ -29,10 +19,9 @@ public class GetErasedBehavior : MonoBehaviour
     {
         if (go != null)
         {
-            FingerTipCollider ftc = go.gameObject.GetComponent<FingerTipCollider>();
-            if (ftc != null && ftc.isTip && ftc.PaintColor == FingerPaint.eraseColor)
+            FingerCollider fc = go.gameObject.GetComponent<FingerCollider>();
+            if (fc != null && fc.isTip && fc.PaintColor == FingerPaint.eraseColor)
             {
-                //Debug.Log("ERASED");
                 Destroy(this.gameObject);
             }
         }

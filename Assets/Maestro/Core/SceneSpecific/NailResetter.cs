@@ -34,18 +34,6 @@ public class NailResetter : MonoBehaviour {
                 nb.transform.position = temp;
             }
 
-            /*if (nb.transform.position.y >= maxHeight && !nb.detached)
-            {
-                nb.detached = true;
-
-                Rigidbody rb = nb.GetComponent<Rigidbody>();
-                rb.useGravity = true;
-                rb.constraints = RigidbodyConstraints.None;
-
-                CapsuleCollider cap = nb.GetComponent<CapsuleCollider>();
-                cap.height = cap.height + 11f;
-                cap.center = new Vector3(cap.center.x, cap.center.y + 5, cap.center.z);
-            }*/
         }
 
         if (reset)

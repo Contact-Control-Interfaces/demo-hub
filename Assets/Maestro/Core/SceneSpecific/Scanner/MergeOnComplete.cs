@@ -54,8 +54,6 @@ public class MergeOnComplete : MonoBehaviour {
         right.Reset();
         right.transform.localPosition = startRight;
 
-        //left.transform.localPosition = startLeft;
-        //right.transform.localPosition = startRight;
         keypad.gameObject.SetActive(false);
         code.gameObject.SetActive(false);
         merged = merging = lastMerging = false;
@@ -102,16 +100,7 @@ public class MergeOnComplete : MonoBehaviour {
                     right.transform.localPosition = startRight + new Vector3(mergeDistance, 0, 0);
                     merged = true;
                     merging = false;
-                    /*keypad.gameObject.SetActive(true);
-                    code.gameObject.SetActive(true);
-
-                    string temp = "";
-                    for (int i = 0; i < 4; i++)
-                    {
-                        temp += Random.Range(0, 9);
-                    }
-                    code.text = temp;
-                    keypadInput.code = temp;*/
+                    
                     keypadInput.onCodeEntry.Invoke();
                 }
             }

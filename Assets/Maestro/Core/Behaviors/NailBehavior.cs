@@ -35,7 +35,7 @@ public class NailBehavior : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<HammerResponse>() || collision.gameObject.GetComponent<FingerTipCollider>())
+        if (collision.gameObject.GetComponent<HammerResponse>() || collision.gameObject.GetComponent<FingerCollider>())
             Nail(collision.relativeVelocity);
         else
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;

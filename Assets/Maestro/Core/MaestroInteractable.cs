@@ -10,7 +10,7 @@ public enum InteractionType
 };
 
 [System.Serializable]
-public class TouchEvent : UnityEvent<FingerTipCollider> { }
+public class TouchEvent : UnityEvent<FingerCollider> { }
 
 public class MaestroInteractable : MonoBehaviour, IComparable<MaestroInteractable>
 {
@@ -46,6 +46,10 @@ public class MaestroInteractable : MonoBehaviour, IComparable<MaestroInteractabl
     public byte Amplitude = 200;
     public byte VibrationEffect = 1;
 
+    [Header("Special Behavior")]
+    public bool isPersistent = false;
+    public float persistanceDuration = 0.0f;
+
     [HideInInspector]
     public byte? ResponseMotorAmplitude { private get; set; }
     public byte? ResponseVibrationEffect { private get; set; }
@@ -60,7 +64,7 @@ public class MaestroInteractable : MonoBehaviour, IComparable<MaestroInteractabl
         ResponseMotorAmplitude = ResponseVibrationEffect = null;
     }
 
-    public void Touch(FingerTipCollider finger)
+    public void Touch(FingerCollider finger)
     {
         if (onTouch != null)
             onTouch.Invoke(finger);
@@ -70,7 +74,7 @@ public class MaestroInteractable : MonoBehaviour, IComparable<MaestroInteractabl
         //}
     }
 
-    public void Untouch(FingerTipCollider finger)
+    public void Untouch(FingerCollider finger)
     {
         if (unTouch != null)
             unTouch.Invoke(finger);
@@ -140,26 +144,6 @@ public class MaestroInteractable : MonoBehaviour, IComparable<MaestroInteractabl
     public void setEffectFromScale(float scale)
     {
         VibrationEffect = (byte)(128 * scale);
-    }
-
-    public void SetDribbleOverride(FingerTipCollider ftc)
-    {
-        if (ftc.pocb && ftc.vocb) {
-            ftc.pocb.DribbleOverride = true;
-            ftc.pocb.DribbleWait = 0f;
-            ftc.pocb.Amplitude = this.Amplitude;
-            ftc.vocb.VibrationEffect = this.VibrationEffect;
-            //Debug.Log("DRIB");
-        }
-    }
-
-    public void UnsetDribbleOverride(FingerTipCollider ftc)
-    {
-        /*if (ftc.pocb)
-        {
-            ftc.pocb.DribbleOverride = false;
-            Debug.Log("DROB");
-        }*/
     }
 
     // Default comparer, TODO

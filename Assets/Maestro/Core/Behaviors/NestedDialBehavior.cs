@@ -47,7 +47,7 @@ public class NestedDialBehavior : MonoBehaviour
     private byte originalTopEffect, originalBottomEffect;
     private float timeElapsedSinceTopTick, timeElapsedSinceBottomTick;
 
-    List<FingerTipCollider> topFTCs, bottomFTCs;
+    List<FingerCollider> topFCs, bottomFCs;
 
     void Start()
     {
@@ -95,8 +95,8 @@ public class NestedDialBehavior : MonoBehaviour
         mi2 = BottomDial.gameObject.GetComponent<MaestroInteractable>();
         originalTopEffect = mi.VibrationEffect;
         originalBottomEffect = mi2.VibrationEffect;
-        topFTCs = new List<FingerTipCollider>();
-        bottomFTCs = new List<FingerTipCollider>();
+        topFCs = new List<FingerCollider>();
+        bottomFCs = new List<FingerCollider>();
     }
 
     private float getNearestTick(float angle, int ticks, out int tick)
@@ -104,7 +104,6 @@ public class NestedDialBehavior : MonoBehaviour
         float delta = 360f / ticks;
 
         float currentTick = angle / delta;
-        //Debug.Log(angle + " " + currentTick);
 
         tick = Mathf.RoundToInt(currentTick) % ticks;
 
@@ -127,11 +126,7 @@ public class NestedDialBehavior : MonoBehaviour
                 timeElapsedSinceTopTick = 0f;
                 mi.VibrationEffect = topTickHapticEffect;
 
-                /*foreach(FingerTipCollider ftc in topFTCs)
-                {
-                    ftc.vocb.VibrationEffect = topTickHapticEffect;
-                    ftc.vocb.Prop();
-                }*/
+
 
             } else {
                 timeElapsedSinceTopTick += Time.deltaTime;
@@ -160,11 +155,7 @@ public class NestedDialBehavior : MonoBehaviour
                 timeElapsedSinceBottomTick = 0f;
                 mi2.VibrationEffect = bottomTickHapticEffect;
 
-                /*foreach (FingerTipCollider ftc in bottomFTCs)
-                {
-                    ftc.vocb.VibrationEffect = bottomTickHapticEffect;
-                    ftc.vocb.Prop();
-                }*/
+
             } else {
                 timeElapsedSinceBottomTick += Time.deltaTime;
                 if (timeElapsedSinceBottomTick > tickHapticDelay) {
@@ -204,9 +195,9 @@ public class NestedDialBehavior : MonoBehaviour
         lastDialPushed = DialPushed;
     }
 
-    public void RegisterTop(FingerTipCollider ftc)
+    public void RegisterTop(FingerCollider fc)
     {
-        topFTCs.Add(ftc);
+        topFCs.Add(fc);
 
         topRegister++;
 
@@ -214,24 +205,24 @@ public class NestedDialBehavior : MonoBehaviour
             top.angularXMotion = ConfigurableJointMotion.Free;
     }
 
-    public void UnregisterTop(FingerTipCollider ftc)
+    public void UnregisterTop(FingerCollider fc)
     {
         topRegister--;
-        topFTCs.Remove(ftc);
+        topFCs.Remove(fc);
     }
 
-    public void RegisterBottom(FingerTipCollider ftc)
+    public void RegisterBottom(FingerCollider fc)
     {
-        bottomFTCs.Add(ftc);
+        bottomFCs.Add(fc);
 
         bottomRegister++;
         if (bottom)
             bottom.angularXMotion = ConfigurableJointMotion.Free;
     }
 
-    public void UnregisterBottom(FingerTipCollider ftc)
+    public void UnregisterBottom(FingerCollider fc)
     {
-        bottomFTCs.Remove(ftc);
+        bottomFCs.Remove(fc);
 
         bottomRegister--;
 

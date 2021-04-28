@@ -23,7 +23,7 @@ public class BasketballNoises : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.GetComponentInParent<FingerTipCollider>() != null)
+        if (collision.collider.gameObject.GetComponentInParent<FingerCollider>() != null)
             return;
         
 

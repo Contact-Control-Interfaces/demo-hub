@@ -15,9 +15,6 @@ public class BallDetector : MonoBehaviour {
     private int combo = 0;
     private const float opacity = 0.1f;
     private Color[] colors = new Color[] {
-        //new Color(0xff, 0x00, 0x00),
-        //new Color(0x00, 0xff, 0x00),
-        //new Color(0x00, 0x00, 0xff),
         new Color(0xbd / 255f, 0x69 / 255f, 0xd4 / 255f, opacity),  // Violet
         new Color(0xff / 255f, 0xa5 / 255f, 0xe4 / 255f, opacity),  // Pink
         new Color(0x87 / 255f, 0xd1 / 255f, 0xd0 / 255f, opacity),  // Contact Blue

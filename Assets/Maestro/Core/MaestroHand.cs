@@ -7,17 +7,7 @@ using System;
 using Assets;
 using Plane = UnityEngine.Plane;
 
-public enum WhichHand
-{
-    RightHand, LeftHand
-};
-
-public enum InteractionPriority
-{
-    PrioritizeAmplitude, PrioritizeVibrationEffect /*, Cascade, Importance*/
-};
-
-public class MaestroHand : MonoBehaviour
+public class MaestroHand : IMaestroHand
 {
 
     public GameObject ThumbMiddle { get { return colliders[0]; } set { colliders[0] = value; } }
@@ -40,7 +30,6 @@ public class MaestroHand : MonoBehaviour
 
     [Header("Hand Configuration")]
     public WhichHand whichHand = WhichHand.RightHand;
-    public InteractionPriority interactionPriority = InteractionPriority.PrioritizeAmplitude;
 
     public MaestroHand otherHand;
     public string objectLayer = "GrippedObject";
@@ -56,7 +45,7 @@ public class MaestroHand : MonoBehaviour
     public float tooClose = 0.1f;
     public float tooFast = 0.2f;
 
-    private FingerTipCollider[] phystips = new FingerTipCollider[12];
+    private FingerCollider[] phystips = new FingerCollider[12];
     private PullOnCollideBehaviour[] pulls = new PullOnCollideBehaviour[5];
     private VibrateOnCollideBehaviour[] vibs = new VibrateOnCollideBehaviour[5];
 
@@ -213,12 +202,12 @@ public class MaestroHand : MonoBehaviour
         //Physics.defaultContactOffset = 0.001f;
         //Physics.defaultContactOffset = 0.0000001f;
 
-        // Generate all FingerTipColliders
+        // Generate all FingerColliders
         for (int i = 0; i < colliders.Length; i++) {
-            // Create new FTC and start setup
+            // Create new FingerCollider and start setup
             GameObject g = new GameObject();
             g.AddComponent<Rigidbody>();
-            phystips[i] = g.AddComponent<FingerTipCollider>();
+            phystips[i] = g.AddComponent<FingerCollider>();
 
             phystips[i].index = i;
             phystips[i].hpi = this;
@@ -236,13 +225,13 @@ public class MaestroHand : MonoBehaviour
                 phystips[i].col.transform.localPosition = palmOffset;
                 //phystips[i].releaseCol.transform.localPosition = palmOffset;
 
-                phystips[i].vocbs = vibs;
-                phystips[i].pocbs = pulls;
+                //phystips[i].vocbs = vibs;
+                //phystips[i].pocbs = pulls;
                 //phystips[i].setAudio(soundPickup);
             } else
                 phystips[i].makeRend(fingertipRadius);
 
-            // Apply physics material to FTCs if applicable
+            // Apply physics material to FCs if applicable
             if (fingertipPhysicMaterial != null)
                 phystips[i].SetPhysicMaterial(fingertipPhysicMaterial);
 
@@ -261,19 +250,19 @@ public class MaestroHand : MonoBehaviour
             }
         }
 
-        // Set finger tip FTCs haptic controllers
+        // Set finger tip FCs haptic controllers
         for (int i = 0; i < vibs.Length; i++) {
-            phystips[i * 2 + 1].vocb = vibs[i];
-            phystips[i * 2 + 1].pocb = pulls[i];
+            //phystips[i * 2 + 1].vocb = vibs[i];
+            //phystips[i * 2 + 1].pocb = pulls[i];
         }
 
-        // Setup temporary FTCs
+        // Setup temporary FCs
         for (int j = 0; j < extras.Length; j++) {
             int i = j + colliders.Length;
             //making a new fingertip collider gameObject and naming it
             GameObject g = new GameObject();
             g.AddComponent<Rigidbody>();
-            phystips[i] = g.AddComponent<FingerTipCollider>();
+            phystips[i] = g.AddComponent<FingerCollider>();
 
             phystips[i].index = i;
             phystips[i].hpi = this;
@@ -378,7 +367,7 @@ public class MaestroHand : MonoBehaviour
         timeSinceRelease += Time.fixedDeltaTime;
         timeSinceTwoHandGrabbing += Time.fixedDeltaTime;
 
-        // Move all temp FTCs and check what they're touching
+        // Move all temp FCs and check what they're touching
         // TODO merge with others
         for (int j = 0; j < extras.Length; j++) {
             int i = j + colliders.Length;
@@ -411,7 +400,7 @@ public class MaestroHand : MonoBehaviour
             }*/
         }
 
-        // Move all FTCs and check what they're touching
+        // Move all FCs and check what they're touching
         for (int i = 0; i < colliders.Length; i++) {
             phystips[i].col.enabled = !lastTargetWasTool || timeSinceRelease > 0.5f; // turn off finger colliders if I'm grabbing something or just let go of it
 
@@ -527,10 +516,10 @@ public class MaestroHand : MonoBehaviour
 
         //Debug.Log("ZERRRRRRR");
 
-        // Disable all FTCs when the hand itself is disabled
-        foreach (FingerTipCollider ftc in phystips) {
-            if (ftc)
-                ftc.enabled = false;
+        // Disable all FCs when the hand itself is disabled
+        foreach (FingerCollider fc in phystips) {
+            if (fc)
+                fc.enabled = false;
         }
     }
 
@@ -552,10 +541,10 @@ public class MaestroHand : MonoBehaviour
 
         Prop();
 
-        // Enable all FTCs when the hand itself is enabled
-        foreach (FingerTipCollider ftc in phystips) {
-            if (ftc)
-                ftc.enabled = true;
+        // Enable all FCs when the hand itself is enabled
+        foreach (FingerCollider fc in phystips) {
+            if (fc)
+                fc.enabled = true;
         }
     }
     #endregion 
@@ -1089,9 +1078,9 @@ public class MaestroHand : MonoBehaviour
 
     public void ClearPaint() {
         if (phystips != null) {
-            foreach (FingerTipCollider ftc in phystips) {
-                if (ftc != null && ftc.isTip && !ftc.PaintColor.Equals(Color.clear)) {
-                    ftc.PaintColor = Color.clear;
+            foreach (FingerCollider fc in phystips) {
+                if (fc != null && fc.isTip && !fc.PaintColor.Equals(Color.clear)) {
+                    fc.PaintColor = Color.clear;
                 }
             }
         }

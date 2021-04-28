@@ -20,16 +20,14 @@ public class RagBehavior : MonoBehaviour {
     {
         if (cloth.sphereColliders.Length < 2)
         {
-            FingerTipCollider[] ftcs = GameObject.FindObjectsOfType<FingerTipCollider>();
+            FingerCollider[] fcs = GameObject.FindObjectsOfType<FingerCollider>();
             List<ClothSphereColliderPair> spheres = new List<ClothSphereColliderPair>();
 
-            Debug.Log(ftcs.Length + "asdasdadad");
+            foreach (FingerCollider fc in fcs)
+                spheres.Add(new ClothSphereColliderPair(fc.GetComponentInChildren<SphereCollider>()));
 
-            foreach (FingerTipCollider ftc in ftcs)
-                spheres.Add(new ClothSphereColliderPair(ftc.GetComponentInChildren<SphereCollider>()));
-
-            foreach (ClothSphereColliderPair ftc in cloth.sphereColliders)
-                spheres.Add(ftc);
+            foreach (ClothSphereColliderPair fc in cloth.sphereColliders)
+                spheres.Add(fc);
 
             cloth.sphereColliders = spheres.ToArray();
         }
@@ -37,25 +35,11 @@ public class RagBehavior : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        //Debug.Log("Touched rag!!!!!!");
-
-        FingerTipCollider ftc = collision.gameObject.GetComponent<FingerTipCollider>();
-
-        if (ftc != null && ftc.isTip)
-        {
-            ftc.pocb.PaintAmp = 200;
-            ftc.PaintColor = Color.clear;
-        }
+        //NOTHING
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        FingerTipCollider ftc = collision.gameObject.GetComponent<FingerTipCollider>();
-
-        if (ftc != null && ftc.isTip)
-        {
-            ftc.pocb.PaintAmp = null;
-        }
+        //NOTHING
     }
 }

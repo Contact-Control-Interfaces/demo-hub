@@ -17,11 +17,11 @@ public class FingerPaint : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        FingerTipCollider ftc = collision.gameObject.GetComponent<FingerTipCollider>();
+        FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
 
-        if (ftc != null && ftc.isTip)
+        if (fc != null && fc.isTip)
         {
-            ftc.PaintColor = erase ? eraseColor : rend.material.color;
+            fc.PaintColor = erase ? eraseColor : rend.material.color;
             if (source)
             {
                 source.pitch = Random.Range(0.8f, 1.2f);

@@ -291,7 +291,6 @@ public class MaestroBLEUI : MonoBehaviour
 
     private string getEllipsis(int num)
     {
-        //return "".PadRight(num, '.').PadRight(3, ' ');
         return "".PadRight(num, '.');
     }
 

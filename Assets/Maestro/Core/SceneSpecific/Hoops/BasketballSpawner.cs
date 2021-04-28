@@ -43,7 +43,6 @@ public class BasketballSpawner : MonoBehaviour {
         if (toSpawn != null)
         {
             toSpawn.gameObject.SetActive(false);
-            //Spawn(); Don't spawn automatically anymore
         }
     }
 
