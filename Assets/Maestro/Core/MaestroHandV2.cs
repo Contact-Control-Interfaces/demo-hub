@@ -304,6 +304,48 @@ public class MaestroHandV2 : IMaestroHand
         
     }
 
+    private void ApplyGlobalInteractable(MaestroInteractable interactable, int i)
+    {
+        if (interactable.isPersistent)
+        {
+            persist[i] = interactable;
+            persistTimeLeft[i] = interactable.persistanceDuration;
+        }
+    }
+
+    public void ApplyAllGlobalInteractable(MaestroInteractable interactable)
+    {
+        for (int i = 0; i < persist.Length; i++)
+        {
+            ApplyGlobalInteractable(interactable, i);
+        }
+    }
+
+    public void ApplyThumbGlobalInteractable(MaestroInteractable interactable)
+    {
+        ApplyGlobalInteractable(interactable, 0);
+    }
+
+    public void ApplyIndexGlobalInteractable(MaestroInteractable interactable)
+    {
+        ApplyGlobalInteractable(interactable, 1);
+    }
+
+    public void ApplyMiddleGlobalInteractable(MaestroInteractable interactable)
+    {
+        ApplyGlobalInteractable(interactable, 2);
+    }
+
+    public void ApplyRingGlobalInteractable(MaestroInteractable interactable)
+    {
+        ApplyGlobalInteractable(interactable, 3);
+    }
+
+    public void ApplyLittleGlobalInteractable(MaestroInteractable interactable)
+    {
+        ApplyGlobalInteractable(interactable, 4);
+    }
+
     public void FixedUpdate()
     {
         MaestroHapticContext currentHaptics = new MaestroHapticContext();
