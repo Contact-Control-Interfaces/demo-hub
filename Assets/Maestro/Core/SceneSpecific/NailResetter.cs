@@ -2,67 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NailResetter : MonoBehaviour {
-
-    NailBehavior[] nails;
-    float initialHeight;
-    //public float maxHeight;
-    public float minOffset;
-    public static GameObject smokePrefab;
-
-    // Use this for initialization
-    void Start()
+namespace Maestro
+{
+    public class NailResetter : MonoBehaviour
     {
-        if (!smokePrefab)
-            smokePrefab = GameObject.Find("Smoke");
 
-        this.nails = this.GetComponentsInChildren<NailBehavior>();
-        initialHeight = nails[0].transform.position.y;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        bool reset = true;
-        foreach (NailBehavior nb in nails)
+        NailBehavior[] nails;
+        float initialHeight;
+        //public float maxHeight;
+        public float minOffset;
+        public static GameObject smokePrefab;
+
+        // Use this for initialization
+        void Start()
         {
-            reset = reset && nb.transform.position.y <= initialHeight + minOffset;
+            if (!smokePrefab)
+                smokePrefab = GameObject.Find("Smoke");
 
-            if (nb.transform.position.y > initialHeight)
-            {
-                Vector3 temp = nb.transform.position;
-                temp.y = initialHeight;
-                nb.transform.position = temp;
-            }
-
+            this.nails = this.GetComponentsInChildren<NailBehavior>();
+            initialHeight = nails[0].transform.position.y;
         }
 
-        if (reset)
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("Resetting nails");
-            foreach (NailBehavior nb in nails)
-            {
-                Vector3 temp = nb.transform.position;
-                temp.y = initialHeight;
-                StartCoroutine("SpawnSmoke", nb.transform.position = temp);
+            bool reset = true;
+            foreach (NailBehavior nb in nails) {
+                reset = reset && nb.transform.position.y <= initialHeight + minOffset;
 
-                Rigidbody rb = nb.GetComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                rb.useGravity = false;
+                if (nb.transform.position.y > initialHeight) {
+                    Vector3 temp = nb.transform.position;
+                    temp.y = initialHeight;
+                    nb.transform.position = temp;
+                }
 
-                nb.transform.parent = this.transform;
+            }
+
+            if (reset) {
+                Debug.Log("Resetting nails");
+                foreach (NailBehavior nb in nails) {
+                    Vector3 temp = nb.transform.position;
+                    temp.y = initialHeight;
+                    StartCoroutine("SpawnSmoke", nb.transform.position = temp);
+
+                    Rigidbody rb = nb.GetComponent<Rigidbody>();
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                    rb.useGravity = false;
+
+                    nb.transform.parent = this.transform;
+                }
             }
         }
-	}
 
-    private IEnumerator SpawnSmoke(Vector3 location)
-    {
-        if (smokePrefab)
+        private IEnumerator SpawnSmoke(Vector3 location)
         {
-            GameObject smoke = Instantiate(smokePrefab);
-            smoke.transform.position = location;
-            smoke.transform.localScale = 0.05f * Vector3.one;
-            yield return new WaitForSeconds(2.0f);
-            Destroy(smoke);
+            if (smokePrefab) {
+                GameObject smoke = Instantiate(smokePrefab);
+                smoke.transform.position = location;
+                smoke.transform.localScale = 0.05f * Vector3.one;
+                yield return new WaitForSeconds(2.0f);
+                Destroy(smoke);
+            }
         }
     }
 }

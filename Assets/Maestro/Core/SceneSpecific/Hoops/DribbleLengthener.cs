@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DribbleLengthener : MonoBehaviour
+namespace Maestro
 {
-
-    public static float MinDribbleWait = 0.20f;
-
-    public float MinWait = 0.20f;
-
-    // Update is called once per frame
-    void Update()
+    public class DribbleLengthener : MonoBehaviour
     {
-        MinDribbleWait = MinWait;
+
+        public static float MinDribbleWait = 0.20f;
+
+        public float MinWait = 0.20f;
+
+        // Update is called once per frame
+        void Update()
+        {
+            MinDribbleWait = MinWait;
+        }
     }
 }
