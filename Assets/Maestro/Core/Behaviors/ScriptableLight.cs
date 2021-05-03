@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptableLight : MonoBehaviour
+namespace Maestro
 {
-    public new Light light;
-
-    public void SetLight(bool isOn)
+    public class ScriptableLight : MonoBehaviour
     {
-        light.gameObject.SetActive(isOn);
-        light.enabled = isOn;
+        public new Light light;
+
+        public void SetLight(bool isOn)
+        {
+            light.gameObject.SetActive(isOn);
+            light.enabled = isOn;
+        }
     }
 }

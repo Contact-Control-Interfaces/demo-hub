@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EraserBehavior : MonoBehaviour {
-
-    public Transform Tableau;
-    private List<GameObject> toDestroy;
-
-    private void Start()
+namespace Maestro
+{
+    public class EraserBehavior : MonoBehaviour
     {
-        toDestroy = new List<GameObject>();
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (Tableau != null && other.transform.parent.Equals(Tableau))
+        public Transform Tableau;
+        private List<GameObject> toDestroy;
+
+        private void Start()
         {
-            other.gameObject.SetActive(false);
-            toDestroy.Add(other.gameObject);
+            toDestroy = new List<GameObject>();
         }
-    }
 
-    public void Update()
-    {
-        foreach (GameObject go in toDestroy)
+        private void OnTriggerEnter(Collider other)
         {
-            Destroy(go);
+            if (Tableau != null && other.transform.parent.Equals(Tableau)) {
+                other.gameObject.SetActive(false);
+                toDestroy.Add(other.gameObject);
+            }
         }
-        toDestroy.Clear();
+
+        public void Update()
+        {
+            foreach (GameObject go in toDestroy) {
+                Destroy(go);
+            }
+            toDestroy.Clear();
+        }
     }
 }

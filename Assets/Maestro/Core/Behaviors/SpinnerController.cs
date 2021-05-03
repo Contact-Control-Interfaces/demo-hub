@@ -2,56 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinnerController : MonoBehaviour
+namespace Maestro
 {
-    public SliderBehavior slider;
-    public ToggleSwitchBehavior toggleSwitch;
-
-    public bool on;
-
-    private Rigidbody spinner;
-    private float lastValue;
-
-    // Start is called before the first frame update
-    void Start()
+    public class SpinnerController : MonoBehaviour
     {
-        spinner = this.GetComponent<Rigidbody>();
-        lastValue = 0f;
-    }
+        public SliderBehavior slider;
+        public ToggleSwitchBehavior toggleSwitch;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (on)
+        public bool on;
+
+        private Rigidbody spinner;
+        private float lastValue;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            float maxSpeed = lastValue * 10;
-            float accel = lastValue * 10;
-
-            //Debug.Log(maxSpeed);
-
-            spinner.angularVelocity += accel * new Vector3(0, 1, 0);
-
-            if (spinner.angularVelocity.magnitude > maxSpeed)
-                spinner.angularVelocity = new Vector3(0, 1, 0) * maxSpeed;
+            spinner = this.GetComponent<Rigidbody>();
+            lastValue = 0f;
         }
-    }
 
-    public void UpdateFromSlider(float value)
-    {
-        //Debug.Log(value);
+        // Update is called once per frame
+        void Update()
+        {
+            if (on) {
+                float maxSpeed = lastValue * 10;
+                float accel = lastValue * 10;
 
-        lastValue = 1 - value;
+                //Debug.Log(maxSpeed);
 
-        //Debug.Log(lastValue);
-    }
+                spinner.angularVelocity += accel * new Vector3(0, 1, 0);
 
-    public void TurnOnOff(bool state)
-    {
-        this.on = state;
-    }
+                if (spinner.angularVelocity.magnitude > maxSpeed)
+                    spinner.angularVelocity = new Vector3(0, 1, 0) * maxSpeed;
+            }
+        }
 
-    public void SetText(TextMesh text)
-    {
-        text.text = Mathf.RoundToInt(lastValue * 100) + "%";
+        public void UpdateFromSlider(float value)
+        {
+            //Debug.Log(value);
+
+            lastValue = 1 - value;
+
+            //Debug.Log(lastValue);
+        }
+
+        public void TurnOnOff(bool state)
+        {
+            this.on = state;
+        }
+
+        public void SetText(TextMesh text)
+        {
+            text.text = Mathf.RoundToInt(lastValue * 100) + "%";
+        }
     }
 }

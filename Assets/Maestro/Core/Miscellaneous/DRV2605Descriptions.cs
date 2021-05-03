@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DRV2605Descriptions
+namespace Maestro
 {
-    private static string[] descriptions =
-        {
+    public static class DRV2605Descriptions
+    {
+        private static string[] descriptions =
+            {
             "None",
             "Strong Click - 100%",
             "Strong Click - 60%",
@@ -132,11 +134,12 @@ public static class DRV2605Descriptions
             "Smooth Hum 5 (No kick or brake pulse) – 10%"
         };
 
-    public static string get(int index)
-    {
-        if (index >= descriptions.Length || index < 0)
-            return descriptions[0];
-        else
-            return descriptions[index];
+        public static string get(int index)
+        {
+            if (index >= descriptions.Length || index < 0)
+                return descriptions[0];
+            else
+                return descriptions[index];
+        }
     }
 }

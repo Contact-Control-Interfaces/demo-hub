@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetErasedBehavior : MonoBehaviour
+namespace Maestro
 {
-
-    void OnCollisionEnter(Collision collision)
+    public class GetErasedBehavior : MonoBehaviour
     {
-        TryErase(collision.gameObject);
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        TryErase(other.transform.parent.gameObject);
-    }
-
-    private void TryErase(GameObject go)
-    {
-        if (go != null)
+        void OnCollisionEnter(Collision collision)
         {
-            FingerCollider fc = go.gameObject.GetComponent<FingerCollider>();
-            if (fc != null && fc.isTip && fc.PaintColor == FingerPaint.eraseColor)
-            {
-                Destroy(this.gameObject);
+            TryErase(collision.gameObject);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            TryErase(other.transform.parent.gameObject);
+        }
+
+        private void TryErase(GameObject go)
+        {
+            if (go != null) {
+                FingerCollider fc = go.gameObject.GetComponent<FingerCollider>();
+                if (fc != null && fc.isTip && fc.PaintColor == FingerPaint.eraseColor) {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }

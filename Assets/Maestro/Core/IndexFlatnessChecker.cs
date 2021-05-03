@@ -3,39 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-public class IndexFlatnessChecker : FlatnessChecker
+namespace Maestro
 {
-    SteamVR_Behaviour_Skeleton parent;
-    private bool flat;
 
-    public float total;
-    public float threshold = 0.0f;
-
-    // Start is called before the first frame update
-    void Start()
+    public class IndexFlatnessChecker : FlatnessChecker
     {
-        parent = this.GetComponent<SteamVR_Behaviour_Skeleton>();
-    }
+        SteamVR_Behaviour_Skeleton parent;
+        private bool flat;
 
-    private float sum(float[] floats)
-    {
-        float result = 0.0f;
+        public float total;
+        public float threshold = 0.0f;
 
-        for (int i = 0; i < floats.Length; i++)
-            result += floats[i];
+        // Start is called before the first frame update
+        void Start()
+        {
+            parent = this.GetComponent<SteamVR_Behaviour_Skeleton>();
+        }
 
-        return result;
-    }
+        private float sum(float[] floats)
+        {
+            float result = 0.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        total = sum(parent.fingerCurls);
-        flat = total <= threshold;
-    }
+            for (int i = 0; i < floats.Length; i++)
+                result += floats[i];
 
-    public override bool isFlat()
-    {
-        return flat;
+            return result;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            total = sum(parent.fingerCurls);
+            flat = total <= threshold;
+        }
+
+        public override bool isFlat()
+        {
+            return flat;
+        }
     }
 }

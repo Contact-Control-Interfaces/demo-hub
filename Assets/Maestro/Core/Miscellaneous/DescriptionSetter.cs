@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DescriptionSetter : MonoBehaviour
+namespace Maestro
 {
-    private TextMesh parent;
+    public class DescriptionSetter : MonoBehaviour
+    {
+        private TextMesh parent;
 
-    private void Start()
-    {
-        parent = this.GetComponent<TextMesh>();
-    }
-    public void SetText(float value)
-    {
-        int index = (int)(value * 128);
-        parent.text = DRV2605Descriptions.get(index);
+        private void Start()
+        {
+            parent = this.GetComponent<TextMesh>();
+        }
+        public void SetText(float value)
+        {
+            int index = (int)(value * 128);
+            parent.text = DRV2605Descriptions.get(index);
+        }
     }
 }

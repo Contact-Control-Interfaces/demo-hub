@@ -2,42 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NailBehavior : MonoBehaviour {
-
-    private float totalDepth = 0f;
-
-    public bool detached = false;
-    
-    //public float maxDepth = 
-
-    public void Nail(Vector3 relativeVelocity)
+namespace Maestro
+{
+    public class NailBehavior : MonoBehaviour
     {
-        float depth = Mathf.Max(relativeVelocity.y / 150f, 0f);
-        totalDepth += depth;
 
-        this.transform.Translate(0f, depth, 0f, this.transform);
-        totalDepth += depth;
+        private float totalDepth = 0f;
 
-        
-    }
+        public bool detached = false;
 
-    public void Elongate()
-    {
-        CapsuleCollider cc = this.GetComponent<CapsuleCollider>();
+        //public float maxDepth = 
 
-        cc.height = 10;
-        cc.center = new Vector3(cc.center.x, cc.center.y + 4, cc.center.z);
+        public void Nail(Vector3 relativeVelocity)
+        {
+            float depth = Mathf.Max(relativeVelocity.y / 150f, 0f);
+            totalDepth += depth;
 
-        this.GetComponent<Rigidbody>().useGravity = true;
+            this.transform.Translate(0f, depth, 0f, this.transform);
+            totalDepth += depth;
 
-        this.transform.parent = null;
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.GetComponent<HammerResponse>() || collision.gameObject.GetComponent<FingerCollider>())
-            Nail(collision.relativeVelocity);
-        else
-            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+
+        public void Elongate()
+        {
+            CapsuleCollider cc = this.GetComponent<CapsuleCollider>();
+
+            cc.height = 10;
+            cc.center = new Vector3(cc.center.x, cc.center.y + 4, cc.center.z);
+
+            this.GetComponent<Rigidbody>().useGravity = true;
+
+            this.transform.parent = null;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.GetComponent<HammerResponse>() || collision.gameObject.GetComponent<FingerCollider>())
+                Nail(collision.relativeVelocity);
+            else
+                this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
     }
 }

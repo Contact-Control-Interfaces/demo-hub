@@ -2,40 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoopMoverV2 : MonoBehaviour
+namespace Maestro
 {
-    public Transform hoop, start, far, top;
-    public float bounds, offset;
-
-    private float startZ;
-
-    void Start()
+    public class HoopMoverV2 : MonoBehaviour
     {
-        startZ = this.transform.localPosition.z;
-    }
-    
-    void Update()
-    {
-        //Move handle back in bounds
-        Vector3 localPosition = this.transform.localPosition;
-        if (localPosition.x < -bounds)
-            localPosition.x = -bounds;
-        else if (localPosition.x > bounds)
-            localPosition.x = bounds;
+        public Transform hoop, start, far, top;
+        public float bounds, offset;
 
-        if (localPosition.y < -bounds)
-            localPosition.y = -bounds;
-        else if (localPosition.y > bounds - offset)
-            localPosition.y = bounds - offset;
+        private float startZ;
 
-        localPosition.z = startZ;
+        void Start()
+        {
+            startZ = this.transform.localPosition.z;
+        }
 
-        this.transform.localPosition = localPosition;
+        void Update()
+        {
+            //Move handle back in bounds
+            Vector3 localPosition = this.transform.localPosition;
+            if (localPosition.x < -bounds)
+                localPosition.x = -bounds;
+            else if (localPosition.x > bounds)
+                localPosition.x = bounds;
 
-        //Move hoop
-        float toFro = (localPosition.x + bounds) / (bounds * 2);
-        float upDown = (localPosition.y + bounds) / (bounds * 2 - offset);
+            if (localPosition.y < -bounds)
+                localPosition.y = -bounds;
+            else if (localPosition.y > bounds - offset)
+                localPosition.y = bounds - offset;
 
-        hoop.transform.position = Vector3.Lerp(start.position, far.position, 1 - toFro) + (upDown * (top.position - far.position));
+            localPosition.z = startZ;
+
+            this.transform.localPosition = localPosition;
+
+            //Move hoop
+            float toFro = (localPosition.x + bounds) / (bounds * 2);
+            float upDown = (localPosition.y + bounds) / (bounds * 2 - offset);
+
+            hoop.transform.position = Vector3.Lerp(start.position, far.position, 1 - toFro) + (upDown * (top.position - far.position));
+        }
     }
 }

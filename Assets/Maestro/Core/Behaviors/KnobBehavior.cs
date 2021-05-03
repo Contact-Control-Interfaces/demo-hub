@@ -2,56 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnobBehavior : MonoBehaviour {
-
-    static bool hasFirstBeenTouched = false;
-
-    public bool shouldFail = false;
-    private bool attached;
-    public Rigidbody door;
-
-	// Use this for initialization
-	void Start () {
-        attached = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void TryGrab()
+namespace Maestro
+{
+    public class KnobBehavior : MonoBehaviour
     {
-        if (!hasFirstBeenTouched)
+
+        static bool hasFirstBeenTouched = false;
+
+        public bool shouldFail = false;
+        private bool attached;
+        public Rigidbody door;
+
+        // Use this for initialization
+        void Start()
         {
-            hasFirstBeenTouched = true;
-            this.shouldFail = true;
+            attached = true;
         }
 
-        if (shouldFail)
+        // Update is called once per frame
+        void Update()
         {
-            if (!attached)
-                return;
-            else
-            {
-                Rigidbody temp = this.GetComponent<Rigidbody>();
-                Destroy(this.GetComponent<ConfigurableJoint>());
-                temp.useGravity = true;
-                temp.drag = 0;
-                attached = false;
+
+        }
+
+        public void TryGrab()
+        {
+            if (!hasFirstBeenTouched) {
+                hasFirstBeenTouched = true;
+                this.shouldFail = true;
+            }
+
+            if (shouldFail) {
+                if (!attached)
+                    return;
+                else {
+                    Rigidbody temp = this.GetComponent<Rigidbody>();
+                    Destroy(this.GetComponent<ConfigurableJoint>());
+                    temp.useGravity = true;
+                    temp.drag = 0;
+                    attached = false;
+                }
+            } else {
+                door.isKinematic = false;
             }
         }
-        else
-        {
-            door.isKinematic = false;
-        }
-    }
 
-    public void TryRelease()
-    {
-        if (!attached)
+        public void TryRelease()
         {
-            this.GetComponent<Rigidbody>().useGravity = true;
-        }   
+            if (!attached) {
+                this.GetComponent<Rigidbody>().useGravity = true;
+            }
+        }
     }
 }
