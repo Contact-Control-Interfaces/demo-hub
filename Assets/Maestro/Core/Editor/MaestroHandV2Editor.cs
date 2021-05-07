@@ -21,6 +21,7 @@ namespace Maestro
         private bool showDebug = false;
         private string showDebugTxt = "Debug";
 
+
         public void OnEnable()
         {
             /* Effectively the inspector's OnStart */
@@ -54,6 +55,16 @@ namespace Maestro
             // Read-only toggles for grab states
             EditorGUILayout.Toggle("Is Grabbing", hand.grabbing);
             EditorGUILayout.Toggle("Is Two-Hand Grabbing", hand.twoHandGrabbing);
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
+            hand.interactablesOnly = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnly);
+            if (!hand.interactablesOnly)
+            {
+                hand.defaultEffect.Amplitude = (byte)EditorGUILayout.IntSlider("Feedback Amplitude", hand.defaultEffect.Amplitude, 0, 255);
+                hand.defaultEffect.Vibration = (byte)EditorGUILayout.IntSlider("Vibration Effect", hand.defaultEffect.Vibration, 0, 128);
+                EditorGUILayout.HelpBox(DRV2605Descriptions.get(hand.defaultEffect.Vibration), MessageType.None, false);
+            }
 
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
             if (showHandConfig) {

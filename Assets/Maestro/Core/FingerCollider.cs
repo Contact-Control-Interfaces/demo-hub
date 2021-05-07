@@ -42,7 +42,7 @@ namespace Maestro
 
         public bool Contacting {
             get {
-                return AllTouching.Count > 0;
+                return AllTouching.Count + DefaultTouching.Count > 0;
             }
         }
 
@@ -84,6 +84,7 @@ namespace Maestro
         }
 
         private List<Collider> AllTouching = new List<Collider>();
+        private List<Collider> DefaultTouching = new List<Collider>();
         private Dictionary<Collider, MaestroInteractable> mapper = new Dictionary<Collider, MaestroInteractable>();
 
         #region Mono Behaviours
@@ -101,6 +102,7 @@ namespace Maestro
         {
             //update the public touching variable
             AllTouching.RemoveAll(x => x == null);
+            DefaultTouching.RemoveAll(x => x == null);
             if (AllTouching.Count > 0) {
                 SortedSet<MaestroInteractable> ints;
 
@@ -154,37 +156,50 @@ namespace Maestro
         {
             //rend.enabled = false;
             AllTouching.Clear();
+            DefaultTouching.Clear();
         }
         #endregion
 
         #region On Collision
         void OnCollisionEnter(Collision c)
         {
-            if (TryGetInteractable(c.collider, out MaestroInteractable interactable)) {
+            if (TryGetInteractable(c.collider, out MaestroInteractable interactable))
+            {
                 AllTouching.Add(c.collider);
                 interactable.Touch(this);
-
-                if (!interactable.IgnoreTaps) {
+                if (!interactable.IgnoreTaps)
+                {
                     float scale = 1.50f;
                     float helper = Mathf.Max(0.20f, Mathf.Min(1.0f, this.rb.velocity.magnitude * scale));
 
-                    if (source != null && interactable.type == InteractionType.Static) {
+                    if (source != null && interactable.type == InteractionType.Static)
+                    {
                         source.volume = helper;
                         source.Play();
                     }
                 }
             }
+            else if (c.collider.gameObject.GetComponent<FingerCollider>() == null && c.collider.gameObject.GetComponentInParent<MaestroContainer>() == null)
+            {
+                DefaultTouching.Add(c.collider);
+            }
         }
 
         void OnCollisionExit(Collision c)
         {
-            if (AllTouching.Remove(c.collider)) {
-                if (mapper.TryGetValue(c.collider, out MaestroInteractable interactable)) {
+            if (AllTouching.Remove(c.collider))
+            {
+                if (mapper.TryGetValue(c.collider, out MaestroInteractable interactable))
+                {
                     interactable.Untouch(this);
-                } else {
+                }
+                else
+                {
                     Debug.LogWarning("Removed collider without mapping!");
                 }
             }
+            else
+                DefaultTouching.Remove(c.collider);
 
             netImpulse += c.impulse;
         }

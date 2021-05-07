@@ -71,6 +71,10 @@ namespace Maestro
         // Layers
         public LayerMask objectLayer;
 
+        // Default haptic interaction
+        public HapticEffect defaultEffect = new HapticEffect { Amplitude = 115, Vibration = 3 };
+        public bool interactablesOnly = false;
+
         /*************
          *  PRIVATE  *
          *************/
@@ -108,7 +112,7 @@ namespace Maestro
         private Mesh m, thumbM, palmMesh;
         private MeshFilter palmMeshFilter, mf, thumbMF;
         private MeshCollider PalmCollider, thumbMC;
-        private GameObject thumbMeshObject;
+        private GameObject thumbMeshObject, palmMeshObject;
 
         // Throw estimation
         private List<Vector3> palmLocations;
@@ -161,6 +165,7 @@ namespace Maestro
 
             // Init container
             container = new GameObject((whichHand == WhichHand.LeftHand ? "Left" : "Right") + " Maestro container");
+            container.AddComponent<MaestroContainer>();
 
             // Spawn FCs
             List<FingerCollider> temps = new List<FingerCollider>();
@@ -222,17 +227,19 @@ namespace Maestro
             thumbM.name = "THUMB MESH";
 
             // Get MeshFilter
-            this.mf = PalmBase.gameObject.AddComponent<MeshFilter>();
+            palmMeshObject = new GameObject("PalmMesh");
+            palmMeshObject.transform.parent = PalmFC.transform;
+
+            this.mf = palmMeshObject.AddComponent<MeshFilter>();
             if (!mf)
-                mf = PalmBase.gameObject.GetComponent<MeshFilter>();
+                mf = palmMeshObject.GetComponent<MeshFilter>();
 
             // Get MeshRenderer
-            palmMeshRenderer = PalmBase.gameObject.GetComponent<MeshRenderer>();
+            palmMeshRenderer = palmMeshObject.GetComponent<MeshRenderer>();
 
             // Make Thumb Mesh
-            thumbMeshObject = new GameObject("empty");
-            thumbMeshObject.transform.parent = PalmBase;
-            thumbMeshObject.transform.position = Vector3.zero;
+            thumbMeshObject = new GameObject("ThumbMesh");
+            thumbMeshObject.transform.parent = PalmFC.transform;
 
             thumbMF = thumbMeshObject.GetComponent<MeshFilter>();
             if (!thumbMF)
@@ -252,7 +259,6 @@ namespace Maestro
             thumbMF.mesh = thumbM;
 
             palmMeshFilter = mf;
-            mf.gameObject.transform.localScale = Vector3.one;
 
             // Generate initial palm meshes
             CalculatePalmMeshes(mf, false);
@@ -414,6 +420,7 @@ namespace Maestro
 
         protected override MaestroHapticContext ProcessHaptics()
         {
+
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
             bool palmTouch = PalmFC.TriggerTouching;
 
@@ -428,18 +435,26 @@ namespace Maestro
                     float palmDiffusion = 0.65f;
 
                     MaestroInteractable interactable = fcs[i].touching;
-                    if (interactable != null) {
+                    if (interactable != null)
+                    {
                         nextHaptics.SetAmplitudeFromIndex(fcs[i].index, interactable.getMotorAmplitude());
                         nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, interactable.getVibrationEffect());
-                        if (interactable.isPersistent) {
+                        if (interactable.isPersistent)
+                        {
                             persist[i] = interactable;
                             persistTimeLeft[i] = interactable.persistanceDuration;
                         }
 
-                    } else if (persist[i] && persistTimeLeft[i] > Time.fixedDeltaTime) {
+                    }
+                    else if (persist[i] && persistTimeLeft[i] > Time.fixedDeltaTime)
+                    {
                         nextHaptics.SetAmplitudeFromIndex(fcs[i].index, persist[i].getMotorAmplitude());
                         nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, persist[i].getVibrationEffect());
                         persistTimeLeft[i] -= Time.fixedDeltaTime;
+                    }else if (fcs[i].Contacting && !interactablesOnly) {
+                        //Touching something without a MaestroInteractable, use default values
+                        nextHaptics.SetAmplitudeFromIndex(fcs[i].index, defaultEffect.Amplitude);
+                        nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, defaultEffect.Vibration);
                     } else if (inheritFromPalm) {
                         // Inherit a portion of palm haptics if applicable
                         byte? amp = PalmFC.touching.getMotorAmplitude();
@@ -604,7 +619,7 @@ namespace Maestro
         {
             // Make sure mesh collider exists between knuckles and palm base
             if (!PalmCollider)
-                PalmCollider = PalmBase.gameObject.AddComponent<MeshCollider>();
+                PalmCollider = palmMeshObject.AddComponent<MeshCollider>();
 
             ToggleMeshCollider(PalmCollider);
 
