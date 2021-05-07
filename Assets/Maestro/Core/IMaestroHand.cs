@@ -18,6 +18,12 @@ namespace Maestro
         PrioritizeAmplitude, PrioritizeVibrationEffect /*, Cascade, Importance*/
     };
 
+    public struct HapticEffect
+    {
+        public byte Amplitude { get; set; }
+        public byte Vibration { get; set; }
+    }
+
     public struct MaestroHapticContext
     {
         public byte? ThumbAmplitude { get; set; }
