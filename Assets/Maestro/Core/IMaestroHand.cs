@@ -63,47 +63,29 @@ namespace Maestro
             LittleVibrationEffect = vibrationEffect;
         }
 
-        public void SetAmplitudeFromIndex(HAND_POSITION index, byte? amplitude)
+        public void SetAmplitudeFromIndex(MaestroIndex index, byte? amplitude)
         {
-            switch (index) {
+            switch (index.finger) {
                 default: Debug.LogWarning(string.Format("Unimplemented index {0}!", index)); break; /* TODO add other hand positions */
 
-                //case HAND_POSITION.ThumbMiddle:
-                case HAND_POSITION.ThumbTip: ThumbAmplitude = amplitude; break;
-
-                //case HAND_POSITION.IndexMiddle:
-                case HAND_POSITION.IndexTip: IndexAmplitude = amplitude; break;
-
-                //case HAND_POSITION.MiddleMiddle:
-                case HAND_POSITION.MiddleTip: MiddleAmplitude = amplitude; break;
-
-                //case HAND_POSITION.RingMiddle:
-                case HAND_POSITION.RingTip: RingAmplitude = amplitude; break;
-
-                //case HAND_POSITION.LittleMiddle:
-                case HAND_POSITION.LittleTip: LittleAmplitude = amplitude; break;
+                case WhichFinger.Thumb: ThumbAmplitude = amplitude; break;
+                case WhichFinger.Index: IndexAmplitude = amplitude; break;
+                case WhichFinger.Middle: MiddleAmplitude = amplitude; break;
+                case WhichFinger.Ring: RingAmplitude = amplitude; break;
+                case WhichFinger.Little: LittleAmplitude = amplitude; break;
             }
         }
 
-        public void SetVibrationEffectFromIndex(HAND_POSITION index, byte? vibrationEffect)
+        public void SetVibrationEffectFromIndex(MaestroIndex index, byte? vibrationEffect)
         {
-            switch (index) {
+            switch (index.finger) {
                 default: Debug.LogWarning(string.Format("Unimplemented index {0}!", index)); break; /* TODO add other hand positions */
 
-                //case HAND_POSITION.ThumbMiddle:
-                case HAND_POSITION.ThumbTip: ThumbVibrationEffect = vibrationEffect; break;
-
-                //case HAND_POSITION.IndexMiddle:
-                case HAND_POSITION.IndexTip: IndexVibrationEffect = vibrationEffect; break;
-
-                //case HAND_POSITION.MiddleMiddle:
-                case HAND_POSITION.MiddleTip: MiddleVibrationEffect = vibrationEffect; break;
-
-                //case HAND_POSITION.RingMiddle:
-                case HAND_POSITION.RingTip: RingVibrationEffect = vibrationEffect; break;
-
-                //case HAND_POSITION.LittleMiddle:
-                case HAND_POSITION.LittleTip: LittleVibrationEffect = vibrationEffect; break;
+                case WhichFinger.Thumb: ThumbVibrationEffect = vibrationEffect; break;
+                case WhichFinger.Index: IndexVibrationEffect = vibrationEffect; break;
+                case WhichFinger.Middle: MiddleVibrationEffect = vibrationEffect; break;
+                case WhichFinger.Ring: RingVibrationEffect = vibrationEffect; break;
+                case WhichFinger.Little: LittleVibrationEffect = vibrationEffect; break;
             }
         }
     }

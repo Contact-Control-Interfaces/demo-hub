@@ -33,7 +33,9 @@ namespace Maestro
 
         public Vector3 colnrm; // the normal of the current collision
 
-        public HAND_POSITION index; // which finger am I?
+        private PointOnHand parent;
+
+        public MaestroIndex index { get { return parent.index; } } // which finger am I?
 
         [HideInInspector]
         public Collider col; //keep track of my collider so I can turn it off in certain situations
@@ -60,19 +62,62 @@ namespace Maestro
             }
         }
 
+        #region Hand position helpers
         public bool isTip { 
             get {
-                switch (index) {
-                    case HAND_POSITION.ThumbTip:
-                    case HAND_POSITION.IndexTip:
-                    case HAND_POSITION.MiddleTip:
-                    case HAND_POSITION.RingTip:
-                    case HAND_POSITION.LittleTip:
-                        return true;
-                    default: return false;
-                }
+                return index.point == PointOnFinger.Tip;
             } 
         }
+
+        public bool isMiddleJoint {
+            get {
+                return index.point == PointOnFinger.Middle;
+            }
+        }
+
+        public bool isFingerBase {
+            get {
+                return index.point == PointOnFinger.Base
+                    && !isPalmBase;
+            }
+        }
+
+        public bool isPalmBase {
+            get {
+                return index.finger == WhichFinger.Palm;
+            }
+        }
+
+        public bool isThumbFinger {
+            get {
+                return index.finger == WhichFinger.Thumb;
+            }
+        }
+
+        public bool isIndexFinger {
+            get {
+                return index.finger == WhichFinger.Index;
+            }
+        }
+
+        public bool isMiddleFinger {
+            get {
+                return index.finger == WhichFinger.Middle;
+            }
+        }
+
+        public bool isRingFinger {
+            get {
+                return index.finger == WhichFinger.Ring;
+            }
+        }
+
+        public bool isLittleFinger {
+            get {
+                return index.finger == WhichFinger.Little;
+            }
+        }
+        #endregion
 
         private Vector3 netImpulse;
         public Vector3 NetImpulse {
@@ -86,6 +131,11 @@ namespace Maestro
         private List<Collider> AllTouching = new List<Collider>();
         private List<Collider> DefaultTouching = new List<Collider>();
         private Dictionary<Collider, MaestroInteractable> mapper = new Dictionary<Collider, MaestroInteractable>();
+
+        public void SetParent(PointOnHand poh)
+        {
+            this.parent = poh;
+        }
 
         #region Mono Behaviours
         void Awake()
