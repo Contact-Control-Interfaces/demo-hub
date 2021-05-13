@@ -9,6 +9,7 @@ namespace Maestro
     public class MaestroHandV2 : IMaestroHand
     {
         public MaestroHandV2 otherHand;
+        public MaestroManager manager;
 
         #region Transforms
         public Transform ThumbTip;
@@ -74,6 +75,8 @@ namespace Maestro
         // Default haptic interaction
         public HapticEffect defaultEffect = new HapticEffect { Amplitude = 115, Vibration = 3 };
         public bool interactablesOnly = false;
+
+        public bool settingsOverride = false;
 
         /*************
          *  PRIVATE  *
