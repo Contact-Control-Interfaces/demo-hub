@@ -44,9 +44,9 @@ namespace Maestro
 
         private void RegisterHelper(FingerCollider fc, bool whatever)
         {
-            if ((int)fc.index % 2 == 1 && (int)fc.index < 10) {
-                touching[(int)fc.index / 2] = whatever;
-                pulse[(int)fc.index / 2].gameObject.SetActive(whatever);
+            if (fc.isTip) {
+                touching[(int)fc.index.finger] = whatever;
+                pulse[(int)fc.index.finger].gameObject.SetActive(whatever);
             }
         }
 

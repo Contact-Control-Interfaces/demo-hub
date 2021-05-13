@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Maestro
 {
@@ -50,7 +51,7 @@ namespace Maestro
         public float timeSinceRelease = 1.0f;
 
         // Pickup Data
-        public int f1, f2;
+        public MaestroIndex f1, f2;
         public float dist1, dist2;
         public float ratio1, ratio2;
 
@@ -82,26 +83,14 @@ namespace Maestro
          *  PRIVATE  *
          *************/
 
-        // Contacts
-        private bool[] contacts = new bool[16];
-        private bool PalmContact { get { if (contacts.Length > 14) return contacts[15]; else return false; } }
-
-        // FCs
-        private FingerCollider[] fcs;
-        private FingerCollider PalmFC { get { if (fcs.Length > 14) return fcs[15]; else return null; } }
-
-        // Arrays
-        private Transform[] tips, middles, knuckles, transforms;
-        private CapsuleCollider[] distal, proximal, palmBox;
-
         // Grab Targets
         MaestroInteractable grabTarget, twoHandGrabTarget;
-        private int twoHandIndex;
+        private MaestroIndex twoHandIndex;
         private bool lastTargetWasTool = false;
         private GameObject grabPos;
 
         // Put everything here instead of somewhere random
-        private GameObject container;
+        private MaestroContainer mc;
 
         // Why not have this
         private MeshRenderer palmMeshRenderer;
@@ -130,134 +119,91 @@ namespace Maestro
         private bool oldGravity, oldKinematic;
         private Transform oldParent = null;
 
-        // persistance storage
-        private MaestroInteractable[] persist = new MaestroInteractable[16];
-        private float[] persistTimeLeft = new float[16];
-
+        // Persistance storage
+        private Dictionary<MaestroIndex, MaestroInteractable> persistInteractables;
+        private Dictionary<MaestroIndex, float> persistTimes;
 
         private float timeSinceDropSatisfied;
 
         #region Monobehaviour functions
         public override void Start()
         {
+            // Init collections
+            persistInteractables = new Dictionary<MaestroIndex, MaestroInteractable>();
+            persistTimes = new Dictionary<MaestroIndex, float>();
             palmLocations = new List<Vector3>();
 
             // Init pickup bools to false
             wasTwoHandGrabbing = twoHandGrabStarted = initiatedTwoHandGrab = false;
 
+            // Create and initialize container
+            GameObject temp = new GameObject(string.Format("{0} Maestro container", whichHand == WhichHand.LeftHand ? "Left" : "Right"));
+            mc = temp.AddComponent<MaestroContainer>();
+            mc.parent = this;
+            InitContainer();
 
-            // Sort Transforms into arrays
-            tips = new Transform[] { ThumbTip,
-                                  IndexTip,
-                                  MiddleTip,
-                                  RingTip,
-                                  LittleTip };
+            // Initialize palm meshes
+            InitPalmMeshes();
 
-            middles = new Transform[] { ThumbMiddle,
-                                    IndexMiddle,
-                                    MiddleMiddle,
-                                    RingMiddle,
-                                    LittleMiddle };
-
-            knuckles = new Transform[] { ThumbKnuckle,
-                                     IndexKnuckle,
-                                     MiddleKnuckle,
-                                     RingKnuckle,
-                                     LittleKnuckle };
-
-
-            // Init container
-            container = new GameObject((whichHand == WhichHand.LeftHand ? "Left" : "Right") + " Maestro container");
-            container.AddComponent<MaestroContainer>();
-
-            // Spawn FCs
-            List<FingerCollider> temps = new List<FingerCollider>();
-            for (int i = 0; i < 16; i++) {
-                temps.Add(Spawn(i < 5 ? tips[i] : (i < 10 ? middles[i - 5] : (i < 15 ? knuckles[i - 10] : PalmBase)), 
-                    (HAND_POSITION)i, /* Perhaps not the best idea */
-                    i < 5 ? TipSize : (i < 10 ? MiddleSize : KnuckleSize)));
-            }
-            fcs = temps.ToArray();
-
-            // Init contact bools
-            ResetContacts();
-
-            // Set FC mass
-            for (int i = 0; i < fcs.Length; i++) {
-                fcs[i].rb.mass = i == fcs.Length - 1 ? 10.0f : 5.0f;
+            // Turn off knuckle visibility/collision to see progress
+            IEnumerable<PointOnHand> fingerknuckles = mc.Where(x => x.fc.isFingerBase);
+            foreach (PointOnHand poh in fingerknuckles) {
+                ToggleVisibility(poh.fc.transform, true);
             }
 
-            // TODO add AudioSources for sound effects
+            // Turn off palmBox visibility/collision to see progress
+            IEnumerable<CapsuleCollider> metacarpals = mc.GetFingers().Select(x => x.Metacarpal);
+            foreach (CapsuleCollider cc in metacarpals) {
+                ToggleVisibility(cc.transform, true);
+            }
 
-            // Init all fingers
-            distal = new CapsuleCollider[5];
-            proximal = new CapsuleCollider[5];
-            palmBox = new CapsuleCollider[5];
-
-            for (int i = 0; i < 5; i++) {
-                distal[i] = Spawn(tips[i], middles[i], (TipSize + MiddleSize) / 2);
-                proximal[i] = Spawn(middles[i], knuckles[i], (MiddleSize + KnuckleSize) / 2);
-                palmBox[i] = Spawn(knuckles[i], PalmBase, KnuckleSize);
-
-                //Remove collision TODO too much?
-                for (int j = 0; j < fcs.Length; j++) {
-                    foreach (Collider c in fcs[j].GetComponents<Collider>()) {
-                        Physics.IgnoreCollision(c, distal[i]);
-                        Physics.IgnoreCollision(c, proximal[i]);
-                        Physics.IgnoreCollision(c, palmBox[i]);
-                    }
+            // Ignore FCS with palm meshes
+            foreach (PointOnHand poh in mc) {
+                foreach (Collider c in poh.fc.GetComponents<Collider>()) {
+                    Physics.IgnoreCollision(c, thumbMC, true);
+                    Physics.IgnoreCollision(c, PalmCollider, true);
                 }
             }
 
-            // Ignore capsules collision with themselves
-            for (int i = 0; i < 5; i++) {
-                Physics.IgnoreCollision(distal[i], proximal[i]);
-                Physics.IgnoreCollision(palmBox[i], proximal[i]);
+            // Ignore proximals with palm meshes
+            IEnumerable<CapsuleCollider> proximals = mc.GetFingers().Select(x => x.Proximal);
+            foreach (CapsuleCollider c in proximals) {
+                Physics.IgnoreCollision(c, thumbMC, true);
+                Physics.IgnoreCollision(c, PalmCollider, true);
             }
 
-            // Pull all transforms in one array
-            List<Transform> trans = new List<Transform>();
-            trans.AddRange(tips);
-            trans.AddRange(middles);
-            trans.AddRange(knuckles);
-            trans.Add(PalmBase);
-            transforms = trans.ToArray();
+            // Call IMaestroHand's start
+            base.Start();
+        }
 
-            // Generate Palm Mesh
+        private void InitPalmMeshes()
+        {
+            // Create both meshes
             m = new Mesh();
             thumbM = new Mesh();
             m.name = "PALM MESH";
             thumbM.name = "THUMB MESH";
 
-            // Get MeshFilter
-            palmMeshObject = new GameObject("PalmMesh");
-            palmMeshObject.transform.parent = PalmFC.transform;
-
-            this.mf = palmMeshObject.AddComponent<MeshFilter>();
-            if (!mf)
-                mf = palmMeshObject.GetComponent<MeshFilter>();
-
-            // Get MeshRenderer
-            palmMeshRenderer = palmMeshObject.GetComponent<MeshRenderer>();
-
-            // Make Thumb Mesh
+            // Make GameObjects for both meshes
             thumbMeshObject = new GameObject("ThumbMesh");
-            thumbMeshObject.transform.parent = PalmFC.transform;
+            thumbMeshObject.transform.parent = mc.PalmBase.fc.transform;
+
+            palmMeshObject = new GameObject("PalmMesh");
+            palmMeshObject.transform.parent = mc.PalmBase.fc.transform;
+
+            // Retrieve or add MeshFilters
+            this.mf = palmMeshObject.GetComponent<MeshFilter>(); 
+            if (!mf)
+                mf = palmMeshObject.AddComponent<MeshFilter>();
 
             thumbMF = thumbMeshObject.GetComponent<MeshFilter>();
             if (!thumbMF)
                 thumbMF = thumbMeshObject.AddComponent<MeshFilter>();
 
-            // Turn off knuckle visibility/collision to see progress
-            for (int i = 10; i < 16; i++) {
-                ToggleVisibility(fcs[i].transform, true);
-            }
+            // Get MeshRenderer
+            palmMeshRenderer = palmMeshObject.GetComponent<MeshRenderer>();
 
-            // Turn off palmBox visibility/collision to see progress
-            foreach (CapsuleCollider cc in palmBox) {
-                ToggleVisibility(cc.transform, true);
-            }
-
+            // Assign meshes to MeshFilters
             mf.mesh = m;
             thumbMF.mesh = thumbM;
 
@@ -268,95 +214,130 @@ namespace Maestro
 
             // Start coroutine to recalculate palm meshes
             StartCoroutine("RecalculatePalmVertices");
+        }
 
-            // Ignore FCS with palm meshes
-            for (int i = 0; i < fcs.Length; i++) {
-                foreach (Collider c in fcs[i].GetComponents<Collider>()) {
-                    Physics.IgnoreCollision(c, thumbMC, true);
-                    Physics.IgnoreCollision(c, PalmCollider, true);
+        private FingerContainer InitFingerContainer(Transform tip, Transform middle, Transform knuckle)
+        {
+            PointOnHand fingerTip = SpawnPointOnHand(tip, TipSize);
+            PointOnHand fingerMiddle = SpawnPointOnHand(middle, MiddleSize);
+            PointOnHand fingerBase = SpawnPointOnHand(knuckle, TipSize);
+
+            CapsuleCollider distal = SpawnCapsule(tip, middle, (TipSize + MiddleSize) / 2);
+            CapsuleCollider proximal = SpawnCapsule(middle, knuckle, (MiddleSize + KnuckleSize) / 2);
+            CapsuleCollider metacarpal = SpawnCapsule(knuckle, PalmBase, KnuckleSize);
+
+            // Don't collide finger with itself
+            Physics.IgnoreCollision(distal, proximal);
+            Physics.IgnoreCollision(proximal, metacarpal);
+
+            return new FingerContainer(fingerTip, fingerMiddle, fingerBase, distal, proximal, metacarpal);
+        }
+
+        private void InitContainer()
+        {
+            // Create and assign all fingers
+            mc[WhichFinger.Thumb] = InitFingerContainer(ThumbTip, ThumbMiddle, ThumbKnuckle);
+            mc[WhichFinger.Index] = InitFingerContainer(IndexTip, IndexMiddle, IndexKnuckle);
+            mc[WhichFinger.Middle] = InitFingerContainer(MiddleTip, MiddleMiddle, MiddleKnuckle);
+            mc[WhichFinger.Ring] = InitFingerContainer(RingTip, RingMiddle, RingKnuckle);
+            mc[WhichFinger.Little] = InitFingerContainer(LittleTip, LittleMiddle, LittleKnuckle);
+            mc.PalmBase = SpawnPointOnHand(PalmBase, KnuckleSize);
+
+            // Set FC mass
+            mc.ToList().ForEach(x => x.fc.rb.mass = (x.fc.isPalmBase ? 10.0f : 5.0f));
+
+            List<FingerContainer> fingers = mc.GetFingers();
+            IEnumerable<CapsuleCollider> distals = fingers.Select(x => x.Distal);
+            IEnumerable<CapsuleCollider> proximals = fingers.Select(x => x.Proximal);
+            IEnumerable<CapsuleCollider> metacarpals = fingers.Select(x => x.Metacarpal);
+
+            // Ignore self collision within the hand
+            foreach (PointOnHand contained in mc) {
+                foreach (Collider c in contained.fc.GetComponents<Collider>()) {
+                    foreach(CapsuleCollider distal in distals) {
+                        Physics.IgnoreCollision(c, distal);
+                    }
+                    foreach (CapsuleCollider proximal in proximals) {
+                        Physics.IgnoreCollision(c, proximal);
+                    }
+                    foreach (CapsuleCollider metacarpal in metacarpals) {
+                        Physics.IgnoreCollision(c, metacarpal);
+                    }
                 }
             }
-
-            // Ignore proximals with palm meshes
-            for (int i = 0; i < 5; i++) {
-                Physics.IgnoreCollision(proximal[i], thumbMC, true);
-                Physics.IgnoreCollision(proximal[i], PalmCollider, true);
-            }
-
-            // Call IMaestroHand's start
-            base.Start();
         }
 
         private void OnDisable()
         {
             // Disable all FCs when the hand itself is disabled
-            if (fcs != null) {
-                foreach (FingerCollider fc in fcs) {
-                    if (fc)
-                        fc.enabled = false;
-                }
-            }
-
+            SetAllFCs(false);
         }
 
         private void OnEnable()
         {
             // Enable all FCs when the hand itself is enabled
-            if (fcs != null) {
-                foreach (FingerCollider fc in fcs) {
-                    if (fc)
-                        fc.enabled = true;
-                }
-            }
-
+            SetAllFCs(true);
         }
 
-        private void ApplyGlobalInteractable(MaestroInteractable interactable, int i)
+        private void SetAllFCs(bool enabled)
+        {
+            if (mc != null) {
+                foreach (PointOnHand poh in mc) {
+                    if (poh.fc)
+                        poh.fc.enabled = enabled;
+                }
+            }
+        }
+
+        private PointOnHand SpawnPointOnHand(Transform t, float size)
+        {
+            return new PointOnHand(t, Spawn(t, size));
+        }
+
+        private void ApplyGlobalInteractable(MaestroInteractable interactable, MaestroIndex index)
         {
             if (interactable.isPersistent) {
-                persist[i] = interactable;
-                persistTimeLeft[i] = interactable.persistanceDuration;
+                persistInteractables[index] = interactable;
+                persistTimes[index] = interactable.persistanceDuration;
             }
         }
 
         public void ApplyAllGlobalInteractable(MaestroInteractable interactable)
         {
-            for (int i = 0; i < persist.Length; i++) {
-                ApplyGlobalInteractable(interactable, i);
+            foreach (PointOnHand poh in mc.Where(x => !x.fc.isPalmBase)) {
+                ApplyGlobalInteractable(interactable, poh.index);
             }
         }
 
         public void ApplyThumbGlobalInteractable(MaestroInteractable interactable)
         {
-            ApplyGlobalInteractable(interactable, 0);
+            ApplyGlobalInteractable(interactable, new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip));
         }
 
         public void ApplyIndexGlobalInteractable(MaestroInteractable interactable)
         {
-            ApplyGlobalInteractable(interactable, 1);
+            ApplyGlobalInteractable(interactable, new MaestroIndex(WhichFinger.Index, PointOnFinger.Tip));
         }
 
         public void ApplyMiddleGlobalInteractable(MaestroInteractable interactable)
         {
-            ApplyGlobalInteractable(interactable, 2);
+            ApplyGlobalInteractable(interactable, new MaestroIndex(WhichFinger.Middle, PointOnFinger.Tip));
         }
 
         public void ApplyRingGlobalInteractable(MaestroInteractable interactable)
         {
-            ApplyGlobalInteractable(interactable, 3);
+            ApplyGlobalInteractable(interactable, new MaestroIndex(WhichFinger.Ring, PointOnFinger.Tip));
         }
 
         public void ApplyLittleGlobalInteractable(MaestroInteractable interactable)
         {
-            ApplyGlobalInteractable(interactable, 4);
+            ApplyGlobalInteractable(interactable, new MaestroIndex(WhichFinger.Little, PointOnFinger.Tip));
         }
 
         public void FixedUpdate()
         {
             // Update contact bools
             regrabbed = false;
-            for (int i = 0; i < contacts.Length; i++)
-                contacts[i] = fcs[i].TriggerTouching;
 
             // Update all time variables
             timeSinceGrabbing += Time.fixedDeltaTime;
@@ -364,29 +345,29 @@ namespace Maestro
             timeSinceTwoHandGrabbing += Time.fixedDeltaTime;
 
             // Move all FCs
-            for (int i = 0; i < fcs.Length; i++) {
+            foreach (PointOnHand poh in mc) {
+                Vector3 dist = (poh.transform.position - poh.fc.rb.position);
+                Vector3 lastLocation = poh.fc.lastLocation;
 
-                Vector3 dist = (transforms[i].position - fcs[i].rb.position);
-                Vector3 lastLocation = fcs[i].lastLocation;
-
-                if (dist.magnitude > tooFast && (lastLocation - fcs[i].rb.position).magnitude < tooClose) {
-                    fcs[i].rb.transform.position = transforms[i].position;
+                // Teleport the FC back into place if we think it's stuck somewhere
+                if (dist.magnitude > tooFast && (lastLocation - poh.fc.rb.position).magnitude < tooClose) {
+                    poh.fc.rb.transform.position = poh.transform.position;
                 } else {
-                    fcs[i].rb.velocity = dist / Time.deltaTime;
+                    poh.fc.rb.velocity = dist / Time.deltaTime;
                 }
 
-                fcs[i].rb.MoveRotation(transforms[i].rotation);
+                poh.fc.rb.MoveRotation(poh.transform.rotation);
 
                 //if the fingertip is touching something, and I'm not currently holding anything, check if there's more than one finger holding onto it.
-                if (fcs[i].touching != null && !grabbing) {
-                    CheckFingerGrabbing(i);
+                if (poh.fc.touching != null && !grabbing) {
+                    CheckFingerGrabbing(poh.fc.index);
                 } else {
                     //check the appropriate 
                 }
             }
 
             // Record palm
-            recordPalmLocation(PalmFC.rb.transform.position);
+            recordPalmLocation(mc.PalmBase.fc.rb.transform.position);
 
             // If the user has two hands defined, check if two-hand grab has started
             if (otherHand != null && !twoHandGrabbing && !otherHand.twoHandGrabbing)
@@ -414,7 +395,7 @@ namespace Maestro
 
             // Move grab anchor if necessary
             if (grabbing && grabPos != null && !grabTarget.isTool && !grabStarted) {
-                Vector3 centroid = GetCentroid(contacts);
+                Vector3 centroid = GetCentroid(mc);
                 Vector3 temp = Vector3.Lerp(grabPos.transform.position, centroid, Time.fixedDeltaTime * 0.5f);
                 if (!(temp.Equals(Vector3.negativeInfinity) || grabTarget.maintainPosition))
                     grabPos.transform.position = temp;
@@ -425,51 +406,49 @@ namespace Maestro
         {
 
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
-            bool palmTouch = PalmFC.TriggerTouching;
+            bool palmTouch = mc.PalmBase.fc.TriggerTouching;
 
             if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.getMotorAmplitude());
                 nextHaptics.SetAllVibrationEffects(grabTarget.getVibrationEffect());
             } else {
                 // Check each finger specifically
-                for (int i = 0; i < tips.Length; i++) {
 
-                    bool inheritFromPalm = palmTouch && PalmFC.touching != null;
+                IEnumerable<PointOnHand> tips = mc.Where(x => x.fc.isTip);
+                foreach (PointOnHand tip in tips) {
+                    bool inheritFromPalm = palmTouch && mc.PalmBase.fc.touching != null;
                     float palmDiffusion = 0.65f;
 
-                    MaestroInteractable interactable = fcs[i].touching;
-                    if (interactable != null)
-                    {
-                        nextHaptics.SetAmplitudeFromIndex(fcs[i].index, interactable.getMotorAmplitude());
-                        nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, interactable.getVibrationEffect());
-                        if (interactable.isPersistent)
-                        {
-                            persist[i] = interactable;
-                            persistTimeLeft[i] = interactable.persistanceDuration;
+                    MaestroInteractable interactable = tip.fc.touching;
+                    if (interactable != null) {
+                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
+                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, interactable.getVibrationEffect());
+                        if (interactable.isPersistent) {
+                            persistInteractables[tip.index] = interactable;
+                            persistTimes[tip.index] = interactable.persistanceDuration;
                         }
-
-                    }
-                    else if (persist[i] && persistTimeLeft[i] > Time.fixedDeltaTime)
-                    {
-                        nextHaptics.SetAmplitudeFromIndex(fcs[i].index, persist[i].getMotorAmplitude());
-                        nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, persist[i].getVibrationEffect());
-                        persistTimeLeft[i] -= Time.fixedDeltaTime;
-                    }else if (fcs[i].Contacting && !interactablesOnly) {
-                        //Touching something without a MaestroInteractable, use default values
-                        nextHaptics.SetAmplitudeFromIndex(fcs[i].index, defaultEffect.Amplitude);
-                        nextHaptics.SetVibrationEffectFromIndex(fcs[i].index, defaultEffect.Vibration);
+                    } else if (persistInteractables.ContainsKey(tip.index) && persistInteractables[tip.index] != null && persistTimes[tip.index] > Time.fixedDeltaTime) {
+                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, persistInteractables[tip.index].getMotorAmplitude());
+                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, persistInteractables[tip.index].getVibrationEffect());
+                        persistTimes[tip.index] -= Time.fixedDeltaTime;
+                        if (persistTimes[tip.index] <= 0) {
+                            persistTimes.Remove(tip.index);
+                            persistInteractables.Remove(tip.index);
+                        }
                     } else if (inheritFromPalm) {
                         // Inherit a portion of palm haptics if applicable
-                        byte? amp = PalmFC.touching.getMotorAmplitude();
-                        if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(fcs[i].index, (byte)(amp.Value * palmDiffusion));
+                        byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
+                        if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
                     } else {
                         // Check middle joint
-                        interactable = fcs[i + tips.Length].touching;
+                        PointOnHand matchingMiddle = mc[tip.index.finger][PointOnFinger.Middle];
+
+                        interactable = matchingMiddle.fc.touching;
                         if (inheritFromPalm) {
-                            byte? amp = PalmFC.touching.getMotorAmplitude();
-                            if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(fcs[i].index, (byte)(amp.Value * palmDiffusion));
+                            byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
+                            if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
                         } else if (interactable != null) {
-                            nextHaptics.SetAmplitudeFromIndex(fcs[i].index, interactable.getMotorAmplitude());
+                            nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
                         }
                     }
                 }
@@ -500,8 +479,10 @@ namespace Maestro
             int vertexOffset = 0;
 
             /* Get finger knuckles to palm */
-            for (int i = 11; i < 16; i++) {
-                MeshFilter current = fcs[i].gameObject.GetComponent<MeshFilter>();
+            IEnumerable<PointOnHand> knuckles = mc.Where(x => x.fc.isFingerBase);
+            foreach (PointOnHand poh in knuckles) {
+                MeshFilter current = poh.fc.gameObject.GetComponent<MeshFilter>();
+
                 if (current) {
                     // Vertices
                     Vector3[] verts = current.mesh.vertices;
@@ -510,8 +491,9 @@ namespace Maestro
                         verts[k] *= (KnuckleSize);
 
                         // Shift them to their finger position if necessary (not palm base)
-                        if (i < 15)
-                            verts[k] += mf.transform.InverseTransformPoint(fcs[i].transform.position);
+                        //if (i < 15)
+                        if (poh.index.finger != WhichFinger.Thumb) //handled in other mesh
+                            verts[k] += mf.transform.InverseTransformPoint(poh.fc.transform.position);
                     }
                     newVertices.AddRange(verts);
 
@@ -572,16 +554,18 @@ namespace Maestro
             int vertexOffset = 0;
 
             /* Get Index - Thumb - Palm */
-            int[] indices = new int[] { 10, 11, 15 };
-            for (int i = 0; i < indices.Length; i++) {
-                MeshFilter current = fcs[indices[i]].gameObject.GetComponent<MeshFilter>();
+            WhichFinger[] toInclude = new WhichFinger[] { WhichFinger.Thumb, WhichFinger.Index, WhichFinger.Palm };
+            IEnumerable<PointOnHand> thumbIndexPalm = mc.Where(x => (x.fc.isFingerBase || x.fc.isPalmBase) && toInclude.Contains(x.index.finger));
+
+            foreach (PointOnHand poh in thumbIndexPalm) {
+                MeshFilter current = poh.fc.gameObject.GetComponent<MeshFilter>();
                 if (current) {
                     // Vertices
                     Vector3[] verts = current.mesh.vertices;
                     for (int k = 0; k < verts.Length; k++) {
                         // Scale each submesh down by the knuckle size, also shift to their rational position in world space. 
                         verts[k] *= (KnuckleSize);
-                        verts[k] += mf.transform.InverseTransformPoint(fcs[indices[i]].transform.position);
+                        verts[k] += mf.transform.InverseTransformPoint(poh.fc.transform.position);
                     }
                     newVertices.AddRange(verts);
 
@@ -675,20 +659,18 @@ namespace Maestro
             rend.enabled = !rend.enabled;
         }
 
-        private FingerCollider Spawn(Transform t, HAND_POSITION index, float size)
+        private FingerCollider Spawn(Transform t, float size)
         {
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             temp.name = "FC: " + t.gameObject.name;
             temp.transform.localScale = size * Vector3.one;
-            if (container)
-                temp.transform.parent = container.transform;
+            temp.transform.parent = mc.gameObject.transform;
 
             FingerCollider result = temp.AddComponent<FingerCollider>();
             result.rb = temp.AddComponent<Rigidbody>();
             result.rb.useGravity = false;
             result.rb.freezeRotation = true;
             result.hpi = this;
-            result.index = index;
 
             if (DestroyFingerRenderersOnSpawn)
                 Destroy(temp.GetComponent<Renderer>());
@@ -696,14 +678,28 @@ namespace Maestro
             return result;
         }
 
-        private CapsuleCollider Spawn(Transform a, Transform b, float size)
+        private FingerCollider SpawnAtTip(Transform t)
+        {
+            return Spawn(t, TipSize);
+        }
+
+        private FingerCollider SpawnAtMiddle(Transform t)
+        {
+            return Spawn(t, MiddleSize);
+        }
+
+        private FingerCollider SpawnAtKnuckle(Transform t)
+        {
+            return Spawn(t, KnuckleSize);
+        }
+
+        private CapsuleCollider SpawnCapsule(Transform a, Transform b, float size)
         {
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             temp.name = a.gameObject.name + " + " + b.gameObject.name;
 
             temp.transform.localScale = new Vector3(size, (b.position - a.position).magnitude / 2, size);
-            if (container)
-                temp.transform.parent = container.transform;
+            temp.transform.parent = mc.gameObject.transform;
 
             CapsuleCollider result = temp.GetComponent<CapsuleCollider>();
 
@@ -722,21 +718,16 @@ namespace Maestro
             return result;
         }
 
-        private void ResetContacts()
-        {
-            contacts = new bool[16];
-        }
-
         #region Two handed grab functions
         private void CheckTwoHandGrabbing()
         {
             List<LineSegment> possibilities = new List<LineSegment>();
 
-            for (int i = 0; i < contacts.Length; i++) {
-                for (int j = 0; j < otherHand.contacts.Length; j++) {
-                    if (contacts[i] && otherHand.contacts[j]) {
-                        if (fcs[i].touching != null && fcs[i].touching.type == InteractionType.TwoHand && fcs[i].touching == otherHand.fcs[j].touching /*phystips[i].touching.type != InteractionType.Static*/ ) {
-                            possibilities.Add(new LineSegment(fcs[i].transform.position, otherHand.fcs[j].transform.position, fcs[i].touching, i, j));
+            foreach (PointOnHand i in mc) {
+                foreach (PointOnHand j in otherHand.mc) {
+                    if (i.Contacting && j.Contacting) {
+                        if (i.fc.touching != null && i.fc.touching.type == InteractionType.TwoHand && i.fc.touching == j.fc.touching) {
+                            possibilities.Add(new LineSegment(i.fc.transform.position, j.fc.transform.position, i.fc.touching, i.index, j.index));
                         }
                     }
                 }
@@ -751,7 +742,7 @@ namespace Maestro
             }
         }
 
-        private void TwoHandGrabStart(MaestroInteractable interactable, int index, int otherIndex)
+        private void TwoHandGrabStart(MaestroInteractable interactable, MaestroIndex index, MaestroIndex otherIndex)
         {
             if (interactable == null)
                 return;
@@ -779,8 +770,6 @@ namespace Maestro
             if (CheckTwoHandGrabDone()) {
                 TwoHandGrabEnd(true);
             } else {
-
-
                 timeSinceDropSatisfied = -0.5f;
                 ApplyTwoHandFollowForce();
             }
@@ -788,23 +777,9 @@ namespace Maestro
 
         private bool CheckTwoHandGrabDone()
         {
-            bool hasOne = false, otherHasOne = false;
-
-            for (int i = 1; i < fcs.Length; i += 2) {
-                if (fcs[i].touching == twoHandGrabTarget) {
-                    hasOne = true;
-                    break;
-                }
-            }
-            hasOne |= PalmFC.touching == twoHandGrabTarget;
-
-            for (int i = 1; i < otherHand.fcs.Length; i += 2) {
-                if (otherHand.fcs[i].touching == twoHandGrabTarget) {
-                    otherHasOne = true;
-                    break;
-                }
-            }
-            otherHasOne |= otherHand.PalmFC.touching == twoHandGrabTarget;
+            // Check if either has at least one FC touching the target
+            bool hasOne = mc.Where(x => x.fc.touching == twoHandGrabTarget).FirstOrDefault() != null;
+            bool otherHasOne = otherHand.mc.Where(x => x.fc.touching == twoHandGrabTarget).FirstOrDefault() != null;
 
             return timeSinceTwoHandGrabbing > 0.1f && !(hasOne && otherHasOne);
         }
@@ -841,7 +816,7 @@ namespace Maestro
         {
             if (twoHandGrabbing && twoHandGrabTarget != null) {
 
-                Vector3 toInBetween = (((fcs[twoHandIndex].transform.position + otherHand.fcs[otherHand.twoHandIndex].transform.position) / 2f) - twoHandGrabTarget.getFollowPoint());
+                Vector3 toInBetween = (((mc[twoHandIndex.finger][twoHandIndex.point].transform.position + otherHand.mc[otherHand.twoHandIndex.finger][otherHand.twoHandIndex.point].transform.position) / 2f) - twoHandGrabTarget.getFollowPoint());
                 // Square vector
                 toInBetween.Scale(new Vector3(Mathf.Abs(toInBetween.x), Mathf.Abs(toInBetween.y), Mathf.Abs(toInBetween.z)));
 
@@ -860,9 +835,9 @@ namespace Maestro
             public Vector3 start, end;
             public float length;
             public MaestroInteractable interactable;
-            public int index, otherIndex;
+            public MaestroIndex index, otherIndex;
 
-            public LineSegment(Vector3 start, Vector3 end, MaestroInteractable interactable, int index, int otherIndex)
+            public LineSegment(Vector3 start, Vector3 end, MaestroInteractable interactable, MaestroIndex index, MaestroIndex otherIndex)
             {
                 this.length = (start - end).magnitude;
                 this.start = start;
@@ -880,77 +855,76 @@ namespace Maestro
         #endregion
 
         #region One handed grab functions
-        private bool CheckFingerGrabbing(int j)
+        private bool CheckFingerGrabbing(MaestroIndex position)
         {
-            int index = j / 2;
-            //bool isPalm = index == 5;
-            //if (isPalm) return false; //TODO?
+            PointOnHand grabbed = mc[position];
 
-            int other = ShouldStartGrab(index);
-            bool result = other >= 0
+            MaestroIndex? other = ShouldStartGrab(position);
+            bool result = other.HasValue
                 && !isFlat
-                && fcs[j].lastTouching != null
-                && fcs[j].lastTouching.type != InteractionType.Static
-                && fcs[j].lastTouching.type != InteractionType.TwoHand
-                && fcs[j].lastTouching.Equals(fcs[other].lastTouching)
+                && grabbed.fc.lastTouching != null
+                && grabbed.fc.lastTouching.type != InteractionType.Static
+                && grabbed.fc.lastTouching.type != InteractionType.TwoHand
+                && grabbed.fc.lastTouching.Equals(mc[other.Value.finger][other.Value.point].fc.lastTouching)
                 && timeSinceRelease > 0.5f;
 
             if (result) {
                 if (grabbing)
-                    Regrab(fcs[j].lastTouching, j, other);
+                    Regrab(grabbed.fc.lastTouching, position, other.Value);
                 else
-                    GrabStart(fcs[j].lastTouching, j, other);
+                    GrabStart(grabbed.fc.lastTouching, position, other.Value);
             }
             return result;
         }
 
-        private int ShouldStartGrab(int index)
+        private MaestroIndex? ShouldStartGrab(MaestroIndex index)
         {
-            switch (index) {
-                case 0: // Thumb
-                    int result = firstContactTipInRange(1, 4);
-                    if (result < 0 && PalmContact) //Palm override
-                        result = 15;
+            switch (index.finger) {
+                case WhichFinger.Thumb:
 
+                    /* Thumb checks for finger tips or palm */
+                    MaestroIndex? result = firstContactTip(includeThumb: false);
+                    if (result == null && mc.PalmBase.Contacting) //Palm override
+                        result = new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base);
                     return result;
-                case 1:
-                case 2:
-                case 3:
-                case 4: // Fingers
-                    if (contacts[0] || contacts[5]) {
-                        return contacts[0] ? 0 : 5;
-                    } else if (PalmContact) {
-                        return 15;
-                    }
-                    return -1;
 
-                case 5: //palm
-                    return firstContactTipInRange(0, 4);
+                case WhichFinger.Index: 
+                case WhichFinger.Middle: 
+                case WhichFinger.Ring:
+                case WhichFinger.Little:
+
+                    /* Fingers check for thumb or palm */
+                    if (firstContactTip() != null) {
+                        return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip);
+                    } else if (mc.PalmBase.Contacting) {
+                        return new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base);
+                    }
+                    return null;
+
                 default:
-                    return -1;
+                    /* Palm checks all finger tips */
+                    return firstContactTip();
             }
         }
 
         private bool CheckGrabDone()
         {
 
-            float tempDist1 = ((fcs[f1].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(fcs[f1].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
+            float tempDist1 = ((mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
 
-            float tempDist2 = ((fcs[f2].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(fcs[f2].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
+            float tempDist2 = ((mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
 
             ratio1 = tempDist1 / dist1; //grabPos
             ratio2 = tempDist2 / dist2; //grabPos
 
-            bool someTips = false;
-            for (int i = 0; i < 10; i++) // < 5
-                someTips |= contacts[i]; // i * 2 + 1
+            bool tipOrMiddleTouching = mc.Where(x => (x.fc.isTip || x.fc.isMiddleJoint)).Any(x => x.fc.Contacting);
 
-            return (grabTarget.isTool ? Mathf.Max(tempDist1, tempDist2) > 0.05f : Mathf.Min(ratio1, ratio2) > releaseRatio) || /*(grabTarget.isTool ? false :*/ !someTips;
+            return (grabTarget.isTool ? Mathf.Max(tempDist1, tempDist2) > 0.05f : Mathf.Min(ratio1, ratio2) > releaseRatio) || !tipOrMiddleTouching;
         }
 
-        private void GrabStart(MaestroInteractable r, int finger0, int finger1)
+        private void GrabStart(MaestroInteractable r, MaestroIndex finger0, MaestroIndex finger1)
         {
             if (r == null)
                 return;
@@ -996,10 +970,10 @@ namespace Maestro
 
             f1 = finger0;
             f2 = finger1;
-            dist1 = (fcs[f1].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(fcs[f1].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
-            dist2 = (fcs[f2].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(fcs[f2].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+            dist1 = (mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+            dist2 = (mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
 
             // Tell the Interactable it's been grabbed by this script
             r.Grab(objectLayer);
@@ -1013,7 +987,7 @@ namespace Maestro
                 ApplyFollowForce();
         }
 
-        private void Regrab(MaestroInteractable r, int finger0, int finger1)
+        private void Regrab(MaestroInteractable r, MaestroIndex finger0, MaestroIndex finger1)
         {
             if (r == null)
                 return;
@@ -1023,7 +997,7 @@ namespace Maestro
             grabbing = true;
             regrabbed = true;
 
-            Vector3 centroid = GetCentroid(contacts);
+            Vector3 centroid = GetCentroid(mc);
             if (!centroid.Equals(Vector3.negativeInfinity)) {
                 Vector3 worldPos = grabTarget.transform.position;
                 Quaternion worldRot = grabTarget.transform.rotation;
@@ -1034,25 +1008,17 @@ namespace Maestro
             f1 = finger0;
             f2 = finger1;
 
-            dist1 = (fcs[f1].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                 Physics.ClosestPoint(fcs[f1].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
-            dist2 = (fcs[f2].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(fcs[f2].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+            dist1 = (mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                 Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+            dist2 = (mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
+                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
         }
 
         private void GrabEnd(bool drop)
         {
             if (drop) {
                 // Try regrab
-                bool grabStarted = false;
-
-                for (int i = 0; i < contacts.Length; i++) {
-                    if (fcs[i].touching != null && !grabStarted)
-                        grabStarted |= CheckFingerGrabbing(i);
-                }
-
-                if (grabStarted)
-                    ResetContacts();
+                bool grabStarted = mc.Any(x => x.fc.touching != null && CheckFingerGrabbing(x.index));
 
                 // Drop only if regrab failed
                 if (!grabStarted) {
@@ -1074,7 +1040,6 @@ namespace Maestro
                     // Reset grab position and contacts
                     grabPos.transform.DetachChildren();
                     Destroy(grabPos);
-                    ResetContacts();
                     lastTargetWasTool = grabTarget.isTool;
                     grabTarget = null;
 
@@ -1089,7 +1054,6 @@ namespace Maestro
                 grabbing = false;
                 timeSinceRelease = 0.0f;
                 grabTarget = null;
-                ResetContacts();
             }
         }
 
@@ -1122,7 +1086,7 @@ namespace Maestro
         private Vector3 getThrowVelocity()
         {
             if (palmLocations.Count <= 1)
-                return PalmFC.rb.velocity;
+                return mc.PalmBase.fc.rb.velocity;
             else {
                 Vector3 result = Vector3.zero;
                 float scalar = 1f;
@@ -1146,39 +1110,42 @@ namespace Maestro
         #endregion
 
         #region Helper functions
-
-        private int firstContactInRange(int start, int end)
+        private MaestroIndex? firstContact(params MaestroIndex[] positions)
         {
-            int index = -1;
-            for (int i = start; i <= end; i++) {
-                if (contacts[i]) {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
+            PointOnHand firstContact = mc.Where(x => positions.Contains(x.fc.index)).FirstOrDefault(x => x.Contacting);
+            if (firstContact != null)
+                return firstContact.fc.index;
+            else return null;
         }
 
-        private int firstContactTipInRange(int start, int end)
+        private MaestroIndex? firstContactTip(bool includeThumb = true)
         {
-            int index = -1;
-            //if (start % 2 == 0)
-            //    start++;
+            IEnumerable<PointOnHand> tips = mc.Where(x => x.fc.isTip);
 
-            for (int i = start; i <= end && i < 5; i++) {
-                if (contacts[i]) {
-                    index = i;
-                    break;
-                }
-            }
+            if (!includeThumb)
+                tips = tips.Where(x => x.index.finger != WhichFinger.Thumb);
 
-            return index;
+            PointOnHand firstFound = tips.FirstOrDefault(x => x.Contacting);
+
+            if (firstFound != null)
+                return firstFound.index;
+            else return null;
         }
 
         private bool SnowconeDetected()
         {
-            return !(contacts[1] && contacts[3]) && firstContactInRange(0, 3) >= 0 && firstContactInRange(4, 9) < 0;
+            WhichFinger[] toInclude = new WhichFinger[] { WhichFinger.Thumb, WhichFinger.Index };
+            WhichFinger[] toExclude = new WhichFinger[] { WhichFinger.Middle, WhichFinger.Ring, WhichFinger.Little };
+
+            PointOnHand firstIncluded = mc.Where(x => toInclude.Contains(x.index.finger)
+                && (x.index.point == PointOnFinger.Tip || x.index.point == PointOnFinger.Middle)).FirstOrDefault();
+
+            PointOnHand firstExcluded = mc.Where(x => toExclude.Contains(x.index.finger)
+                && (x.index.point == PointOnFinger.Tip || x.index.point == PointOnFinger.Middle)).FirstOrDefault();
+
+            return !(mc[WhichFinger.Thumb][PointOnFinger.Tip].Contacting && mc[WhichFinger.Index][PointOnFinger.Tip].Contacting)
+                && firstIncluded != null
+                && firstExcluded == null;
         }
 
         private float FlatnessThreshold(float radius)
@@ -1186,19 +1153,17 @@ namespace Maestro
             return radius / 2;
         }
 
-        public Vector3 GetCentroid(bool[] whichColliders)
+        private Vector3 GetCentroid(MaestroContainer container)
         {
             Vector3 result = Vector3.zero;
             int count = 0;
 
-
-
-            for (int i = 2 /*ignore thumb*/; i < whichColliders.Length - 1 /*Palm pulls the object down too much*/; i++) {
-                if (whichColliders[i]) {
-                    result += fcs[i].transform.position;
+            mc.ToList().ForEach(x => {
+                if (!(x.fc.isPalmBase || x.index.finger == WhichFinger.Thumb) && x.Contacting) {
+                    result += x.transform.position;
                     count++;
                 }
-            }
+            });
 
             if (count > 1)
                 return result / count;
@@ -1215,7 +1180,7 @@ namespace Maestro
 
             anchor.transform.localScale = Vector3.one * 0.01f;
             FixedJoint fj = anchor.AddComponent<FixedJoint>();
-            fj.connectedBody = PalmFC.rb;
+            fj.connectedBody = mc.PalmBase.fc.rb;
             fj.massScale = 100;
             fj.connectedMassScale = 100;
 
@@ -1239,19 +1204,6 @@ namespace Maestro
             vel = vel / timestep;
             vel = vel * Mathf.Deg2Rad;
             return vel;
-        }
-        #endregion
-
-        #region Paint functions (temporary)
-        public void ClearPaint()
-        {
-            if (fcs != null) {
-                foreach (FingerCollider fc in fcs) {
-                    if (fc != null && fc.isTip && !fc.PaintColor.Equals(Color.clear)) {
-                        fc.PaintColor = Color.clear;
-                    }
-                }
-            }
         }
         #endregion
     }

@@ -38,7 +38,6 @@ namespace Maestro
                 g.transform.localPosition = spawnLocation;
                 g.AddComponent<Rigidbody>();
                 shell[i] = g.AddComponent<FingerCollider>();
-                shell[i].index = (HAND_POSITION)i;
                 shell[i].hpi = null;
                 shell[i].rb = shell[i].GetComponent<Rigidbody>();
                 shell[i].makeRend(colliderRadius);
