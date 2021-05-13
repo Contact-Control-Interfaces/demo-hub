@@ -6,6 +6,80 @@ namespace Maestro
 {
     public class MaestroManager : MonoBehaviour
     {
+        private MaestroHandV2 leftHand;
+        private MaestroHandV2 rightHand;
+
+        public MaestroHandV2 LeftHand
+        {
+            get
+            {
+                return leftHand;
+            }
+            set{
+                leftHand = value;
+                if (leftHand)
+                    leftHand.manager = this;
+            }
+        }
+        public MaestroHandV2 RightHand
+        {
+            get
+            {
+                return rightHand;
+            }
+            set
+            {
+                rightHand = value;
+                if (rightHand)
+                    rightHand.manager = this;
+            }
+        }
+
+        public bool InteractablesOnly = false;
+        public HapticEffect DefaultEffect = new HapticEffect { Amplitude = 115, Vibration = 3 };
+        public float TipSize;
+        public float MiddleSize;
+        public float KnuckleSize;
+        public FlatnessChecker flatnessChecker;
+        public LayerMask objectLayer;
+        public float palmMeshWait = 0.1f;
+        public float tooClose = 0.1f;
+        public float tooFast = 0.2f;
+
+        public void cascadeProperties()
+        {
+            if (LeftHand != null && !LeftHand.settingsOverride)
+            {
+                LeftHand.interactablesOnly = InteractablesOnly;
+                LeftHand.defaultEffect = DefaultEffect;
+                LeftHand.TipSize = TipSize;
+                LeftHand.MiddleSize = MiddleSize;
+                LeftHand.KnuckleSize = KnuckleSize;
+                LeftHand.flatnessChecker = flatnessChecker;
+                LeftHand.objectLayer = objectLayer;
+                LeftHand.palmMeshWait = palmMeshWait;
+                LeftHand.tooClose = tooClose;
+                LeftHand.tooFast = tooFast;
+                LeftHand.otherHand = RightHand;
+                LeftHand.whichHand = WhichHand.LeftHand;
+            }
+            if (RightHand != null && !RightHand.settingsOverride)
+            {
+                RightHand.interactablesOnly = InteractablesOnly;
+                RightHand.defaultEffect = DefaultEffect;
+                RightHand.TipSize = TipSize;
+                RightHand.MiddleSize = MiddleSize;
+                RightHand.KnuckleSize = KnuckleSize;
+                RightHand.flatnessChecker = flatnessChecker;
+                RightHand.objectLayer = objectLayer;
+                RightHand.palmMeshWait = palmMeshWait;
+                RightHand.tooClose = tooClose;
+                RightHand.tooFast = tooFast;
+                RightHand.otherHand = LeftHand;
+                RightHand.whichHand = WhichHand.RightHand;
+            }
+        }
+
         public byte? Amplitude {
             get {
                 if (activeHaptics.Count > 0)
@@ -20,6 +94,7 @@ namespace Maestro
                 else return null;
             }
         }
+
 
         private static float DefaultDuration = 0.3125f; //0.25f
 

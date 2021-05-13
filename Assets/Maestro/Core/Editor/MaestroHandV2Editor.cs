@@ -32,8 +32,20 @@ namespace Maestro
             MaestroHandV2 hand = (MaestroHandV2)target;
 
             EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
-            hand.whichHand = (WhichHand) EditorGUILayout.EnumPopup("Which Hand", hand.whichHand);
-            hand.otherHand = (MaestroHandV2)EditorGUILayout.ObjectField("Other Hand", hand.otherHand, typeof(MaestroHandV2), allowSceneObjects: true);
+            hand.settingsOverride = EditorGUILayout.Toggle("Override Settings", hand.settingsOverride);
+
+            bool displayOverrideSettings = hand.manager == null ||
+                hand != ((hand.whichHand == WhichHand.RightHand) ? hand.manager.RightHand : hand.manager.LeftHand) ||
+                hand.settingsOverride;
+
+            if (displayOverrideSettings && !hand.settingsOverride)
+                EditorGUILayout.HelpBox("Not attached to a manager, will not cascade settings.", MessageType.Info, wide: true);
+
+            if (displayOverrideSettings)
+            {
+                hand.whichHand = (WhichHand)EditorGUILayout.EnumPopup("Which Hand", hand.whichHand);
+                hand.otherHand = (MaestroHandV2)EditorGUILayout.ObjectField("Other Hand", hand.otherHand, typeof(MaestroHandV2), allowSceneObjects: true);
+            }  
             EditorGUILayout.Space();
 
             bool handNotFullyDefined =
@@ -57,22 +69,34 @@ namespace Maestro
             EditorGUILayout.Toggle("Is Two-Hand Grabbing", hand.twoHandGrabbing);
             
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
-            hand.interactablesOnly = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnly);
-            if (!hand.interactablesOnly)
-            {
-                hand.defaultEffect.Amplitude = (byte)EditorGUILayout.IntSlider("Feedback Amplitude", hand.defaultEffect.Amplitude, 0, 255);
-                hand.defaultEffect.Vibration = (byte)EditorGUILayout.IntSlider("Vibration Effect", hand.defaultEffect.Vibration, 0, 128);
-                EditorGUILayout.HelpBox(DRV2605Descriptions.get(hand.defaultEffect.Vibration), MessageType.None, false);
-            }
 
+            if (displayOverrideSettings)
+            {
+                EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
+                hand.interactablesOnly = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnly);
+                if (!hand.interactablesOnly)
+                {
+                    hand.defaultEffect.Amplitude = (byte)EditorGUILayout.IntSlider("Feedback Amplitude", 
+                        hand.defaultEffect.Amplitude, 
+                        HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE, 
+                        HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
+                    hand.defaultEffect.Vibration = (byte)EditorGUILayout.IntSlider("Vibration Effect", 
+                        hand.defaultEffect.Vibration, 
+                        HapticEffect.VIBRATION_MIN_ID, 
+                        HapticEffect.VIBRATION_MAX_ID);
+                    EditorGUILayout.HelpBox(DRV2605Descriptions.get(hand.defaultEffect.Vibration), MessageType.None, false);
+                }
+            }
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
             if (showHandConfig) {
-                EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                hand.TipSize = EditorGUILayout.FloatField("Tip Size", hand.TipSize);
-                hand.MiddleSize = EditorGUILayout.FloatField("Middle Size", hand.MiddleSize);
-                hand.KnuckleSize = EditorGUILayout.FloatField("Knuckle Size", hand.KnuckleSize);
-                EditorGUILayout.Space();
+                if (displayOverrideSettings)
+                {
+                    EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
+                    hand.TipSize = EditorGUILayout.FloatField("Tip Size", hand.TipSize);
+                    hand.MiddleSize = EditorGUILayout.FloatField("Middle Size", hand.MiddleSize);
+                    hand.KnuckleSize = EditorGUILayout.FloatField("Knuckle Size", hand.KnuckleSize);
+                    EditorGUILayout.Space();
+                }
 
                 EditorGUILayout.LabelField("Positions on Hand", EditorStyles.boldLabel);
                 hand.ThumbTip = (Transform)EditorGUILayout.ObjectField("Thumb Tip", hand.ThumbTip, typeof(Transform), allowSceneObjects: true);
@@ -98,21 +122,24 @@ namespace Maestro
                 hand.PalmBase = (Transform)EditorGUILayout.ObjectField("Palm Base", hand.PalmBase, typeof(Transform), allowSceneObjects: true);
             }
 
-            showAdvConfig = EditorGUILayout.Foldout(showAdvConfig, showAdvConfigTxt);
-            if (showAdvConfig) {
-                EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
-                hand.flatnessChecker = (FlatnessChecker) EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects:true);
-                hand.objectLayer = EditorGUILayout.LayerField("Object Layer", hand.objectLayer);
-                EditorGUILayout.Space();
+            if (displayOverrideSettings)
+                {
+                showAdvConfig = EditorGUILayout.Foldout(showAdvConfig, showAdvConfigTxt);
+                if (showAdvConfig)
+                {
+                    EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
+                    hand.flatnessChecker = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
+                    hand.objectLayer = EditorGUILayout.LayerField("Object Layer", hand.objectLayer);
+                    EditorGUILayout.Space();
 
-                hand.palmMeshWait = EditorGUILayout.FloatField("Palm Mesh Generation Tick", hand.palmMeshWait);
-                EditorGUILayout.Space();
+                    hand.palmMeshWait = EditorGUILayout.FloatField("Palm Mesh Generation Tick", hand.palmMeshWait);
+                    EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);
-                hand.tooClose = EditorGUILayout.FloatField("Too Close Threshold", hand.tooClose);
-                hand.tooFast = EditorGUILayout.FloatField("Too Fast Threshold", hand.tooFast);
+                    EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);
+                    hand.tooClose = EditorGUILayout.FloatField("Too Close Threshold", hand.tooClose);
+                    hand.tooFast = EditorGUILayout.FloatField("Too Fast Threshold", hand.tooFast);
+                }
             }
-
             showDebug = EditorGUILayout.Foldout(showDebug, showDebugTxt);
             if (showDebug) {
                 hand.DestroyFingerRenderersOnSpawn = EditorGUILayout.Toggle("Destroy Finger Renderers on Spawn", hand.DestroyFingerRenderersOnSpawn);
