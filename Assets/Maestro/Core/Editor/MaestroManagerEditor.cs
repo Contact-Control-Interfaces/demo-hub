@@ -18,22 +18,46 @@ namespace Maestro
         private bool showAdvConfig = false;
         private string showAdvConfigTxt = "Advanced Config";
 
-        private bool showDebug = false;
-        private string showDebugTxt = "Debug";
+        SerializedProperty leftHand;
+        SerializedProperty rightHand;
+        
+        SerializedProperty interactablesOnly;
 
+        SerializedProperty tipSize;
+        SerializedProperty middleSize;
+        SerializedProperty knuckleSize;
+
+        SerializedProperty flatnessChecker;
+        SerializedProperty objectLayer;
+        SerializedProperty palmMeshWait;
+        SerializedProperty tooClose;
+        SerializedProperty tooFast;
 
         public void OnEnable()
         {
-            /* Effectively the inspector's OnStart */
+            leftHand = this.serializedObject.FindProperty("LeftHand");
+            rightHand = this.serializedObject.FindProperty("RightHand");
+            
+            interactablesOnly = this.serializedObject.FindProperty("InteractablesOnly");
+
+            tipSize = this.serializedObject.FindProperty("TipSize");
+            middleSize = this.serializedObject.FindProperty("MiddleSize");
+            knuckleSize = this.serializedObject.FindProperty("KnuckleSize");
+
+            flatnessChecker = this.serializedObject.FindProperty("flatnessChecker");
+            objectLayer = this.serializedObject.FindProperty("objectLayer");
+            palmMeshWait = this.serializedObject.FindProperty("palmMeshWait");
+            tooClose = this.serializedObject.FindProperty("tooClose");
+            tooFast = this.serializedObject.FindProperty("tooFast");
         }
 
         public override void OnInspectorGUI()
         {
             MaestroManager manager = (MaestroManager)target;
 
-            EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
-            manager.LeftHand = (MaestroHandV2)EditorGUILayout.ObjectField("Left Hand", manager.LeftHand, typeof(MaestroHandV2), allowSceneObjects: true);
-            manager.RightHand = (MaestroHandV2)EditorGUILayout.ObjectField("Right Hand", manager.RightHand, typeof(MaestroHandV2), allowSceneObjects: true);
+            EditorGUILayout.LabelField("Main Configuration2", EditorStyles.boldLabel);
+            leftHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Left Hand", manager.LeftHand, typeof(MaestroHandV2), allowSceneObjects: true);
+            rightHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Right Hand", manager.RightHand, typeof(MaestroHandV2), allowSceneObjects: true);
             EditorGUILayout.Space();
 
 
@@ -61,31 +85,43 @@ namespace Maestro
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
-                manager.InteractablesOnly = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), manager.InteractablesOnly);
+                interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), manager.InteractablesOnly);
+                
                 if (!manager.InteractablesOnly)
                 {
-                    HapticEffect thisDefaultEffect = manager.DefaultEffect;
-                    thisDefaultEffect.Amplitude = 
+                    byte Amplitude = manager.DefaultEffect.Amplitude;
+                    byte Vibration = manager.DefaultEffect.Vibration;
+                    Amplitude = //
                         (byte)EditorGUILayout.IntSlider("Feedback Amplitude", 
-                        thisDefaultEffect.Amplitude, 
+                        Amplitude, 
                         HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE, 
                         HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
-                    thisDefaultEffect.Vibration = 
+                    Vibration = 
                         (byte)EditorGUILayout.IntSlider("Vibration Effect", 
-                        thisDefaultEffect.Vibration, 
+                        Vibration, 
                         HapticEffect.VIBRATION_MIN_ID, 
                         HapticEffect.VIBRATION_MAX_ID);
-                    manager.DefaultEffect = thisDefaultEffect;
                     EditorGUILayout.HelpBox(DRV2605Descriptions.get(manager.DefaultEffect.Vibration), MessageType.None, false);
+
+                    var childEnum = this.serializedObject.FindProperty("DefaultEffect").GetEnumerator();
+                    while (childEnum.MoveNext())
+                    {
+                        SerializedProperty current = childEnum.Current as SerializedProperty;
+                        if (current.name.Equals("Amplitude"))
+                            current.intValue = Amplitude;
+                        else if (current.name.Equals("Vibration"))
+                            current.intValue = Vibration;
+                    }
+                   
                 }
 
                 showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
                 if (showHandConfig)
                 {
                     EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                    manager.TipSize = EditorGUILayout.FloatField("Tip Size", manager.TipSize);
-                    manager.MiddleSize = EditorGUILayout.FloatField("Middle Size", manager.MiddleSize);
-                    manager.KnuckleSize = EditorGUILayout.FloatField("Knuckle Size", manager.KnuckleSize);
+                    tipSize.floatValue = EditorGUILayout.FloatField("Tip Size", manager.TipSize);
+                    middleSize.floatValue = EditorGUILayout.FloatField("Middle Size", manager.MiddleSize);
+                    knuckleSize.floatValue = EditorGUILayout.FloatField("Knuckle Size", manager.KnuckleSize);
                     EditorGUILayout.Space();
                 }
 
@@ -93,20 +129,21 @@ namespace Maestro
                 if (showAdvConfig)
                 {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
-                    manager.flatnessChecker = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", manager.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
-                    manager.objectLayer = EditorGUILayout.LayerField("Object Layer", manager.objectLayer);
+                    flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", manager.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
+                    objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", manager.objectLayer);
                     EditorGUILayout.Space();
 
-                    manager.palmMeshWait = EditorGUILayout.FloatField("Palm Mesh Generation Tick", manager.palmMeshWait);
+                    palmMeshWait.floatValue = EditorGUILayout.FloatField("Palm Mesh Generation Tick", manager.palmMeshWait);
                     EditorGUILayout.Space();
 
                     EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);
-                    manager.tooClose = EditorGUILayout.FloatField("Too Close Threshold", manager.tooClose);
-                    manager.tooFast = EditorGUILayout.FloatField("Too Fast Threshold", manager.tooFast);
+                    tooClose.floatValue = EditorGUILayout.FloatField("Too Close Threshold", manager.tooClose);
+                    tooFast.floatValue = EditorGUILayout.FloatField("Too Fast Threshold", manager.tooFast);
                 }
-
-                manager.cascadeProperties();
             }
+
+            manager.cascadeProperties();
+            this.serializedObject.ApplyModifiedProperties();
         }
     }
 }

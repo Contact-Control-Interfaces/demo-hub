@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEditor;
 
 namespace Maestro
 {
@@ -18,16 +19,19 @@ namespace Maestro
         PrioritizeAmplitude, PrioritizeVibrationEffect /*, Cascade, Importance*/
     };
 
+    [Serializable]
     public struct HapticEffect
     {
-        public byte Amplitude { get; set; }
-        public byte Vibration { get; set; }
+        public byte Amplitude;
+        public byte Vibration;
 
         public const byte FORCE_FEEDBACK_MAX_AMPLITUDE = 255;
         public const byte FORCE_FEEDBACK_MIN_AMPLITUDE = 0;
         
         public const byte VIBRATION_MAX_ID = 128; //will change when vibration is handled differently
         public const byte VIBRATION_MIN_ID = 0;
+
+
 
     }
 
