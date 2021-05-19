@@ -14236,6 +14236,18 @@ MonoBehaviour:
   VibrationEffect: 2
   isPersistent: 0
   persistanceDuration: 0
+--- !u!114 &1047385928 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2892570281501133416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf77a0f76a9cdbd46aa0093c37a9fdef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1056164179
 GameObject:
   m_ObjectHideFlags: 0
@@ -20070,6 +20082,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1719678862}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1429035639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2892570281501133416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba7be558a4dfba49bd057e1bf1fdc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1430750935
 GameObject:
   m_ObjectHideFlags: 0
@@ -31337,6 +31361,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1766933106}
     m_Modifications:
+    - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: LeftHand
+      value: 
+      objectReference: {fileID: 2892570281501133417}
+    - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: InteractablesOnly
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: testField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: testField.Amplitude
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3282102554433351785, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -31577,6 +31621,86 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.20746501
       objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: otherHand
+      value: 
+      objectReference: {fileID: 1047385928}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: TipSize
+      value: 0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: MiddleSize
+      value: 0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: KnuckleSize
+      value: 0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: defaultEffect.Amplitude
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: defaultEffect.Vibration
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: settingsOverride
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: whichHand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1429035639}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: showPalmMesh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: objectLayer.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1429035639}
+    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: objectLayer.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: defaultEffect.Amplitude
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: defaultEffect.Vibration
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: settingsOverride
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3843091710741201794, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_Name
@@ -31747,8 +31871,60 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.9999989
       objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: testField.Amplitude
+      value: 124
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: testField.Vibration
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: InteractablesOnly
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: RightHand
+      value: 
+      objectReference: {fileID: 1047385928}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: LeftHand
+      value: 
+      objectReference: {fileID: 2892570281501133417}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Amplitude
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Vibration
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: objectLayer.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3952388617c98147b066982f1051e3c, type: 3}
+--- !u!114 &2892570281501133417 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2892570281501133416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf77a0f76a9cdbd46aa0093c37a9fdef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3248338879357325841
 Transform:
   m_ObjectHideFlags: 0

@@ -298,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichHand: 1
   otherHand: {fileID: 3842647507836374505}
+  manager: {fileID: 5120305089791988621}
   ThumbTip: {fileID: 3838421827932335290}
   IndexTip: {fileID: 3838301673360047092}
   MiddleTip: {fileID: 3838280523694574900}
@@ -315,8 +316,8 @@ MonoBehaviour:
   LittleKnuckle: {fileID: 3838611700806960404}
   PalmBase: {fileID: 3838614394837429106}
   TipSize: 0.012
-  MiddleSize: 0.013
-  KnuckleSize: 0.014
+  MiddleSize: 0.012
+  KnuckleSize: 0.012
   showPalmMesh: 0
   palmMeshWait: 0.1
   grabbing: 0
@@ -324,8 +325,6 @@ MonoBehaviour:
   timeSinceGrabbing: 1
   timeSinceTwoHandGrabbing: 1
   timeSinceRelease: 1
-  f1: 0
-  f2: 0
   dist1: 0
   dist2: 0
   ratio1: 0
@@ -339,6 +338,11 @@ MonoBehaviour:
   objectLayer:
     serializedVersion: 2
     m_Bits: 0
+  defaultEffect:
+    Amplitude: 135
+    Vibration: 3
+  interactablesOnly: 0
+  settingsOverride: 0
 --- !u!1 &3841773042947294654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,6 +2188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichHand: 0
   otherHand: {fileID: 3841736694086269697}
+  manager: {fileID: 5120305089791988621}
   ThumbTip: {fileID: 3844461635297957978}
   IndexTip: {fileID: 3838284656321785080}
   MiddleTip: {fileID: 3838311129162111720}
@@ -2201,8 +2206,8 @@ MonoBehaviour:
   LittleKnuckle: {fileID: 3838613033390400276}
   PalmBase: {fileID: 3838499918356274496}
   TipSize: 0.012
-  MiddleSize: 0.013
-  KnuckleSize: 0.014
+  MiddleSize: 0.012
+  KnuckleSize: 0.012
   showPalmMesh: 0
   palmMeshWait: 0.1
   grabbing: 0
@@ -2210,8 +2215,6 @@ MonoBehaviour:
   timeSinceGrabbing: 1
   timeSinceTwoHandGrabbing: 1
   timeSinceRelease: 1
-  f1: 0
-  f2: 0
   dist1: 0
   dist2: 0
   ratio1: 0
@@ -2225,6 +2228,11 @@ MonoBehaviour:
   objectLayer:
     serializedVersion: 2
     m_Bits: 0
+  defaultEffect:
+    Amplitude: 135
+    Vibration: 3
+  interactablesOnly: 0
+  settingsOverride: 0
 --- !u!1 &3842650847711844018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,7 +2386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3843091710741201795}
   - component: {fileID: 7279837668667887462}
-  - component: {fileID: 259432603621579036}
+  - component: {fileID: 5120305089791988621}
   m_Layer: 0
   m_Name: '[MaestroLeapRigV2]'
   m_TagString: Untagged
@@ -2424,7 +2432,7 @@ MonoBehaviour:
   stepUpKey: 273
   stepDownKey: 274
   stepSize: 0.1
---- !u!114 &259432603621579036
+--- !u!114 &5120305089791988621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2436,6 +2444,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba7be558a4dfba49bd057e1bf1fdc88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeftHand: {fileID: 3841736694086269697}
+  RightHand: {fileID: 3842647507836374505}
+  InteractablesOnly: 0
+  DefaultEffect:
+    Amplitude: 135
+    Vibration: 3
+  testField:
+    Amplitude: 0
+    Vibration: 0
+  TipSize: 0.012
+  MiddleSize: 0.012
+  KnuckleSize: 0.012
+  flatnessChecker: {fileID: 0}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWait: 0.1
+  tooClose: 0.1
+  tooFast: 0.2
 --- !u!1 &3843091711313633735
 GameObject:
   m_ObjectHideFlags: 0

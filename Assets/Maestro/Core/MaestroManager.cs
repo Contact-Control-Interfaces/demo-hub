@@ -6,37 +6,11 @@ namespace Maestro
 {
     public class MaestroManager : MonoBehaviour
     {
-        private MaestroHandV2 leftHand;
-        private MaestroHandV2 rightHand;
-
-        public MaestroHandV2 LeftHand
-        {
-            get
-            {
-                return leftHand;
-            }
-            set{
-                leftHand = value;
-                if (leftHand)
-                    leftHand.manager = this;
-            }
-        }
-        public MaestroHandV2 RightHand
-        {
-            get
-            {
-                return rightHand;
-            }
-            set
-            {
-                rightHand = value;
-                if (rightHand)
-                    rightHand.manager = this;
-            }
-        }
+        public MaestroHandV2 LeftHand;
+        public MaestroHandV2 RightHand;
 
         public bool InteractablesOnly = false;
-        public HapticEffect DefaultEffect = new HapticEffect { Amplitude = 115, Vibration = 3 };
+        public HapticEffect DefaultEffect;
         public float TipSize;
         public float MiddleSize;
         public float KnuckleSize;
@@ -62,6 +36,7 @@ namespace Maestro
                 LeftHand.tooFast = tooFast;
                 LeftHand.otherHand = RightHand;
                 LeftHand.whichHand = WhichHand.LeftHand;
+                LeftHand.manager = this;
             }
             if (RightHand != null && !RightHand.settingsOverride)
             {
@@ -77,6 +52,7 @@ namespace Maestro
                 RightHand.tooFast = tooFast;
                 RightHand.otherHand = LeftHand;
                 RightHand.whichHand = WhichHand.RightHand;
+                RightHand.manager = this;
             }
         }
 

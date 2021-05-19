@@ -21,10 +21,76 @@ namespace Maestro
         private bool showDebug = false;
         private string showDebugTxt = "Debug";
 
+        private SerializedProperty settingsOverride;
+
+        private SerializedProperty whichHand;
+        private SerializedProperty otherHand;
+
+        SerializedProperty interactablesOnly;
+
+        private SerializedProperty tipSize, middleSize, knuckleSize;
+
+        private SerializedProperty thumbTip, thumbMiddle, thumbKnuckle,
+                                   indexTip, indexMiddle, indexKnuckle,
+                                   middleTip, middleMiddle, middleKnuckle,
+                                   ringTip, ringMiddle, ringKnuckle,
+                                   littleTip, littleMiddle, littleKnuckle,
+                                   palmBase;
+
+        private SerializedProperty flatnessChecker;
+        private SerializedProperty objectLayer;
+        private SerializedProperty palmMeshWait;
+        private SerializedProperty tooClose;
+        private SerializedProperty tooFast;
+
+        private SerializedProperty destroyFingerRenderersOnSpawn;
+        private SerializedProperty showPalmMesh;
 
         public void OnEnable()
         {
-            /* Effectively the inspector's OnStart */
+            settingsOverride = this.serializedObject.FindProperty("settingsOverride");
+            
+            whichHand = this.serializedObject.FindProperty("whichHand");
+            otherHand = this.serializedObject.FindProperty("otherHand");
+
+            interactablesOnly = this.serializedObject.FindProperty("interactablesOnly");
+
+            tipSize = this.serializedObject.FindProperty("TipSize");
+            middleSize = this.serializedObject.FindProperty("MiddleSize");
+            knuckleSize = this.serializedObject.FindProperty("KnuckleSize");
+
+
+            //transforms, will be condensed into a struct in another PR
+            thumbTip = this.serializedObject.FindProperty("ThumbTip");
+            thumbMiddle = this.serializedObject.FindProperty("ThumbMiddle");
+            thumbKnuckle = this.serializedObject.FindProperty("ThumbKnuckle");
+
+            indexTip = this.serializedObject.FindProperty("IndexTip");
+            indexMiddle = this.serializedObject.FindProperty("IndexMiddle");
+            indexKnuckle = this.serializedObject.FindProperty("IndexKnuckle");
+
+            middleTip = this.serializedObject.FindProperty("MiddleTip");
+            middleMiddle = this.serializedObject.FindProperty("MiddleMiddle");
+            middleKnuckle = this.serializedObject.FindProperty("MiddleKnuckle");
+
+            ringTip = this.serializedObject.FindProperty("RingTip");
+            ringMiddle = this.serializedObject.FindProperty("RingMiddle");
+            ringKnuckle = this.serializedObject.FindProperty("RingKnuckle");
+
+            littleTip = this.serializedObject.FindProperty("LittleTip");
+            littleMiddle = this.serializedObject.FindProperty("LittleMiddle");
+            littleKnuckle = this.serializedObject.FindProperty("LittleKnuckle");
+
+            palmBase = this.serializedObject.FindProperty("PalmBase");
+
+            flatnessChecker = this.serializedObject.FindProperty("flatnessChecker");
+            objectLayer = this.serializedObject.FindProperty("objectLayer");
+            palmMeshWait = this.serializedObject.FindProperty("palmMeshWait");
+            tooClose = this.serializedObject.FindProperty("tooClose");
+            tooFast = this.serializedObject.FindProperty("tooFast");
+
+            destroyFingerRenderersOnSpawn = this.serializedObject.FindProperty("DestroyFingerRenderersOnSpawn");
+            showPalmMesh = this.serializedObject.FindProperty("showPalmMesh");
         }
 
         public override void OnInspectorGUI()
@@ -32,7 +98,7 @@ namespace Maestro
             MaestroHandV2 hand = (MaestroHandV2)target;
 
             EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
-            hand.settingsOverride = EditorGUILayout.Toggle("Override Settings", hand.settingsOverride);
+            settingsOverride.boolValue = EditorGUILayout.Toggle("Override Settings", settingsOverride.boolValue);
 
             bool displayOverrideSettings = hand.manager == null ||
                 hand != ((hand.whichHand == WhichHand.RightHand) ? hand.manager.RightHand : hand.manager.LeftHand) ||
@@ -43,8 +109,8 @@ namespace Maestro
 
             if (displayOverrideSettings)
             {
-                hand.whichHand = (WhichHand)EditorGUILayout.EnumPopup("Which Hand", hand.whichHand);
-                hand.otherHand = (MaestroHandV2)EditorGUILayout.ObjectField("Other Hand", hand.otherHand, typeof(MaestroHandV2), allowSceneObjects: true);
+                EditorGUILayout.PropertyField(whichHand);
+                otherHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Other Hand", otherHand.objectReferenceValue, typeof(MaestroHandV2), allowSceneObjects: true);
             }  
             EditorGUILayout.Space();
 
@@ -73,18 +139,32 @@ namespace Maestro
             if (displayOverrideSettings)
             {
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
-                hand.interactablesOnly = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnly);
+                interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnly);
                 if (!hand.interactablesOnly)
                 {
-                    hand.defaultEffect.Amplitude = (byte)EditorGUILayout.IntSlider("Feedback Amplitude", 
-                        hand.defaultEffect.Amplitude, 
-                        HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE, 
+                    byte Amplitude = hand.defaultEffect.Amplitude;
+                    byte Vibration = hand.defaultEffect.Vibration;
+                    Amplitude = //
+                        (byte)EditorGUILayout.IntSlider("Feedback Amplitude",
+                        Amplitude,
+                        HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE,
                         HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
-                    hand.defaultEffect.Vibration = (byte)EditorGUILayout.IntSlider("Vibration Effect", 
-                        hand.defaultEffect.Vibration, 
-                        HapticEffect.VIBRATION_MIN_ID, 
+                    Vibration =
+                        (byte)EditorGUILayout.IntSlider("Vibration Effect",
+                        Vibration,
+                        HapticEffect.VIBRATION_MIN_ID,
                         HapticEffect.VIBRATION_MAX_ID);
                     EditorGUILayout.HelpBox(DRV2605Descriptions.get(hand.defaultEffect.Vibration), MessageType.None, false);
+
+                    var childEnum = this.serializedObject.FindProperty("defaultEffect").GetEnumerator();
+                    while (childEnum.MoveNext())
+                    {
+                        SerializedProperty current = childEnum.Current as SerializedProperty;
+                        if (current.name.Equals("Amplitude"))
+                            current.intValue = Amplitude;
+                        else if (current.name.Equals("Vibration"))
+                            current.intValue = Vibration;
+                    }
                 }
             }
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
@@ -92,34 +172,34 @@ namespace Maestro
                 if (displayOverrideSettings)
                 {
                     EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                    hand.TipSize = EditorGUILayout.FloatField("Tip Size", hand.TipSize);
-                    hand.MiddleSize = EditorGUILayout.FloatField("Middle Size", hand.MiddleSize);
-                    hand.KnuckleSize = EditorGUILayout.FloatField("Knuckle Size", hand.KnuckleSize);
+                    tipSize.floatValue = EditorGUILayout.FloatField("Tip Size", tipSize.floatValue);
+                    middleSize.floatValue = EditorGUILayout.FloatField("Middle Size", middleSize.floatValue);
+                    knuckleSize.floatValue = EditorGUILayout.FloatField("Knuckle Size", knuckleSize.floatValue);
                     EditorGUILayout.Space();
                 }
 
                 EditorGUILayout.LabelField("Positions on Hand", EditorStyles.boldLabel);
-                hand.ThumbTip = (Transform)EditorGUILayout.ObjectField("Thumb Tip", hand.ThumbTip, typeof(Transform), allowSceneObjects: true);
-                hand.ThumbMiddle = (Transform)EditorGUILayout.ObjectField("Thumb Middle", hand.ThumbMiddle, typeof(Transform), allowSceneObjects: true);
-                hand.ThumbKnuckle = (Transform)EditorGUILayout.ObjectField("Thumb Knuckle", hand.ThumbKnuckle, typeof(Transform), allowSceneObjects: true);
+                thumbTip.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Tip", hand.ThumbTip, typeof(Transform), allowSceneObjects: true);
+                thumbMiddle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Middle", hand.ThumbMiddle, typeof(Transform), allowSceneObjects: true);
+                thumbKnuckle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Knuckle", hand.ThumbKnuckle, typeof(Transform), allowSceneObjects: true);
                 EditorGUILayout.Space();
-                hand.IndexTip = (Transform)EditorGUILayout.ObjectField("Index Tip", hand.IndexTip, typeof(Transform), allowSceneObjects: true);
-                hand.IndexMiddle = (Transform)EditorGUILayout.ObjectField("Index Middle", hand.IndexMiddle, typeof(Transform), allowSceneObjects: true);
-                hand.IndexKnuckle = (Transform)EditorGUILayout.ObjectField("Index Knuckle", hand.IndexKnuckle, typeof(Transform), allowSceneObjects: true);
+                indexTip.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Tip", hand.IndexTip, typeof(Transform), allowSceneObjects: true);
+                indexMiddle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Middle", hand.IndexMiddle, typeof(Transform), allowSceneObjects: true);
+                indexKnuckle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Knuckle", hand.IndexKnuckle, typeof(Transform), allowSceneObjects: true);
                 EditorGUILayout.Space();
-                hand.MiddleTip = (Transform)EditorGUILayout.ObjectField("Middle Tip", hand.MiddleTip, typeof(Transform), allowSceneObjects: true);
-                hand.MiddleMiddle = (Transform)EditorGUILayout.ObjectField("Middle Middle", hand.MiddleMiddle, typeof(Transform), allowSceneObjects: true);
-                hand.MiddleKnuckle = (Transform)EditorGUILayout.ObjectField("Middle Knuckle", hand.MiddleKnuckle, typeof(Transform), allowSceneObjects: true);
+                middleTip.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Tip", hand.MiddleTip, typeof(Transform), allowSceneObjects: true);
+                middleMiddle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Middle", hand.MiddleMiddle, typeof(Transform), allowSceneObjects: true);
+                middleKnuckle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Knuckle", hand.MiddleKnuckle, typeof(Transform), allowSceneObjects: true);
                 EditorGUILayout.Space();
-                hand.RingTip = (Transform)EditorGUILayout.ObjectField("Ring Tip", hand.RingTip, typeof(Transform), allowSceneObjects: true);
-                hand.RingMiddle = (Transform)EditorGUILayout.ObjectField("Ring Middle", hand.RingMiddle, typeof(Transform), allowSceneObjects: true);
-                hand.RingKnuckle = (Transform)EditorGUILayout.ObjectField("Ring Knuckle", hand.RingKnuckle, typeof(Transform), allowSceneObjects: true);
+                ringTip.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Tip", hand.RingTip, typeof(Transform), allowSceneObjects: true);
+                ringMiddle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Middle", hand.RingMiddle, typeof(Transform), allowSceneObjects: true);
+                ringKnuckle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Knuckle", hand.RingKnuckle, typeof(Transform), allowSceneObjects: true);
                 EditorGUILayout.Space();
-                hand.LittleTip = (Transform)EditorGUILayout.ObjectField("Little Tip", hand.LittleTip, typeof(Transform), allowSceneObjects: true);
-                hand.LittleMiddle = (Transform)EditorGUILayout.ObjectField("Little Middle", hand.LittleMiddle, typeof(Transform), allowSceneObjects: true);
-                hand.LittleKnuckle = (Transform)EditorGUILayout.ObjectField("Little Knuckle", hand.LittleKnuckle, typeof(Transform), allowSceneObjects: true);
+                littleTip.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Tip", hand.LittleTip, typeof(Transform), allowSceneObjects: true);
+                littleMiddle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Middle", hand.LittleMiddle, typeof(Transform), allowSceneObjects: true);
+                littleKnuckle.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Knuckle", hand.LittleKnuckle, typeof(Transform), allowSceneObjects: true);
                 EditorGUILayout.Space();
-                hand.PalmBase = (Transform)EditorGUILayout.ObjectField("Palm Base", hand.PalmBase, typeof(Transform), allowSceneObjects: true);
+                palmBase.objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Palm Base", hand.PalmBase, typeof(Transform), allowSceneObjects: true);
             }
 
             if (displayOverrideSettings)
@@ -128,22 +208,22 @@ namespace Maestro
                 if (showAdvConfig)
                 {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
-                    hand.flatnessChecker = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
-                    hand.objectLayer = EditorGUILayout.LayerField("Object Layer", hand.objectLayer);
+                    flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
+                    objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", hand.objectLayer);
                     EditorGUILayout.Space();
 
-                    hand.palmMeshWait = EditorGUILayout.FloatField("Palm Mesh Generation Tick", hand.palmMeshWait);
+                    palmMeshWait.floatValue = EditorGUILayout.FloatField("Palm Mesh Generation Tick", hand.palmMeshWait);
                     EditorGUILayout.Space();
 
                     EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);
-                    hand.tooClose = EditorGUILayout.FloatField("Too Close Threshold", hand.tooClose);
-                    hand.tooFast = EditorGUILayout.FloatField("Too Fast Threshold", hand.tooFast);
+                    tooClose.floatValue = EditorGUILayout.FloatField("Too Close Threshold", hand.tooClose);
+                    tooFast.floatValue = EditorGUILayout.FloatField("Too Fast Threshold", hand.tooFast);
                 }
             }
             showDebug = EditorGUILayout.Foldout(showDebug, showDebugTxt);
             if (showDebug) {
-                hand.DestroyFingerRenderersOnSpawn = EditorGUILayout.Toggle("Destroy Finger Renderers on Spawn", hand.DestroyFingerRenderersOnSpawn);
-                hand.showPalmMesh = EditorGUILayout.Toggle("Show Palm Meshes", hand.showPalmMesh);
+                destroyFingerRenderersOnSpawn.boolValue = EditorGUILayout.Toggle("Destroy Finger Renderers on Spawn", hand.DestroyFingerRenderersOnSpawn);
+                showPalmMesh.boolValue = EditorGUILayout.Toggle("Show Palm Meshes", hand.showPalmMesh);
                 EditorGUILayout.Space();
 
                 EditorGUILayout.LabelField("Time Since Last Grab", hand.timeSinceGrabbing.ToString("F3"));
@@ -158,6 +238,7 @@ namespace Maestro
                 EditorGUILayout.LabelField("Ratio 1", hand.ratio1.ToString("F3"));
                 EditorGUILayout.LabelField("Ratio 2", hand.ratio2.ToString("F3"));
             }
+            this.serializedObject.ApplyModifiedProperties();
         }
     }
 }
