@@ -125,6 +125,8 @@ namespace Maestro
 
         private float timeSinceDropSatisfied;
 
+        private bool arePalmMeshesTrigger = true;
+
         #region Monobehaviour functions
         public override void Start()
         {
@@ -404,9 +406,8 @@ namespace Maestro
 
         protected override MaestroHapticContext ProcessHaptics()
         {
-
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
-            bool palmTouch = mc.PalmBase.fc.TriggerTouching;
+            bool palmTouch = mc.PalmBase.Contacting;
 
             if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.getMotorAmplitude());
@@ -439,6 +440,7 @@ namespace Maestro
                         // Inherit a portion of palm haptics if applicable
                         byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
                         if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
+                        
                     } else {
                         // Check middle joint
                         PointOnHand matchingMiddle = mc[tip.index.finger][PointOnFinger.Middle];
@@ -453,7 +455,6 @@ namespace Maestro
                     }
                 }
             }
-
             return nextHaptics;
         }
         #endregion
@@ -604,25 +605,31 @@ namespace Maestro
 
         private void TogglePalmMeshes()
         {
-            // Make sure mesh collider exists between knuckles and palm base
-            if (!PalmCollider)
+            if (PalmCollider == null) {
                 PalmCollider = palmMeshObject.AddComponent<MeshCollider>();
-
+                SetupMeshCollider(PalmCollider);
+            }
             ToggleMeshCollider(PalmCollider);
 
-            // Make sure mesh collider exists between thumb and palm base
-            if (!thumbMC)
+            if (thumbMC == null) {
                 thumbMC = thumbMeshObject.AddComponent<MeshCollider>();
-
+                SetupMeshCollider(thumbMC);
+            }
             ToggleMeshCollider(thumbMC);
         }
 
-        private void ToggleMeshCollider(MeshCollider mc)
+        private void SetupMeshCollider(MeshCollider meshCollider)
         {
-            if (mc != null) {
+            meshCollider.convex = true;
+            meshCollider.isTrigger = arePalmMeshesTrigger;
+        }
+
+        private void ToggleMeshCollider(MeshCollider meshCollider)
+        {
+            if (meshCollider != null) {
                 // Toggle convex off/on, which will force it to recalculate a convex collider.
-                mc.convex = false;
-                mc.convex = true;
+                meshCollider.isTrigger = arePalmMeshesTrigger;
+                meshCollider.convex = true;
             }
         }
 
@@ -816,7 +823,7 @@ namespace Maestro
         {
             if (twoHandGrabbing && twoHandGrabTarget != null) {
 
-                Vector3 toInBetween = (((mc[twoHandIndex.finger][twoHandIndex.point].transform.position + otherHand.mc[otherHand.twoHandIndex.finger][otherHand.twoHandIndex.point].transform.position) / 2f) - twoHandGrabTarget.getFollowPoint());
+                Vector3 toInBetween = (((mc[twoHandIndex].transform.position + otherHand.mc[otherHand.twoHandIndex].transform.position) / 2f) - twoHandGrabTarget.getFollowPoint());
                 // Square vector
                 toInBetween.Scale(new Vector3(Mathf.Abs(toInBetween.x), Mathf.Abs(toInBetween.y), Mathf.Abs(toInBetween.z)));
 
@@ -865,7 +872,7 @@ namespace Maestro
                 && grabbed.fc.lastTouching != null
                 && grabbed.fc.lastTouching.type != InteractionType.Static
                 && grabbed.fc.lastTouching.type != InteractionType.TwoHand
-                && grabbed.fc.lastTouching.Equals(mc[other.Value.finger][other.Value.point].fc.lastTouching)
+                && grabbed.fc.lastTouching.Equals(mc[other.Value].fc.lastTouching)
                 && timeSinceRelease > 0.5f;
 
             if (result) {
@@ -909,12 +916,8 @@ namespace Maestro
 
         private bool CheckGrabDone()
         {
-
-            float tempDist1 = ((mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
-
-            float tempDist2 = ((mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude);
+            float tempDist1 = GetDist(f1);
+            float tempDist2 = GetDist(f2);
 
             ratio1 = tempDist1 / dist1; //grabPos
             ratio2 = tempDist2 / dist2; //grabPos
@@ -970,13 +973,26 @@ namespace Maestro
 
             f1 = finger0;
             f2 = finger1;
-            dist1 = (mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
-            dist2 = (mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+
+            dist1 = GetDist(f1);
+            dist2 = GetDist(f2);
 
             // Tell the Interactable it's been grabbed by this script
             r.Grab(objectLayer);
+        }
+
+        private float GetDist(MaestroIndex index)
+        {
+            Vector3 followPoint = grabTarget.getFollowPoint();
+            if (grabTarget.gripCollider != null)
+                followPoint = ClosestPointOnGripCollider(index, grabTarget.gripCollider);
+
+            return (mc[index].transform.position - followPoint).magnitude;
+        }
+
+        private Vector3 ClosestPointOnGripCollider(MaestroIndex index, Collider grip)
+        {
+            return Physics.ClosestPoint(mc[index].transform.position, grip, grip.transform.position, grip.transform.rotation);
         }
 
         private void OnGrabbing()
@@ -1008,10 +1024,8 @@ namespace Maestro
             f1 = finger0;
             f2 = finger1;
 
-            dist1 = (mc[f1.finger][f1.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                 Physics.ClosestPoint(mc[f1.finger][f1.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
-            dist2 = (mc[f2.finger][f2.point].transform.position - (grabTarget.gripCollider == null ? grabTarget.getFollowPoint() :
-                Physics.ClosestPoint(mc[f2.finger][f2.point].transform.position, grabTarget.gripCollider, grabTarget.gripCollider.transform.position, grabTarget.gripCollider.transform.rotation))).magnitude; //grabPos
+            dist1 = GetDist(f1);
+            dist2 = GetDist(f2);
         }
 
         private void GrabEnd(bool drop)

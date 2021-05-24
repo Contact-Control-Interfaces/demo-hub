@@ -166,22 +166,6 @@ namespace Maestro
                         break;
                 }
 
-                //TODO sort this
-                /*
-                SortedSet<MaestroInteractable> ints = new SortedSet<MaestroInteractable>();
-                foreach (Collider c in AllTouching) {
-                    MaestroInteractable temp = null;
-                    if (!mapper.TryGetValue(c, out temp)) {
-                        Debug.LogWarning(string.Format("Collider on {0} unaccounted for!", c.gameObject.name));
-                    } else {
-                        ints.Add(temp);
-                    }
-                }*/
-
-                if (ints.Count > 1) {
-                    //Debug.Log(string.Format("Detected {0} different interactables, need to decide", ints.Count));
-                }
-
                 if (ints.Count > 0)
                     touching = ints.Max;
                 else
