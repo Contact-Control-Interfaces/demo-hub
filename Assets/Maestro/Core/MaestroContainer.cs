@@ -225,6 +225,6 @@ namespace Maestro
             this.fc.SetParent(this);
         }
 
-        public bool Contacting { get { return fc.TriggerTouching; } }
+        public bool Contacting { get { return fc.Contacting; } }
     }
 }
