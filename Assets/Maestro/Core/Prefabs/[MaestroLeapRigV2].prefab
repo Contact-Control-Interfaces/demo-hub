@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3841736694086269696}
   m_LocalRotation: {x: 0.50406986, y: -0.49589676, z: 0.50228006, w: -0.4977095}
-  m_LocalPosition: {x: -8.809142e-21, y: 0, z: -5.746271e-20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3838614394837429106}
@@ -299,25 +299,27 @@ MonoBehaviour:
   whichHand: 1
   otherHand: {fileID: 3842647507836374505}
   manager: {fileID: 5120305089791988621}
-  ThumbTip: {fileID: 3838421827932335290}
-  IndexTip: {fileID: 3838301673360047092}
-  MiddleTip: {fileID: 3838280523694574900}
-  RingTip: {fileID: 3838256686240450222}
-  LittleTip: {fileID: 3844584622966655058}
-  ThumbMiddle: {fileID: 3844912039519914962}
-  IndexMiddle: {fileID: 3844411353443791458}
-  MiddleMiddle: {fileID: 3838536813450558426}
-  RingMiddle: {fileID: 3844722225958460798}
-  LittleMiddle: {fileID: 3844679810612589122}
-  ThumbKnuckle: {fileID: 3844442907696073342}
-  IndexKnuckle: {fileID: 3838595175330095346}
-  MiddleKnuckle: {fileID: 3844591655734110990}
-  RingKnuckle: {fileID: 3838221957797861012}
-  LittleKnuckle: {fileID: 3838611700806960404}
-  PalmBase: {fileID: 3838614394837429106}
-  TipSize: 0.012
-  MiddleSize: 0.012
-  KnuckleSize: 0.012
+  transforms:
+    ThumbTip: {fileID: 3838421827932335290}
+    IndexTip: {fileID: 3838301673360047092}
+    MiddleTip: {fileID: 3838280523694574900}
+    RingTip: {fileID: 3838256686240450222}
+    LittleTip: {fileID: 3844584622966655058}
+    ThumbMiddle: {fileID: 3844912039519914962}
+    IndexMiddle: {fileID: 3844411353443791458}
+    MiddleMiddle: {fileID: 3838536813450558426}
+    RingMiddle: {fileID: 3844722225958460798}
+    LittleMiddle: {fileID: 3844679810612589122}
+    ThumbKnuckle: {fileID: 3844442907696073342}
+    IndexKnuckle: {fileID: 3838595175330095346}
+    MiddleKnuckle: {fileID: 3844591655734110990}
+    RingKnuckle: {fileID: 3838221957797861012}
+    LittleKnuckle: {fileID: 3838611700806960404}
+    PalmBase: {fileID: 3838614394837429106}
+  handSize:
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   showPalmMesh: 0
   palmMeshWait: 0.1
   grabbing: 0
@@ -2189,25 +2191,27 @@ MonoBehaviour:
   whichHand: 0
   otherHand: {fileID: 3841736694086269697}
   manager: {fileID: 5120305089791988621}
-  ThumbTip: {fileID: 3844461635297957978}
-  IndexTip: {fileID: 3838284656321785080}
-  MiddleTip: {fileID: 3838311129162111720}
-  RingTip: {fileID: 3844420892777305452}
-  LittleTip: {fileID: 3844396173397760834}
-  ThumbMiddle: {fileID: 3844611261621526920}
-  IndexMiddle: {fileID: 3838547904634155740}
-  MiddleMiddle: {fileID: 3838309830503622416}
-  RingMiddle: {fileID: 3844665730791822706}
-  LittleMiddle: {fileID: 3838532181898903620}
-  ThumbKnuckle: {fileID: 3838538243109462020}
-  IndexKnuckle: {fileID: 3844939665094554574}
-  MiddleKnuckle: {fileID: 3844417679346718580}
-  RingKnuckle: {fileID: 3838682954003026480}
-  LittleKnuckle: {fileID: 3838613033390400276}
-  PalmBase: {fileID: 3838499918356274496}
-  TipSize: 0.012
-  MiddleSize: 0.012
-  KnuckleSize: 0.012
+  transforms:
+    ThumbTip: {fileID: 3844461635297957978}
+    IndexTip: {fileID: 3838284656321785080}
+    MiddleTip: {fileID: 3838311129162111720}
+    RingTip: {fileID: 3844420892777305452}
+    LittleTip: {fileID: 3844396173397760834}
+    ThumbMiddle: {fileID: 3844611261621526920}
+    IndexMiddle: {fileID: 3838547904634155740}
+    MiddleMiddle: {fileID: 3838309830503622416}
+    RingMiddle: {fileID: 3844665730791822706}
+    LittleMiddle: {fileID: 3838532181898903620}
+    ThumbKnuckle: {fileID: 3838538243109462020}
+    IndexKnuckle: {fileID: 3844939665094554574}
+    MiddleKnuckle: {fileID: 3844417679346718580}
+    RingKnuckle: {fileID: 3838682954003026480}
+    LittleKnuckle: {fileID: 3838613033390400276}
+    PalmBase: {fileID: 3838499918356274496}
+  handSize:
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   showPalmMesh: 0
   palmMeshWait: 0.1
   grabbing: 0
@@ -2450,12 +2454,10 @@ MonoBehaviour:
   DefaultEffect:
     Amplitude: 135
     Vibration: 3
-  testField:
-    Amplitude: 0
-    Vibration: 0
-  TipSize: 0.012
-  MiddleSize: 0.012
-  KnuckleSize: 0.012
+  handSize:
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   flatnessChecker: {fileID: 0}
   objectLayer:
     serializedVersion: 2

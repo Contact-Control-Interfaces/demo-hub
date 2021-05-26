@@ -34,6 +34,34 @@ namespace Maestro
 
 
     }
+    [Serializable]
+    public struct HandSize
+    {
+        public float TipSize;
+        public float MiddleSize;
+        public float KnuckleSize;
+    }
+    [Serializable]
+    public struct HandTransforms
+    {
+        public Transform ThumbTip;
+        public Transform IndexTip;
+        public Transform MiddleTip;
+        public Transform RingTip;
+        public Transform LittleTip;
+        public Transform ThumbMiddle;
+        public Transform IndexMiddle;
+        public Transform MiddleMiddle;
+        public Transform RingMiddle;
+        public Transform LittleMiddle;
+        public Transform ThumbKnuckle;
+        public Transform IndexKnuckle;
+        public Transform MiddleKnuckle;
+        public Transform RingKnuckle;
+        public Transform LittleKnuckle;
+        public Transform PalmBase;
+
+    }
 
     public struct MaestroHapticContext
     {

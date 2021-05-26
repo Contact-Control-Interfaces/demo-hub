@@ -18,20 +18,19 @@ namespace Maestro
         private bool showAdvConfig = false;
         private string showAdvConfigTxt = "Advanced Config";
 
-        SerializedProperty leftHand;
-        SerializedProperty rightHand;
-        
-        SerializedProperty interactablesOnly;
+        private SerializedProperty leftHand;
+        private SerializedProperty rightHand;
 
-        SerializedProperty tipSize;
-        SerializedProperty middleSize;
-        SerializedProperty knuckleSize;
+        private SerializedProperty interactablesOnly;
 
-        SerializedProperty flatnessChecker;
-        SerializedProperty objectLayer;
-        SerializedProperty palmMeshWait;
-        SerializedProperty tooClose;
-        SerializedProperty tooFast;
+        private SerializedProperty flatnessChecker;
+        private SerializedProperty objectLayer;
+        private SerializedProperty palmMeshWait;
+        private SerializedProperty tooClose;
+        private SerializedProperty tooFast;
+
+        private SerializedProperty handSize;
+        private SerializedProperty defaultEffect;
 
         public void OnEnable()
         {
@@ -40,15 +39,14 @@ namespace Maestro
             
             interactablesOnly = this.serializedObject.FindProperty("InteractablesOnly");
 
-            tipSize = this.serializedObject.FindProperty("TipSize");
-            middleSize = this.serializedObject.FindProperty("MiddleSize");
-            knuckleSize = this.serializedObject.FindProperty("KnuckleSize");
-
             flatnessChecker = this.serializedObject.FindProperty("flatnessChecker");
             objectLayer = this.serializedObject.FindProperty("objectLayer");
             palmMeshWait = this.serializedObject.FindProperty("palmMeshWait");
             tooClose = this.serializedObject.FindProperty("tooClose");
             tooFast = this.serializedObject.FindProperty("tooFast");
+            
+            handSize = this.serializedObject.FindProperty("handSize");
+            defaultEffect = this.serializedObject.FindProperty("DefaultEffect");
         }
 
         public override void OnInspectorGUI()
@@ -89,39 +87,27 @@ namespace Maestro
                 
                 if (!manager.InteractablesOnly)
                 {
-                    byte Amplitude = manager.DefaultEffect.Amplitude;
-                    byte Vibration = manager.DefaultEffect.Vibration;
-                    Amplitude = //
+                    defaultEffect.FindPropertyRelative("Amplitude").intValue = 
                         (byte)EditorGUILayout.IntSlider("Feedback Amplitude", 
-                        Amplitude, 
+                        manager.DefaultEffect.Amplitude, 
                         HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE, 
                         HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
-                    Vibration = 
+                    defaultEffect.FindPropertyRelative("Vibration").intValue = 
                         (byte)EditorGUILayout.IntSlider("Vibration Effect", 
-                        Vibration, 
+                        manager.DefaultEffect.Vibration, 
                         HapticEffect.VIBRATION_MIN_ID, 
                         HapticEffect.VIBRATION_MAX_ID);
                     EditorGUILayout.HelpBox(DRV2605Descriptions.get(manager.DefaultEffect.Vibration), MessageType.None, false);
-
-                    var childEnum = this.serializedObject.FindProperty("DefaultEffect").GetEnumerator();
-                    while (childEnum.MoveNext())
-                    {
-                        SerializedProperty current = childEnum.Current as SerializedProperty;
-                        if (current.name.Equals("Amplitude"))
-                            current.intValue = Amplitude;
-                        else if (current.name.Equals("Vibration"))
-                            current.intValue = Vibration;
-                    }
-                   
                 }
 
                 showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
                 if (showHandConfig)
                 {
                     EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                    tipSize.floatValue = EditorGUILayout.FloatField("Tip Size", manager.TipSize);
-                    middleSize.floatValue = EditorGUILayout.FloatField("Middle Size", manager.MiddleSize);
-                    knuckleSize.floatValue = EditorGUILayout.FloatField("Knuckle Size", manager.KnuckleSize);
+                    handSize.FindPropertyRelative("TipSize").floatValue = EditorGUILayout.FloatField("Tip Size", manager.handSize.TipSize);
+                    handSize.FindPropertyRelative("MiddleSize").floatValue = EditorGUILayout.FloatField("Middle Size", manager.handSize.MiddleSize);
+                    handSize.FindPropertyRelative("KnuckleSize").floatValue = EditorGUILayout.FloatField("Knuckle Size", manager.handSize.KnuckleSize);
+
                     EditorGUILayout.Space();
                 }
 
