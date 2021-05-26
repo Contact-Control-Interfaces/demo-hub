@@ -12,31 +12,12 @@ namespace Maestro
         public MaestroHandV2 otherHand;
         public MaestroManager manager;
 
-        #region Transforms
-        public Transform ThumbTip;
-        public Transform IndexTip;
-        public Transform MiddleTip;
-        public Transform RingTip;
-        public Transform LittleTip;
-        public Transform ThumbMiddle;
-        public Transform IndexMiddle;
-        public Transform MiddleMiddle;
-        public Transform RingMiddle;
-        public Transform LittleMiddle;
-        public Transform ThumbKnuckle;
-        public Transform IndexKnuckle;
-        public Transform MiddleKnuckle;
-        public Transform RingKnuckle;
-        public Transform LittleKnuckle;
-        public Transform PalmBase;
-        #endregion
+        public HandTransforms transforms;
 
-        public override Transform Palm { get { return PalmBase; } }
+        public override Transform Palm { get { return transforms.PalmBase; } }
 
         // Sizes
-        public float TipSize;
-        public float MiddleSize;
-        public float KnuckleSize;
+        public HandSize handSize;
 
         public bool showPalmMesh;
         public float palmMeshWait = 0.1f;
@@ -220,13 +201,13 @@ namespace Maestro
 
         private FingerContainer InitFingerContainer(Transform tip, Transform middle, Transform knuckle)
         {
-            PointOnHand fingerTip = SpawnPointOnHand(tip, TipSize);
-            PointOnHand fingerMiddle = SpawnPointOnHand(middle, MiddleSize);
-            PointOnHand fingerBase = SpawnPointOnHand(knuckle, TipSize);
+            PointOnHand fingerTip = SpawnPointOnHand(tip, handSize.TipSize);
+            PointOnHand fingerMiddle = SpawnPointOnHand(middle, handSize.MiddleSize);
+            PointOnHand fingerBase = SpawnPointOnHand(knuckle, handSize.TipSize);
 
-            CapsuleCollider distal = SpawnCapsule(tip, middle, (TipSize + MiddleSize) / 2);
-            CapsuleCollider proximal = SpawnCapsule(middle, knuckle, (MiddleSize + KnuckleSize) / 2);
-            CapsuleCollider metacarpal = SpawnCapsule(knuckle, PalmBase, KnuckleSize);
+            CapsuleCollider distal = SpawnCapsule(tip, middle, (handSize.TipSize + handSize.MiddleSize) / 2);
+            CapsuleCollider proximal = SpawnCapsule(middle, knuckle, (handSize.MiddleSize + handSize.KnuckleSize) / 2);
+            CapsuleCollider metacarpal = SpawnCapsule(knuckle, transforms.PalmBase, handSize.KnuckleSize);
 
             // Don't collide finger with itself
             Physics.IgnoreCollision(distal, proximal);
@@ -238,12 +219,12 @@ namespace Maestro
         private void InitContainer()
         {
             // Create and assign all fingers
-            mc[WhichFinger.Thumb] = InitFingerContainer(ThumbTip, ThumbMiddle, ThumbKnuckle);
-            mc[WhichFinger.Index] = InitFingerContainer(IndexTip, IndexMiddle, IndexKnuckle);
-            mc[WhichFinger.Middle] = InitFingerContainer(MiddleTip, MiddleMiddle, MiddleKnuckle);
-            mc[WhichFinger.Ring] = InitFingerContainer(RingTip, RingMiddle, RingKnuckle);
-            mc[WhichFinger.Little] = InitFingerContainer(LittleTip, LittleMiddle, LittleKnuckle);
-            mc.PalmBase = SpawnPointOnHand(PalmBase, KnuckleSize);
+            mc[WhichFinger.Thumb] = InitFingerContainer(transforms.ThumbTip, transforms.ThumbMiddle, transforms.ThumbKnuckle);
+            mc[WhichFinger.Index] = InitFingerContainer(transforms.IndexTip, transforms.IndexMiddle, transforms.IndexKnuckle);
+            mc[WhichFinger.Middle] = InitFingerContainer(transforms.MiddleTip, transforms.MiddleMiddle, transforms.MiddleKnuckle);
+            mc[WhichFinger.Ring] = InitFingerContainer(transforms.RingTip, transforms.RingMiddle, transforms.RingKnuckle);
+            mc[WhichFinger.Little] = InitFingerContainer(transforms.LittleTip, transforms.LittleMiddle, transforms.LittleKnuckle);
+            mc.PalmBase = SpawnPointOnHand(transforms.PalmBase, handSize.KnuckleSize);
 
             // Set FC mass
             mc.ToList().ForEach(x => x.fc.rb.mass = (x.fc.isPalmBase ? 10.0f : 5.0f));
@@ -428,6 +409,7 @@ namespace Maestro
                             persistInteractables[tip.index] = interactable;
                             persistTimes[tip.index] = interactable.persistanceDuration;
                         }
+
                     } else if (persistInteractables.ContainsKey(tip.index) && persistInteractables[tip.index] != null && persistTimes[tip.index] > Time.fixedDeltaTime) {
                         nextHaptics.SetAmplitudeFromIndex(tip.fc.index, persistInteractables[tip.index].getMotorAmplitude());
                         nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, persistInteractables[tip.index].getVibrationEffect());
@@ -436,11 +418,19 @@ namespace Maestro
                             persistTimes.Remove(tip.index);
                             persistInteractables.Remove(tip.index);
                         }
+
+                    } else if (tip.Contacting && !interactablesOnly) {
+                        nextHaptics.SetAmplitudeFromIndex(tip.index, defaultEffect.Amplitude);
+                        nextHaptics.SetVibrationEffectFromIndex(tip.index, defaultEffect.Vibration);
                     } else if (inheritFromPalm) {
                         // Inherit a portion of palm haptics if applicable
                         byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
-                        if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
-                        
+                        if (amp.HasValue)
+                        {
+                            //Debug.Log(mc.PalmBase.fc.touching.gameObject.name);
+                            nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
+                        }
+                    
                     } else {
                         // Check middle joint
                         PointOnHand matchingMiddle = mc[tip.index.finger][PointOnFinger.Middle];
@@ -453,8 +443,11 @@ namespace Maestro
                             nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
                         }
                     }
+
+                    
                 }
             }
+
             return nextHaptics;
         }
         #endregion
@@ -489,7 +482,7 @@ namespace Maestro
                     Vector3[] verts = current.mesh.vertices;
                     for (int k = 0; k < verts.Length; k++) {
                         // Scale all these vertices by knuckle size
-                        verts[k] *= (KnuckleSize);
+                        verts[k] *= (handSize.KnuckleSize);
 
                         // Shift them to their finger position if necessary (not palm base)
                         //if (i < 15)
@@ -565,7 +558,7 @@ namespace Maestro
                     Vector3[] verts = current.mesh.vertices;
                     for (int k = 0; k < verts.Length; k++) {
                         // Scale each submesh down by the knuckle size, also shift to their rational position in world space. 
-                        verts[k] *= (KnuckleSize);
+                        verts[k] *= (handSize.KnuckleSize);
                         verts[k] += mf.transform.InverseTransformPoint(poh.fc.transform.position);
                     }
                     newVertices.AddRange(verts);
@@ -687,17 +680,17 @@ namespace Maestro
 
         private FingerCollider SpawnAtTip(Transform t)
         {
-            return Spawn(t, TipSize);
+            return Spawn(t, handSize.TipSize);
         }
 
         private FingerCollider SpawnAtMiddle(Transform t)
         {
-            return Spawn(t, MiddleSize);
+            return Spawn(t, handSize.MiddleSize);
         }
 
         private FingerCollider SpawnAtKnuckle(Transform t)
         {
-            return Spawn(t, KnuckleSize);
+            return Spawn(t, handSize.KnuckleSize);
         }
 
         private CapsuleCollider SpawnCapsule(Transform a, Transform b, float size)
@@ -867,8 +860,10 @@ namespace Maestro
             PointOnHand grabbed = mc[position];
 
             MaestroIndex? other = ShouldStartGrab(position);
+
             bool result = other.HasValue
                 && !isFlat
+                && grabbed.fc != null
                 && grabbed.fc.lastTouching != null
                 && grabbed.fc.lastTouching.type != InteractionType.Static
                 && grabbed.fc.lastTouching.type != InteractionType.TwoHand
@@ -939,7 +934,7 @@ namespace Maestro
 
             grabbing = true;
 
-            grabPos = generateAnchor(grabTarget.isTool ? PalmBase.position : grabTarget.getFollowPoint());
+            grabPos = generateAnchor(grabTarget.isTool ? transforms.PalmBase.position : grabTarget.getFollowPoint());
             //grabPos.transform.rotation = Quaternion.identity;
 
             if (otherHand != null && otherHand.grabbing && otherHand.grabTarget == this.grabTarget) {
@@ -974,9 +969,9 @@ namespace Maestro
             f1 = finger0;
             f2 = finger1;
 
+
             dist1 = GetDist(f1);
             dist2 = GetDist(f2);
-
             // Tell the Interactable it's been grabbed by this script
             r.Grab(objectLayer);
         }

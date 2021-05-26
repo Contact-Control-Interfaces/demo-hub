@@ -11,9 +11,9 @@ namespace Maestro
 
         public bool InteractablesOnly = false;
         public HapticEffect DefaultEffect;
-        public float TipSize;
-        public float MiddleSize;
-        public float KnuckleSize;
+
+        public HandSize handSize;
+
         public FlatnessChecker flatnessChecker;
         public LayerMask objectLayer;
         public float palmMeshWait = 0.1f;
@@ -26,9 +26,7 @@ namespace Maestro
             {
                 LeftHand.interactablesOnly = InteractablesOnly;
                 LeftHand.defaultEffect = DefaultEffect;
-                LeftHand.TipSize = TipSize;
-                LeftHand.MiddleSize = MiddleSize;
-                LeftHand.KnuckleSize = KnuckleSize;
+                LeftHand.handSize = handSize;
                 LeftHand.flatnessChecker = flatnessChecker;
                 LeftHand.objectLayer = objectLayer;
                 LeftHand.palmMeshWait = palmMeshWait;
@@ -42,9 +40,7 @@ namespace Maestro
             {
                 RightHand.interactablesOnly = InteractablesOnly;
                 RightHand.defaultEffect = DefaultEffect;
-                RightHand.TipSize = TipSize;
-                RightHand.MiddleSize = MiddleSize;
-                RightHand.KnuckleSize = KnuckleSize;
+                RightHand.handSize = handSize;
                 RightHand.flatnessChecker = flatnessChecker;
                 RightHand.objectLayer = objectLayer;
                 RightHand.palmMeshWait = palmMeshWait;

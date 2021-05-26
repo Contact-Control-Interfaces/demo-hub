@@ -40,7 +40,7 @@ namespace Maestro
         [HideInInspector]
         public Collider col; //keep track of my collider so I can turn it off in certain situations
 
-        public bool TriggerTouching = true;
+        private bool TriggerTouching = true;
 
         public bool Contacting {
             get {
@@ -199,7 +199,8 @@ namespace Maestro
         {
             if (TryGetInteractable(c.collider, out MaestroInteractable interactable))
             {
-                AllTouching.Add(c.collider);
+                if (!AllTouching.Contains(c.collider))
+                    AllTouching.Add(c.collider);
                 interactable.Touch(this);
                 if (!interactable.IgnoreTaps)
                 {
@@ -232,8 +233,7 @@ namespace Maestro
                     Debug.LogWarning("Removed collider without mapping!");
                 }
             }
-            else
-                DefaultTouching.Remove(c.collider);
+            DefaultTouching.Remove(c.collider);
 
             netImpulse += c.impulse;
         }
