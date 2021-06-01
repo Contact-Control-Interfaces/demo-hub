@@ -9,18 +9,129 @@ namespace Maestro
 {
     public class MaestroHandV2 : IMaestroHand
     {
-        public MaestroHandV2 otherHand;
         public MaestroManager manager;
+        public bool settingsOverride = false;
+
+        //override values
+        public HandSize handSizeOverride;
+        public bool interactablesOnlyOverride = false;
+        public HapticEffect defaultEffectOverride = new HapticEffect { Amplitude = 115, Vibration = 3 };
+        public FlatnessChecker flatnessCheckerOverride;
+        public LayerMask objectLayerOverride;
+        public float palmMeshWaitOverride = 0.1f;
+        public float tooCloseOverride = 0.1f;
+        public float tooFastOverride = 0.2f;
+        //whichHand from IMaestroHand
+        public MaestroHandV2 otherHandOverride;
+
+        //inherited values
+        private HandSize handSize
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return handSizeOverride;
+                else
+                    return manager.handSize;
+            }
+        }
+        private bool interactablesOnly
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return interactablesOnlyOverride;
+                else
+                    return manager.InteractablesOnly;
+            }
+        }
+        private HapticEffect defaultEffect
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return defaultEffectOverride;
+                else
+                    return manager.DefaultEffect;
+            }
+        }
+        private FlatnessChecker flatnessChecker
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return flatnessCheckerOverride;
+                else
+                    return manager.flatnessChecker;
+            }
+        }
+        private LayerMask objectLayer
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return objectLayerOverride;
+                else
+                    return manager.objectLayer;
+            }
+        }
+        private float palmMeshWait
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return palmMeshWaitOverride;
+                else
+                    return manager.palmMeshWait;
+            }
+        }
+        private float tooClose
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return tooCloseOverride;
+                else
+                    return manager.tooClose;
+            }
+        }
+        private float tooFast
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return tooFastOverride;
+                else
+                    return manager.tooFast;
+            }
+        }
+
+        private WhichHand whichHandInherited
+        {
+            get
+            {
+                if (settingsOverride || manager == null && (this == manager.LeftHand || this == manager.RightHand))
+                    return whichHand;
+                else return this == manager.RightHand ? WhichHand.RightHand : WhichHand.LeftHand;
+            }
+        }
+
+        public MaestroHandV2 otherHand
+        {
+            get
+            {
+                if (settingsOverride || manager == null)
+                    return otherHandOverride;
+                else
+                    return whichHandInherited == WhichHand.RightHand ? manager.LeftHand : manager.RightHand;
+            }
+        }
 
         public HandTransforms transforms;
 
         public override Transform Palm { get { return transforms.PalmBase; } }
 
-        // Sizes
-        public HandSize handSize;
-
         public bool showPalmMesh;
-        public float palmMeshWait = 0.1f;
 
         public bool grabbing;
 
@@ -40,25 +151,15 @@ namespace Maestro
         public float ToolRatio = 1.3f;
         public float releaseRatio = 1.2f;
 
-        // Respawn variables
-        public float tooClose = 0.1f;
-        public float tooFast = 0.2f;
-
         // DFROST
         public bool DestroyFingerRenderersOnSpawn;
 
         // Flatness
-        public FlatnessChecker flatnessChecker;
         private bool isFlat { get { return flatnessChecker != null && flatnessChecker.isFlat(); } }
 
         // Layers
-        public LayerMask objectLayer;
 
-        // Default haptic interaction
-        public HapticEffect defaultEffect = new HapticEffect { Amplitude = 115, Vibration = 3 };
-        public bool interactablesOnly = false;
 
-        public bool settingsOverride = false;
 
         /*************
          *  PRIVATE  *
