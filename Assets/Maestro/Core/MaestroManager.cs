@@ -20,34 +20,14 @@ namespace Maestro
         public float tooClose = 0.1f;
         public float tooFast = 0.2f;
 
-        public void cascadeProperties()
+        public void attachToHands()
         {
-            if (LeftHand != null && !LeftHand.settingsOverride)
+            if (LeftHand != null)
             {
-                LeftHand.interactablesOnly = InteractablesOnly;
-                LeftHand.defaultEffect = DefaultEffect;
-                LeftHand.handSize = handSize;
-                LeftHand.flatnessChecker = flatnessChecker;
-                LeftHand.objectLayer = objectLayer;
-                LeftHand.palmMeshWait = palmMeshWait;
-                LeftHand.tooClose = tooClose;
-                LeftHand.tooFast = tooFast;
-                LeftHand.otherHand = RightHand;
-                LeftHand.whichHand = WhichHand.LeftHand;
                 LeftHand.manager = this;
             }
-            if (RightHand != null && !RightHand.settingsOverride)
+            if (RightHand != null)
             {
-                RightHand.interactablesOnly = InteractablesOnly;
-                RightHand.defaultEffect = DefaultEffect;
-                RightHand.handSize = handSize;
-                RightHand.flatnessChecker = flatnessChecker;
-                RightHand.objectLayer = objectLayer;
-                RightHand.palmMeshWait = palmMeshWait;
-                RightHand.tooClose = tooClose;
-                RightHand.tooFast = tooFast;
-                RightHand.otherHand = LeftHand;
-                RightHand.whichHand = WhichHand.RightHand;
                 RightHand.manager = this;
             }
         }

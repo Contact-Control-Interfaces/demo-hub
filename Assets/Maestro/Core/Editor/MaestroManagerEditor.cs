@@ -128,7 +128,7 @@ namespace Maestro
                 }
             }
 
-            manager.cascadeProperties();
+            manager.attachToHands();
             this.serializedObject.ApplyModifiedProperties();
         }
     }
