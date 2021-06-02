@@ -86,28 +86,12 @@ namespace Maestro
                 interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), manager.InteractablesOnly);
                 
                 if (!manager.InteractablesOnly)
-                {
-                    defaultEffect.FindPropertyRelative("Amplitude").intValue = 
-                        (byte)EditorGUILayout.IntSlider("Feedback Amplitude", 
-                        manager.DefaultEffect.Amplitude, 
-                        HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE, 
-                        HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
-                    defaultEffect.FindPropertyRelative("Vibration").intValue = 
-                        (byte)EditorGUILayout.IntSlider("Vibration Effect", 
-                        manager.DefaultEffect.Vibration, 
-                        HapticEffect.VIBRATION_MIN_ID, 
-                        HapticEffect.VIBRATION_MAX_ID);
-                    EditorGUILayout.HelpBox(DRV2605Descriptions.get(manager.DefaultEffect.Vibration), MessageType.None, false);
-                }
+                    EditorGUILayout.PropertyField(defaultEffect, new GUIContent("Default Effect"));
 
                 showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
                 if (showHandConfig)
                 {
-                    EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                    handSize.FindPropertyRelative("TipSize").floatValue = EditorGUILayout.FloatField("Tip Size", manager.handSize.TipSize);
-                    handSize.FindPropertyRelative("MiddleSize").floatValue = EditorGUILayout.FloatField("Middle Size", manager.handSize.MiddleSize);
-                    handSize.FindPropertyRelative("KnuckleSize").floatValue = EditorGUILayout.FloatField("Knuckle Size", manager.handSize.KnuckleSize);
-
+                    EditorGUILayout.PropertyField(handSize, new GUIContent("Hand Sizing"));
                     EditorGUILayout.Space();
                 }
 

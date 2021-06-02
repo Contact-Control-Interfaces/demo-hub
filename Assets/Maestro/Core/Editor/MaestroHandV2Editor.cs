@@ -116,54 +116,18 @@ namespace Maestro
                 interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnlyOverride);
                 if (!hand.interactablesOnlyOverride)
                 {
-
-                    defaultEffect.FindPropertyRelative("Amplitude").intValue = 
-                        (byte)EditorGUILayout.IntSlider("Feedback Amplitude",
-                        hand.defaultEffectOverride.Amplitude,
-                        HapticEffect.FORCE_FEEDBACK_MIN_AMPLITUDE,
-                        HapticEffect.FORCE_FEEDBACK_MAX_AMPLITUDE);
-                    defaultEffect.FindPropertyRelative("Vibration").intValue =
-                        (byte)EditorGUILayout.IntSlider("Vibration Effect",
-                        hand.defaultEffectOverride.Vibration,
-                        HapticEffect.VIBRATION_MIN_ID,
-                        HapticEffect.VIBRATION_MAX_ID);
-                    EditorGUILayout.HelpBox(DRV2605Descriptions.get(hand.defaultEffectOverride.Vibration), MessageType.None, false);
+                    EditorGUILayout.PropertyField(defaultEffect, new GUIContent("Default Effect"));
                 }
             }
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
             if (showHandConfig) {
                 if (displayOverrideSettings)
                 {
-                    EditorGUILayout.LabelField("Hand Sizing", EditorStyles.boldLabel);
-                    handSize.FindPropertyRelative("TipSize").floatValue = EditorGUILayout.FloatField("Tip Size", hand.handSizeOverride.TipSize);
-                    handSize.FindPropertyRelative("MiddleSize").floatValue = EditorGUILayout.FloatField("Middle Size", hand.handSizeOverride.MiddleSize);
-                    handSize.FindPropertyRelative("KnuckleSize").floatValue = EditorGUILayout.FloatField("Knuckle Size", hand.handSizeOverride.KnuckleSize);
-
+                    EditorGUILayout.PropertyField(handSize, new GUIContent("Hand Sizing"));
                     EditorGUILayout.Space();
                 }
 
-                EditorGUILayout.LabelField("Positions on Hand", EditorStyles.boldLabel);
-                transforms.FindPropertyRelative("ThumbTip").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Tip", hand.transforms.ThumbTip, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("ThumbMiddle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Middle", hand.transforms.ThumbMiddle, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("ThumbKnuckle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Thumb Knuckle", hand.transforms.ThumbKnuckle, typeof(Transform), allowSceneObjects: true);
-                EditorGUILayout.Space();
-                transforms.FindPropertyRelative("IndexTip").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Tip", hand.transforms.IndexTip, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("IndexMiddle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Middle", hand.transforms.IndexMiddle, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("IndexKnuckle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Index Knuckle", hand.transforms.IndexKnuckle, typeof(Transform), allowSceneObjects: true);
-                EditorGUILayout.Space();
-                transforms.FindPropertyRelative("MiddleTip").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Tip", hand.transforms.MiddleTip, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("MiddleMiddle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Middle", hand.transforms.MiddleMiddle, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("MiddleKnuckle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Middle Knuckle", hand.transforms.MiddleKnuckle, typeof(Transform), allowSceneObjects: true);
-                EditorGUILayout.Space();
-                transforms.FindPropertyRelative("RingTip").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Tip", hand.transforms.RingTip, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("RingMiddle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Middle", hand.transforms.RingMiddle, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("RingKnuckle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Ring Knuckle", hand.transforms.RingKnuckle, typeof(Transform), allowSceneObjects: true);
-                EditorGUILayout.Space();
-                transforms.FindPropertyRelative("LittleTip").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Tip", hand.transforms.LittleTip, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("LittleMiddle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Middle", hand.transforms.LittleMiddle, typeof(Transform), allowSceneObjects: true);
-                transforms.FindPropertyRelative("LittleKnuckle").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Little Knuckle", hand.transforms.LittleKnuckle, typeof(Transform), allowSceneObjects: true);
-                EditorGUILayout.Space();
-                transforms.FindPropertyRelative("PalmBase").objectReferenceValue = (Transform)EditorGUILayout.ObjectField("Palm Base", hand.transforms.PalmBase, typeof(Transform), allowSceneObjects: true);
+                EditorGUILayout.PropertyField(transforms, new GUIContent("Positions on Hand"));
             }
 
             if (displayOverrideSettings)
