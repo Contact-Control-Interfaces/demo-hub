@@ -70,7 +70,7 @@ namespace Maestro
 
             FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
             if (fc != null /*&& fc.PaintColor != Color.clear*/) {
-                if (fc.PaintColor != Color.clear && fc.PaintColor != FingerPaint.eraseColor) {
+                if (fc.transform.Find("Paint") != null && fc.transform.Find("Paint").gameObject.GetComponent<PaintType>().paintColor != Color.clear && !fc.transform.Find("Paint").gameObject.GetComponent<PaintType>().erase) {
                     if (!source.isPlaying) {
                         source.Play();
                     }
@@ -82,7 +82,8 @@ namespace Maestro
                     //brushObject.layer = paintLayer;
                     brushObject.transform.parent = null;
                     SpriteRenderer sr = brushObject.GetComponent<SpriteRenderer>();
-                    sr.color = fc.PaintColor;
+                    if (fc.transform.Find("Paint") != null)
+                        sr.color = fc.transform.Find("Paint").gameObject.GetComponent<PaintType>().paintColor;
                     sr.sortingOrder = this.transform.childCount;
 
                     //Find canvas plane
@@ -94,6 +95,8 @@ namespace Maestro
                     brushObject.transform.rotation = Quaternion.LookRotation(collision.contacts[0].normal);
                     brushObject.transform.parent = this.transform;
                     brushObject.transform.localScale = Vector3.one * brushSize;
+
+                    brushObject.AddComponent<GetErasedBehavior>();
                 }
 
             }

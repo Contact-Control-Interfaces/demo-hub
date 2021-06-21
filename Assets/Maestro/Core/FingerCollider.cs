@@ -52,16 +52,6 @@ namespace Maestro
 
         public Vector3 lastLocation;
 
-        private Color _paintColor = Color.clear;
-        public Color PaintColor {
-            get { return _paintColor; }
-            set {
-                _paintColor = value;
-                if (rend && rend.material)
-                    rend.material.color = _paintColor == Color.clear ? Color.clear : _paintColor;
-            }
-        }
-
         #region Hand position helpers
         public bool isTip { 
             get {
