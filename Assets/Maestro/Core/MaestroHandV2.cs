@@ -382,7 +382,7 @@ namespace Maestro
         {
             if (interactable.isPersistent) {
                 persistInteractables[index] = interactable;
-                persistTimes[index] = interactable.persistanceDuration;
+                persistTimes[index] = interactable.persistenceDuration;
             }
         }
 
@@ -508,7 +508,7 @@ namespace Maestro
                         nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, interactable.getVibrationEffect());
                         if (interactable.isPersistent) {
                             persistInteractables[tip.index] = interactable;
-                            persistTimes[tip.index] = interactable.persistanceDuration;
+                            persistTimes[tip.index] = interactable.persistenceDuration;
                         }
 
                     } else if (persistInteractables.ContainsKey(tip.index) && persistInteractables[tip.index] != null && persistTimes[tip.index] > Time.fixedDeltaTime) {

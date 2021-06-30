@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using Maestro.Vibration;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace Maestro
 {
-
     [CanEditMultipleObjects]
     [CustomEditor(typeof(MaestroInteractable))]
     public class MaestroInteractableEditor : Editor
@@ -17,6 +17,10 @@ namespace Maestro
         private string showEventsTxt = "Bind Events";
 
         private SerializedProperty OnTouchProp, UnTouchProp, OnGrabProp, OnReleaseProp;
+        private SerializedProperty haptics;
+        private SerializedProperty type, ignoreTaps, persist, persistenceDuration;
+        private SerializedProperty UseRenderCenter, maintainOrientation, maintainPosition, stayInHand, SendHapticsToWholeHand;
+        private SerializedProperty gripTransform, gripCollider;
 
         private void OnEnable()
         {
@@ -24,37 +28,51 @@ namespace Maestro
             UnTouchProp = serializedObject.FindProperty("unTouch");
             OnGrabProp = serializedObject.FindProperty("onGrab");
             OnReleaseProp = serializedObject.FindProperty("onRelease");
+            haptics = serializedObject.FindProperty("haptics");
+
+            type = serializedObject.FindProperty("type");
+            ignoreTaps = serializedObject.FindProperty("IgnoreTaps");
+            persist = serializedObject.FindProperty("isPersistent");
+            persistenceDuration = serializedObject.FindProperty("persistenceDuration");
+
+            UseRenderCenter = serializedObject.FindProperty("UseRenderCenter");
+            maintainOrientation = serializedObject.FindProperty("maintainOrientation");
+            maintainPosition = serializedObject.FindProperty("maintainPosition");
+            stayInHand = serializedObject.FindProperty("stayInHand");
+            SendHapticsToWholeHand = serializedObject.FindProperty("SendHapticsToWholeHand");
+
+            gripTransform = serializedObject.FindProperty("gripTransform");
+            gripCollider = serializedObject.FindProperty("gripCollider");
         }
 
         public override void OnInspectorGUI()
         {
-            MaestroInteractable mi = (MaestroInteractable) target;
+            serializedObject.Update();
+
+            MaestroInteractable mi = (MaestroInteractable)target;
 
             /** 
              * Haptics
              */
-            EditorGUILayout.LabelField("Haptic Configuration", EditorStyles.boldLabel);
-
-            mi.Amplitude = (byte)EditorGUILayout.IntSlider("Amplitude", mi.Amplitude, 0, 255);
-            mi.VibrationEffect = (byte)EditorGUILayout.IntSlider("Vibration Effect", mi.VibrationEffect, 0, 128);
-            // Describe DRV2605 effect below
-            EditorGUILayout.HelpBox(DRV2605Descriptions.get(mi.VibrationEffect), MessageType.None, false);
+            EditorGUILayout.PropertyField(haptics);
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
             EditorGUILayout.Space();
 
             /**
              * Configuration
              */
-            mi.type = (InteractionType) EditorGUILayout.EnumPopup("Type", mi.type);
-            mi.IgnoreTaps = EditorGUILayout.Toggle("Ignore Taps", mi.IgnoreTaps);
-            mi.isPersistent = EditorGUILayout.Toggle("Persist", mi.isPersistent);
-            if (mi.isPersistent) {
-                mi.persistanceDuration = EditorGUILayout.FloatField("Persistence Duration", mi.persistanceDuration);
+            PropertyField(type);
+            PropertyField(ignoreTaps);
+            PropertyField(persist);
+            if (persist.boolValue) {
+                PropertyField(persistenceDuration);
             }
             EditorGUILayout.Space();
 
             /**
-             * Bind events
-             */
+                * Bind events
+                */
             showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt);
             if (showEvents) {
                 EditorGUILayout.PropertyField(OnGrabProp);
@@ -67,25 +85,34 @@ namespace Maestro
             }
 
             /**
-             * Advanced config
-             */
+                * Advanced config
+                */
             showAdvConfig = EditorGUILayout.Foldout(showAdvConfig, showAdvConfigTxt);
             if (showAdvConfig) {
-                mi.UseRenderCenter = EditorGUILayout.Toggle("Use Render Center", mi.UseRenderCenter);
-                mi.SendHapticsToWholeHand = EditorGUILayout.Toggle("Send Haptics to Whole Hand", mi.SendHapticsToWholeHand);
+                PropertyField(UseRenderCenter);
+                PropertyField(SendHapticsToWholeHand);
                 EditorGUILayout.Space();
 
-                mi.maintainOrientation = EditorGUILayout.Toggle("Maintain Orientation", mi.maintainOrientation);
-                mi.maintainPosition = EditorGUILayout.Toggle("Maintain Position", mi.maintainPosition);
-                mi.stayInHand = EditorGUILayout.Toggle("Stay in hand", mi.stayInHand);
+                PropertyField(maintainOrientation);
+                PropertyField(maintainPosition);
+                PropertyField(stayInHand);
                 EditorGUILayout.Space();
 
-                mi.gripCollider = EditorGUILayout.ObjectField("Grip Collider", mi.gripCollider, typeof(Collider), allowSceneObjects: true) as Collider;
-                mi.gripTransform = EditorGUILayout.ObjectField("Grip Transform", mi.gripTransform, typeof(Transform), allowSceneObjects: true) as Transform;
+                PropertyField(gripCollider);
+                PropertyField(gripTransform);
             }
 
             // Apply property changes
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private static bool PropertyField(SerializedProperty property)
+        {
+            EditorGUI.BeginChangeCheck();
+            EditorGUI.showMixedValue = property.hasMultipleDifferentValues;
+            EditorGUILayout.PropertyField(property);
+            EditorGUI.showMixedValue = false;
+            return EditorGUI.EndChangeCheck();
         }
     }
 }

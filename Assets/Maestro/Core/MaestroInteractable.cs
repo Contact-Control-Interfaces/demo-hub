@@ -50,7 +50,7 @@ namespace Maestro
 
         [Header("Special Behavior")]
         public bool isPersistent = false;
-        public float persistanceDuration = 0.0f;
+        public float persistenceDuration = 0.0f;
 
         [HideInInspector]
         public byte? ResponseMotorAmplitude { private get; set; }
