@@ -1,5 +1,4 @@
-﻿using Maestro.Vibration;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -73,15 +72,22 @@ namespace Maestro
             /**
                 * Bind events
                 */
-            showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt);
-            if (showEvents) {
-                EditorGUILayout.PropertyField(OnGrabProp);
-                EditorGUILayout.PropertyField(OnReleaseProp);
-                EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("Finger events", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(OnTouchProp);
-                EditorGUILayout.PropertyField(UnTouchProp);
+            bool multiedit = serializedObject.targetObjects.Length > 1;
+
+            if (multiedit) {
+                EditorGUILayout.HelpBox("Events not available when editing multiple interactables!", MessageType.Warning, wide: true);
+            } else {
+                showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt);
+                if (showEvents) {
+                    EditorGUILayout.PropertyField(OnGrabProp);
+                    EditorGUILayout.PropertyField(OnReleaseProp);
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.LabelField("Finger events", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(OnTouchProp);
+                    EditorGUILayout.PropertyField(UnTouchProp);
+                }
             }
 
             /**

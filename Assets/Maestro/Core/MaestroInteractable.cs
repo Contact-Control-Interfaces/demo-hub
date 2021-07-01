@@ -45,8 +45,7 @@ namespace Maestro
         public TouchEvent onTouch, unTouch;
 
         [Header("Haptics")]
-        public byte Amplitude = 200;
-        public byte VibrationEffect = 1;
+        public HapticEffect haptics;
 
         [Header("Special Behavior")]
         public bool isPersistent = false;
@@ -121,31 +120,31 @@ namespace Maestro
 
         public byte? getMotorAmplitude()
         {
-            return ResponseMotorAmplitude ?? Amplitude;
+            return ResponseMotorAmplitude ?? haptics.Amplitude;
         }
 
         public byte? getVibrationEffect()
         {
-            return ResponseVibrationEffect ?? VibrationEffect;
+            return ResponseVibrationEffect ?? haptics.Vibration;
         }
 
         public void setHaptics(byte? amp, byte? vib)
         {
             if (amp.HasValue)
-                Amplitude = amp.Value;
+                haptics.Amplitude = amp.Value;
 
             if (vib.HasValue)
-                VibrationEffect = vib.Value;
+                haptics.Vibration = vib.Value;
         }
 
         public void setAmplitudeFromScale(float scale)
         {
-            Amplitude = (byte)(255 * scale);
+            haptics.Amplitude = (byte)(255 * scale);
         }
 
         public void setEffectFromScale(float scale)
         {
-            VibrationEffect = (byte)(128 * scale);
+            haptics.Vibration = (byte)(128 * scale);
         }
 
         // Default comparer, TODO
@@ -155,10 +154,10 @@ namespace Maestro
                 return -1;
 
             //TODO add priority
-            if (other.Amplitude != this.Amplitude) {
-                return this.Amplitude.CompareTo(other.Amplitude);
+            if (other.haptics.Amplitude != this.haptics.Amplitude) {
+                return this.haptics.Amplitude.CompareTo(other.haptics.Amplitude);
             } else {
-                return this.VibrationEffect.CompareTo(other.VibrationEffect);
+                return this.haptics.Vibration.CompareTo(other.haptics.Vibration);
             }
         }
     }
@@ -168,10 +167,10 @@ namespace Maestro
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
             if (y != null && x != null) {
-                if (y.Amplitude != x.Amplitude) {
-                    return x.Amplitude.CompareTo(y.Amplitude);
+                if (y.haptics.Amplitude != x.haptics.Amplitude) {
+                    return x.haptics.Amplitude.CompareTo(y.haptics.Amplitude);
                 } else {
-                    return x.VibrationEffect.CompareTo(y.VibrationEffect);
+                    return x.haptics.Vibration.CompareTo(y.haptics.Vibration);
                 }
             } else if (x != null) {
                 return 1;
@@ -186,10 +185,10 @@ namespace Maestro
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
             if (y != null && x != null) {
-                if (y.VibrationEffect != x.VibrationEffect) {
-                    return x.VibrationEffect.CompareTo(y.VibrationEffect);
+                if (y.haptics.Vibration != x.haptics.Vibration) {
+                    return x.haptics.Vibration.CompareTo(y.haptics.Vibration);
                 } else {
-                    return x.Amplitude.CompareTo(y.Amplitude);
+                    return x.haptics.Amplitude.CompareTo(y.haptics.Amplitude);
                 }
             } else if (x != null) {
                 return 1;

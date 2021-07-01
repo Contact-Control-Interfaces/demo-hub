@@ -123,8 +123,8 @@ namespace Maestro
             MaestroInteractable mi = result.AddComponent<MaestroInteractable>();
             mi.type = InteractionType.Static;
             mi.IgnoreTaps = true;
-            mi.Amplitude = 255;
-            mi.VibrationEffect = 2;
+            mi.haptics.Amplitude = 255;
+            mi.haptics.Vibration = 2;
             cb.a = a;
             cb.b = b;
             cb.size = size;

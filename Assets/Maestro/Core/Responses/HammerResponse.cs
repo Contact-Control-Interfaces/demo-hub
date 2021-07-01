@@ -32,12 +32,12 @@ namespace Maestro
         {
 
             if (impulseSum.magnitude > minImpulse) {
-                CurrentAmp = (byte)Mathf.Min(255, parent.Amplitude + ((impulseSum.magnitude / (minImpulse * 100)) - 1));
+                CurrentAmp = (byte)Mathf.Min(255, parent.haptics.Amplitude + ((impulseSum.magnitude / (minImpulse * 100)) - 1));
                 CurrentDelay = 0f;
                 Debug.Log("BONK: " + CurrentAmp);
             }
 
-            if (CurrentAmp > parent.Amplitude) {
+            if (CurrentAmp > parent.haptics.Amplitude) {
                 parent.ResponseMotorAmplitude = CurrentAmp;
                 parent.ResponseVibrationEffect = (byte)Mathf.Min(128, (CurrentAmp * 2));
 
@@ -46,10 +46,10 @@ namespace Maestro
                 parent.ResponseMotorAmplitude = parent.ResponseVibrationEffect = null;
             }
 
-            if (CurrentAmp > parent.Amplitude && CurrentDelay > (HitDelay * (StrengthScale + 1))) {
+            if (CurrentAmp > parent.haptics.Amplitude && CurrentDelay > (HitDelay * (StrengthScale + 1))) {
                 CurrentAmp = (byte)(CurrentAmp * DecayRate);
-                if (CurrentAmp < parent.Amplitude)
-                    CurrentAmp = parent.Amplitude;
+                if (CurrentAmp < parent.haptics.Amplitude)
+                    CurrentAmp = parent.haptics.Amplitude;
             }
 
             impulseSum = Vector3.zero;
