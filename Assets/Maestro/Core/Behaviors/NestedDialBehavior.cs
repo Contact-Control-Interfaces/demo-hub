@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Maestro.Vibration;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -45,9 +46,9 @@ namespace Maestro
 
         private MaestroInteractable mi, mi2;
         public float tickHapticDelay = 0.01f;
-        public byte topTickHapticEffect = 1;
-        public byte bottomTickHapticEffect = 5;
-        private byte originalTopEffect, originalBottomEffect;
+        public VibrationEffect topTickHapticEffect = new StrongClick(FourOptions._100);
+        public VibrationEffect bottomTickHapticEffect = new SharpClick(WideThreeOptions._60);
+        private VibrationEffect originalTopEffect, originalBottomEffect;
         private float timeElapsedSinceTopTick, timeElapsedSinceBottomTick;
 
         List<FingerCollider> topFCs, bottomFCs;

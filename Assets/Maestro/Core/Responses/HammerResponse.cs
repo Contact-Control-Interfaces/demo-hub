@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Maestro.Vibration;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,6 @@ namespace Maestro
 
         protected override void GetResponse(MaestroInteractable parent)
         {
-
             if (impulseSum.magnitude > minImpulse) {
                 CurrentAmp = (byte)Mathf.Min(255, parent.haptics.Amplitude + ((impulseSum.magnitude / (minImpulse * 100)) - 1));
                 CurrentDelay = 0f;
@@ -39,11 +39,10 @@ namespace Maestro
 
             if (CurrentAmp > parent.haptics.Amplitude) {
                 parent.ResponseMotorAmplitude = CurrentAmp;
-                parent.ResponseVibrationEffect = (byte)Mathf.Min(128, (CurrentAmp * 2));
-
-
+                parent.ResponseVibrationEffect = new StrongBuzz();
             } else {
-                parent.ResponseMotorAmplitude = parent.ResponseVibrationEffect = null;
+                parent.ResponseMotorAmplitude = null;
+                parent.ResponseVibrationEffect = null;
             }
 
             if (CurrentAmp > parent.haptics.Amplitude && CurrentDelay > (HitDelay * (StrengthScale + 1))) {

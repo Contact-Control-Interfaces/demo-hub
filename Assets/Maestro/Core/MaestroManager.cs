@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Maestro.Vibration;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Maestro
         public MaestroHand RightHand;
 
         public bool InteractablesOnly = false;
-        public HapticEffect DefaultEffect;
+        public HapticEffect DefaultEffect = new HapticEffect { Amplitude = 110, Vibration = new StrongClick(FourOptions._100) };
 
         public HandSize handSize;
 

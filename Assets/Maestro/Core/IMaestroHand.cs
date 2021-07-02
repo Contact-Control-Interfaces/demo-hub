@@ -1,11 +1,7 @@
-﻿using Maestro;
+﻿using Maestro.Vibration;
 using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEditor;
 
 namespace Maestro
 {
@@ -23,17 +19,33 @@ namespace Maestro
     public struct HapticEffect
     {
         public byte Amplitude;
-        public byte Vibration;
+        [SerializeReference]
+        public VibrationEffect Vibration;
 
         public const byte FORCE_FEEDBACK_MAX_AMPLITUDE = 255;
         public const byte FORCE_FEEDBACK_MIN_AMPLITUDE = 0;
-        
-        public const byte VIBRATION_MAX_ID = 128; //will change when vibration is handled differently
-        public const byte VIBRATION_MIN_ID = 0;
 
+        public int CompareAmplitudesFirst(HapticEffect other)
+        {
+            if (this.Amplitude != other.Amplitude) {
+                return this.Amplitude.CompareTo(other.Amplitude);
+            } else {
+                // TODO this comparison makes no sense
+                return this.Vibration.CompareTo(other.Vibration);
+            }
+        }
 
-
+        public int CompareVibrationEffectsFirst(HapticEffect other)
+        {
+            if (!this.Vibration.Equals(other.Vibration)) {
+                // TODO this comparison makes no sense
+                return this.Vibration.CompareTo(other.Vibration);
+            } else {
+                return this.Amplitude.CompareTo(other.Amplitude);
+            }
+        }
     }
+
     [Serializable]
     public struct HandSize
     {
@@ -41,6 +53,7 @@ namespace Maestro
         public float MiddleSize;
         public float KnuckleSize;
     }
+
     [Serializable]
     public struct HandTransforms
     {
@@ -60,7 +73,6 @@ namespace Maestro
         public Transform RingKnuckle;
         public Transform LittleKnuckle;
         public Transform PalmBase;
-
     }
 
     public struct MaestroHapticContext
@@ -71,11 +83,11 @@ namespace Maestro
         public byte? RingAmplitude { get; set; }
         public byte? LittleAmplitude { get; set; }
 
-        public byte? ThumbVibrationEffect { get; set; }
-        public byte? IndexVibrationEffect { get; set; }
-        public byte? MiddleVibrationEffect { get; set; }
-        public byte? RingVibrationEffect { get; set; }
-        public byte? LittleVibrationEffect { get; set; }
+        public VibrationEffect ThumbVibrationEffect { get; set; }
+        public VibrationEffect IndexVibrationEffect { get; set; }
+        public VibrationEffect MiddleVibrationEffect { get; set; }
+        public VibrationEffect RingVibrationEffect { get; set; }
+        public VibrationEffect LittleVibrationEffect { get; set; }
 
         public void SetAllAmplitudes(byte? amplitude)
         {
@@ -86,7 +98,7 @@ namespace Maestro
             LittleAmplitude = amplitude;
         }
 
-        public void SetAllVibrationEffects(byte? vibrationEffect)
+        public void SetAllVibrationEffects(VibrationEffect vibrationEffect)
         {
             ThumbVibrationEffect = vibrationEffect;
             IndexVibrationEffect = vibrationEffect;
@@ -108,7 +120,7 @@ namespace Maestro
             }
         }
 
-        public void SetVibrationEffectFromIndex(MaestroIndex index, byte? vibrationEffect)
+        public void SetVibrationEffectFromIndex(MaestroIndex index, VibrationEffect vibrationEffect)
         {
             switch (index.finger) {
                 default: Debug.LogWarning(string.Format("Unimplemented index {0}!", index)); break; /* TODO add other hand positions */

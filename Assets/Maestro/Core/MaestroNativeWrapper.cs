@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Maestro.Vibration;
 
 namespace Maestro
 {
@@ -32,19 +33,19 @@ namespace Maestro
          * Vibration endpoints
          */
         [DllImport("MaestroAPI")]
-        public static extern void set_thumb_vibration_effect(IntPtr maestroPtr, byte amplitude);
+        public static extern void set_thumb_vibration_effect(IntPtr maestroPtr, byte effectCode);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_index_vibration_effect(IntPtr maestroPtr, byte amplitude);
+        public static extern void set_index_vibration_effect(IntPtr maestroPtr, byte effectCode);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_middle_vibration_effect(IntPtr maestroPtr, byte amplitude);
+        public static extern void set_middle_vibration_effect(IntPtr maestroPtr, byte effectCode);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_ring_vibration_effect(IntPtr maestroPtr, byte amplitude);
+        public static extern void set_ring_vibration_effect(IntPtr maestroPtr, byte effectCode);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_little_vibration_effect(IntPtr maestroPtr, byte amplitude);
+        public static extern void set_little_vibration_effect(IntPtr maestroPtr, byte effectCode);
 
         public delegate void MaestroMutator(IntPtr maestroPtr, byte amplitude);
 
@@ -57,16 +58,16 @@ namespace Maestro
             set_little_motor_amplitude(maestroPtr, amplitude);
         }
 
-        public static void SetAllVibrationEffects(IntPtr maestroPtr, byte effect)
+        public static void SetAllVibrationEffects(IntPtr maestroPtr, VibrationEffect effect)
         {
-            set_thumb_vibration_effect(maestroPtr, effect);
-            set_index_vibration_effect(maestroPtr, effect);
-            set_middle_vibration_effect(maestroPtr, effect);
-            set_ring_vibration_effect(maestroPtr, effect);
-            set_little_vibration_effect(maestroPtr, effect);
+            set_thumb_vibration_effect(maestroPtr, effect.Value);
+            set_index_vibration_effect(maestroPtr, effect.Value);
+            set_middle_vibration_effect(maestroPtr, effect.Value);
+            set_ring_vibration_effect(maestroPtr, effect.Value);
+            set_little_vibration_effect(maestroPtr, effect.Value);
         }
 
-        public static void SetAllHaptics(IntPtr maestroPtr, byte amplitude, byte vibrationEffect)
+        public static void SetAllHaptics(IntPtr maestroPtr, byte amplitude, VibrationEffect vibrationEffect)
         {
             SetAllAmplitudes(maestroPtr, amplitude);
             SetAllVibrationEffects(maestroPtr, vibrationEffect);
@@ -82,11 +83,11 @@ namespace Maestro
             TrySetMutator(maestroPtr, set_little_motor_amplitude, context.LittleAmplitude, lastContext.LittleAmplitude);
 
             // All vibration effects
-            TrySetMutator(maestroPtr, set_thumb_vibration_effect, context.ThumbVibrationEffect, lastContext.ThumbVibrationEffect);
-            TrySetMutator(maestroPtr, set_index_vibration_effect, context.IndexVibrationEffect, lastContext.IndexVibrationEffect);
-            TrySetMutator(maestroPtr, set_middle_vibration_effect, context.MiddleVibrationEffect, lastContext.MiddleVibrationEffect);
-            TrySetMutator(maestroPtr, set_ring_vibration_effect, context.RingVibrationEffect, lastContext.RingVibrationEffect);
-            TrySetMutator(maestroPtr, set_little_vibration_effect, context.LittleVibrationEffect, lastContext.LittleVibrationEffect);
+            TrySetVibrationMutator(maestroPtr, set_thumb_vibration_effect, context.ThumbVibrationEffect, lastContext.ThumbVibrationEffect);
+            TrySetVibrationMutator(maestroPtr, set_index_vibration_effect, context.IndexVibrationEffect, lastContext.IndexVibrationEffect);
+            TrySetVibrationMutator(maestroPtr, set_middle_vibration_effect, context.MiddleVibrationEffect, lastContext.MiddleVibrationEffect);
+            TrySetVibrationMutator(maestroPtr, set_ring_vibration_effect, context.RingVibrationEffect, lastContext.RingVibrationEffect);
+            TrySetVibrationMutator(maestroPtr, set_little_vibration_effect, context.LittleVibrationEffect, lastContext.LittleVibrationEffect);
         }
 
         private static void TrySetMutator(IntPtr maestroPtr, MaestroMutator mutator, byte? value, byte? previousValue)
@@ -96,6 +97,15 @@ namespace Maestro
                 mutator(maestroPtr, value.Value);
             } else if (previousValue.HasValue) {
                 // Turn off haptics if there's no longer a value
+                mutator(maestroPtr, 0);
+            }
+        }
+
+        private static void TrySetVibrationMutator(IntPtr maestroPtr, MaestroMutator mutator, VibrationEffect value, VibrationEffect previousValue)
+        {
+            if (value != null && !value.Equals(VibrationEffect.None)) {
+                mutator(maestroPtr, value.Value);
+            } else if (previousValue != null && !previousValue.Equals(VibrationEffect.None)) {
                 mutator(maestroPtr, 0);
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Maestro;
+using Maestro.Vibration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Maestro
         //override values
         public HandSize handSizeOverride;
         public bool interactablesOnlyOverride = false;
-        public HapticEffect defaultEffectOverride = new HapticEffect { Amplitude = 115, Vibration = 3 };
+        public HapticEffect defaultEffectOverride = new HapticEffect { Amplitude = 115, Vibration = new StrongClick(FourOptions._100) };
         public FlatnessChecker flatnessCheckerOverride;
         public LayerMask objectLayerOverride;
         public float palmMeshWaitOverride = 0.1f;
