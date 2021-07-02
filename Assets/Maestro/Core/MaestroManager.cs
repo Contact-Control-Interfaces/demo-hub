@@ -6,8 +6,8 @@ namespace Maestro
 {
     public class MaestroManager : MonoBehaviour
     {
-        public MaestroHandV2 LeftHand;
-        public MaestroHandV2 RightHand;
+        public MaestroHand LeftHand;
+        public MaestroHand RightHand;
 
         public bool InteractablesOnly = false;
         public HapticEffect DefaultEffect;

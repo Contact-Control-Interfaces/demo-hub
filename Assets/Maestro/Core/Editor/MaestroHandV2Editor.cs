@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Maestro
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(MaestroHandV2))]
+    [CustomEditor(typeof(MaestroHand))]
     public class MaestroHandV2Editor : Editor
     {
         private bool showHandConfig = false;
@@ -69,7 +69,7 @@ namespace Maestro
 
         public override void OnInspectorGUI()
         {
-            MaestroHandV2 hand = (MaestroHandV2)target;
+            MaestroHand hand = (MaestroHand)target;
 
             EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
             settingsOverride.boolValue = EditorGUILayout.Toggle("Override Settings", settingsOverride.boolValue);
@@ -84,7 +84,7 @@ namespace Maestro
             if (displayOverrideSettings)
             {
                 EditorGUILayout.PropertyField(whichHand);
-                otherHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Other Hand", otherHand.objectReferenceValue, typeof(MaestroHandV2), allowSceneObjects: true);
+                otherHand.objectReferenceValue = (MaestroHand)EditorGUILayout.ObjectField("Other Hand", otherHand.objectReferenceValue, typeof(MaestroHand), allowSceneObjects: true);
             }
             EditorGUILayout.Space();
 

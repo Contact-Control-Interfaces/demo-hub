@@ -673,48 +673,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whichHand: 1
-  otherHand: {fileID: 9155768824330773919}
-  ThumbTip: {fileID: 7740437489889258344}
-  IndexTip: {fileID: 7740437489105013244}
-  MiddleTip: {fileID: 7740437487986349772}
-  RingTip: {fileID: 7740437486191346912}
-  LittleTip: {fileID: 7740437487099591286}
-  ThumbMiddle: {fileID: 7740437487841449280}
-  IndexMiddle: {fileID: 7740437492644293714}
-  MiddleMiddle: {fileID: 7740437487976005146}
-  RingMiddle: {fileID: 7740437487801986494}
-  LittleMiddle: {fileID: 7740437488860701218}
-  ThumbKnuckle: {fileID: 7740437489952757716}
-  IndexKnuckle: {fileID: 7740437492772347148}
-  MiddleKnuckle: {fileID: 7740437487029934900}
-  RingKnuckle: {fileID: 7740437490069872996}
-  LittleKnuckle: {fileID: 7740437488215164344}
-  PalmBase: {fileID: 7740437492829790262}
-  TipSize: 0.012
-  MiddleSize: 0.013
-  KnuckleSize: 0.014
+  manager: {fileID: 6048082457845810434}
+  settingsOverride: 0
+  handSizeOverride:
+    TipSize: 0
+    MiddleSize: 0
+    KnuckleSize: 0
+  interactablesOnlyOverride: 0
+  defaultEffectOverride:
+    Amplitude: 115
+    Vibration: 3
+  flatnessCheckerOverride: {fileID: 0}
+  objectLayerOverride:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWaitOverride: 0.1
+  tooCloseOverride: 0.1
+  tooFastOverride: 0.2
+  otherHandOverride: {fileID: 9155768824330773919}
+  transforms:
+    ThumbTip: {fileID: 7740437489889258344}
+    IndexTip: {fileID: 7740437489105013244}
+    MiddleTip: {fileID: 7740437487986349772}
+    RingTip: {fileID: 7740437486191346912}
+    LittleTip: {fileID: 7740437487099591286}
+    ThumbMiddle: {fileID: 7740437487841449280}
+    IndexMiddle: {fileID: 7740437492644293714}
+    MiddleMiddle: {fileID: 7740437487976005146}
+    RingMiddle: {fileID: 7740437487801986494}
+    LittleMiddle: {fileID: 7740437488860701218}
+    ThumbKnuckle: {fileID: 7740437489952757716}
+    IndexKnuckle: {fileID: 7740437492772347148}
+    MiddleKnuckle: {fileID: 7740437487029934900}
+    RingKnuckle: {fileID: 7740437490069872996}
+    LittleKnuckle: {fileID: 7740437488215164344}
+    PalmBase: {fileID: 7740437487340936768}
   showPalmMesh: 0
-  palmMeshWait: 0.1
   grabbing: 0
   twoHandGrabbing: 0
   timeSinceGrabbing: 1
   timeSinceTwoHandGrabbing: 1
   timeSinceRelease: 1
-  f1: 0
-  f2: 0
   dist1: 0
   dist2: 0
   ratio1: 0
   ratio2: 0
   ToolRatio: 1.3
   releaseRatio: 1.2
-  tooClose: 0.1
-  tooFast: 0.2
   DestroyFingerRenderersOnSpawn: 0
-  flatnessChecker: {fileID: 8293855149714221657}
-  objectLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &7738933063766383422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1567,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba7be558a4dfba49bd057e1bf1fdc88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeftHand: {fileID: 2902375986208349259}
+  RightHand: {fileID: 9155768824330773919}
+  InteractablesOnly: 0
+  DefaultEffect:
+    Amplitude: 115
+    Vibration: 3
+  handSize:
+    TipSize: 0
+    MiddleSize: 0
+    KnuckleSize: 0
+  flatnessChecker: {fileID: 0}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWait: 0.1
+  tooClose: 0.1
+  tooFast: 0.2
 --- !u!1 &8538023551391940467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,48 +2129,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whichHand: 0
-  otherHand: {fileID: 2902375986208349259}
-  ThumbTip: {fileID: 8535186413576291886}
-  IndexTip: {fileID: 8535186415956861918}
-  MiddleTip: {fileID: 8535186412616079394}
-  RingTip: {fileID: 8535186415131024850}
-  LittleTip: {fileID: 8535186412270783868}
-  ThumbMiddle: {fileID: 8535186413043077834}
-  IndexMiddle: {fileID: 8535186412051602512}
-  MiddleMiddle: {fileID: 8535186415832957920}
-  RingMiddle: {fileID: 8535186414058407534}
-  LittleMiddle: {fileID: 8535186416030872098}
-  ThumbKnuckle: {fileID: 8535186414530347496}
-  IndexKnuckle: {fileID: 8535186413019310162}
-  MiddleKnuckle: {fileID: 8535186413741571696}
-  RingKnuckle: {fileID: 8535186415661136582}
-  LittleKnuckle: {fileID: 8535186414897012250}
-  PalmBase: {fileID: 8535186415990270398}
-  TipSize: 0.012
-  MiddleSize: 0.013
-  KnuckleSize: 0.014
+  manager: {fileID: 6048082457845810434}
+  settingsOverride: 0
+  handSizeOverride:
+    TipSize: 0
+    MiddleSize: 0
+    KnuckleSize: 0
+  interactablesOnlyOverride: 0
+  defaultEffectOverride:
+    Amplitude: 115
+    Vibration: 3
+  flatnessCheckerOverride: {fileID: 0}
+  objectLayerOverride:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWaitOverride: 0.1
+  tooCloseOverride: 0.1
+  tooFastOverride: 0.2
+  otherHandOverride: {fileID: 2902375986208349259}
+  transforms:
+    ThumbTip: {fileID: 8535186413576291886}
+    IndexTip: {fileID: 8535186415956861918}
+    MiddleTip: {fileID: 8535186412616079394}
+    RingTip: {fileID: 8535186415131024850}
+    LittleTip: {fileID: 8535186412270783868}
+    ThumbMiddle: {fileID: 8535186413043077834}
+    IndexMiddle: {fileID: 8535186412051602512}
+    MiddleMiddle: {fileID: 8535186415832957920}
+    RingMiddle: {fileID: 8535186414058407534}
+    LittleMiddle: {fileID: 8535186416030872098}
+    ThumbKnuckle: {fileID: 8535186414530347496}
+    IndexKnuckle: {fileID: 8535186413019310162}
+    MiddleKnuckle: {fileID: 8535186413741571696}
+    RingKnuckle: {fileID: 8535186415661136582}
+    LittleKnuckle: {fileID: 8535186414897012250}
+    PalmBase: {fileID: 8535186413888554466}
   showPalmMesh: 0
-  palmMeshWait: 0.1
   grabbing: 0
   twoHandGrabbing: 0
   timeSinceGrabbing: 1
   timeSinceTwoHandGrabbing: 1
   timeSinceRelease: 1
-  f1: 0
-  f2: 0
   dist1: 0
   dist2: 0
   ratio1: 0
   ratio2: 0
   ToolRatio: 1.3
   releaseRatio: 1.2
-  tooClose: 0.1
-  tooFast: 0.2
   DestroyFingerRenderersOnSpawn: 0
-  flatnessChecker: {fileID: 8293855148733532447}
-  objectLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &8538449609121082484
 GameObject:
   m_ObjectHideFlags: 0
