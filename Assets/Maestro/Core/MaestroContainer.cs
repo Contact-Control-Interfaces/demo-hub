@@ -65,7 +65,7 @@ namespace Maestro
     {
         /* should be replaced with a IMaestroHand */
         [HideInInspector]
-        public MaestroHandV2 parent;
+        public MaestroHand parent;
 
         private Dictionary<WhichFinger, FingerContainer> fingers;
 

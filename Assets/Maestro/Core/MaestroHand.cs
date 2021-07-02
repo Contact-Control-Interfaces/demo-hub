@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Maestro
 {
-    public class MaestroHandV2 : IMaestroHand
+    public class MaestroHand : IMaestroHand
     {
         public MaestroManager manager;
         public bool settingsOverride = false;
@@ -22,7 +22,7 @@ namespace Maestro
         public float tooCloseOverride = 0.1f;
         public float tooFastOverride = 0.2f;
         //whichHand from IMaestroHand
-        public MaestroHandV2 otherHandOverride;
+        public MaestroHand otherHandOverride;
 
         //inherited values
         private HandSize handSize
@@ -116,7 +116,7 @@ namespace Maestro
             }
         }
 
-        public MaestroHandV2 otherHand
+        public MaestroHand otherHand
         {
             get
             {

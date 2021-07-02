@@ -54,8 +54,8 @@ namespace Maestro
             MaestroManager manager = (MaestroManager)target;
 
             EditorGUILayout.LabelField("Main Configuration2", EditorStyles.boldLabel);
-            leftHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Left Hand", manager.LeftHand, typeof(MaestroHandV2), allowSceneObjects: true);
-            rightHand.objectReferenceValue = (MaestroHandV2)EditorGUILayout.ObjectField("Right Hand", manager.RightHand, typeof(MaestroHandV2), allowSceneObjects: true);
+            leftHand.objectReferenceValue = (MaestroHand)EditorGUILayout.ObjectField("Left Hand", manager.LeftHand, typeof(MaestroHand), allowSceneObjects: true);
+            rightHand.objectReferenceValue = (MaestroHand)EditorGUILayout.ObjectField("Right Hand", manager.RightHand, typeof(MaestroHand), allowSceneObjects: true);
             EditorGUILayout.Space();
 
 
