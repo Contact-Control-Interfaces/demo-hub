@@ -305,8 +305,9 @@ MonoBehaviour:
     KnuckleSize: 0.012
   interactablesOnlyOverride: 0
   defaultEffectOverride:
-    Amplitude: 115
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   flatnessCheckerOverride: {fileID: 0}
   objectLayerOverride:
     serializedVersion: 2
@@ -345,6 +346,21 @@ MonoBehaviour:
   ToolRatio: 1.3
   releaseRatio: 1.2
   DestroyFingerRenderersOnSpawn: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &3841773042947294654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,8 +2213,9 @@ MonoBehaviour:
     KnuckleSize: 0.012
   interactablesOnlyOverride: 0
   defaultEffectOverride:
-    Amplitude: 115
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   flatnessCheckerOverride: {fileID: 0}
   objectLayerOverride:
     serializedVersion: 2
@@ -2237,6 +2254,21 @@ MonoBehaviour:
   ToolRatio: 1.3
   releaseRatio: 1.2
   DestroyFingerRenderersOnSpawn: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &3842650847711844018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,8 +2484,9 @@ MonoBehaviour:
   RightHand: {fileID: 3842647507836374505}
   InteractablesOnly: 0
   DefaultEffect:
-    Amplitude: 135
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   handSize:
     TipSize: 0.012
     MiddleSize: 0.012
@@ -2465,6 +2498,21 @@ MonoBehaviour:
   palmMeshWait: 0.1
   tooClose: 0.1
   tooFast: 0.2
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &3843091711313633735
 GameObject:
   m_ObjectHideFlags: 0
@@ -3081,6 +3129,10 @@ PrefabInstance:
       value: Attachment Hands
       objectReference: {fileID: 0}
     - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0107165575
       objectReference: {fileID: 0}
@@ -3091,6 +3143,10 @@ PrefabInstance:
     - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.3171697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3105,14 +3161,6 @@ PrefabInstance:
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4139101302111182, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -3125,12 +3173,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4151435120617084, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.6746938
-      objectReference: {fileID: 0}
-    - target: {fileID: 4151435120617084, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20218208
+      objectReference: {fileID: 0}
+    - target: {fileID: 4151435120617084, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6746938
       objectReference: {fileID: 0}
     - target: {fileID: 4151435120617084, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3153,20 +3201,20 @@ PrefabInstance:
       value: -0.23064542
       objectReference: {fileID: 0}
     - target: {fileID: 4632168178802062, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.19129351
-      objectReference: {fileID: 0}
-    - target: {fileID: 4632168178802062, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.7036674
       objectReference: {fileID: 0}
-    - target: {fileID: 4901869794248370, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.6746938
+    - target: {fileID: 4632168178802062, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.19129351
       objectReference: {fileID: 0}
     - target: {fileID: 4901869794248370, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2234729
+      objectReference: {fileID: 0}
+    - target: {fileID: 4901869794248370, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6746938
       objectReference: {fileID: 0}
     - target: {fileID: 4901869794248370, guid: 80001c6c93c5068488198a82e151e3ff, type: 3}
       propertyPath: m_LocalPosition.z

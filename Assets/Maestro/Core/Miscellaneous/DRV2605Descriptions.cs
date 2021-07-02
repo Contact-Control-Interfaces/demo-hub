@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Maestro
+namespace Maestro.Vibration
 {
     public static class DRV2605Descriptions
     {

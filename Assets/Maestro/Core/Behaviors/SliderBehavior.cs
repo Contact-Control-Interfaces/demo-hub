@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maestro.Vibration;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,7 +75,7 @@ namespace Maestro
 
         public void setInteractableEffect(MaestroInteractable mi)
         {
-            mi.setEffectFromScale(value);
+            mi.haptics.Vibration = VibrationEffect.ConstructEffect((byte)(value * 128));
         }
 
         public void setTextMesh(TextMesh tm)

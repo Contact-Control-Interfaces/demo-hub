@@ -161,8 +161,6 @@ MonoBehaviour:
   BottomDialTicks: 12
   BottomDialTick: 0
   tickHapticDelay: 0.1
-  topTickHapticEffect: 5
-  bottomTickHapticEffect: 5
 --- !u!1 &5149118
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,10 +495,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &19519144
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,40 +840,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &57761328
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &77742116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,10 +1260,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!65 &107686750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1783,10 +1781,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &131365899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,6 +2302,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.1039605
       objectReference: {fileID: 0}
@@ -2299,6 +2318,10 @@ PrefabInstance:
       value: -4.7713795
       objectReference: {fileID: 0}
     - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.7071068
       objectReference: {fileID: 0}
@@ -2309,14 +2332,6 @@ PrefabInstance:
     - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4632484762552814, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198855466677815456, guid: aeca56a1ec7cad248839ab082d71e432,
         type: 3}
@@ -2624,10 +2639,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &173333051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3366,34 +3398,6 @@ PrefabInstance:
       value: Haptics
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.162
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.6926
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.499
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
@@ -3410,12 +3414,64 @@ PrefabInstance:
       value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.162
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6926
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.499
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.70157003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5003184
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -24.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 28.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0034168358
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3426,22 +3482,6 @@ PrefabInstance:
       value: -0.9978097
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.0034168358
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 28.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -180.624
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -24.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.055231184
       objectReference: {fileID: 0}
@@ -3450,20 +3490,12 @@ PrefabInstance:
       value: -6.314
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180.624
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.195
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5003184
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.70157003
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4046,10 +4078,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!65 &283975610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4794,10 +4843,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 4
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 3
+        options:
+          id: 1
+    00000001:
+      type: {class: SharpClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 3
+        strength: 7
 --- !u!65 &361697840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4984,10 +5050,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 4
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 3
+        options:
+          id: 1
+    00000001:
+      type: {class: SharpClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 3
+        strength: 7
 --- !u!54 &370797635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5475,10 +5558,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 4
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 3
+        options:
+          id: 1
+    00000001:
+      type: {class: SharpClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 3
+        strength: 7
 --- !u!54 &418979413
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5834,10 +5934,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1 &421086926
 GameObject:
   m_ObjectHideFlags: 0
@@ -6025,10 +6142,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1 &427829388
 GameObject:
   m_ObjectHideFlags: 0
@@ -6987,13 +7121,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
+      propertyPath: m_Range
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -7002,7 +7131,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_BounceIntensity
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
@@ -7012,12 +7146,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Range
-      value: 0.5
+      propertyPath: m_DrawHalo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_DrawHalo
+      propertyPath: m_BounceIntensity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
@@ -7037,8 +7171,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_AngularYZDrive.positionDamper
-      value: 0.1
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.68411285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.2940875
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -7047,18 +7186,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.6841126
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 1.2940875
+      propertyPath: m_AngularYZDrive.positionDamper
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: IgnoreTaps
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Amplitude
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options
+      value: Assembly-CSharp Maestro.Vibration.StrongClick/Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.WhichType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.TakesOptions
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.strength
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4227475243247330218, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -7077,6 +7241,26 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8aaee2b3b9bbd7c4599eefc3dfb00ea0, type: 2}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.8571432
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.857143
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.8571432
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.103998914
       objectReference: {fileID: 0}
@@ -7089,6 +7273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.80416745
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -7107,16 +7296,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.80416745
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.030000001
       objectReference: {fileID: 0}
@@ -7129,21 +7308,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 72.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.8571432
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.857143
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.8571432
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2cde2e0ee7cdf545a634fe732ba2247, type: 3}
@@ -7657,10 +7821,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!4 &563477506
 Transform:
   m_ObjectHideFlags: 0
@@ -8091,10 +8272,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &586049837
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8475,10 +8673,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 254
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!136 &662211091
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8880,40 +9095,12 @@ PrefabInstance:
       value: Nail 1
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_TagString
-      value: Haptics
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Name
       value: Nail 1 Head
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
+    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_TagString
+      value: Haptics
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_RootOrder
@@ -8932,12 +9119,40 @@ PrefabInstance:
       value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
+      propertyPath: m_LocalPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -9321,8 +9536,6 @@ MonoBehaviour:
   BottomDialTicks: 12
   BottomDialTick: 0
   tickHapticDelay: 0.1
-  topTickHapticEffect: 5
-  bottomTickHapticEffect: 5
 --- !u!1 &730559420
 GameObject:
   m_ObjectHideFlags: 0
@@ -9412,6 +9625,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3582898
       objectReference: {fileID: 0}
@@ -9424,6 +9641,10 @@ PrefabInstance:
       value: 0.82226825
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5254748
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -9434,14 +9655,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5254748
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b52b39a5a5dcfe645a76a7db80c47e2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -9510,10 +9723,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 30
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 30
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!114 &731855807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9556,6 +9783,169 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!43 &744685716
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 24
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: 0, y: 0.01, z: 0}
+      m_Extent: {x: 1.65, y: 0, z: 1.275}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000004000100010004000500010005000200020005000600020006000300030006000700030007000000000007000400
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 28
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 288
+    _typelessdata: 0000c03f0ad7233c000090bf000000000000803f0000803f0000803f00000000000000000000c0bf0ad7233c000090bf000000000000803f0000803f0000803f0000803f000000000000c0bf0ad7233c0000903f000000000000803f0000803f0000803f00000000000000000000c03f0ad7233c0000903f000000000000803f0000803f0000803f0000803f000000003333d33f0ad7233c3333a3bf000000000000803f0000803f00000000000000000000803f3333d3bf0ad7233c3333a3bf000000000000803f0000803f000000000000803f0000803f3333d3bf0ad7233c3333a33f000000000000803f0000803f00000000000000000000803f3333d33f0ad7233c3333a33f000000000000803f0000803f000000000000803f0000803f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0.01, z: 0}
+    m_Extent: {x: 1.65, y: 0, z: 1.275}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &747375324
 GameObject:
   m_ObjectHideFlags: 0
@@ -9904,10 +10294,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &773655853
 GameObject:
   m_ObjectHideFlags: 0
@@ -10093,10 +10500,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &773655858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10509,10 +10933,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &791436465
 GameObject:
   m_ObjectHideFlags: 0
@@ -10745,10 +11186,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1 &800188928
 GameObject:
   m_ObjectHideFlags: 0
@@ -11323,10 +11781,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!65 &821703810
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11619,10 +12094,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &826433833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11919,10 +12411,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &857345422
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12164,10 +12670,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &867363992
 GameObject:
   m_ObjectHideFlags: 0
@@ -13517,10 +14040,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &993677313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13794,10 +14331,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1017869094
 GameObject:
   m_ObjectHideFlags: 0
@@ -14235,10 +14789,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!114 &1047385928 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
@@ -14628,10 +15199,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1080314939
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15010,10 +15598,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1086606050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15625,10 +16230,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1115596871
 GameObject:
   m_ObjectHideFlags: 0
@@ -15799,10 +16421,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1129033250
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17093,10 +17732,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1001 &1183641314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17104,6 +17760,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 476754248}
     m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.8095253
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.8095284
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.8095272
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17118,6 +17794,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.066
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6990381
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
         type: 3}
@@ -17136,16 +17817,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6990381
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 179.46
       objectReference: {fileID: 0}
@@ -17158,21 +17829,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.99999
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.8095253
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.8095284
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: c2d9680256716434199e34ad799388c9,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.8095272
       objectReference: {fileID: 0}
     - target: {fileID: -2416733968201007103, guid: c2d9680256716434199e34ad799388c9,
         type: 3}
@@ -17292,6 +17948,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -17304,6 +17976,10 @@ PrefabInstance:
       value: 3.171
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -17314,26 +17990,6 @@ PrefabInstance:
     - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -17647,10 +18303,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &1201734645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17809,6 +18479,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1231944320
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1237773368
 GameObject:
   m_ObjectHideFlags: 0
@@ -17908,10 +18612,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!65 &1237773373
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18122,10 +18843,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!65 &1270044288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18384,10 +19122,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!65 &1276562549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18640,10 +19392,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!65 &1292835836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19101,10 +19870,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1 &1314012358
 GameObject:
   m_ObjectHideFlags: 0
@@ -19466,10 +20252,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1322630356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21077,10 +21880,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!1 &1498577966
 GameObject:
   m_ObjectHideFlags: 0
@@ -21976,10 +22796,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1578708111
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22417,169 +23254,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619299856}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!43 &1629883276
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 24
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 8
-    localAABB:
-      m_Center: {x: 0, y: 0.01, z: 0}
-      m_Extent: {x: 1.65, y: 0, z: 1.275}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000004000100010004000500010005000200020005000600020006000300030006000700030007000000000007000400
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 8
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 28
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 288
-    _typelessdata: 0000c03f0ad7233c000090bf000000000000803f0000803f0000803f00000000000000000000c0bf0ad7233c000090bf000000000000803f0000803f0000803f0000803f000000000000c0bf0ad7233c0000903f000000000000803f0000803f0000803f00000000000000000000c03f0ad7233c0000903f000000000000803f0000803f0000803f0000803f000000003333d33f0ad7233c3333a3bf000000000000803f0000803f00000000000000000000803f3333d3bf0ad7233c3333a3bf000000000000803f0000803f000000000000803f0000803f3333d3bf0ad7233c3333a33f000000000000803f0000803f00000000000000000000803f3333d33f0ad7233c3333a33f000000000000803f0000803f000000000000803f0000803f
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0.01, z: 0}
-    m_Extent: {x: 1.65, y: 0, z: 1.275}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1632102422
 GameObject:
   m_ObjectHideFlags: 0
@@ -22744,10 +23418,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1632346248
 GameObject:
   m_ObjectHideFlags: 0
@@ -23188,10 +23879,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1658620450
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23339,10 +24047,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &1673650977
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23597,10 +24319,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1683806897
 GameObject:
   m_ObjectHideFlags: 0
@@ -23670,10 +24409,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!65 &1683806900
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24050,10 +24806,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!65 &1709450238
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24095,40 +24868,12 @@ PrefabInstance:
       value: Nail 3
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_TagString
-      value: Haptics
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Name
       value: Nail 3 Head
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
+    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_TagString
+      value: Haptics
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_RootOrder
@@ -24147,12 +24892,40 @@ PrefabInstance:
       value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
+      propertyPath: m_LocalPosition.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -24207,13 +24980,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.0552845
+      propertyPath: m_Range
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -24222,7 +24990,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_BounceIntensity
+      propertyPath: m_Color.g
+      value: 0.0552845
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
@@ -24232,12 +25005,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Range
-      value: 0.5
+      propertyPath: m_DrawHalo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_DrawHalo
+      propertyPath: m_BounceIntensity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
@@ -24257,6 +25030,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.68411285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.2940875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.053812563
       objectReference: {fileID: 0}
@@ -24265,20 +25048,40 @@ PrefabInstance:
       propertyPath: m_AngularYZDrive.positionDamper
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.6841126
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 1.2940875
-      objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: IgnoreTaps
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Amplitude
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options
+      value: Assembly-CSharp Maestro.Vibration.StrongClick/Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.WhichType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.TakesOptions
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.strength
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -24290,6 +25093,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8aaee2b3b9bbd7c4599eefc3dfb00ea0, type: 2}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.8571432
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.857143
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.8571432
+      objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24304,6 +25127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.20000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.80416745
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -24322,16 +25150,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.80416745
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.030000001
       objectReference: {fileID: 0}
@@ -24344,21 +25162,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 72.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.8571432
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.857143
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.8571432
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2cde2e0ee7cdf545a634fe732ba2247, type: 3}
@@ -24532,10 +25335,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1724367536
 GameObject:
   m_ObjectHideFlags: 0
@@ -24753,10 +25573,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1730439035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24931,10 +25768,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 40
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 40
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!114 &1740213462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25059,10 +25910,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1745293465
 GameObject:
   m_ObjectHideFlags: 0
@@ -25319,10 +26187,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1754261554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25754,10 +26639,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &1797929364
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25976,40 +26875,12 @@ PrefabInstance:
       value: Nail 2
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_TagString
-      value: Haptics
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Name
       value: Nail 2 Head
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
+    - target: {fileID: 100002, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_TagString
+      value: Haptics
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_RootOrder
@@ -26028,12 +26899,40 @@ PrefabInstance:
       value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 649e0e197f21b304d913c9bc31821585, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -26132,40 +27031,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalPosition.y
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.079
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.028
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.404
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalRotation.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
       propertyPath: m_RootOrder
@@ -26182,6 +27053,34 @@ PrefabInstance:
     - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.079
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.028
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.404
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7b45f41d7762df049931cfb1f1589892, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -26251,10 +27150,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1852339793
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26474,10 +27390,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1861534472
 GameObject:
   m_ObjectHideFlags: 0
@@ -26609,10 +27542,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1861534478
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -27089,10 +28039,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!114 &1900713733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27505,10 +28472,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1959569691
 GameObject:
   m_ObjectHideFlags: 0
@@ -27990,10 +28974,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 2
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &1967554956
 GameObject:
   m_ObjectHideFlags: 0
@@ -28236,10 +29237,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &1969968104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28516,10 +29534,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 115
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 115
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!65 &1972286333
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28622,10 +29654,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &1978193356
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28888,10 +29934,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1978548086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29081,10 +30144,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 175
-  VibrationEffect: 4
+  haptics:
+    Amplitude: 175
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 3
+        options:
+          id: 1
+    00000001:
+      type: {class: SharpClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 3
+        strength: 7
 --- !u!65 &1979507796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29330,34 +30410,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 1276562545}
     m_Modifications:
     - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
@@ -29373,6 +30425,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 2397960, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -29382,20 +30462,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1961790850}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_lineWidth
-      value: 0.25
+      propertyPath: m_endPos.x
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_endPos.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_startPos.x
-      value: 0.5
+      propertyPath: m_lineWidth
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_endPos.x
-      value: -0.5
+      propertyPath: m_startPos.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_lightSaberFactor
@@ -29780,34 +30860,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 2116549549}
     m_Modifications:
     - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
@@ -29823,6 +30875,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436056, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 2397960, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -29832,20 +30912,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1877745783}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_lineWidth
-      value: 0.25
+      propertyPath: m_endPos.x
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_endPos.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_startPos.x
-      value: 0.5
+      propertyPath: m_lineWidth
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
-      propertyPath: m_endPos.x
-      value: -0.5
+      propertyPath: m_startPos.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_lightSaberFactor
@@ -29894,10 +30974,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 254
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &2069607646
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -30437,10 +31534,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!65 &2116549553
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30737,10 +31848,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 220
-  VibrationEffect: 1
+  haptics:
+    Amplitude: 220
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
 --- !u!54 &2129281196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31168,10 +32296,24 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 150
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 150
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!64 &2534866581830457001
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -31378,12 +32520,12 @@ PrefabInstance:
       objectReference: {fileID: 2892570281501133417}
     - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: InteractablesOnly
+      propertyPath: testField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: testField
+      propertyPath: InteractablesOnly
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 259432603621579036, guid: e3952388617c98147b066982f1051e3c,
@@ -31483,13 +32625,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3838261812026777238, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000003149975
+      propertyPath: m_LocalScale.x
+      value: 1.0000011
       objectReference: {fileID: 0}
     - target: {fileID: 3838261812026777238, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0000011
+      propertyPath: m_LocalPosition.y
+      value: 0.00000003149975
       objectReference: {fileID: 0}
     - target: {fileID: 3838279527960959654, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31528,6 +32670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3838467187672963830, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838467187672963830, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.026329987
       objectReference: {fileID: 0}
@@ -31540,11 +32687,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.000000036603453
-      objectReference: {fileID: 0}
-    - target: {fileID: 3838467187672963830, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 3838527099154688014, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31633,13 +32775,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
+      propertyPath: TipSize
+      value: 0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1429035639}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
       propertyPath: otherHand
       value: 
       objectReference: {fileID: 1047385928}
     - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: TipSize
-      value: 0.012
+      propertyPath: whichHand
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31653,93 +32805,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: defaultEffect.Amplitude
-      value: 67
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: defaultEffect.Vibration
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: settingsOverride
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: whichHand
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: manager
-      value: 
-      objectReference: {fileID: 1429035639}
-    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
       propertyPath: showPalmMesh
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
-      propertyPath: objectLayer.m_Bits
-      value: 4
+      propertyPath: settingsOverride
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: manager
-      value: 
-      objectReference: {fileID: 1429035639}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: objectLayer.m_Bits
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: defaultEffect.Amplitude
       value: 67
       objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: defaultEffect.Vibration
       value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841736694086269697, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: defaultEffectOverride.Amplitude
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: settingsOverride
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: interactablesOnlyOverride
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: handSizeOverride.TipSize
-      value: 0.012
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: handSizeOverride.MiddleSize
-      value: 0.012
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: handSizeOverride.KnuckleSize
-      value: 0.012
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842647507836374505, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: otherHandOverride
-      value: 
-      objectReference: {fileID: 2892570281501133417}
     - target: {fileID: 3843091710741201794, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_Name
       value: '[MaestroLeapRigV2]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843091710741201794, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31758,6 +32870,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -31770,16 +32887,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31823,6 +32930,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3844609270230976498, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844609270230976498, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.026329994
       objectReference: {fileID: 0}
@@ -31835,11 +32947,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.000000007401537
-      objectReference: {fileID: 0}
-    - target: {fileID: 3844609270230976498, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0000007
       objectReference: {fileID: 0}
     - target: {fileID: 3844679810612589122, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -31888,6 +32995,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3844942501051699572, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9999989
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844942501051699572, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.018110037
       objectReference: {fileID: 0}
@@ -31900,51 +33012,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -6.9849015e-10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3844942501051699572, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.9999989
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: testField.Amplitude
-      value: 124
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: testField.Vibration
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: InteractablesOnly
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: RightHand
-      value: 
-      objectReference: {fileID: 1047385928}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: LeftHand
-      value: 
-      objectReference: {fileID: 2892570281501133417}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: DefaultEffect.Amplitude
-      value: 67
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: DefaultEffect.Vibration
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
-        type: 3}
-      propertyPath: objectLayer.m_Bits
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3952388617c98147b066982f1051e3c, type: 3}
@@ -32111,8 +33178,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Color.g
-      value: 0
+      propertyPath: m_Range
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32121,18 +33188,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: m_Color.r
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_BounceIntensity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_DrawHalo
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32141,18 +33203,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_Range
-      value: 0.5
+      propertyPath: m_DrawHalo
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+    - target: {fileID: 4227475242172549750, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.48
+      propertyPath: m_BounceIntensity
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242172549751, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32167,7 +33234,12 @@ PrefabInstance:
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.68411255
+      value: 0.6841128
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.2940875
       objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32179,15 +33251,40 @@ PrefabInstance:
       propertyPath: m_AngularYZDrive.positionDamper
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 4227475242389049409, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 1.2940875
-      objectReference: {fileID: 0}
     - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: IgnoreTaps
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Amplitude
+      value: 255
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options
+      value: Assembly-CSharp Maestro.Vibration.StrongClick/Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.WhichType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.TakesOptions
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227475242389049410, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: haptics.Vibration.options.strength
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32199,6 +33296,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8aaee2b3b9bbd7c4599eefc3dfb00ea0, type: 2}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.8571432
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.857143
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.8571432
+      objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32213,6 +33330,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.2000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.80416745
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -32231,16 +33353,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.80416745
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.030000001
       objectReference: {fileID: 0}
@@ -32253,21 +33365,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 72.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.8571432
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.857143
-      objectReference: {fileID: 0}
-    - target: {fileID: 9210343491280802144, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.8571432
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2cde2e0ee7cdf545a634fe732ba2247, type: 3}
@@ -32282,12 +33379,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 57761328}
+      objectReference: {fileID: 1231944320}
     - target: {fileID: 8538023551390764295, guid: 24d135cc9e7ef3b4cbe351339561bba9,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1629883276}
+      objectReference: {fileID: 744685716}
     - target: {fileID: 8538023551391852069, guid: 24d135cc9e7ef3b4cbe351339561bba9,
         type: 3}
       propertyPath: m_Name
@@ -32297,6 +33394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
         type: 3}
@@ -32315,6 +33417,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -32327,16 +33434,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8538023551392102365, guid: 24d135cc9e7ef3b4cbe351339561bba9,
         type: 3}
@@ -32492,10 +33589,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!54 &6149893607499602434
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32613,10 +33724,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!153 &6149893607903414249
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -32769,10 +33894,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!136 &6149893607903414251
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -33048,10 +34187,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Amplitude: 200
-  VibrationEffect: 0
+  haptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
 --- !u!153 &6149893608394108758
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -33619,10 +34772,27 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
-  Amplitude: 255
-  VibrationEffect: 3
+  haptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
   isPersistent: 0
-  persistanceDuration: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 2
 --- !u!54 &8086802961842291053
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -73,6 +73,7 @@ namespace Maestro
 
             EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
             settingsOverride.boolValue = EditorGUILayout.Toggle("Override Settings", settingsOverride.boolValue);
+            settingsOverride.serializedObject.ApplyModifiedProperties();
 
             bool displayOverrideSettings = hand.manager == null ||
                 hand != ((hand.whichHand == WhichHand.RightHand) ? hand.manager.RightHand : hand.manager.LeftHand) ||
@@ -114,9 +115,9 @@ namespace Maestro
             {
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
                 interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnlyOverride);
-                if (!hand.interactablesOnlyOverride)
-                {
+                if (!hand.interactablesOnlyOverride) {
                     EditorGUILayout.PropertyField(defaultEffect, new GUIContent("Default Effect"));
+                    EditorGUILayout.Space();
                 }
             }
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);

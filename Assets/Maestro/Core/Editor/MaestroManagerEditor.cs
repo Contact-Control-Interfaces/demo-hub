@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maestro.Vibration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,9 +85,11 @@ namespace Maestro
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
                 interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), manager.InteractablesOnly);
-                
-                if (!manager.InteractablesOnly)
-                    EditorGUILayout.PropertyField(defaultEffect, new GUIContent("Default Effect"));
+
+                if (!manager.InteractablesOnly) {
+                    EditorGUILayout.PropertyField(defaultEffect);
+                    EditorGUILayout.Space();
+                }
 
                 showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
                 if (showHandConfig)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maestro.Vibration;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,7 +46,7 @@ namespace Maestro
         public TouchEvent onTouch, unTouch;
 
         [Header("Haptics")]
-        public HapticEffect haptics;
+        public HapticEffect haptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
 
         [Header("Special Behavior")]
         public bool isPersistent = false;
@@ -53,7 +54,7 @@ namespace Maestro
 
         [HideInInspector]
         public byte? ResponseMotorAmplitude { private get; set; }
-        public byte? ResponseVibrationEffect { private get; set; }
+        public VibrationEffect ResponseVibrationEffect { private get; set; }
 
         private int oldLayer;
 
@@ -62,7 +63,8 @@ namespace Maestro
             rb = this.GetComponent<Rigidbody>();
             rend = this.GetComponent<Renderer>();
             isGrabbed = false;
-            ResponseMotorAmplitude = ResponseVibrationEffect = null;
+            ResponseMotorAmplitude = null;
+            ResponseVibrationEffect = null;
         }
 
         public void Touch(FingerCollider finger)
@@ -94,7 +96,8 @@ namespace Maestro
         {
             isGrabbed = false;
             this.gameObject.layer = oldLayer;
-            ResponseMotorAmplitude = ResponseVibrationEffect = null;
+            ResponseMotorAmplitude = null;
+            ResponseVibrationEffect = null;
             onRelease.Invoke();
         }
 
@@ -123,28 +126,23 @@ namespace Maestro
             return ResponseMotorAmplitude ?? haptics.Amplitude;
         }
 
-        public byte? getVibrationEffect()
+        public VibrationEffect getVibrationEffect()
         {
             return ResponseVibrationEffect ?? haptics.Vibration;
         }
 
-        public void setHaptics(byte? amp, byte? vib)
+        public void setHaptics(byte? amp, VibrationEffect vib)
         {
             if (amp.HasValue)
                 haptics.Amplitude = amp.Value;
 
-            if (vib.HasValue)
-                haptics.Vibration = vib.Value;
+            if (vib != null)
+                haptics.Vibration = vib;
         }
 
         public void setAmplitudeFromScale(float scale)
         {
             haptics.Amplitude = (byte)(255 * scale);
-        }
-
-        public void setEffectFromScale(float scale)
-        {
-            haptics.Vibration = (byte)(128 * scale);
         }
 
         // Default comparer, TODO
@@ -154,11 +152,7 @@ namespace Maestro
                 return -1;
 
             //TODO add priority
-            if (other.haptics.Amplitude != this.haptics.Amplitude) {
-                return this.haptics.Amplitude.CompareTo(other.haptics.Amplitude);
-            } else {
-                return this.haptics.Vibration.CompareTo(other.haptics.Vibration);
-            }
+            return this.haptics.CompareAmplitudesFirst(other.haptics);
         }
     }
 
@@ -166,17 +160,7 @@ namespace Maestro
     {
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
-            if (y != null && x != null) {
-                if (y.haptics.Amplitude != x.haptics.Amplitude) {
-                    return x.haptics.Amplitude.CompareTo(y.haptics.Amplitude);
-                } else {
-                    return x.haptics.Vibration.CompareTo(y.haptics.Vibration);
-                }
-            } else if (x != null) {
-                return 1;
-            } else {
-                return -1;
-            }
+            return x.haptics.CompareAmplitudesFirst(y.haptics);
         }
     }
 
@@ -184,17 +168,7 @@ namespace Maestro
     {
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
-            if (y != null && x != null) {
-                if (y.haptics.Vibration != x.haptics.Vibration) {
-                    return x.haptics.Vibration.CompareTo(y.haptics.Vibration);
-                } else {
-                    return x.haptics.Amplitude.CompareTo(y.haptics.Amplitude);
-                }
-            } else if (x != null) {
-                return 1;
-            } else {
-                return -1;
-            }
+            return x.haptics.CompareVibrationEffectsFirst(y.haptics);
         }
     }
 }

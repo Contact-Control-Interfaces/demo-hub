@@ -676,13 +676,14 @@ MonoBehaviour:
   manager: {fileID: 6048082457845810434}
   settingsOverride: 0
   handSizeOverride:
-    TipSize: 0
-    MiddleSize: 0
-    KnuckleSize: 0
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   interactablesOnlyOverride: 0
   defaultEffectOverride:
-    Amplitude: 115
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   flatnessCheckerOverride: {fileID: 0}
   objectLayerOverride:
     serializedVersion: 2
@@ -721,6 +722,21 @@ MonoBehaviour:
   ToolRatio: 1.3
   releaseRatio: 1.2
   DestroyFingerRenderersOnSpawn: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &7738933063766383422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,12 +1587,13 @@ MonoBehaviour:
   RightHand: {fileID: 9155768824330773919}
   InteractablesOnly: 0
   DefaultEffect:
-    Amplitude: 115
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   handSize:
-    TipSize: 0
-    MiddleSize: 0
-    KnuckleSize: 0
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   flatnessChecker: {fileID: 0}
   objectLayer:
     serializedVersion: 2
@@ -1584,6 +1601,21 @@ MonoBehaviour:
   palmMeshWait: 0.1
   tooClose: 0.1
   tooFast: 0.2
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &8538023551391940467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,13 +2164,14 @@ MonoBehaviour:
   manager: {fileID: 6048082457845810434}
   settingsOverride: 0
   handSizeOverride:
-    TipSize: 0
-    MiddleSize: 0
-    KnuckleSize: 0
+    TipSize: 0.012
+    MiddleSize: 0.012
+    KnuckleSize: 0.012
   interactablesOnlyOverride: 0
   defaultEffectOverride:
-    Amplitude: 115
-    Vibration: 3
+    Amplitude: 110
+    Vibration:
+      id: 0
   flatnessCheckerOverride: {fileID: 0}
   objectLayerOverride:
     serializedVersion: 2
@@ -2177,6 +2210,21 @@ MonoBehaviour:
   ToolRatio: 1.3
   releaseRatio: 1.2
   DestroyFingerRenderersOnSpawn: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 5
 --- !u!1 &8538449609121082484
 GameObject:
   m_ObjectHideFlags: 0

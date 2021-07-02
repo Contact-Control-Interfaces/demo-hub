@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Maestro.Vibration;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -124,7 +125,7 @@ namespace Maestro
             mi.type = InteractionType.Static;
             mi.IgnoreTaps = true;
             mi.haptics.Amplitude = 255;
-            mi.haptics.Vibration = 2;
+            mi.haptics.Vibration = new StrongClick(FourOptions._60);
             cb.a = a;
             cb.b = b;
             cb.size = size;
