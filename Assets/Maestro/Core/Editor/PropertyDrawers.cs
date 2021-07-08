@@ -34,7 +34,7 @@ namespace Maestro
 
             SerializedProperty vibrationProp = property.FindPropertyRelative("Vibration");
             if (vibrationProp != null) {
-                EditorGUILayout.PropertyField(vibrationProp, GUIContent.none, true);
+                EditorGUILayout.PropertyField(vibrationProp, new GUIContent("Vibration Effect"), true);
             } else {
                 EditorGUILayout.HelpBox("Vibration effect not found!", MessageType.Error);
             }
@@ -85,113 +85,22 @@ namespace Maestro
                 SerializedProperty takesOptionsProp = property.FindPropertyRelative("TakesOptions");
                 SerializedProperty options = property.FindPropertyRelative("options");
 
-                EffectType type;
+                EditorGUI.BeginChangeCheck();
+                EditorGUI.showMixedValue = whichType.hasMultipleDifferentValues;
 
-                // Set this effect to None if it isn't anything already
-                if (!GetValue(whichType, out type)) {
-                    type = EffectType.None;
-                    takesOptionsProp.boolValue = false;
-                    options.managedReferenceValue = null;
-                } else {
-                    EditorGUI.BeginChangeCheck();
-                    EditorGUI.showMixedValue = whichType.hasMultipleDifferentValues;
+                EditorGUILayout.PropertyField(whichType, new GUIContent("Vibration Effect"));
 
-                    EditorGUILayout.PropertyField(whichType, new GUIContent("Vibration Effect"));
-                    if (whichType.hasMultipleDifferentValues)
-                        EditorGUILayout.HelpBox("Multiple effect type values detected! Options not available.", MessageType.Warning, wide: true);
-
-                    // Primary effect type changed, change options to match
-                    if (EditorGUI.EndChangeCheck()) {
-
-                        EffectType newType;
-                        if (GetValue(whichType, whichType.intValue, out newType)) {
-                            type = newType;
-                            UpdateOptions(options, takesOptionsProp, type);
-                            property.serializedObject.ApplyModifiedProperties();
-                        } else {
-                            Debug.LogError("Could not parse VibrationEffect type!");
-                        }
-                    } else if (options != null && (EffectType)whichType.intValue != EffectType.None) {
-                        SerializedProperty optionsType = options.FindPropertyRelative("Type");
-
-                        // Options effect type changed, undo the change
-                        if (optionsType != null && whichType != null && ((optionsType.enumValueIndex != whichType.enumValueIndex)
-                            || (optionsType.hasMultipleDifferentValues && !whichType.hasMultipleDifferentValues))) {
-                            UpdateOptions(options, takesOptionsProp, type);
-                            property.serializedObject.ApplyModifiedProperties();
-                        }
-                    }
-
-                    if (takesOptionsProp.boolValue && !whichType.hasMultipleDifferentValues) {
-                        DisplayOptions(options, type);
-                    }
-                }
+                if (takesOptionsProp.boolValue && !whichType.hasMultipleDifferentValues)
+                    EditorGUILayout.PropertyField(options, new GUIContent("Vibration Options"), true);
+                else if (whichType.hasMultipleDifferentValues)
+                    EditorGUILayout.HelpBox("Multiple effect type values detected! Options not available.", MessageType.Warning, wide: true);
+            
             } else {
-                EditorGUILayout.LabelField("no type found!");
+                EditorGUILayout.HelpBox("No type found!", MessageType.Warning, wide: true);
             }
             EditorGUI.showMixedValue = false;
             EditorGUI.EndProperty();
             property.serializedObject.ApplyModifiedProperties();
-        }
-
-        private void UpdateOptions(SerializedProperty optionsProp, SerializedProperty takesOptionsProp, EffectType type)
-        {
-            EffectOptions newOptions = EffectOptions.ConstructFromType(type);
-            takesOptionsProp.boolValue = newOptions != null;
-            optionsProp.managedReferenceValue = newOptions;
-
-            foreach (object obj in optionsProp.serializedObject.targetObjects)
-            {
-                // This is gross but it works
-                MaestroInteractable interactable = obj as MaestroInteractable;
-                if (interactable != null) {
-                    VibrationEffect vibration = interactable.haptics.Vibration;
-                    vibration.options = EffectOptions.ConstructFromType(type);
-                    continue;
-                }
-
-                MaestroHand hand = obj as MaestroHand;
-                if (hand != null) {
-                    VibrationEffect vibration = hand.defaultEffectOverride.Vibration;
-                    vibration.options = EffectOptions.ConstructFromType(type);
-                }
-            }
-        }
-
-        private void DisplayOptions(SerializedProperty prop, EffectType type)
-        {
-            prop.serializedObject.Update();
-
-            if (prop == null) {
-                EditorGUILayout.LabelField("no options found!");
-                return;
-            }
-
-            SerializedProperty typeProp = prop.FindPropertyRelative("Type");
-            if (typeProp == null) {
-                prop.managedReferenceValue = EffectOptions.ConstructFromType(type);
-            }
-            
-            EditorGUI.showMixedValue = prop.hasMultipleDifferentValues;
-            EditorGUILayout.PropertyField(prop, new GUIContent("Effect Config"), true);
-
-            prop.serializedObject.ApplyModifiedProperties();
-        }
-
-        private bool GetValue<T>(SerializedProperty prop, out T value) where T : struct, Enum
-        {
-            return GetValue(prop, prop.enumValueIndex, out value);
-        }
-
-        private bool GetValue<T>(SerializedProperty prop, int index, out T value) where T : struct, Enum
-        {
-            if (index < 0 || index >= prop.enumNames.Length) {
-                value = default(T); 
-                return false;
-            }
-            bool success = Enum.TryParse<T>(prop.enumNames[index], out T result);
-            value = result;
-            return success;
         }
     }
 
