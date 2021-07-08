@@ -145,8 +145,42 @@ namespace Maestro.Vibration
     #endregion
 
     [Serializable]
-    public abstract class VibrationEffect : IComparable<VibrationEffect>
+    public abstract class VibrationEffect : IComparable<VibrationEffect>, ISerializationCallbackReceiver
     {
+        #region ISerializationCallbackReceiver impl
+        public void OnBeforeSerialize()
+        {
+            VibrationEffect template = ConstructEffect(this.WhichType);
+            TakesOptions = template.TakesOptions;
+
+            if (TakesOptions) {
+                if (options == null || (options != null && options.Type != this.WhichType)) {
+                    // options are wrong or don't exist,
+                    // need to generate default options
+                    options = template.OptionsFactory();
+                }
+            } else if (options != null) {
+                // remove previous effect's options
+                options = null;
+            }
+
+            if (options != null) {
+                try {
+                    // catch multi-edit causing invalid strength
+                    byte code = options.Value;
+                } catch (NotImplementedException e) {
+                    options = template.OptionsFactory();
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            /* Nothing for now */
+        }
+        #endregion
+
+        #region static
         private static Dictionary<EffectType, byte> _staticValues;
         private static byte GetStaticValue(EffectType type)
         {
@@ -165,67 +199,9 @@ namespace Maestro.Vibration
 
         public static VibrationEffect None = new None();
 
-        private static EffectType[] _allTypes;
-        protected static EffectType[] AllTypes {
-            get {
-                if (_allTypes == null)
-                    _allTypes = (EffectType[])Enum.GetValues(typeof(EffectType));
-
-                return _allTypes;
-            }
-        }
-
-        public override string ToString() { return Description; }
-
-        [SerializeField]
-        protected bool TakesOptions = false;
-
-        protected virtual bool DisplayStrength => true;
-
-        public string Description;
-
-        public byte Value { get { return this.TakesOptions ? options.Value : GetStaticValue(this.WhichType); } }
-
-        public EffectType WhichType;
-
-        public EffectStrength? Strength;
-
-        [SerializeReference]
-        public EffectOptions options;
-
-        internal abstract Func<VibrationEffect> Factory { get; }
-        internal abstract Func<EffectOptions> OptionsFactory { get; }
-
-        internal VibrationEffect(EffectType effectType)
-            : this(effectType, null) { }
-
-        internal VibrationEffect(EffectType effectType, EffectStrength? strength)
-        {
-            this.WhichType = effectType;
-            this.Strength = strength;
-
-            this.TakesOptions = this.OptionsFactory != null;
-            if (!this.TakesOptions)
-                this.options = null;
-        }
-
-        public VibrationEffect(EffectOptions options)
-            : this(options.Type, options.Strength)
-        {
-            this.options = options;
-        }
-
-        public int CompareTo(VibrationEffect other)
-        {
-            if (other != null) {
-                return this.Value.CompareTo(other.Value);
-            }
-            return -1;
-        }
-
         public static VibrationEffect ConstructEffect(byte effectCode)
         {
-            switch(effectCode) {
+            switch (effectCode) {
                 default: return new None();
             }
         }
@@ -235,7 +211,7 @@ namespace Maestro.Vibration
             VibrationEffect result = null;
 
             switch (type) {
-                default: 
+                default:
                     throw new NotImplementedException(string.Format("Unable to construct {0}!", type.ToString()));
                 case EffectType.None: result = new None(); break;
                 case EffectType.MediumClick: result = new MediumClick(); break;
@@ -295,6 +271,57 @@ namespace Maestro.Vibration
                 case EffectType.SharpTick: return "Sharp Tick";
                 case EffectType.DoubleSharpTick: return "Double Sharp Tick";
             }
+        }
+        #endregion
+
+        public override string ToString() { return Description; }
+
+        [SerializeField]
+        [HideInInspector]
+        protected bool TakesOptions = false;
+
+        protected virtual bool DisplayStrength => true;
+
+        [HideInInspector]
+        public string Description;
+
+        public byte Value { get { return this.TakesOptions ? options.Value : GetStaticValue(this.WhichType); } }
+
+        public EffectType WhichType;
+
+        public EffectStrength? Strength;
+
+        [SerializeReference]
+        public EffectOptions options;
+
+        internal abstract Func<VibrationEffect> Factory { get; }
+        internal abstract Func<EffectOptions> OptionsFactory { get; }
+
+        internal VibrationEffect(EffectType effectType)
+            : this(effectType, null) { }
+
+        internal VibrationEffect(EffectType effectType, EffectStrength? strength)
+        {
+            this.WhichType = effectType;
+            this.Strength = strength;
+
+            this.TakesOptions = this.OptionsFactory != null;
+            if (!this.TakesOptions)
+                this.options = null;
+        }
+
+        public VibrationEffect(EffectOptions options)
+            : this(options.Type, options.Strength)
+        {
+            this.options = options;
+        }
+
+        public int CompareTo(VibrationEffect other)
+        {
+            if (other != null) {
+                return this.Value.CompareTo(other.Value);
+            }
+            return -1;
         }
 
         public override bool Equals(object obj)
