@@ -84,8 +84,7 @@ namespace Maestro
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
-                interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), manager.InteractablesOnly);
-
+                EditorGUILayout.PropertyField(interactablesOnly, new GUIContent("Interactables Only", "Will only play effects from MaestroInteractables"));
                 if (!manager.InteractablesOnly) {
                     EditorGUILayout.PropertyField(defaultEffect);
                     EditorGUILayout.Space();
