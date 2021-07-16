@@ -227,6 +227,15 @@ namespace Maestro
 
             netImpulse += c.impulse;
         }
+
+        private void OnCollisionStay(Collision c)
+        {
+            if (TryGetInteractable(c.collider, out MaestroInteractable interactable))
+            {
+                if (AllTouching.Contains(c.collider))
+                    interactable.WhileTouch(this);
+            }
+        }
         #endregion
 
         public void AddAudioSource()

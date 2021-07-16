@@ -43,7 +43,7 @@ namespace Maestro
         [Header("Events")]
         public UnityEvent onGrab;
         public UnityEvent onRelease;
-        public TouchEvent onTouch, unTouch;
+        public TouchEvent onTouch, unTouch, whileTouch;
 
         [Header("Haptics")]
         public HapticEffect haptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
@@ -75,6 +75,12 @@ namespace Maestro
             //{ //index == 1 means index finger
             //    onPoked.Invoke();
             //}
+        }
+
+        public void WhileTouch(FingerCollider finger)
+        {
+            if (whileTouch != null)
+                whileTouch.Invoke(finger);
         }
 
         public void Untouch(FingerCollider finger)
