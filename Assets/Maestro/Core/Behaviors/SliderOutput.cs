@@ -2,11 +2,12 @@
 using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 namespace Maestro
 {
-
-	[CustomEditor(typeof(SliderOutput))]
+#if UNITY_EDITOR
+    [CustomEditor(typeof(SliderOutput))]
 	public class SliderOutputEditor : Editor
 	{
 
