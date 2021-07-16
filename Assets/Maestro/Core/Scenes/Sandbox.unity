@@ -495,6 +495,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -840,6 +843,225 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &44294682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44294683}
+  - component: {fileID: 44294689}
+  - component: {fileID: 44294688}
+  - component: {fileID: 44294687}
+  - component: {fileID: 44294685}
+  - component: {fileID: 44294684}
+  - component: {fileID: 44294686}
+  - component: {fileID: 44294690}
+  m_Layer: 0
+  m_Name: M Sphere (6)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44294683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.822, y: 1.055, z: -1.2711}
+  m_LocalScale: {x: 0.10000004, y: 0.099999994, z: 0.10000004}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44294684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &44294685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 44294690}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 44294690}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  haptics:
+    Amplitude: 0
+    Vibration:
+      id: 0
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 1
+    00000001:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 1
+        strength: 7
+--- !u!54 &44294686
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!135 &44294687
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &44294688
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 92ad1c57de716484c8cd38e4f1fcd925, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &44294689
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &44294690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44294682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248bb817d2711d4682e4750bf850fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmplitude: 0.204
 --- !u!1 &77742116
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +1094,169 @@ Transform:
   m_Father: {fileID: 3248338879568347667}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!43 &82776829
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 18
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 020001000000030001000200040003000200050004000200040005000600060005000700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 32
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 320
+    _typelessdata: 0000003f0000000000000000000000bf00000000000000000000803f0000803f0000803f0000803f0000003f0000000000000000000000bf00000000000000000000803f000000000000803f000080bf0000003f0000000000000000000000bf00000000000000000000003f0000803f000000000000803f0000003f0000000000000000000000bf00000000000000000000003f0000000000000000000080bf000000bf00000000000000000000003f00000000000000000000003f00000000000000000000803f000000bf00000000000000000000003f00000000000000000000003f0000803f00000000000080bf000000bf00000000000000000000003f000000000000000000000000000000000000803f0000803f000000bf00000000000000000000003f0000000000000000000000000000803f0000803f000080bf
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &84441483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1643,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -1779,6 +2167,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -2338,6 +2729,11 @@ PrefabInstance:
       propertyPath: simulationSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 199892223435775468, guid: aeca56a1ec7cad248839ab082d71e432,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeca56a1ec7cad248839ab082d71e432, type: 3}
 --- !u!1 &164854842
@@ -2637,6 +3033,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -4078,6 +4477,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 115
     Vibration:
@@ -4214,80 +4616,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288266709}
   m_CullTransparentMesh: 0
---- !u!21 &292984908
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: VolumetricLineMaterial(Clone)
-  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _Glossiness: 0.5
-    - _LightSaberFactor: 0.95
-    - _LineScale: 0.14291666
-    - _LineWidth: 0.25
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 0, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &318054666
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,6 +4805,222 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 523979090}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &332693353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 332693354}
+  - component: {fileID: 332693360}
+  - component: {fileID: 332693359}
+  - component: {fileID: 332693358}
+  - component: {fileID: 332693356}
+  - component: {fileID: 332693355}
+  - component: {fileID: 332693357}
+  - component: {fileID: 332693361}
+  m_Layer: 0
+  m_Name: M Sphere (2)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &332693354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.867, y: 0.918, z: -1.3744277}
+  m_LocalScale: {x: 0.10000004, y: 0.099999994, z: 0.10000004}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &332693355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &332693356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 332693361}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 332693361}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  haptics:
+    Amplitude: 0
+    Vibration:
+      id: 0
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
+--- !u!54 &332693357
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!135 &332693358
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &332693359
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: acb7ddf77f21276428723b0a1e8e90f5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &332693360
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &332693361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332693353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248bb817d2711d4682e4750bf850fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmplitude: 0.076
 --- !u!1 &333924420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4843,6 +5387,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 175
     Vibration:
@@ -4854,16 +5401,13 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
-        WhichType: 3
+        WhichType: 9
         options:
           id: 1
     00000001:
-      type: {class: SharpClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
-      data:
-        Type: 3
-        strength: 7
+      type: {class: , ns: , asm: }
 --- !u!65 &361697840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5048,6 +5592,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -5558,6 +6105,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 175
     Vibration:
@@ -5934,6 +6484,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -6140,6 +6693,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -6385,6 +6941,36 @@ Transform:
   m_Father: {fileID: 103508277}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &443929932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443929933}
+  m_Layer: 0
+  m_Name: VibrationPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &443929933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443929932}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.706}
+  m_LocalScale: {x: 1.3333336, y: 1.3333334, z: 1.3333336}
+  m_Children: []
+  m_Father: {fileID: 819736509}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &450132771
 GameObject:
   m_ObjectHideFlags: 0
@@ -6417,6 +7003,80 @@ Transform:
   m_Father: {fileID: 819736509}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!21 &458716442
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VolumetricLineMaterial(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 0.95
+    - _LineScale: 0.14291666
+    - _LineWidth: 0.25
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &464193936
 GameObject:
   m_ObjectHideFlags: 0
@@ -6617,6 +7277,117 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473327169}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &473448270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 473448271}
+  - component: {fileID: 473448275}
+  - component: {fileID: 473448274}
+  - component: {fileID: 473448273}
+  - component: {fileID: 473448272}
+  m_Layer: 0
+  m_Name: panel_mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &473448271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473448270}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.79673964, y: 0.932, z: -1.2647722}
+  m_LocalScale: {x: 0.09600005, y: 0.096, z: 0.09600005}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &473448272
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473448270}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
+--- !u!54 &473448273
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473448270}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
+--- !u!23 &473448274
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473448270}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b2806430487324c4c87f49b5b6616b1c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &473448275
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473448270}
+  m_Mesh: {fileID: 4300000, guid: df5226331dd6d9a4a9a866628d0bd75d, type: 3}
 --- !u!1 &473898280
 GameObject:
   m_ObjectHideFlags: 0
@@ -7550,6 +8321,225 @@ Transform:
   m_Father: {fileID: 1543295263}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &539546009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 539546010}
+  - component: {fileID: 539546015}
+  - component: {fileID: 539546014}
+  - component: {fileID: 539546013}
+  - component: {fileID: 539546012}
+  - component: {fileID: 539546011}
+  - component: {fileID: 539546016}
+  - component: {fileID: 539546017}
+  m_Layer: 0
+  m_Name: M Sphere (1)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &539546010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.867, y: 0.9179999, z: -1.157}
+  m_LocalScale: {x: 0.10000004, y: 0.099999994, z: 0.10000004}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539546011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &539546012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 539546017}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 539546017}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  haptics:
+    Amplitude: 0
+    Vibration:
+      id: 0
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 5
+        strength: 7
+--- !u!135 &539546013
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &539546014
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5e9cca025ac1b4e468c2d56bcd6943d4, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &539546015
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &539546016
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!114 &539546017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539546009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248bb817d2711d4682e4750bf850fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmplitude: 0.072
 --- !u!1 &546724017
 GameObject:
   m_ObjectHideFlags: 0
@@ -7819,6 +8809,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -8272,6 +9265,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 175
     Vibration:
@@ -8671,6 +9667,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -9723,6 +10722,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 30
     Vibration:
@@ -10294,6 +11296,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -10498,6 +11503,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -10933,6 +11941,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -11184,6 +12195,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -11657,6 +12671,7 @@ Transform:
   - {fileID: 1005805235}
   - {fileID: 476754248}
   - {fileID: 103508277}
+  - {fileID: 443929933}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -11779,6 +12794,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -12092,6 +13110,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -12411,6 +13432,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 255
     Vibration:
@@ -12668,6 +13692,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -13058,80 +14085,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!21 &889263843
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: VolumetricLineMaterial(Clone)
-  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _Glossiness: 0.5
-    - _LightSaberFactor: 0.95
-    - _LineScale: 0.14291666
-    - _LineWidth: 0.25
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 0, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &899018007
 GameObject:
   m_ObjectHideFlags: 0
@@ -13630,6 +14583,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &945698149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 945698150}
+  m_Layer: 0
+  m_Name: VibrationDemo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &945698150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945698149}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5550419, y: 0.226, z: 1.2847723}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 539546010}
+  - {fileID: 332693354}
+  - {fileID: 2060430486}
+  - {fileID: 1220996611}
+  - {fileID: 44294683}
+  - {fileID: 473448271}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &952283761
 GameObject:
   m_ObjectHideFlags: 0
@@ -14040,6 +15029,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 255
     Vibration:
@@ -14329,6 +15321,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -14789,6 +15784,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -15199,6 +16197,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 220
     Vibration:
@@ -15596,6 +16597,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -16230,6 +17234,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -16419,6 +17426,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -17732,6 +18742,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -18303,6 +19316,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 255
     Vibration:
@@ -18398,6 +19414,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201734642}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &1213307048
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VolumetricLineMaterial(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 0.95
+    - _LineScale: 0.14291666
+    - _LineWidth: 0.25
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1216221979
 GameObject:
   m_ObjectHideFlags: 0
@@ -18479,6 +19569,222 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1220996610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220996611}
+  - component: {fileID: 1220996617}
+  - component: {fileID: 1220996616}
+  - component: {fileID: 1220996615}
+  - component: {fileID: 1220996613}
+  - component: {fileID: 1220996612}
+  - component: {fileID: 1220996614}
+  - component: {fileID: 1220996618}
+  m_Layer: 0
+  m_Name: M Sphere (4)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1220996611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.7877, y: 1.177, z: -1.3744277}
+  m_LocalScale: {x: 0.10000004, y: 0.099999994, z: 0.10000004}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1220996612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1220996613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1220996618}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1220996618}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  haptics:
+    Amplitude: 0
+    Vibration:
+      id: 0
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 9
+        options:
+          id: 1
+    00000001:
+      type: {class: , ns: , asm: }
+--- !u!54 &1220996614
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!135 &1220996615
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1220996616
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b55300d1714f6954ab0b5aec9c919d29, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1220996617
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1220996618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220996610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248bb817d2711d4682e4750bf850fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmplitude: 0.115
 --- !u!21 &1231944320
 Material:
   serializedVersion: 6
@@ -18610,6 +19916,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -18774,6 +20083,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586e9505cf484c64fab74fe766f4909b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &1262020254
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VolumetricLineMaterial(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 0.95
+    - _LineScale: 0.14291666
+    - _LineWidth: 0.25
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1270044285
 GameObject:
   m_ObjectHideFlags: 0
@@ -18841,6 +20224,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -19122,6 +20508,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -19390,6 +20779,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -19870,6 +21262,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -20250,6 +21645,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -20639,6 +22037,169 @@ Transform:
   m_Father: {fileID: 450132772}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1374069774
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 18
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 020001000000030001000200040003000200050004000200040005000600060005000700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 32
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 320
+    _typelessdata: 0000003f0000000000000000000000bf00000000000000000000803f0000803f0000803f0000803f0000003f0000000000000000000000bf00000000000000000000803f000000000000803f000080bf0000003f0000000000000000000000bf00000000000000000000003f0000803f000000000000803f0000003f0000000000000000000000bf00000000000000000000003f0000000000000000000080bf000000bf00000000000000000000003f00000000000000000000003f00000000000000000000803f000000bf00000000000000000000003f00000000000000000000003f0000803f00000000000080bf000000bf00000000000000000000003f000000000000000000000000000000000000803f0000803f000000bf00000000000000000000003f0000000000000000000000000000803f0000803f000080bf
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1376608600
 GameObject:
   m_ObjectHideFlags: 0
@@ -21880,6 +23441,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -22546,12 +24110,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1540382041}
   m_Layer: 0
-  m_Name: Custom Panel
+  m_Name: Custom Vibration Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1540382041
 Transform:
   m_ObjectHideFlags: 0
@@ -22794,6 +24358,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -23418,6 +24985,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -23879,6 +25449,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 175
     Vibration:
@@ -24045,6 +25618,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -24319,6 +25895,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -24407,6 +25986,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -24804,6 +26386,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -25335,6 +26920,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -25573,6 +27161,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 220
     Vibration:
@@ -25768,6 +27359,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 40
     Vibration:
@@ -25908,6 +27502,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -26185,6 +27782,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -26637,6 +28237,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -27150,6 +28753,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 175
     Vibration:
@@ -27390,6 +28996,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -27540,6 +29149,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -27727,169 +29339,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0125, y: 0.1, z: 0.05}
   m_Center: {x: 0, y: 0.05, z: -0.135}
---- !u!43 &1877745783
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 18
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 8
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 020001000000030001000200040003000200050004000200040005000600060005000700
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 8
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 32
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 320
-    _typelessdata: 0000003f0000000000000000000000bf00000000000000000000803f0000803f0000803f0000803f0000003f0000000000000000000000bf00000000000000000000803f000000000000803f000080bf0000003f0000000000000000000000bf00000000000000000000003f0000803f000000000000803f0000003f0000000000000000000000bf00000000000000000000003f0000000000000000000080bf000000bf00000000000000000000003f00000000000000000000003f00000000000000000000803f000000bf00000000000000000000003f00000000000000000000003f0000803f00000000000080bf000000bf00000000000000000000003f000000000000000000000000000000000000803f0000803f000000bf00000000000000000000003f0000000000000000000000000000803f0000803f000080bf
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1895804273
 GameObject:
   m_ObjectHideFlags: 0
@@ -28037,6 +29486,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -28472,6 +29924,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -28603,169 +30058,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959569691}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!43 &1961790850
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 18
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 8
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 020001000000030001000200040003000200050004000200040005000600060005000700
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 8
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 32
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 320
-    _typelessdata: 0000003f0000000000000000000000bf00000000000000000000803f0000803f0000803f0000803f0000003f0000000000000000000000bf00000000000000000000803f000000000000803f000080bf0000003f0000000000000000000000bf00000000000000000000003f0000803f000000000000803f0000003f0000000000000000000000bf00000000000000000000003f0000000000000000000080bf000000bf00000000000000000000003f00000000000000000000003f00000000000000000000803f000000bf00000000000000000000003f00000000000000000000003f0000803f00000000000080bf000000bf00000000000000000000003f000000000000000000000000000000000000803f0000803f000000bf00000000000000000000003f0000000000000000000000000000803f0000803f000080bf
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1962297163
 GameObject:
   m_ObjectHideFlags: 0
@@ -28972,6 +30264,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -29235,6 +30530,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -29534,6 +30832,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 115
     Vibration:
@@ -29652,6 +30953,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -29934,6 +31238,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 220
     Vibration:
@@ -30142,6 +31449,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -30456,11 +31766,11 @@ PrefabInstance:
     - target: {fileID: 2397960, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 292984908}
+      objectReference: {fileID: 2039885368}
     - target: {fileID: 3305964, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1961790850}
+      objectReference: {fileID: 1374069774}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_endPos.x
       value: -0.5
@@ -30852,6 +32162,299 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036045416}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &2039885368
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VolumetricLineMaterial(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 0.95
+    - _LineScale: 0.14291666
+    - _LineWidth: 0.25
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!1 &2060430485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060430486}
+  - component: {fileID: 2060430492}
+  - component: {fileID: 2060430491}
+  - component: {fileID: 2060430490}
+  - component: {fileID: 2060430488}
+  - component: {fileID: 2060430487}
+  - component: {fileID: 2060430489}
+  - component: {fileID: 2060430493}
+  m_Layer: 0
+  m_Name: M Sphere (3)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2060430486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.7877, y: 1.177, z: -1.157}
+  m_LocalScale: {x: 0.10000004, y: 0.099999994, z: 0.10000004}
+  m_Children: []
+  m_Father: {fileID: 945698150}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060430487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2060430488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2060430493}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2060430493}
+        m_MethodName: onTouch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  haptics:
+    Amplitude: 0
+    Vibration:
+      id: 0
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 7
+        options:
+          id: 1
+    00000001:
+      type: {class: DoubleClickStrong/Options, ns: Maestro.Vibration, asm: Assembly-CSharp}
+      data:
+        Type: 7
+        strength: 7
+--- !u!54 &2060430489
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!135 &2060430490
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &2060430491
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 959b4784dbc5b4e4692423309b9ccdb7, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &2060430492
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2060430493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060430485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9248bb817d2711d4682e4750bf850fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAmplitude: 0.133
 --- !u!1001 &2069519135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30906,11 +32509,11 @@ PrefabInstance:
     - target: {fileID: 2397960, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 889263843}
+      objectReference: {fileID: 458716442}
     - target: {fileID: 3305964, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1877745783}
+      objectReference: {fileID: 82776829}
     - target: {fileID: 11475718, guid: 11530f2b0a0cd2442949827ecbb622f2, type: 3}
       propertyPath: m_endPos.x
       value: -0.5
@@ -30972,6 +32575,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -31534,6 +33140,9 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -31846,6 +33455,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -32294,6 +33906,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
@@ -33013,6 +34628,31 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -6.9849015e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Amplitude
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Vibration.options
+      value: Assembly-CSharp Maestro.Vibration.StrongClick/Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Vibration.WhichType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Vibration.TakesOptions
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: DefaultEffect.Vibration.options.strength
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3952388617c98147b066982f1051e3c, type: 3}
 --- !u!114 &2892570281501133417 stripped
@@ -33589,6 +35229,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -33724,6 +35367,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -33894,6 +35540,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -34187,6 +35836,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
   haptics:
     Amplitude: 200
     Vibration:
@@ -34770,6 +36422,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
     m_PersistentCalls:
       m_Calls: []
   haptics:
