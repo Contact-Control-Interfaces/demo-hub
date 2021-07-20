@@ -75,11 +75,17 @@ namespace Maestro
                 */
 
             bool multiedit = serializedObject.targetObjects.Length > 1;
-
             if (multiedit) {
                 EditorGUILayout.HelpBox("Events not available when editing multiple interactables!", MessageType.Warning, wide: true);
             } else {
-                showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt);
+                int eventsBound = mi.onGrab.GetPersistentEventCount() +
+                  mi.onRelease.GetPersistentEventCount() +
+                  mi.onTouch.GetPersistentEventCount() +
+                  mi.unTouch.GetPersistentEventCount() +
+                  mi.whileTouch.GetPersistentEventCount();
+                bool areBound = eventsBound > 0;
+                showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt + (areBound?string.Format("({0}) ", eventsBound):""), 
+                    areBound?EditorStyles.foldoutHeader:EditorStyles.foldout);
                 if (showEvents) {
                     EditorGUILayout.PropertyField(OnGrabProp);
                     EditorGUILayout.PropertyField(OnReleaseProp);
