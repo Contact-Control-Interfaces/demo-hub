@@ -1,5 +1,6 @@
 ﻿using Leap.Unity;
 using Maestro;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -38,10 +39,14 @@ namespace Maestro
         private GameObject leftPanel, rightPanel;
         private TextMesh leftText, rightText;
 
-        public bool showPanels = true;
         private bool overrideRightText = false, overrideLeftText = false;
         public Vector3 panelOffset = new Vector3(0, 0.2f, 0);
         public GameObject panelPrefab;
+
+        public bool showLeftPanel = true, showRightPanel = true;
+
+        private string inputLeftPanel = null;
+        private string inputRightPanel = null;
 
         private int ellipsisTicks = 2, currentTicks = 0, currentEllipsis = 3;
 
@@ -165,6 +170,13 @@ namespace Maestro
             leftConnected.gameObject.SetActive(false);
             rightConnected.gameObject.SetActive(false);
 
+            // Check if inputs exist
+            CheckInput("ToggleLeftPanel", out inputLeftPanel);
+            CheckInput("ToggleRightPanel", out inputRightPanel);
+            showLeftPanel = true;
+            showRightPanel = true;
+
+
             // Find active left/right hands
             IMaestroHand[] hands = GameObject.FindObjectsOfType<IMaestroHand>();
             foreach (IMaestroHand hand in hands) {
@@ -216,6 +228,26 @@ namespace Maestro
             OrientPanel(WhichHand.LeftHand);
         }
 
+        private void CheckInput(string input, out string key)
+        {
+            if (DoesInputExist(input))
+                key = input;
+            else {
+                Debug.LogWarning(string.Format("Input [{0}] not bound!", input));
+                key = null;
+            }
+        }
+
+        private bool DoesInputExist(string input)
+        {
+            try {
+                Input.GetButton(input);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
         private void TryAddEnableDisable(MaestroGloveBehaviour toAddTo)
         {
             if (toAddTo != null && toAddTo.addHandEnableDisable) {
@@ -248,6 +280,15 @@ namespace Maestro
         // Update is called once per frame
         void Update()
         {
+            // Check input
+            if (inputLeftPanel != null && Input.GetButtonDown(inputLeftPanel)) {
+                showLeftPanel = !showLeftPanel;
+            }
+
+            if(inputRightPanel != null && Input.GetButtonDown(inputRightPanel)) {
+                showRightPanel = !showRightPanel;
+            }
+
             elapsed += Time.deltaTime;
             if (elapsed >= tick) {
                 elapsed = 0f;
@@ -262,20 +303,16 @@ namespace Maestro
                 UpdateUI();
             }
 
-            // Always update panels
-            if (showPanels || overrideRightText || overrideLeftText) {
+            RecordHistory(WhichHand.RightHand);
+            RecordHistory(WhichHand.LeftHand);
 
-                RecordHistory(WhichHand.RightHand);
-                RecordHistory(WhichHand.LeftHand);
+            OrientPanel(WhichHand.RightHand);
+            OrientPanel(WhichHand.LeftHand);
 
-                OrientPanel(WhichHand.RightHand);
-                OrientPanel(WhichHand.LeftHand);
+            string ellipsis = getEllipsis(currentEllipsis);
 
-                string ellipsis = getEllipsis(currentEllipsis);
-
-                UpdateForHandedness(WhichHand.RightHand);
-                UpdateForHandedness(WhichHand.LeftHand);
-            }
+            UpdateForHandedness(WhichHand.RightHand);
+            UpdateForHandedness(WhichHand.LeftHand);
         }
 
         private void UpdateForHandedness(WhichHand handedness)
@@ -285,10 +322,19 @@ namespace Maestro
                 bool connected = glove.Connected;
                 bool overrideText = GetOverride(handedness);
 
-                GetPanel(handedness).SetActive((showPanels && !connected) || overrideText);
+                if (handedness == WhichHand.RightHand && !showRightPanel) {
+                    bool hey = showPanel(handedness);
+                }
+
+                GetPanel(handedness).SetActive(showPanel(handedness) && (!connected || overrideText));
                 if (!connected && !overrideText)
                     GetTextMesh(handedness).text = GetDisplayText(handedness);
             }
+        }
+
+        private bool showPanel(WhichHand handedness)
+        {
+            return handedness == WhichHand.RightHand ? showRightPanel : showLeftPanel;
         }
 
         private string getEllipsis(int num)
