@@ -28,16 +28,25 @@ namespace Maestro
             }
         }
 
+        private Rigidbody rb;
+
         // Start is called before the first frame update
         void Start()
         {
+            rb = this.GetComponent<Rigidbody>();
         }
 
         // Update is called once per frame
         void Update()
         {
             if (a && b) {
-                transform.position = (a.position + b.position) / 2;
+                Vector3 start = transform.position;
+                Vector3 end = (a.position + b.position) / 2;
+
+                transform.position = end;
+                if (rb != null)
+                    rb.velocity = (end - start) / Time.deltaTime;
+
                 transform.localScale = new Vector3(size, (b.position - a.position).magnitude / 2, size);
                 transform.rotation = Quaternion.LookRotation(Vector3.Cross(b.position - a.position, Vector3.forward), b.position - a.position);
             }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-
+using System.Collections.Generic;
 
 namespace Maestro
 {
@@ -31,6 +31,8 @@ namespace Maestro
 		public ButtonEvent onStateChanged;
 		public UnityEvent onDown, onUp;
 
+		public List<Collider> toIgnore;
+
 		void Awake()
 		{
 			if (!down) down = Resources.Load<AudioClip>("Sounds/button_down");
@@ -43,17 +45,24 @@ namespace Maestro
 			origin = buttonTrans.localPosition;
 			rb = buttonTrans.GetComponent<Rigidbody>();
 			rb.velocity = Vector3.zero;
+
+			Collider temp = rb.GetComponent<Collider>();
+
+			if (toIgnore != null && toIgnore.Count > 0) {
+				foreach (Collider c in toIgnore) {
+					Physics.IgnoreCollision(temp, c, true);
+                }
+            }
 		}
 
 		void Update()
 		{
 			float y = buttonTrans.localPosition.y;
 
-			if (y < 0) {
-				//rb.velocity += new Vector3 (0, slideForce, 0);
-				rb.velocity += buttonTrans.up * slideForce;
+			if (y < origin.y) {
+				rb.velocity = buttonTrans.up * slideForce;
 
-				if (y < -buttonSensitivity) {
+				if (y < origin.y - buttonSensitivity) {
 					if (!buttonDown) {
 						ButtonPushed();
 					}
@@ -62,12 +71,10 @@ namespace Maestro
 				if (buttonDown) {
 					ButtonReleased();
 				}
-				buttonTrans.localPosition = Vector3.zero;
 				rb.velocity = Vector3.zero;
 			}
 
-			buttonTrans.localPosition = new Vector3(origin.x, Mathf.Clamp(buttonTrans.localPosition.y, -buttonSensitivity, 0), origin.z);
-			//buttonTrans.localPosition = new Vector3(0,Mathf.Clamp(buttonTrans.localPosition.y,-buttonSensitivity,0),0);
+			buttonTrans.localPosition = new Vector3(origin.x, Mathf.Clamp(y, origin.y - buttonSensitivity, origin.y), origin.z);
 		}
 
 		void ButtonPushed()

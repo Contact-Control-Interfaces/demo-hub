@@ -808,6 +808,9 @@ namespace Maestro
             Rigidbody rb = temp.AddComponent<Rigidbody>();
             rb.useGravity = false;
 
+            rb.mass = 10;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
             CylinderBetween cb = temp.AddComponent<CylinderBetween>();
             cb.a = a;
             cb.b = b;
