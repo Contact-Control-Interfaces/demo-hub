@@ -24,153 +24,112 @@ namespace Maestro
         public float tooFastOverride = 0.2f;
         //whichHand from IMaestroHand
         public MaestroHand otherHandOverride;
+        public IGrabManager grabManager;
+        public GrabType grabTypeOverride = GrabType.Arcade;
 
-        //inherited values
-        private HandSize handSize
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return handSizeOverride;
-                else
-                    return manager.handSize;
+        private bool Inheriting { get { return !(settingsOverride || manager == null); } }
+
+        #region Inherited from MaestroManager
+        public GrabType grabType {
+            get {
+                return Inheriting ? manager.grabType : grabTypeOverride;
             }
         }
-        private bool interactablesOnly
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return interactablesOnlyOverride;
-                else
-                    return manager.InteractablesOnly;
-            }
-        }
-        private HapticEffect defaultEffect
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return defaultEffectOverride;
-                else
-                    return manager.DefaultEffect;
-            }
-        }
-        private FlatnessChecker flatnessChecker
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return flatnessCheckerOverride;
-                else
-                    return manager.flatnessChecker;
-            }
-        }
-        private LayerMask objectLayer
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return objectLayerOverride;
-                else
-                    return manager.objectLayer;
-            }
-        }
-        private float palmMeshWait
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return palmMeshWaitOverride;
-                else
-                    return manager.palmMeshWait;
-            }
-        }
-        private float tooClose
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return tooCloseOverride;
-                else
-                    return manager.tooClose;
-            }
-        }
-        private float tooFast
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return tooFastOverride;
-                else
-                    return manager.tooFast;
+        
+        private HandSize handSize {
+            get {
+                return Inheriting ? manager.handSize : handSizeOverride;
             }
         }
 
-        private WhichHand whichHandInherited
-        {
-            get
-            {
-                if (settingsOverride || manager == null && (this == manager.LeftHand || this == manager.RightHand))
+        private bool interactablesOnly {
+            get {
+                return Inheriting ? manager.InteractablesOnly : interactablesOnlyOverride;
+            }
+        }
+
+        private HapticEffect defaultEffect {
+            get {
+                return Inheriting ? manager.DefaultEffect : defaultEffectOverride;
+            }
+        }
+
+        private FlatnessChecker flatnessChecker {
+            get {
+                return Inheriting ? manager.flatnessChecker : flatnessCheckerOverride;
+            }
+        }
+
+        private LayerMask objectLayer {
+            get {
+                return Inheriting ? manager.objectLayer : objectLayerOverride;
+            }
+        }
+
+        private float palmMeshWait {
+            get {
+                return Inheriting ? manager.palmMeshWait : palmMeshWaitOverride;
+            }
+        }
+
+        private float tooClose {
+            get {
+                return Inheriting ? manager.tooClose : tooCloseOverride;
+            }
+        }
+
+        private float tooFast {
+            get {
+                return Inheriting ? manager.tooFast : tooFastOverride;
+            }
+        }
+
+        private WhichHand whichHandInherited {
+            get {
+                if (!Inheriting && (this == manager.LeftHand || this == manager.RightHand))
                     return whichHand;
                 else return this == manager.RightHand ? WhichHand.RightHand : WhichHand.LeftHand;
             }
         }
 
-        public MaestroHand otherHand
-        {
-            get
-            {
-                if (settingsOverride || manager == null)
-                    return otherHandOverride;
-                else
-                    return whichHandInherited == WhichHand.RightHand ? manager.LeftHand : manager.RightHand;
+        public MaestroHand otherHand {
+            get {
+                return Inheriting ? (whichHandInherited == WhichHand.RightHand ? manager.LeftHand : manager.RightHand)
+                    : otherHandOverride;
             }
         }
+        #endregion
 
         public HandTransforms transforms;
 
         public override Transform Palm { get { return transforms.PalmBase; } }
 
+        //TODO check all things we're holding, instead of just one
+        public MaestroInteractable grabTarget { get { return grabManager.grabTarget; } }
+
         public bool showPalmMesh;
 
-        public bool grabbing;
+        public bool grabbing { get { return grabManager == null ? false : grabManager.isGrabbing; } }
 
         public bool twoHandGrabbing;
 
         // Time variables
-        public float timeSinceGrabbing = 1.0f;
         public float timeSinceTwoHandGrabbing = 1.0f;
-        public float timeSinceRelease = 1.0f;
-
-        // Pickup Data
-        public MaestroIndex f1, f2;
-        public float dist1, dist2;
-        public float ratio1, ratio2;
-
-        // Pickup Ratios
-        public float ToolRatio = 1.3f;
-        public float releaseRatio = 1.2f;
 
         // DFROST
         public bool DestroyFingerRenderersOnSpawn;
+        public bool RenderOnTop;
 
         // Flatness
-        private bool isFlat { get { return flatnessChecker != null && flatnessChecker.isFlat(); } }
-
-        // Layers
-
-
+        public bool isFlat { get { return flatnessChecker != null && flatnessChecker.isFlat(); } }
 
         /*************
          *  PRIVATE  *
          *************/
 
         // Grab Targets
-        MaestroInteractable grabTarget, twoHandGrabTarget;
+        MaestroInteractable twoHandGrabTarget;
         private MaestroIndex twoHandIndex;
-        private bool lastTargetWasTool = false;
-        private GameObject grabPos;
 
         // Put everything here instead of somewhere random
         private MaestroContainer mc;
@@ -189,17 +148,8 @@ namespace Maestro
         private MeshCollider PalmCollider, thumbMC;
         private GameObject thumbMeshObject, palmMeshObject;
 
-        // Throw estimation
-        private List<Vector3> palmLocations;
-        private int throwHistory = 3;
-
         // Grab bools
-        private bool wasgrabbing, grabStarted, regrabbed;
         private bool wasTwoHandGrabbing, twoHandGrabStarted, initiatedTwoHandGrab;
-
-        // Grab storage
-        private RigidbodyConstraints oldConstraints;
-        private bool oldGravity, oldKinematic;
         private Transform oldParent = null;
 
         // Persistance storage
@@ -216,7 +166,6 @@ namespace Maestro
             // Init collections
             persistInteractables = new Dictionary<MaestroIndex, MaestroInteractable>();
             persistTimes = new Dictionary<MaestroIndex, float>();
-            palmLocations = new List<Vector3>();
 
             // Init pickup bools to false
             wasTwoHandGrabbing = twoHandGrabStarted = initiatedTwoHandGrab = false;
@@ -256,6 +205,8 @@ namespace Maestro
                 Physics.IgnoreCollision(c, thumbMC, true);
                 Physics.IgnoreCollision(c, PalmCollider, true);
             }
+                        
+            grabManager = new ArcadeGrabManager(mc);
 
             // Call IMaestroHand's start
             base.Start();
@@ -421,12 +372,7 @@ namespace Maestro
 
         public void FixedUpdate()
         {
-            // Update contact bools
-            regrabbed = false;
-
             // Update all time variables
-            timeSinceGrabbing += Time.fixedDeltaTime;
-            timeSinceRelease += Time.fixedDeltaTime;
             timeSinceTwoHandGrabbing += Time.fixedDeltaTime;
 
             // Move all FCs
@@ -442,49 +388,14 @@ namespace Maestro
                 }
 
                 poh.fc.rb.MoveRotation(poh.transform.rotation);
-
-                //if the fingertip is touching something, and I'm not currently holding anything, check if there's more than one finger holding onto it.
-                if (poh.fc.touching != null && !grabbing) {
-                    CheckFingerGrabbing(poh.fc.index);
-                } else {
-                    //check the appropriate 
-                }
             }
 
-            // Record palm
-            recordPalmLocation(mc.PalmBase.fc.rb.transform.position);
-
-            // If the user has two hands defined, check if two-hand grab has started
-            if (otherHand != null && !twoHandGrabbing && !otherHand.twoHandGrabbing)
-                CheckTwoHandGrabbing();
-
-            // Update started bools
-            grabStarted = !wasgrabbing && grabbing;
-            twoHandGrabStarted = !wasTwoHandGrabbing && twoHandGrabbing;
-
-            // Update one-hand grabs if necessary
-            if (grabbing)
-                OnGrabbing();
-            else
-                grabStarted = false;
-
-            // Update two-hand grabs if necessary
-            if (twoHandGrabbing && initiatedTwoHandGrab)
-                OnTwoHandGrabbing();
-            else
-                twoHandGrabStarted = false;
-
-            // Update was bools
-            wasgrabbing = grabbing;
-            wasTwoHandGrabbing = twoHandGrabbing;
-
-            // Move grab anchor if necessary
-            if (grabbing && grabPos != null && !grabTarget.isTool && !grabStarted) {
-                Vector3 centroid = GetCentroid(mc);
-                Vector3 temp = Vector3.Lerp(grabPos.transform.position, centroid, Time.fixedDeltaTime * 0.5f);
-                if (!(temp.Equals(Vector3.negativeInfinity) || grabTarget.maintainPosition))
-                    grabPos.transform.position = temp;
+            // Make sure we're using the correct GrabManager
+            if (grabManager == null || grabManager.grabType != grabType) {
+                grabManager = new ArcadeGrabManager(mc);
             }
+
+            grabManager.FixedUpdate();
         }
 
         protected override MaestroHapticContext ProcessHaptics()
@@ -524,15 +435,15 @@ namespace Maestro
                     } else if (tip.Contacting && !interactablesOnly) {
                         nextHaptics.SetAmplitudeFromIndex(tip.index, defaultEffect.Amplitude);
                         nextHaptics.SetVibrationEffectFromIndex(tip.index, defaultEffect.Vibration);
+
                     } else if (inheritFromPalm) {
                         // Inherit a portion of palm haptics if applicable
                         byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
-                        if (amp.HasValue)
-                        {
+                        if (amp.HasValue) {
                             //Debug.Log(mc.PalmBase.fc.touching.gameObject.name);
                             nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
                         }
-                    
+
                     } else {
                         // Check middle joint
                         PointOnHand matchingMiddle = mc[tip.index.finger][PointOnFinger.Middle];
@@ -545,11 +456,8 @@ namespace Maestro
                             nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
                         }
                     }
-
-                    
                 }
             }
-
             return nextHaptics;
         }
         #endregion
@@ -774,8 +682,7 @@ namespace Maestro
             result.rb.freezeRotation = true;
             result.hpi = this;
 
-            if (DestroyFingerRenderersOnSpawn)
-                Destroy(temp.GetComponent<Renderer>());
+            InitRenderer(temp.GetComponent<Renderer>());
 
             return result;
         }
@@ -793,6 +700,23 @@ namespace Maestro
         private FingerCollider SpawnAtKnuckle(Transform t)
         {
             return Spawn(t, handSize.KnuckleSize);
+        }
+
+        private void InitRenderer(Renderer renderer)
+        {
+            if (renderer == null)
+                return;
+
+            if (DestroyFingerRenderersOnSpawn)
+                Destroy(renderer);
+            else if (RenderOnTop) {
+                Shader showAlwaysShader = Shader.Find("GUI/Text Shader");
+
+                if (renderer != null && showAlwaysShader != null) {
+                    renderer.material.shader = showAlwaysShader;
+                    renderer.material.color = Color.red;
+                }
+            }
         }
 
         private CapsuleCollider SpawnCapsule(Transform a, Transform b, float size)
@@ -817,8 +741,7 @@ namespace Maestro
             cb.size = size;
             //FingerCollider?? TODO
 
-            if (DestroyFingerRenderersOnSpawn)
-                Destroy(temp.GetComponent<Renderer>());
+            InitRenderer(temp.GetComponent<Renderer>());
 
             return result;
         }
@@ -959,356 +882,7 @@ namespace Maestro
         }
         #endregion
 
-        #region One handed grab functions
-        private bool CheckFingerGrabbing(MaestroIndex position)
-        {
-            PointOnHand grabbed = mc[position];
-
-            MaestroIndex? other = ShouldStartGrab(position);
-
-            bool result = other.HasValue
-                && !isFlat
-                && grabbed.fc != null
-                && grabbed.fc.lastTouching != null
-                && grabbed.fc.lastTouching.type != InteractionType.Static
-                && grabbed.fc.lastTouching.type != InteractionType.TwoHand
-                && grabbed.fc.lastTouching.Equals(mc[other.Value].fc.lastTouching)
-                && timeSinceRelease > 0.5f;
-
-            if (result) {
-                if (grabbing)
-                    Regrab(grabbed.fc.lastTouching, position, other.Value);
-                else
-                    GrabStart(grabbed.fc.lastTouching, position, other.Value);
-            }
-            return result;
-        }
-
-        private MaestroIndex? ShouldStartGrab(MaestroIndex index)
-        {
-            switch (index.finger) {
-                case WhichFinger.Thumb:
-
-                    /* Thumb checks for finger tips or palm */
-                    MaestroIndex? result = firstContactTip(includeThumb: false);
-                    if (result == null && mc.PalmBase.Contacting) //Palm override
-                        result = new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base);
-                    return result;
-
-                case WhichFinger.Index: 
-                case WhichFinger.Middle: 
-                case WhichFinger.Ring:
-                case WhichFinger.Little:
-
-                    /* Fingers check for thumb or palm */
-                    if (firstContactTip() != null) {
-                        return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip);
-                    } else if (mc.PalmBase.Contacting) {
-                        return new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base);
-                    }
-                    return null;
-
-                default:
-                    /* Palm checks all finger tips */
-                    return firstContactTip();
-            }
-        }
-
-        private bool CheckGrabDone()
-        {
-            float tempDist1 = GetDist(f1);
-            float tempDist2 = GetDist(f2);
-
-            ratio1 = tempDist1 / dist1; //grabPos
-            ratio2 = tempDist2 / dist2; //grabPos
-
-            bool tipOrMiddleTouching = mc.Where(x => (x.fc.isTip || x.fc.isMiddleJoint)).Any(x => x.fc.Contacting);
-
-            return (grabTarget.isTool ? Mathf.Max(tempDist1, tempDist2) > 0.05f : Mathf.Min(ratio1, ratio2) > releaseRatio) || !tipOrMiddleTouching;
-        }
-
-        private void GrabStart(MaestroInteractable r, MaestroIndex finger0, MaestroIndex finger1)
-        {
-            if (r == null)
-                return;
-
-            Debug.Log("Start grab: " + finger0 + ", " + finger1);
-
-            grabTarget = r;
-            timeSinceGrabbing = 0;
-
-            grabbing = true;
-
-            grabPos = generateAnchor(grabTarget.isTool ? transforms.PalmBase.position : grabTarget.getFollowPoint());
-            //grabPos.transform.rotation = Quaternion.identity;
-
-            if (otherHand != null && otherHand.grabbing && otherHand.grabTarget == this.grabTarget) {
-                oldParent = otherHand.oldParent;
-                oldGravity = otherHand.oldGravity;
-                oldKinematic = otherHand.oldKinematic;
-                otherHand.GrabEnd(false);
-            } else {
-                oldParent = grabTarget.transform.parent;
-
-                oldGravity = grabTarget.rb.useGravity;
-
-                oldKinematic = grabTarget.rb.isKinematic;
-            }
-
-            grabTarget.rb.useGravity = false;
-
-            oldConstraints = grabTarget.rb.constraints;
-            if (oldConstraints == RigidbodyConstraints.None) {
-                Vector3 worldPos = grabTarget.transform.position;
-                Quaternion worldRot = grabTarget.transform.rotation;
-                grabTarget.transform.parent = grabPos.transform;
-                grabTarget.transform.SetPositionAndRotation(worldPos, worldRot);
-                //grabTarget.transform.localPosition = Vector3.zero;
-            }
-
-            if (grabTarget.maintainOrientation)
-                grabTarget.rb.constraints |= RigidbodyConstraints.FreezeRotation;
-
-            grabTarget.rb.isKinematic = false;
-
-            f1 = finger0;
-            f2 = finger1;
-
-
-            dist1 = GetDist(f1);
-            dist2 = GetDist(f2);
-            // Tell the Interactable it's been grabbed by this script
-            r.Grab(objectLayer);
-        }
-
-        private float GetDist(MaestroIndex index)
-        {
-            Vector3 followPoint = grabTarget.getFollowPoint();
-            if (grabTarget.gripCollider != null)
-                followPoint = ClosestPointOnGripCollider(index, grabTarget.gripCollider);
-
-            return (mc[index].transform.position - followPoint).magnitude;
-        }
-
-        private Vector3 ClosestPointOnGripCollider(MaestroIndex index, Collider grip)
-        {
-            return Physics.ClosestPoint(mc[index].transform.position, grip, grip.transform.position, grip.transform.rotation);
-        }
-
-        private void OnGrabbing()
-        {
-            if (isFlat || (timeSinceGrabbing > 0.25f && (CheckGrabDone() /*|| (!grabTarget.isTool && SnowconeDetected())*/)))
-                GrabEnd(true);
-            else
-                ApplyFollowForce();
-        }
-
-        private void Regrab(MaestroInteractable r, MaestroIndex finger0, MaestroIndex finger1)
-        {
-            if (r == null)
-                return;
-
-            Debug.Log("Regrabbing: " + finger0 + ", " + finger1);
-
-            grabbing = true;
-            regrabbed = true;
-
-            Vector3 centroid = GetCentroid(mc);
-            if (!centroid.Equals(Vector3.negativeInfinity)) {
-                Vector3 worldPos = grabTarget.transform.position;
-                Quaternion worldRot = grabTarget.transform.rotation;
-                grabPos.transform.position = centroid;
-                grabTarget.transform.SetPositionAndRotation(worldPos, worldRot);
-            }
-
-            f1 = finger0;
-            f2 = finger1;
-
-            dist1 = GetDist(f1);
-            dist2 = GetDist(f2);
-        }
-
-        private void GrabEnd(bool drop)
-        {
-            if (drop) {
-                // Try regrab
-                bool grabStarted = mc.Any(x => x.fc.touching != null && CheckFingerGrabbing(x.index));
-
-                // Drop only if regrab failed
-                if (!grabStarted) {
-                    Debug.Log("Dropping" + timeSinceGrabbing);
-
-                    grabTarget.rb.constraints = oldConstraints;
-                    grabTarget.rb.AddForce(getThrowVelocity(), ForceMode.Force);
-                    grabTarget.transform.parent = oldParent;
-                    oldParent = null;
-
-                    //release the thing
-
-                    grabTarget.rb.useGravity = oldGravity;
-                    grabTarget.rb.isKinematic = oldKinematic;
-
-                    // Tell the MaestroInteractable it was released
-                    grabTarget.Release();
-
-                    // Reset grab position and contacts
-                    grabPos.transform.DetachChildren();
-                    Destroy(grabPos);
-                    lastTargetWasTool = grabTarget.isTool;
-                    grabTarget = null;
-
-                    timeSinceRelease = 0.0f;
-                    grabbing = false;
-                }
-            } else {
-                //if drop is false, a different hand has taken control of the thing and we don't need to worry about detaching it
-                grabPos.transform.DetachChildren();
-                lastTargetWasTool = grabTarget.isTool;
-                Destroy(grabPos);
-                grabbing = false;
-                timeSinceRelease = 0.0f;
-                grabTarget = null;
-            }
-        }
-
-        private void ApplyFollowForce()
-        {
-            if (grabbing && grabTarget != null) {
-                if (grabTarget.stayInHand) {
-                    grabTarget.gameObject.transform.Translate(grabPos.transform.position - grabTarget.getFollowPoint(), Space.World);
-
-                    grabTarget.rb.angularVelocity = Vector3.zero;
-                } else {
-                    if (!grabTarget.isTool) {
-                        Vector3 dis = grabPos.transform.position - grabTarget.getFollowPoint();
-
-                        //dampen
-                        Vector3 current = grabTarget.rb.velocity;
-                        current *= 0.5f;
-                        grabTarget.rb.velocity = current;
-
-                        grabTarget.rb.velocity += dis * Mathf.Pow(dis.magnitude * 750, 2) * Time.fixedDeltaTime; //prev. 500
-
-                    } else
-                        grabTarget.rb.velocity = Vector3.zero;
-
-                    grabTarget.rb.angularVelocity = Vector3.zero;
-                }
-            }
-        }
-
-        private Vector3 getThrowVelocity()
-        {
-            if (palmLocations.Count <= 1)
-                return mc.PalmBase.fc.rb.velocity;
-            else {
-                Vector3 result = Vector3.zero;
-                float scalar = 1f;
-
-                //Get weighted average of palm history
-                for (int i = palmLocations.Count - 1; i > 0; i--) {
-                    result += (palmLocations[i] - palmLocations[i - 1]) * scalar;
-                    scalar *= 0.5f;
-                }
-
-                return result;
-            }
-        }
-
-        private void recordPalmLocation(Vector3 location)
-        {
-            palmLocations.Add(location);
-            while (palmLocations.Count > throwHistory)
-                palmLocations.RemoveAt(0);
-        }
-        #endregion
-
         #region Helper functions
-        private MaestroIndex? firstContact(params MaestroIndex[] positions)
-        {
-            PointOnHand firstContact = mc.Where(x => positions.Contains(x.fc.index)).FirstOrDefault(x => x.Contacting);
-            if (firstContact != null)
-                return firstContact.fc.index;
-            else return null;
-        }
-
-        private MaestroIndex? firstContactTip(bool includeThumb = true)
-        {
-            IEnumerable<PointOnHand> tips = mc.Where(x => x.fc.isTip);
-
-            if (!includeThumb)
-                tips = tips.Where(x => x.index.finger != WhichFinger.Thumb);
-
-            PointOnHand firstFound = tips.FirstOrDefault(x => x.Contacting);
-
-            if (firstFound != null)
-                return firstFound.index;
-            else return null;
-        }
-
-        private bool SnowconeDetected()
-        {
-            WhichFinger[] toInclude = new WhichFinger[] { WhichFinger.Thumb, WhichFinger.Index };
-            WhichFinger[] toExclude = new WhichFinger[] { WhichFinger.Middle, WhichFinger.Ring, WhichFinger.Little };
-
-            PointOnHand firstIncluded = mc.Where(x => toInclude.Contains(x.index.finger)
-                && (x.index.point == PointOnFinger.Tip || x.index.point == PointOnFinger.Middle)).FirstOrDefault();
-
-            PointOnHand firstExcluded = mc.Where(x => toExclude.Contains(x.index.finger)
-                && (x.index.point == PointOnFinger.Tip || x.index.point == PointOnFinger.Middle)).FirstOrDefault();
-
-            return !(mc[WhichFinger.Thumb][PointOnFinger.Tip].Contacting && mc[WhichFinger.Index][PointOnFinger.Tip].Contacting)
-                && firstIncluded != null
-                && firstExcluded == null;
-        }
-
-        private float FlatnessThreshold(float radius)
-        {
-            return radius / 2;
-        }
-
-        private Vector3 GetCentroid(MaestroContainer container)
-        {
-            Vector3 result = Vector3.zero;
-            int count = 0;
-
-            mc.ToList().ForEach(x => {
-                if (!(x.fc.isPalmBase || x.index.finger == WhichFinger.Thumb) && x.Contacting) {
-                    result += x.transform.position;
-                    count++;
-                }
-            });
-
-            if (count > 1)
-                return result / count;
-            else
-                return Vector3.negativeInfinity;
-        }
-
-        public GameObject generateAnchor(Vector3 position)
-        {
-            GameObject anchor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-
-            anchor.transform.SetPositionAndRotation(position, Quaternion.identity);
-
-            anchor.transform.localScale = Vector3.one * 0.01f;
-            FixedJoint fj = anchor.AddComponent<FixedJoint>();
-            fj.connectedBody = mc.PalmBase.fc.rb;
-            fj.massScale = 100;
-            fj.connectedMassScale = 100;
-
-            Rigidbody rb = anchor.GetComponent<Rigidbody>();
-            rb.useGravity = false;
-            rb.drag = 0;
-            rb.mass = 10;
-
-            Destroy(anchor.GetComponent<Collider>());
-            //Destroy(anchor.GetComponent<Rigidbody>());
-            Destroy(anchor.GetComponent<Renderer>());
-
-            return anchor;
-        }
 
         private Vector3 OffsetToAngular(Quaternion a, Quaternion b, float timestep)
         {

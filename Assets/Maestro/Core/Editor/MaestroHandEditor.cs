@@ -1,5 +1,4 @@
-﻿using Maestro.EditorExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,15 +35,16 @@ namespace Maestro
         private SerializedProperty tooFast;
 
         private SerializedProperty destroyFingerRenderersOnSpawn;
+        private SerializedProperty renderOnTop;
         private SerializedProperty showPalmMesh;
 
         private SerializedProperty defaultEffect;
         private SerializedProperty handSize;
         private SerializedProperty transforms;
+        private SerializedProperty grabType;
 
         public void OnEnable()
         {
-
             settingsOverride = this.serializedObject.FindProperty("settingsOverride");
             
             whichHand = this.serializedObject.FindProperty("whichHand");
@@ -64,7 +64,10 @@ namespace Maestro
 
 
             destroyFingerRenderersOnSpawn = this.serializedObject.FindProperty("DestroyFingerRenderersOnSpawn");
+            renderOnTop = this.serializedObject.FindProperty("RenderOnTop");
+
             showPalmMesh = this.serializedObject.FindProperty("showPalmMesh");
+            grabType = this.serializedObject.FindProperty("grabTypeOverride");
         }
 
         public override void OnInspectorGUI()
@@ -74,16 +77,15 @@ namespace Maestro
             EditorGUILayout.LabelField("Main Configuration", EditorStyles.boldLabel);
             settingsOverride.boolValue = EditorGUILayout.Toggle("Override Settings", settingsOverride.boolValue);
             settingsOverride.serializedObject.ApplyModifiedProperties();
-
+            
             bool displayOverrideSettings = hand.manager == null ||
                 hand != ((hand.whichHand == WhichHand.RightHand) ? hand.manager.RightHand : hand.manager.LeftHand) ||
                 hand.settingsOverride;
 
-            if (displayOverrideSettings && !hand.settingsOverride)
-                EditorGUILayout.HelpBox("Not attached to a manager, will not inherit settings.", MessageType.Info, wide: true);
+            if (displayOverrideSettings) {
+                if (!hand.settingsOverride)
+                        EditorGUILayout.HelpBox("Not attached to a manager, will not inherit settings.", MessageType.Info, wide: true);
 
-            if (displayOverrideSettings)
-            {
                 EditorGUILayout.PropertyField(whichHand);
                 otherHand.objectReferenceValue = (MaestroHand)EditorGUILayout.ObjectField("Other Hand", otherHand.objectReferenceValue, typeof(MaestroHand), allowSceneObjects: true);
             }
@@ -111,19 +113,21 @@ namespace Maestro
             
             EditorGUILayout.Space();
 
-            if (displayOverrideSettings)
-            {
+            if (displayOverrideSettings) {
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
+
+                EditorGUILayout.PropertyField(grabType, new GUIContent("Grab Type", "Controls how objects are picked up and manipulated"));
+
                 interactablesOnly.boolValue = EditorGUILayout.Toggle(new GUIContent("Interactables Only", "hover text"), hand.interactablesOnlyOverride);
                 if (!hand.interactablesOnlyOverride) {
                     EditorGUILayout.PropertyField(defaultEffect, new GUIContent("Default Effect"));
                     EditorGUILayout.Space();
                 }
             }
+
             showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
             if (showHandConfig) {
-                if (displayOverrideSettings)
-                {
+                if (displayOverrideSettings) {
                     EditorGUILayout.PropertyField(handSize, new GUIContent("Hand Sizing"));
                     EditorGUILayout.Space();
                 }
@@ -131,11 +135,9 @@ namespace Maestro
                 EditorGUILayout.PropertyField(transforms, new GUIContent("Positions on Hand"));
             }
 
-            if (displayOverrideSettings)
-                {
+            if (displayOverrideSettings) {
                 showAdvConfig = EditorGUILayout.Foldout(showAdvConfig, showAdvConfigTxt);
-                if (showAdvConfig)
-                {
+                if (showAdvConfig) {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
                     flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessCheckerOverride, typeof(FlatnessChecker), allowSceneObjects: true);
                     objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", hand.objectLayerOverride);
@@ -149,23 +151,16 @@ namespace Maestro
                     tooFast.floatValue = EditorGUILayout.FloatField("Too Fast Threshold", hand.tooFastOverride);
                 }
             }
+
             showDebug = EditorGUILayout.Foldout(showDebug, showDebugTxt);
             if (showDebug) {
                 destroyFingerRenderersOnSpawn.boolValue = EditorGUILayout.Toggle("Destroy Finger Renderers on Spawn", hand.DestroyFingerRenderersOnSpawn);
+                renderOnTop.boolValue = EditorGUILayout.Toggle("Render on Top", hand.RenderOnTop);
                 showPalmMesh.boolValue = EditorGUILayout.Toggle("Show Palm Meshes", hand.showPalmMesh);
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("Time Since Last Grab", hand.timeSinceGrabbing.ToString("F3"));
-                EditorGUILayout.LabelField("Time Since Last Release", hand.timeSinceRelease.ToString("F3"));
                 EditorGUILayout.LabelField("Time Since Last Two-Hand Grab", hand.timeSinceTwoHandGrabbing.ToString("F3"));
                 EditorGUILayout.Space();
-
-                EditorGUILayout.LabelField("F1", hand.f1.ToString());
-                EditorGUILayout.LabelField("F2", hand.f2.ToString());
-                //EditorGUILayout.LabelField("Dist 1", hand.dist1.ToString("F3"));
-                //EditorGUILayout.LabelField("Dist 2", hand.dist2.ToString("F3"));
-                EditorGUILayout.LabelField("Ratio 1", hand.ratio1.ToString("F3"));
-                EditorGUILayout.LabelField("Ratio 2", hand.ratio2.ToString("F3"));
             }
             this.serializedObject.ApplyModifiedProperties();
         }

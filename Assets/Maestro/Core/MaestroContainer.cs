@@ -206,7 +206,11 @@ namespace Maestro
     {
         public PointOnFinger whereOnFinger { get; internal set; }
 
-        public WhichFinger whichFinger { get { return parent.whichFinger; } }
+        public WhichFinger whichFinger { 
+            get { 
+                return parent != null ? parent.whichFinger : WhichFinger.Palm; 
+            } 
+        }
          
         public MaestroIndex index { 
             get {
