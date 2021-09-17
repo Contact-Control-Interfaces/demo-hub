@@ -22,6 +22,7 @@ namespace Maestro
         private SerializedProperty leftHand;
         private SerializedProperty rightHand;
 
+        private SerializedProperty grabType;
         private SerializedProperty interactablesOnly;
 
         private SerializedProperty flatnessChecker;
@@ -29,7 +30,6 @@ namespace Maestro
         private SerializedProperty palmMeshWait;
         private SerializedProperty tooClose;
         private SerializedProperty tooFast;
-
         private SerializedProperty handSize;
         private SerializedProperty defaultEffect;
 
@@ -48,6 +48,8 @@ namespace Maestro
             
             handSize = this.serializedObject.FindProperty("handSize");
             defaultEffect = this.serializedObject.FindProperty("DefaultEffect");
+
+            grabType = this.serializedObject.FindProperty("grabType");
         }
 
         public override void OnInspectorGUI()
@@ -60,16 +62,11 @@ namespace Maestro
             EditorGUILayout.Space();
 
 
-            if (manager.LeftHand == null && manager.RightHand == null)
-            {
+            if (manager.LeftHand == null && manager.RightHand == null) {
                 EditorGUILayout.HelpBox("Hands not defined! Settings cannot yet be configured!", MessageType.Warning, wide: true);
-            }
-            else if (manager.LeftHand == null)
-            {
+            }  else if (manager.LeftHand == null) {
                 EditorGUILayout.HelpBox("Left hand not defined! Two-handed interactions will disabled!", MessageType.Warning, wide: true);
-            }
-            else if (manager.RightHand == null)
-            {
+            } else if (manager.RightHand == null) {
                 EditorGUILayout.HelpBox("Right hand not defined! Two-handed interactions will disabled!", MessageType.Warning, wide: true);
             }
 
@@ -79,11 +76,12 @@ namespace Maestro
                 EditorGUILayout.HelpBox("Right hand will not take these settings because override is on.", MessageType.Info, wide: true);
 
 
-            if (manager.LeftHand != null || manager.RightHand != null)
-            {
-
+            if (manager.LeftHand != null || manager.RightHand != null) {
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Default Interaction Profile", EditorStyles.boldLabel);
+
+                EditorGUILayout.PropertyField(grabType, new GUIContent("Grab Type", "Controls how objects are picked up and manipulated"));
+
                 EditorGUILayout.PropertyField(interactablesOnly, new GUIContent("Interactables Only", "Will only play effects from MaestroInteractables"));
                 if (!manager.InteractablesOnly) {
                     EditorGUILayout.PropertyField(defaultEffect);
@@ -91,15 +89,13 @@ namespace Maestro
                 }
 
                 showHandConfig = EditorGUILayout.Foldout(showHandConfig, showHandConfigTxt);
-                if (showHandConfig)
-                {
+                if (showHandConfig) {
                     EditorGUILayout.PropertyField(handSize, new GUIContent("Hand Sizing"));
                     EditorGUILayout.Space();
                 }
 
                 showAdvConfig = EditorGUILayout.Foldout(showAdvConfig, showAdvConfigTxt);
-                if (showAdvConfig)
-                {
+                if (showAdvConfig) {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
                     flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", manager.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
                     objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", manager.objectLayer);

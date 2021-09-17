@@ -15,6 +15,8 @@ namespace Maestro
 
         public HandSize handSize;
 
+        public GrabType grabType = GrabType.Arcade;
+
         public FlatnessChecker flatnessChecker;
         public LayerMask objectLayer;
         public float palmMeshWait = 0.1f;
