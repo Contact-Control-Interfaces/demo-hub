@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Maestro
 {
@@ -12,10 +13,8 @@ namespace Maestro
     {
         private static MaestroBLEUI instance;
 
-        public Transform watcher, left, right, process, leftConnected, rightConnected;
-
         private float elapsed;
-        public float tick = 0.1f;
+        public float tick = 0.25f;
 
         [DllImport("MaestroAPI")]
         public static extern bool is_ble_processing();
@@ -50,6 +49,9 @@ namespace Maestro
 
         private int ellipsisTicks = 2, currentTicks = 0, currentEllipsis = 3;
 
+        public Image leftDot, rightDot;
+        private bool blinkState;
+
         public static void SetLeftText(string text)
         {
             instance.overrideLeftText = true;
@@ -69,71 +71,34 @@ namespace Maestro
         }
 
         #region Getters/setters based on handedness
-
         private IMaestroHand GetHand(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return rightHand;
-                case WhichHand.LeftHand:
-                    return leftHand;
-            }
+            return get(handedness, leftHand, rightHand);
         }
 
         private MaestroGloveBehaviour GetGlove(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return rightGlove;
-                case WhichHand.LeftHand:
-                    return leftGlove;
-            }
+            return get(handedness, leftGlove, rightGlove);
         }
 
         private GameObject GetPanel(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return rightPanel;
-                case WhichHand.LeftHand:
-                    return leftPanel;
-            }
+            return get(handedness, leftPanel, rightPanel);
         }
 
         private bool GetOverride(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return overrideRightText;
-                case WhichHand.LeftHand:
-                    return overrideLeftText;
-            }
+            return get(handedness, overrideLeftText, overrideRightText);
         }
 
         private List<Vector3> GetHistory(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return rightHistory;
-                case WhichHand.LeftHand:
-                    return leftHistory;
-            }
+            return get(handedness, leftHistory, rightHistory);
         }
 
         private string GetName(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return "Right";
-                case WhichHand.LeftHand:
-                    return "Left";
-            }
+            return get(handedness, "Left", "Right");
         }
 
         private string GetDisplayText(WhichHand handedness)
@@ -143,15 +108,23 @@ namespace Maestro
 
         private TextMesh GetTextMesh(WhichHand handedness)
         {
-            switch (handedness) {
-                default:
-                case WhichHand.RightHand:
-                    return rightText;
-                case WhichHand.LeftHand:
-                    return leftText;
-            }
+            return get(handedness, leftText, rightText);
         }
 
+        private Image getDot(WhichHand handedness)
+        {
+            return get(handedness, leftDot, rightDot);
+        }
+
+        private bool getBlinkState(WhichHand handedness)
+        {
+            return get(handedness, blinkState, !blinkState);
+        }
+
+        private T get<T>(WhichHand handedness, T leftOption, T rightOption) 
+        {
+            return handedness == WhichHand.LeftHand ? leftOption : rightOption;
+        }
         #endregion
 
         // Start is called before the first frame update
@@ -160,22 +133,17 @@ namespace Maestro
             if (instance == null)
                 instance = this;
 
+            leftDot.color = Color.clear;
+            rightDot.color = Color.clear;
+
             leftHistory = new List<Vector3>();
             rightHistory = new List<Vector3>();
-
-            watcher.gameObject.SetActive(false);
-            left.gameObject.SetActive(false);
-            right.gameObject.SetActive(false);
-            process.gameObject.SetActive(false);
-            leftConnected.gameObject.SetActive(false);
-            rightConnected.gameObject.SetActive(false);
 
             // Check if inputs exist
             CheckInput("ToggleLeftPanel", out inputLeftPanel);
             CheckInput("ToggleRightPanel", out inputRightPanel);
             showLeftPanel = true;
             showRightPanel = true;
-
 
             // Find active left/right hands
             IMaestroHand[] hands = GameObject.FindObjectsOfType<IMaestroHand>();
@@ -268,13 +236,27 @@ namespace Maestro
 
         private void UpdateUI()
         {
-            watcher.gameObject.SetActive(is_ble_watcher_running());
-            left.gameObject.SetActive(is_ble_left_connecting());
-            right.gameObject.SetActive(is_ble_right_connecting());
-            process.gameObject.SetActive(is_ble_processing());
+            blinkState = !blinkState;
 
-            leftConnected.gameObject.SetActive(leftGlove != null ? leftGlove.Connected : false);
-            rightConnected.gameObject.SetActive(rightGlove != null ? rightGlove.Connected : false);
+            UpdateUI(WhichHand.LeftHand);
+            UpdateUI(WhichHand.RightHand);
+        }
+
+        private void UpdateUI(WhichHand handedness)
+        {
+            Image dot = getDot(handedness);
+            MaestroGloveBehaviour glove = GetGlove(handedness);
+
+            if (glove.Connected) {
+                dot.color = Color.green;
+            } else if (is_ble_processing()) {
+                dot.color = Color.magenta;
+            } else {
+                if (getBlinkState(handedness))
+                    dot.color = Color.blue;
+                else
+                    dot.color = Color.red;
+            }   
         }
 
         // Update is called once per frame
@@ -322,10 +304,6 @@ namespace Maestro
                 bool connected = glove.Connected;
                 bool overrideText = GetOverride(handedness);
 
-                if (handedness == WhichHand.RightHand && !showRightPanel) {
-                    bool hey = showPanel(handedness);
-                }
-
                 GetPanel(handedness).SetActive(showPanel(handedness) && (!connected || overrideText));
                 if (!connected && !overrideText)
                     GetTextMesh(handedness).text = GetDisplayText(handedness);
@@ -357,7 +335,6 @@ namespace Maestro
             return result;
         }
 
-        //private void OrientPanel(GameObject panel, Vector3 position)
         private void OrientPanel(WhichHand handedness)
         {
             GameObject panel = GetPanel(handedness);
