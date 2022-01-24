@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#if !UNITY_ANDROID
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,3 +38,5 @@ namespace Maestro
         }
     }
 }
+
+#endif

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Maestro
 {
@@ -34,6 +35,21 @@ namespace Maestro
             get {
                 return Inheriting ? manager.grabType : grabTypeOverride;
             }
+        }
+
+        // TODO do this much cleaner
+        public byte? ForcedMotorAmplitude
+        {
+            get;
+            set;
+        }
+
+        // TODO do this much cleaner
+        [CanBeNull]
+        public VibrationEffect ForcedVibrationEffect
+        {
+            get;
+            set;
         }
         
         private HandSize handSize {
@@ -132,7 +148,7 @@ namespace Maestro
         private MaestroIndex twoHandIndex;
 
         // Put everything here instead of somewhere random
-        private MaestroContainer mc;
+        public MaestroContainer mc;
 
         // Why not have this
         private MeshRenderer palmMeshRenderer;
@@ -403,7 +419,19 @@ namespace Maestro
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
             bool palmTouch = mc.PalmBase.Contacting;
 
-            if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
+            // TODO do this much cleaner
+            if (ForcedMotorAmplitude != null || ForcedVibrationEffect != null)
+            {
+                if (ForcedMotorAmplitude != null)
+                {
+                    nextHaptics.SetAllAmplitudes(ForcedMotorAmplitude);
+                }
+
+                if (ForcedVibrationEffect != null)
+                {
+                    nextHaptics.SetAllVibrationEffects(ForcedVibrationEffect);
+                }
+            } else if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.getMotorAmplitude());
                 nextHaptics.SetAllVibrationEffects(grabTarget.getVibrationEffect());
             } else {

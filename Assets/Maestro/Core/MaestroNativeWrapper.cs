@@ -6,10 +6,27 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Maestro.Vibration;
 
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_WSA_10_0 || UNITY_WINRT || UNITY_WINRT_10_0)
+
 namespace Maestro
 {
     static class MaestroNativeWrapper
     {
+        [DllImport("MaestroAPI")]
+        public static extern bool is_ble_processing();
+
+        [DllImport("MaestroAPI")]
+        public static extern IntPtr get_left_glove_pointer();
+
+        [DllImport("MaestroAPI")]
+        public static extern IntPtr get_right_glove_pointer();
+
+        [DllImport("MaestroAPI")]
+        public static extern bool is_glove_connected(IntPtr glovePointer);
+
+        [DllImport("MaestroAPI")]
+        public static extern bool start_maestro_detection_service();
+
         /**
          * Force-feedback endpoints
          */
@@ -111,3 +128,5 @@ namespace Maestro
         }
     }
 }
+
+#endif
