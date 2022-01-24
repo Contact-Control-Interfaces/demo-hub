@@ -8,7 +8,7 @@ namespace Maestro
     {
         public new Light light;
 
-        public void SetLight(bool isOn)
+        public virtual void SetLight(bool isOn)
         {
             light.gameObject.SetActive(isOn);
             light.enabled = isOn;

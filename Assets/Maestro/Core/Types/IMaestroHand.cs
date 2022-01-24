@@ -170,7 +170,7 @@ namespace Maestro
         {
             for (; ; ) {
                 MaestroHapticContext next = ProcessHaptics();
-                MaestroNativeWrapper.SetHapticsFromContexts(parentGloveBehavior.GetPointer(), next, lastHaptics);
+                HapticsApplicator.ApplyHaptics(parentGloveBehavior.GetPointer(), next, lastHaptics);
                 lastHaptics = next;
 
                 yield return new WaitForFixedUpdate();

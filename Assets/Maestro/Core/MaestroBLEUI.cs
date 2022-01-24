@@ -13,20 +13,10 @@ namespace Maestro
     {
         private static MaestroBLEUI instance;
 
+        private float opacity = 0.5f;
+
         private float elapsed;
         public float tick = 0.25f;
-
-        [DllImport("MaestroAPI")]
-        public static extern bool is_ble_processing();
-
-        [DllImport("MaestroAPI")]
-        public static extern bool is_ble_watcher_running();
-
-        [DllImport("MaestroAPI")]
-        public static extern bool is_ble_left_connecting();
-
-        [DllImport("MaestroAPI")]
-        public static extern bool is_ble_right_connecting();
 
         public int history = 5;
         private List<Vector3> rightHistory, leftHistory;
@@ -242,20 +232,36 @@ namespace Maestro
             UpdateUI(WhichHand.RightHand);
         }
 
+        private Color fromColor(Color c)
+        {
+            return new Color(c.r, c.g, c.b, opacity);
+        }
+
+        private bool isBleProcessing()
+        {
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_WSA_10_0 || UNITY_WINRT || UNITY_WINRT_10_0)
+            return MaestroNativeWrapper.is_ble_processing();
+#elif UNITY_ANDROID
+            return MaestroAndroidWrapper.IsBleProcessing();
+#else
+            return false;
+#endif
+        }
+
         private void UpdateUI(WhichHand handedness)
         {
             Image dot = getDot(handedness);
             MaestroGloveBehaviour glove = GetGlove(handedness);
 
             if (glove.Connected) {
-                dot.color = Color.green;
-            } else if (is_ble_processing()) {
-                dot.color = Color.magenta;
+                dot.color = fromColor(Color.green);
+            } else if (isBleProcessing()) {
+                dot.color = fromColor(Color.magenta);
             } else {
                 if (getBlinkState(handedness))
-                    dot.color = Color.blue;
+                    dot.color = fromColor(Color.blue);
                 else
-                    dot.color = Color.red;
+                    dot.color = fromColor(Color.red);
             }   
         }
 

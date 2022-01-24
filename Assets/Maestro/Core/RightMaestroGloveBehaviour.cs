@@ -11,12 +11,9 @@ namespace Maestro
 {
     public class RightMaestroGloveBehaviour : MaestroGloveBehaviour
     {
-        [DllImport("MaestroAPI")]
-        public static extern IntPtr get_right_glove_pointer();
-
         public override IntPtr GetPointer()
         {
-            return get_right_glove_pointer();
+            return MaestroGloveConnector.GetRightGlovePointer();
         }
     }
 }

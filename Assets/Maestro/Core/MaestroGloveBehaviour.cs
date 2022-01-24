@@ -16,12 +16,6 @@ namespace Maestro
             ON_TAG_DIFFERENT
         };
 
-        [DllImport("MaestroAPI")]
-        protected static extern bool is_glove_connected(IntPtr glovePointer);
-
-        [DllImport("MaestroAPI")]
-        protected static extern bool start_maestro_detection_service();
-
         public abstract IntPtr GetPointer();
 
         public IntPtr GlovePointer { get; set; }
@@ -31,11 +25,11 @@ namespace Maestro
 
         public void Start()
         {
-            Connected = is_glove_connected(GetPointer());
+            Connected = MaestroGloveConnector.isGloveConnected(GetPointer());
 
             if (!Connected)
             {
-                bool detectionRunning = start_maestro_detection_service();
+                bool detectionRunning = MaestroGloveConnector.StartScanningForGloves();
                 if (detectionRunning)
                     Debug.Log("Maestro detection service is running.");
                 else
@@ -45,7 +39,7 @@ namespace Maestro
 
         public void Update()
         {
-            bool still = is_glove_connected(GetPointer());
+            bool still = MaestroGloveConnector.isGloveConnected(GetPointer());
 
             Connected = still;
         }
