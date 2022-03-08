@@ -1,10 +1,17 @@
 using UnityEngine;
 
-public class Foveator : MonoBehaviour
+#if UNITY_ANDROID
+
+namespace Maestro
 {
-    void Start()
+    public class Foveator : MonoBehaviour
     {
-        OVRManager.fixedFoveatedRenderingLevel = OVRManager.FixedFoveatedRenderingLevel.High;
-        OVRManager.useDynamicFixedFoveatedRendering = true;
+        void Start()
+        {
+            OVRManager.fixedFoveatedRenderingLevel = OVRManager.FixedFoveatedRenderingLevel.High;
+            OVRManager.useDynamicFixedFoveatedRendering = true;
+        }
     }
 }
+
+#endif
