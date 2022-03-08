@@ -403,7 +403,7 @@ namespace Maestro
                     poh.fc.rb.velocity = dist / Time.deltaTime;
                 }
 
-                poh.fc.rb.MoveRotation(poh.transform.rotation);
+                poh.fc.rb.MoveRotation(poh.transform.rotation.normalized);
             }
 
             // Make sure we're using the correct GrabManager
