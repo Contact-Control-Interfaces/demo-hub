@@ -9,11 +9,27 @@ namespace Maestro
         public Transform hoop, start, far, top;
         public float bounds, offset;
 
+        private Vector3 startLocalScale;
+        private Quaternion startLocalRotation;
+
         private float startZ;
 
         void Start()
         {
             startZ = this.transform.localPosition.z;
+            GetStartingValues();
+        }
+
+        private void GetStartingValues()
+        {
+            startLocalScale = this.transform.localScale;
+            startLocalRotation = this.transform.localRotation;
+        }
+
+        private void ApplyStartingValues()
+        {
+            this.transform.localScale = startLocalScale;
+            this.transform.localRotation = startLocalRotation;
         }
 
         void Update()
@@ -33,6 +49,7 @@ namespace Maestro
             localPosition.z = startZ;
 
             this.transform.localPosition = localPosition;
+            ApplyStartingValues();
 
             //Move hoop
             float toFro = (localPosition.x + bounds) / (bounds * 2);

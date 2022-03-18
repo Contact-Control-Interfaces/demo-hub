@@ -1,17 +1,15 @@
-﻿#if !UNITY_ANDROID
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Valve.VR;
+//using Valve.VR;
 
 namespace Maestro
 {
     public class BasketballSpawner : MonoBehaviour
     {
 
-        public SteamVR_Action_Boolean action; //Grab Pinch is the trigger, select from inspecter
-        public SteamVR_Input_Sources inputSource = SteamVR_Input_Sources.Any;//which controller
+        //public SteamVR_Action_Boolean action; //Grab Pinch is the trigger, select from inspecter
+        //public SteamVR_Input_Sources inputSource = SteamVR_Input_Sources.Any;//which controller
 
         public Transform launchTransform;
         public AudioSource launchAudio;
@@ -125,12 +123,12 @@ namespace Maestro
             SpawnAt(this.transform.position, this.transform.rotation, true);
         }
 
-        void OnEnable()
+        /*void OnEnable()
         {
             if (action != null) {
                 action.AddOnChangeListener(OnAction, inputSource);
             }
-        }
+        }*/
 
         public void Launch()
         {
@@ -147,7 +145,7 @@ namespace Maestro
             }
         }
 
-        private void OnDisable()
+        /*private void OnDisable()
         {
             if (action != null) {
                 action.RemoveOnChangeListener(OnAction, inputSource);
@@ -162,8 +160,6 @@ namespace Maestro
 
                 Spawn();
             }
-        }
+        }*/
     }
 }
-
-#endif

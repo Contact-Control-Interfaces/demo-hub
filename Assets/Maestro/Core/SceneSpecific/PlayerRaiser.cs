@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TableRaiser : MonoBehaviour
+public class PlayerRaiser : MonoBehaviour
 {
+    public Transform toRaise;
     public float speed = 0.2f;
 
-    private static string inputName = "TableHeight";
+    private static string inputName = "PlayerHeight";
     private bool inputBound;
-
-    private Rigidbody rb;
 
     void Start()
     {
+        if (toRaise == null)
+            toRaise = this.transform;
+
         inputBound = true;
 
         try {
             Input.GetAxis(inputName);
         } catch (ArgumentException ae) {
-            Debug.LogWarning(string.Format("Input {0} is not bound! Define it to raise/lower the table", inputName));
+            Debug.LogWarning(string.Format("Input {0} is not bound! Define it to raise/lower the player rig", inputName));
             inputBound = false;
         }
     }
@@ -29,7 +29,7 @@ public class TableRaiser : MonoBehaviour
         if (inputBound) {
             float axis = Input.GetAxis(inputName);
 
-            this.gameObject.transform.localPosition += axis * speed * Time.deltaTime * new Vector3(0, 1, 0);
+            toRaise.localPosition += axis * speed * Time.deltaTime * Vector3.up;
         }
     }
 }
