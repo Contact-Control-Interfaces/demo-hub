@@ -117,16 +117,7 @@ namespace Maestro
 
             nearbyObjects.transform.localPosition = mc.PalmBase.transform.InverseTransformPoint(mc[WhichFinger.Middle].Base.transform.position);
 
-            List<MaestroInteractable> candidates = nearbyObjects.get();
-            foreach (GrabState gs in grabStates) {
-                // Don't grab objects we're already grabbing with this hand
-                candidates.RemoveAll(x => x == gs.target);
-            }
-            foreach (MaestroInteractable dg in dontGrab.Keys) {
-                // Don't grab objects that we just dropped
-                candidates.Remove(dg);
-            }
-            grabCandidates = candidates;
+            GatherCandidates();
 
             base.FixedUpdate();
 
@@ -145,6 +136,25 @@ namespace Maestro
             }
 
             endedThisFrame.Clear();
+        }
+
+        private void GatherCandidates()
+        {
+            List<MaestroInteractable> candidates = nearbyObjects.get();
+
+            // Don't grab static things
+            candidates.RemoveAll(x => x.type == InteractionType.Static);
+
+            // Don't grab objects we're already grabbing with this hand
+            foreach (GrabState gs in grabStates) {
+                candidates.RemoveAll(x => x == gs.target);
+            }
+
+            // Don't grab objects that we just dropped
+            foreach (MaestroInteractable dg in dontGrab.Keys) {
+                candidates.Remove(dg);
+            }
+            grabCandidates = candidates;
         }
 
         private void CalculateFingerCurl(WhichFinger whichFinger)
