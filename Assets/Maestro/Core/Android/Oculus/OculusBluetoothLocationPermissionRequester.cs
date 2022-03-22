@@ -5,11 +5,15 @@ using UnityEngine.Android;
 
 namespace Maestro
 {
-    public class OculusBluetoothLocationPermisisonRequester : MonoBehaviour
+    public class OculusBluetoothLocationPermissionRequester : MonoBehaviour
     {
         void Start()
         {
-            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            {
+                StartScanningForGloves();
+            }
+            else
             {
                 Permission.RequestUserPermission(Permission.FineLocation, CreatePermissionCallbacks());
             }
@@ -27,16 +31,7 @@ namespace Maestro
                     return;
                 }
                 
-                bool detectionStarted = MaestroGloveConnector.StartScanningForGloves();
-            
-                if (detectionStarted)
-                {
-                    Debug.Log("Maestro detection service was started.");
-                }
-                else
-                {
-                    Debug.LogError("Maestro detection service failed to start!");
-                }
+                StartScanningForGloves();
             };
                 
             callbacks.PermissionDenied += permission =>
@@ -48,6 +43,20 @@ namespace Maestro
             };
 
             return callbacks;
+        }
+
+        private void StartScanningForGloves()
+        {
+            bool detectionStarted = MaestroGloveConnector.StartScanningForGloves();
+        
+            if (detectionStarted)
+            {
+                Debug.Log("Maestro detection service was started.");
+            }
+            else
+            {
+                Debug.LogError("Maestro detection service failed to start!");
+            }
         }
     }
 }

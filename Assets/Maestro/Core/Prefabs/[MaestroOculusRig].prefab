@@ -294,9 +294,9 @@ GameObject:
   - component: {fileID: 8495682206488873528}
   - component: {fileID: 8390216140192832892}
   - component: {fileID: 8495682206748780852}
-  - component: {fileID: 445173047065574937}
-  - component: {fileID: 5439577572500119694}
   - component: {fileID: 7428791043888595013}
+  - component: {fileID: 8495682206434405481}
+  - component: {fileID: 8495682206434405480}
   m_Layer: 0
   m_Name: '[MaestroOculusRig]'
   m_TagString: Untagged
@@ -457,30 +457,6 @@ MonoBehaviour:
       data:
         Type: 14
         strength: 4
---- !u!114 &445173047065574937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8495682206495948764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99dfb6709659794ea2e4ba7db0c454f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5439577572500119694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8495682206495948764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9915446ddc9c96745b789d2630b4d39f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7428791043888595013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +470,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enable90fps: 1
+--- !u!114 &8495682206434405481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495682206495948764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a99dfb6709659794ea2e4ba7db0c454f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FixedFoveatedRenderingLevel: 0
+--- !u!114 &8495682206434405480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495682206495948764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3468391af5fa9046a54d3f04fd85748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8495682206495948766
 GameObject:
   m_ObjectHideFlags: 0
