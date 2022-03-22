@@ -10,8 +10,8 @@ namespace Maestro
         
         void Start()
         {
-            OVRManager.fixedFoveatedRenderingLevel = OVRManager.FixedFoveatedRenderingLevel.High;
-            OVRManager.useDynamicFixedFoveatedRendering = true;
+            OVRManager.fixedFoveatedRenderingLevel = FixedFoveatedRenderingLevel;
+            OVRManager.useDynamicFixedFoveatedRendering = FixedFoveatedRenderingLevel != OVRManager.FixedFoveatedRenderingLevel.Off;
         }
     }
 }
