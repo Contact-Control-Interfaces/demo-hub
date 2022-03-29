@@ -1,25 +1,20 @@
-﻿#if !UNITY_ANDROID
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if !UNITY_ANDROID
 using Valve.VR;
+#endif
 
 namespace Maestro
 {
-
     public class IndexFlatnessChecker : FlatnessChecker
     {
-        SteamVR_Behaviour_Skeleton parent;
         private bool flat;
 
-        public float total;
-        public float threshold = 0.0f;
-
-        // Start is called before the first frame update
-        void Start()
+        public override bool isFlat()
         {
-            parent = this.GetComponent<SteamVR_Behaviour_Skeleton>();
+            return flat;
         }
 
         private float sum(float[] floats)
@@ -32,18 +27,24 @@ namespace Maestro
             return result;
         }
 
+#if !UNITY_ANDROID
+        SteamVR_Behaviour_Skeleton parent;
+
+        public float total;
+        public float threshold = 0.0f;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            parent = this.GetComponent<SteamVR_Behaviour_Skeleton>();
+        }
+
         // Update is called once per frame
         void Update()
         {
             total = sum(parent.fingerCurls);
             flat = total <= threshold;
         }
-
-        public override bool isFlat()
-        {
-            return flat;
-        }
+#endif
     }
 }
-
-#endif
