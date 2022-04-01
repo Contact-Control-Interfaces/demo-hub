@@ -12,6 +12,9 @@ namespace Maestro
 
         public static GameObject smokePrefab;
         public static AudioClip disappear, appear;
+
+        public bool destroyInstead = false;
+
         // Use this for initialization
         void Start()
         {
@@ -59,22 +62,25 @@ namespace Maestro
             if (mi != null && mi.isGrabbed)
                 return;
 
+            // Make the poof where it disappears
             Debug.Log("Resetting " + gameObject.name);
             StartCoroutine("SpawnSmoke", this.gameObject.transform.position);
             if (disappear != null)
                 AudioSource.PlayClipAtPoint(disappear, this.gameObject.transform.position, 0.10f);
-            StartCoroutine("SpawnSmoke", this.position);
 
-            /*if (appear != null)
-                AudioSource.PlayClipAtPoint(appear, this.position);*/
+            if (destroyInstead) {
+                Destroy(this.gameObject);
+            } else {
+                // Respawn, make another poof
+                StartCoroutine("SpawnSmoke", this.position);
+                this.transform.SetPositionAndRotation(position, rotation);
 
-            this.transform.SetPositionAndRotation(position, rotation);
-
-            Rigidbody rb = this.GetComponent<Rigidbody>();
-            if (rb) {
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-                rb.constraints = constraints;
+                Rigidbody rb = this.GetComponent<Rigidbody>();
+                if (rb) {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.constraints = constraints;
+                }
             }
         }
     }

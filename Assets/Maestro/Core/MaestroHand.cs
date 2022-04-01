@@ -414,6 +414,12 @@ namespace Maestro
             grabManager.FixedUpdate();
         }
 
+        private void PersistPalm(MaestroIndex mi, float duration = 0.25f)
+        {
+            persistTimes[mi] = duration;
+            persistInteractables[mi] = mc.PalmBase.fc.touching;
+        }
+
         protected override MaestroHapticContext ProcessHaptics()
         {
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
@@ -435,9 +441,10 @@ namespace Maestro
                 nextHaptics.SetAllAmplitudes(grabTarget.getMotorAmplitude());
                 nextHaptics.SetAllVibrationEffects(grabTarget.getVibrationEffect());
             } else {
-                // Check each finger specifically
 
+                // Check each finger specifically
                 IEnumerable<PointOnHand> tips = mc.Where(x => x.fc.isTip);
+
                 foreach (PointOnHand tip in tips) {
                     bool inheritFromPalm = palmTouch && mc.PalmBase.fc.touching != null;
                     float palmDiffusion = 0.65f;
@@ -468,7 +475,6 @@ namespace Maestro
                         // Inherit a portion of palm haptics if applicable
                         byte? amp = mc.PalmBase.fc.touching.getMotorAmplitude();
                         if (amp.HasValue) {
-                            //Debug.Log(mc.PalmBase.fc.touching.gameObject.name);
                             nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
                         }
 
@@ -586,10 +592,15 @@ namespace Maestro
             int vertexOffset = 0;
 
             /* Get Index - Thumb - Palm */
-            WhichFinger[] toInclude = new WhichFinger[] { WhichFinger.Thumb, WhichFinger.Index, WhichFinger.Palm };
-            IEnumerable<PointOnHand> thumbIndexPalm = mc.Where(x => (x.fc.isFingerBase || x.fc.isPalmBase) && toInclude.Contains(x.index.finger));
+            //WhichFinger[] toInclude = new WhichFinger[] { WhichFinger.Thumb, WhichFinger.Index, WhichFinger.Palm };
+            //IEnumerable<PointOnHand> thumbIndexPalm = mc.Where(x => (x.fc.isFingerBase || x.fc.isPalmBase) && toInclude.Contains(x.index.finger));
 
-            foreach (PointOnHand poh in thumbIndexPalm) {
+            List<PointOnHand> toInclude = new List<PointOnHand>();
+            toInclude.Add(mc[WhichFinger.Index][PointOnFinger.Base]);
+            toInclude.Add(mc[WhichFinger.Thumb][PointOnFinger.Base]);
+            toInclude.Add(mc.PalmBase);
+
+            foreach (PointOnHand poh in toInclude) {
                 MeshFilter current = poh.fc.gameObject.GetComponent<MeshFilter>();
                 if (current) {
                     // Vertices

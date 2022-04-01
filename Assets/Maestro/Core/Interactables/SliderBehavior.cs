@@ -17,9 +17,15 @@ namespace Maestro
         private Rigidbody rb;
         private Vector3 startLocalPosition;
 
+        public TextMesh outputTextMesh;
+
         public float range;
         public float value = 0.5f;
-        public int textScale = 255;
+
+        public float outputScale = 1f;
+        public float outputOffset = 0f;
+        public float outputValue = 0f;
+
         public string suffix = "";
         public bool showSpecialValues = true;
 
@@ -35,7 +41,6 @@ namespace Maestro
 
             if (onValueChanged == null)
                 onValueChanged = new SliderEvent();
-
 
             lastZ = 0;
 
@@ -55,8 +60,13 @@ namespace Maestro
                 transform.localPosition = new Vector3(startLocalPosition.x, startLocalPosition.y, z);
 
                 value = Mathf.InverseLerp(-range, range, transform.localPosition.z);
+                outputValue = outputOffset + outputScale * value;
 
-                onValueChanged.Invoke(value);
+                if (outputTextMesh != null) {
+                    outputTextMesh.text = OutputText;
+                }
+
+                onValueChanged.Invoke(outputValue);
             }
 
             lastZ = z;
@@ -78,15 +88,16 @@ namespace Maestro
             mi.haptics.Vibration = VibrationEffect.ConstructEffect((byte)(value * 128));
         }
 
-        public void setTextMesh(TextMesh tm)
-        {
-            byte result = (byte)(textScale * value);
-            if (showSpecialValues && result == 0)
-                tm.text = "OFF";
-            else if (showSpecialValues && result >= textScale)
-                tm.text = "MAX";
-            else
-                tm.text = result + suffix;
+        public string OutputText {
+            get {
+                if (showSpecialValues && outputValue == 0) {
+                    return "OFF";
+                } else if (showSpecialValues && outputValue >= outputOffset + outputScale) {
+                    return "MAX";
+                } else {
+                    return outputValue.ToString("0.00") + suffix;
+                }
+            }
         }
     }
 }

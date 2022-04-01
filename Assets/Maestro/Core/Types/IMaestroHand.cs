@@ -73,6 +73,7 @@ namespace Maestro
         public Transform RingKnuckle;
         public Transform LittleKnuckle;
         public Transform PalmBase;
+        public Transform PalmLittleBase;
     }
 
     public struct MaestroHapticContext
