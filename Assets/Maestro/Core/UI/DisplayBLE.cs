@@ -1,17 +1,16 @@
 ﻿using Leap.Unity;
-using Maestro;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Maestro
+namespace Maestro.UI
 {
-    public class MaestroBLEUI : MonoBehaviour
+    public class DisplayBLE : MonoBehaviour
     {
-        private static MaestroBLEUI instance;
+        private static DisplayBLE instance;
 
         private float opacity = 0.5f;
 
@@ -137,18 +136,11 @@ namespace Maestro
 
             // Find active left/right hands
             IMaestroHand[] hands = GameObject.FindObjectsOfType<IMaestroHand>();
-            foreach (IMaestroHand hand in hands) {
-                if (hand.whichHand == WhichHand.LeftHand) {
-                    if (leftHand == null)
-                        leftHand = hand;
-                    else
-                        continue;
-                } else {
-                    if (rightHand == null)
-                        rightHand = hand;
-                    else
-                        continue;
-                }
+            if (hands.Length > 0) {
+                if (leftHand == null)
+                    leftHand = hands.FirstOrDefault(x => x.whichHand == WhichHand.LeftHand);
+                if (rightHand == null)
+                    rightHand = hands.FirstOrDefault(x => x.whichHand == WhichHand.RightHand);
             }
 
             // Get gloves
