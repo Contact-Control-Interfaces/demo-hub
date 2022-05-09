@@ -8,22 +8,32 @@ namespace Maestro
     {
         public GameObject toSpawn;
         public Transform barrelTransform;
+        public GameObject targetPrefab;
 
-        public Transform aimAtRight;
-        //public Transform aimAtLeft;
+        public Transform aimAt;
 
         public float launchSpeed;
-
-        //public bool targetLeft = false;
-        public TextMesh targetText;
 
         public float persistMin = 0.1f, persistMax = 0.25f;
 
         public Transform endOfBarrel;
 
         private AudioSource source;
+        public AudioClip launchSound;
+        public AudioClip beepSound;
+        public AudioClip fastBeepSound;
+
         private GameObject displayBall;
         private GameObject smokePrefab;
+        private BallCannonTarget target;
+
+        private bool lockOn;
+
+        public float launchDelay = 2.0f;
+        public float targetDespawnDelay = 0.25f;
+        public float speedThreshold = 0.1f;
+
+        private bool lastFastBeep;
 
         void Start()
         {
@@ -32,10 +42,10 @@ namespace Maestro
             Destroy(displayBall.GetComponent<Collider>());
             Destroy(displayBall.GetComponent<Rigidbody>());
 
+            source = this.GetComponent<AudioSource>();
+
             displayBall.transform.position = barrelTransform.position;
             displayBall.transform.parent = barrelTransform;
-
-            source = this.GetComponent<AudioSource>();
 
             if (!smokePrefab)
                 smokePrefab = GameObject.Find("Smoke");
@@ -54,10 +64,23 @@ namespace Maestro
 
         void Update()
         {
-            if (aimAtRight != null) {
-                Vector3 target = aimAtRight.position;
+            if (lockOn && aimAt != null) {
+                Vector3 toTarget = aimAt.position - barrelTransform.position;
 
-                Vector3 toTarget = target - barrelTransform.position;
+                bool fastBeep = target.ratio < 0.95f;
+                if (fastBeep && !lastFastBeep) {
+                    // switch to fast audio clip
+                    source.clip = fastBeepSound;
+                    source.Play();
+                } else if (lastFastBeep && !fastBeep) {
+                    // switch to slow audio clip
+                    source.clip = beepSound;
+                    source.Play();
+                }
+
+                if (target != null) {
+                    target.transform.position = aimAt.position;
+                }
 
                 float s2 = launchSpeed * launchSpeed;
                 float s4 = s2 * s2;
@@ -72,22 +95,14 @@ namespace Maestro
                 // quadratic formula
                 float sqrt = Mathf.Sqrt(s4 - gravity * ((gravity * x * x) + (2 * s2 * y)));
                 float low = Mathf.Atan2(s2 - sqrt, gravity * x);
-                float high = Mathf.Atan2(s2 + sqrt, gravity * x);
 
                 Vector3 launchDirection = GetLaunchDirection(groundToTarget, low);
 
                 barrelTransform.transform.rotation = Quaternion.LookRotation(launchDirection);
+
+                lastFastBeep = fastBeep;
             }
         }
-
-        /*public void SetTargettingLeft(bool targetLeft)
-        {
-            this.targetLeft = targetLeft;
-
-            if (targetText != null) {
-                targetText.text = string.Format("Target:\n{0}", this.targetLeft ? "LEFT" : "RIGHT");
-            }
-        }*/
 
         private Vector3 GetLaunchDirection(Vector3 ground, float angle)
         {
@@ -96,8 +111,29 @@ namespace Maestro
             return upComponent + groundComponent;
         }
 
+        public void LockOn()
+        {
+            // don't double fire
+            if (!this.lockOn) {
+                this.lockOn = true;
+
+                if (source != null && beepSound != null) {
+                    source.pitch = 1f;
+                    source.clip = beepSound;
+                    source.loop = true;
+                    source.Play();
+                }
+
+                GameObject temp = Instantiate(targetPrefab);
+                target = temp.GetComponent<BallCannonTarget>();
+                target.from = this;
+                target.gameObject.SetActive(true);
+            }
+        }
+
         public void Launch()
         {
+            this.lockOn = false;
             Launch(barrelTransform.transform.forward * launchSpeed);
         }
 
@@ -116,12 +152,18 @@ namespace Maestro
             rb.constraints = RigidbodyConstraints.None;
             rb.velocity = launchVelocity;
 
-            if (source != null) {
+            if (source != null && launchSound != null) {
+                if (source.isPlaying)
+                    source.Stop();
+
+                source.pitch = 1f;
+                source.clip = launchSound;
+                source.loop = false;
                 source.Play();
             }
 
             if (smokePrefab != null) {
-                StartCoroutine("SpawnSmoke", endOfBarrel.position);
+                StartCoroutine(SpawnSmoke(endOfBarrel.position));
             }
         }
 
