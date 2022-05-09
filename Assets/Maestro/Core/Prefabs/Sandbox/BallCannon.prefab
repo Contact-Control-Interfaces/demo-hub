@@ -48,12 +48,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toSpawn: {fileID: 3739432659632436896, guid: e50a825441b26734ea35832e81b989c8, type: 3}
   barrelTransform: {fileID: 176182095767487068}
-  aimAtRight: {fileID: 0}
-  launchSpeed: 1
+  targetPrefab: {fileID: 6072666298807438511, guid: e45c2c25d1b57ef4f98f314768f94176,
+    type: 3}
+  aimAt: {fileID: 0}
+  launchSpeed: 5
   targetText: {fileID: 0}
   persistMin: 0.1
   persistMax: 0.25
-  endOfBarrel: {fileID: 0}
+  endOfBarrel: {fileID: 7273831291622949563}
+  launchSound: {fileID: 8300000, guid: 989e693433da81e42af4212f02c1b80e, type: 3}
+  beepSound: {fileID: 8300000, guid: 75730f8c1901c4f49994b816c7fa47b3, type: 3}
+  fastBeepSound: {fileID: 8300000, guid: 3b9d2761ed99fbb4a8a3b6d28253513a, type: 3}
+  launchDelay: 2
+  targetDespawnDelay: 0.25
+  speedThreshold: 0.3
 --- !u!82 &8179659133388667827
 AudioSource:
   m_ObjectHideFlags: 0
@@ -64,9 +72,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 989e693433da81e42af4212f02c1b80e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
