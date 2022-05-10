@@ -2319,6 +2319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &131365900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3382,6 +3383,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2022930412}
         m_TargetAssemblyTypeName: 
         m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2022930412}
+        m_TargetAssemblyTypeName: Maestro.FingerPaintable, Assembly-CSharp
+        m_MethodName: CleanHands
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11489,6 +11502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &773655859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13153,6 +13167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &826433834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16382,6 +16397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1080314938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16858,6 +16874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1086606051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21613,6 +21630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1322630357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27402,6 +27420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1730439036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30556,6 +30575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1969968103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31338,6 +31358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 1
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &1978548087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32023,7 +32044,7 @@ GameObject:
   - component: {fileID: 2022930412}
   - component: {fileID: 2022930411}
   - component: {fileID: 2022930413}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Tableau
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32122,12 +32143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9794e733427199408b4f6cd4f137cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brush: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
-  brushSize: 100
-  maxDots: 5000
-  scale: 1000000
-  dist: 0.1
-  effect: 128
   onClear:
     m_PersistentCalls:
       m_Calls: []
@@ -33530,6 +33545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexOnly: 0
   erase: 0
+  splotchPrefab: {fileID: 113140, guid: a83983ea0f7ea18439f8f8530dc1c8cc, type: 3}
 --- !u!114 &2129281195
 MonoBehaviour:
   m_ObjectHideFlags: 0
