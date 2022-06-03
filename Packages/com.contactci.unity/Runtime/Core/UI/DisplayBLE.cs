@@ -145,12 +145,10 @@ namespace Maestro.UI
             // Get gloves
             if (rightHand != null) {
                 rightGlove = rightHand.gameObject.GetComponentInParent<MaestroGloveBehaviour>();
-                TryAddEnableDisable(rightGlove);
             }
 
             if (leftHand != null) {
                 leftGlove = leftHand.gameObject.GetComponentInParent<MaestroGloveBehaviour>();
-                TryAddEnableDisable(leftGlove);
             }
 
             // Find main camera
@@ -194,13 +192,6 @@ namespace Maestro.UI
                 return true;
             } catch (Exception) {
                 return false;
-            }
-        }
-
-        private void TryAddEnableDisable(MaestroGloveBehaviour toAddTo)
-        {
-            if (toAddTo != null && toAddTo.addHandEnableDisable) {
-                toAddTo.gameObject.AddComponent<HandEnableDisable>();
             }
         }
 

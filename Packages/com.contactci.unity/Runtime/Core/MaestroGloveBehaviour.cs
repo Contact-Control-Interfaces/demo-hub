@@ -21,8 +21,6 @@ namespace Maestro
         public IntPtr GlovePointer { get; set; }
         public bool Connected = false;
 
-        public bool addHandEnableDisable = false;
-
         public void Start()
         {
             Connected = MaestroGloveConnector.isGloveConnected(GetPointer());
