@@ -34,6 +34,7 @@ namespace Maestro
 
             objects = new List<MaestroInteractable>();
 
+            rb.useGravity = false;
             rb.isKinematic = true;
             detector.isTrigger = true;
         }
@@ -73,7 +74,7 @@ namespace Maestro
             if (r != null) {
                 try {
                     originalColors.Add(toSet, r.material.color);
-                } catch (Exception e) { /* TODO count occurences */}
+                } catch (Exception) { /* TODO count occurences */}
                 r.material.color = c;
             }
         }

@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Android;
 
-#if UNITY_ANDROID
-
 namespace Maestro
 {
     public class OculusBluetoothLocationPermissionRequester : MonoBehaviour
     {
+#if UNITY_ANDROID
+
         void Start()
         {
             if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
@@ -58,7 +58,6 @@ namespace Maestro
                 Debug.LogError("Maestro detection service failed to start!");
             }
         }
+#endif
     }
 }
-
-#endif

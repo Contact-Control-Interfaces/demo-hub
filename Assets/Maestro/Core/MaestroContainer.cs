@@ -63,25 +63,16 @@ namespace Maestro
 
     public class MaestroContainer : MonoBehaviour, IEnumerable, IEnumerable<PointOnHand>
     {
-        /* should be replaced with a IMaestroHand */
+        /* TODO should be replaced with a IMaestroHand */
         [HideInInspector]
         public MaestroHand parent;
 
         private Dictionary<WhichFinger, FingerContainer> fingers;
 
-        private PointOnHand _palmBase;
-        public PointOnHand PalmBase { 
-            get {
-                return _palmBase;
-            }
-            set {
-                _palmBase = value;
-                _palmBase.whereOnFinger = PointOnFinger.Base;
-            }
-        }
+        public Transform PalmContainer { get; internal set; }
 
         public int FingerCount { get { return 5; } }
-        public int PointOnHandCount { get { return (FingerCount * 3) + 1 /*palm*/; } }
+        public int PointOnHandCount { get { return FingerCount * 3; } }
 
         void Awake()
         {
@@ -90,32 +81,25 @@ namespace Maestro
 
         public List<FingerContainer> GetFingers()
         {
-            return fingers.Values.ToList();
+            return fingers.Values.Where(x => x.whichFinger != WhichFinger.Palm).ToList();
         }
 
         #region Indexing
         public FingerContainer this[WhichFinger finger] {
-            get {
-                FingerContainer result = null;
-                fingers.TryGetValue(finger, out result);
-                return result;
-            }
+            get => fingers[finger];
 
             set {
-                fingers.Add(finger, value);
+                if (!fingers.ContainsKey(finger)) {
+                    fingers.Add(finger, value);
+                } else {
+                    fingers[finger] = value;
+                }
                 fingers[finger].Parent = this;
                 fingers[finger].whichFinger = finger;
             }
         }
 
-        public PointOnHand this[MaestroIndex index] {
-            get {
-                if (index.finger == WhichFinger.Palm)
-                    return PalmBase;
-                else 
-                    return fingers[index.finger][index.point];
-            }
-        }
+        public PointOnHand this[MaestroIndex index] => fingers[index.finger][index.point];
         #endregion
 
         #region IEnumerable impl
@@ -141,7 +125,6 @@ namespace Maestro
             foreach (PointOnHand poh in fingers[WhichFinger.Little]) {
                 yield return poh;
             }
-            yield return PalmBase;
         }
         #endregion
     }
@@ -223,10 +206,26 @@ namespace Maestro
         public FingerCollider fc   { get; private set; }       
         
         public PointOnHand(Transform transform, FingerCollider fc)
+            :this(transform)
+        {
+            SetFC(fc);
+        }
+
+        public PointOnHand(Transform transform)
         {
             this.transform = transform;
+        }
+
+        public void SetFC(FingerCollider fc, MaestroHand mh = null)
+        {
             this.fc = fc;
-            this.fc.SetParent(this);
+            this.fc.SetParentPOH(this);
+
+            if (mh != null) {
+                this.fc.SetParentHPI(mh);
+            } else if (this.parent != null) {
+                this.fc.SetParentHPI(this.parent.Parent.parent);
+            }                
         }
 
         public bool Contacting { get { return fc.Contacting; } }
