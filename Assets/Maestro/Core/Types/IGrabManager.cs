@@ -141,5 +141,15 @@ namespace Maestro
 
             wasGrabbing = isGrabbing;
         }
+
+        public virtual void Touch(MaestroInteractable touched, FingerCollider touchedBy)
+        {
+            touched.Touch(touchedBy);
+        }
+
+        public virtual void UnTouch(MaestroInteractable touched, FingerCollider touchedBy)
+        {
+            touched.Untouch(touchedBy);
+        }
     }    
 }

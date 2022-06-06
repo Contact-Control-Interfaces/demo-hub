@@ -21,7 +21,7 @@ namespace Maestro
 
     public class FingerCollider : MonoBehaviour
     {
-        public IMaestroHand hpi; // the parent hand's interaction script.
+        public IMaestroHand hpi { get; protected set; } // the parent hand's interaction script.
 
         public Rigidbody rb; // my rigidbody
 
@@ -31,16 +31,9 @@ namespace Maestro
 
         public Renderer rend; // the debug renderer for the collider. Is disabled by default.
 
-        public Vector3 colnrm; // the normal of the current collision
-
         private PointOnHand parent;
 
         public MaestroIndex index { get { return parent.index; } } // which finger am I?
-
-        [HideInInspector]
-        public Collider col; //keep track of my collider so I can turn it off in certain situations
-
-        private bool TriggerTouching = true;
 
         public bool Contacting {
             get {
@@ -55,26 +48,31 @@ namespace Maestro
         #region Hand position helpers
         public bool isTip { 
             get {
-                return index.point == PointOnFinger.Tip;
+                return isFinger && index.point == PointOnFinger.Tip;
             } 
         }
 
         public bool isMiddleJoint {
             get {
-                return index.point == PointOnFinger.Middle;
+                return isFinger && index.point == PointOnFinger.Middle;
             }
         }
 
         public bool isFingerBase {
             get {
-                return index.point == PointOnFinger.Base
-                    && !isPalmBase;
+                return isFinger && index.point == PointOnFinger.Base;
             }
         }
 
-        public bool isPalmBase {
+        public bool isPalm {
             get {
                 return index.finger == WhichFinger.Palm;
+            }
+        }
+
+        public bool isFinger {
+            get {
+                return !isPalm;
             }
         }
 
@@ -122,7 +120,18 @@ namespace Maestro
         private List<Collider> DefaultTouching = new List<Collider>();
         private Dictionary<Collider, MaestroInteractable> mapper = new Dictionary<Collider, MaestroInteractable>();
 
-        public void SetParent(PointOnHand poh)
+        public void SetParent(PointOnHand poh, IMaestroHand hand)
+        {
+            SetParentPOH(poh);
+            SetParentHPI(hand);
+        }
+
+        public void SetParentHPI(IMaestroHand hand)
+        {
+            this.hpi = hand;
+        }
+
+        public void SetParentPOH(PointOnHand poh)
         {
             this.parent = poh;
         }
@@ -132,10 +141,11 @@ namespace Maestro
         {
             netImpulse = Vector3.zero;
             rb = GetComponent<Rigidbody>();
+            if (!rb) rb = this.gameObject.AddComponent<Rigidbody>();
+
+            rend = GetComponent<Renderer>();
 
             lastLocation = this.transform.position;
-
-            TriggerTouching = false;
         }
 
         void Update()
@@ -164,13 +174,16 @@ namespace Maestro
                 touching = null;
             }
 
+            if (rend != null) {
+                rend.enabled = hpi.ShowOnlyWhileTouching ? this.Contacting : true;
+            }
 
             if (rb)
                 lastLocation = this.rb.position;
             else
                 lastLocation = this.transform.position;
 
-            //this mess just resets the finger clamping after 0.2 seconds of not touching anything
+            // Keep track of the last thing we've touched, other than current
             if (touching) {
                 lastTouching = touching;
             }
@@ -178,7 +191,6 @@ namespace Maestro
 
         private void OnDisable()
         {
-            //rend.enabled = false;
             AllTouching.Clear();
             DefaultTouching.Clear();
         }
@@ -191,7 +203,8 @@ namespace Maestro
             {
                 if (!AllTouching.Contains(c.collider))
                     AllTouching.Add(c.collider);
-                interactable.Touch(this);
+                hpi.grabManager.Touch(interactable, this);
+
                 if (!interactable.IgnoreTaps)
                 {
                     float scale = 1.50f;
@@ -243,56 +256,6 @@ namespace Maestro
             source = gameObject.AddComponent<AudioSource>();
             source.volume = 0.5f;
             source.clip = Resources.Load<AudioClip>("Sounds/tap");
-        }
-
-        public void SetPhysicMaterial(PhysicMaterial material)
-        {
-            this.col.material = material;
-        }
-
-        // Creates the actual colliders for fingertips/palm
-        public void makeRend(float radius)
-        {
-            GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            col = g.GetComponent<Collider>();
-
-            g.transform.parent = transform;
-            g.transform.localPosition = Vector3.zero;
-            g.transform.localRotation = Quaternion.identity;
-            g.transform.localScale = radius * Vector3.one * 2;
-            g.GetComponent<Renderer>().material = (Material)Resources.Load("ContactAccent", typeof(Material));
-            rend = g.GetComponent<Renderer>();
-
-
-
-            //Ignore all collisions with the hand itself
-            if (hpi != null) {
-                foreach (Collider c in hpi.GetComponentsInChildren<Collider>()) {
-                    //Physics.IgnoreCollision(releaseCol, c);
-                    Physics.IgnoreCollision(col, c);
-                }
-            }
-        }
-
-        public void makeRend(Vector3 size)
-        {
-            GameObject g = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            col = g.GetComponent<Collider>();
-            g.transform.parent = transform;
-            g.transform.localPosition = Vector3.zero;
-            g.transform.localRotation = Quaternion.identity;
-            g.transform.localScale = size;
-            g.GetComponent<Renderer>().material = (Material)Resources.Load("colliderDebug", typeof(Material));
-            rend = g.GetComponent<Renderer>();
-
-
-
-            if (hpi != null) {
-                foreach (Collider c in hpi.GetComponentsInChildren<Collider>()) {
-                    Physics.IgnoreCollision(col, c);
-                    //Physics.IgnoreCollision(releaseCol, c);
-                }
-            }
         }
 
         //Check whether a collider is Maestro Interactable

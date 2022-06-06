@@ -18,19 +18,15 @@ namespace Maestro
         public GrabType grabType = GrabType.Arcade;
 
         public FlatnessChecker flatnessChecker;
-        public LayerMask objectLayer;
-        public float palmMeshWait = 0.1f;
         public float tooClose = 0.1f;
         public float tooFast = 0.2f;
 
         public void attachToHands()
         {
-            if (LeftHand != null)
-            {
+            if (LeftHand != null) {
                 LeftHand.manager = this;
             }
-            if (RightHand != null)
-            {
+            if (RightHand != null) {
                 RightHand.manager = this;
             }
         }
@@ -55,12 +51,10 @@ namespace Maestro
 
         private SortedSet<MaestroGlobalHapticEffect> activeHaptics = new SortedSet<MaestroGlobalHapticEffect>();
 
-        // Start is called before the first frame update
         void Start()
         {
         }
 
-        // Update is called once per frame
         void Update()
         {
             activeHaptics.RemoveWhere(x => !x.isActive());

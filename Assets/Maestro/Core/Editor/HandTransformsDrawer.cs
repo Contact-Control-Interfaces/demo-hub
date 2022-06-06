@@ -43,7 +43,14 @@ namespace Maestro
             updateObjectField(property, "LittleMiddle");
             updateObjectField(property, "LittleKnuckle");
             EditorGUILayout.Space();
-            updateObjectField(property, "PalmBase");
+            updateObjectField(property, "PalmBaseThumb");
+            updateObjectField(property, "PalmBaseLittle");
+
+            updateObjectField(property, "BetweenIndexMiddle");
+            updateObjectField(property, "BetweenRingLittle");
+            updateObjectField(property, "PalmCreaseThumb");
+            updateObjectField(property, "PalmCreaseMiddle");
+            updateObjectField(property, "PalmCreaseLittle");
 
             EditorGUI.EndProperty();
             property.serializedObject.ApplyModifiedProperties();

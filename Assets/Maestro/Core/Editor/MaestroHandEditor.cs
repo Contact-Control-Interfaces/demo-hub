@@ -34,7 +34,7 @@ namespace Maestro
         private SerializedProperty tooClose;
         private SerializedProperty tooFast;
 
-        private SerializedProperty destroyFingerRenderersOnSpawn;
+        private SerializedProperty destroyRenderersOnSpawn;
         private SerializedProperty renderOnTop;
         private SerializedProperty showPalmMesh;
 
@@ -42,6 +42,7 @@ namespace Maestro
         private SerializedProperty handSize;
         private SerializedProperty transforms;
         private SerializedProperty grabType;
+        private SerializedProperty showWhileTouching;
 
         public void OnEnable()
         {
@@ -63,11 +64,12 @@ namespace Maestro
             transforms = this.serializedObject.FindProperty("transforms");
 
 
-            destroyFingerRenderersOnSpawn = this.serializedObject.FindProperty("DestroyFingerRenderersOnSpawn");
+            destroyRenderersOnSpawn = this.serializedObject.FindProperty("DestroyRenderersOnSpawn");
             renderOnTop = this.serializedObject.FindProperty("RenderOnTop");
 
-            showPalmMesh = this.serializedObject.FindProperty("showPalmMesh");
+            showPalmMesh = this.serializedObject.FindProperty("inflatePalm");
             grabType = this.serializedObject.FindProperty("grabTypeOverride");
+            showWhileTouching = this.serializedObject.FindProperty("ShowOnlyWhileTouching");
         }
 
         public override void OnInspectorGUI()
@@ -90,20 +92,12 @@ namespace Maestro
                 otherHand.objectReferenceValue = (MaestroHand)EditorGUILayout.ObjectField("Other Hand", otherHand.objectReferenceValue, typeof(MaestroHand), allowSceneObjects: true);
             }
             EditorGUILayout.Space();
-
-            bool handNotFullyDefined =
-                hand.transforms.ThumbTip == null || hand.transforms.ThumbMiddle == null || hand.transforms.ThumbKnuckle == null ||
-                hand.transforms.IndexTip == null || hand.transforms.IndexMiddle == null || hand.transforms.IndexKnuckle == null ||
-                hand.transforms.MiddleTip == null || hand.transforms.MiddleMiddle == null || hand.transforms.MiddleKnuckle == null ||
-                hand.transforms.RingTip == null || hand.transforms.RingMiddle == null || hand.transforms.RingKnuckle == null ||
-                hand.transforms.LittleTip == null || hand.transforms.LittleMiddle == null || hand.transforms.LittleKnuckle == null ||
-                hand.transforms.PalmBase == null;
             
             if (hand.otherHand == null) {
                 EditorGUILayout.HelpBox("Other hand not defined! Two-handed interactions will disabled!", MessageType.Warning, wide: true);
             }
 
-            if (handNotFullyDefined) {
+            if (!hand.transforms.FullyDefined) {
                 EditorGUILayout.HelpBox("Hand not fully defined!", MessageType.Error, wide: true);
             }
 
@@ -154,9 +148,10 @@ namespace Maestro
 
             showDebug = EditorGUILayout.Foldout(showDebug, showDebugTxt);
             if (showDebug) {
-                destroyFingerRenderersOnSpawn.boolValue = EditorGUILayout.Toggle("Destroy Finger Renderers on Spawn", hand.DestroyFingerRenderersOnSpawn);
+                destroyRenderersOnSpawn.boolValue = EditorGUILayout.Toggle("Destroy Renderers on Spawn", hand.DestroyRenderersOnSpawn);
                 renderOnTop.boolValue = EditorGUILayout.Toggle("Render on Top", hand.RenderOnTop);
-                showPalmMesh.boolValue = EditorGUILayout.Toggle("Show Palm Meshes", hand.showPalmMesh);
+                showPalmMesh.boolValue = EditorGUILayout.Toggle("Inflate Palm Meshes", hand.inflatePalm);
+                showWhileTouching.boolValue = EditorGUILayout.Toggle("Show Only While Touching", hand.ShowOnlyWhileTouching);
                 EditorGUILayout.Space();
 
                 EditorGUILayout.LabelField("Time Since Last Two-Hand Grab", hand.timeSinceTwoHandGrabbing.ToString("F3"));

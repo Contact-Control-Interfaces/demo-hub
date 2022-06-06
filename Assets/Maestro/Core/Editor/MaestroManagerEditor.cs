@@ -41,8 +41,6 @@ namespace Maestro
             interactablesOnly = this.serializedObject.FindProperty("InteractablesOnly");
 
             flatnessChecker = this.serializedObject.FindProperty("flatnessChecker");
-            objectLayer = this.serializedObject.FindProperty("objectLayer");
-            palmMeshWait = this.serializedObject.FindProperty("palmMeshWait");
             tooClose = this.serializedObject.FindProperty("tooClose");
             tooFast = this.serializedObject.FindProperty("tooFast");
             
@@ -98,10 +96,6 @@ namespace Maestro
                 if (showAdvConfig) {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
                     flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", manager.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
-                    objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", manager.objectLayer);
-                    EditorGUILayout.Space();
-
-                    palmMeshWait.floatValue = EditorGUILayout.FloatField("Palm Mesh Generation Tick", manager.palmMeshWait);
                     EditorGUILayout.Space();
 
                     EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);

@@ -18,7 +18,7 @@ public class PlayerRaiser : MonoBehaviour
 
         try {
             Input.GetAxis(inputName);
-        } catch (ArgumentException ae) {
+        } catch (ArgumentException) {
             Debug.LogWarning(string.Format("Input {0} is not bound! Define it to raise/lower the player rig", inputName));
             inputBound = false;
         }

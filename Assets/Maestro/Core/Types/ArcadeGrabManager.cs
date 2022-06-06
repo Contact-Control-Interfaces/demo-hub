@@ -100,7 +100,7 @@ namespace Maestro
             grabStates = new List<GrabState>();
 
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            temp.transform.parent = mc.PalmBase.transform;
+            temp.transform.parent = mc.PalmContainer;
             nearbyObjects = temp.AddComponent<NearbyObjects>();
             nearbyObjects.transform.localPosition = Vector3.zero;
 
@@ -115,7 +115,7 @@ namespace Maestro
             lastCanInitiateAnyGrab = this.CanInitiateGrab();
             CalculateFingerCurls();
 
-            nearbyObjects.transform.localPosition = mc.PalmBase.transform.InverseTransformPoint(mc[WhichFinger.Middle].Base.transform.position);
+            nearbyObjects.transform.localPosition = mc.PalmContainer.InverseTransformPoint(mc[WhichFinger.Middle].Base.transform.position);
 
             GatherCandidates();
 
@@ -227,7 +227,7 @@ namespace Maestro
             ArcadeGrabContext oldValues = new ArcadeGrabContext();
             oldValues.Populate(toHold);
 
-            toHold.transform.parent = mc.PalmBase.transform;
+            toHold.transform.parent = mc.PalmContainer;
             toHold.rb.useGravity = false;
             toHold.rb.velocity = Vector3.zero;
             toHold.rb.angularVelocity = Vector3.zero;

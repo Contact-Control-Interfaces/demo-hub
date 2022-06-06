@@ -48,7 +48,10 @@ namespace Maestro
                     rb.velocity = (end - start) / Time.deltaTime;
 
                 transform.localScale = new Vector3(size, (b.position - a.position).magnitude / 2, size);
-                transform.rotation = Quaternion.LookRotation(Vector3.Cross(b.position - a.position, Vector3.forward), b.position - a.position);
+                Vector3 diff = b.position - a.position;
+                if (diff.magnitude > 0) {
+                    transform.rotation = Quaternion.LookRotation(Vector3.Cross(diff, Vector3.forward), diff);
+                }
             }
         }
 

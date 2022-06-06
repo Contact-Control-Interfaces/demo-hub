@@ -168,7 +168,7 @@ namespace Maestro.Vibration
                 try {
                     // catch multi-edit causing invalid strength
                     byte code = options.Value;
-                } catch (NotImplementedException e) {
+                } catch (NotImplementedException) {
                     options = template.OptionsFactory();
                 }
             }

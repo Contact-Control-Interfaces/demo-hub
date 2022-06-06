@@ -7,9 +7,9 @@ namespace Maestro
     {
         public MaestroHand maestroHand;
         
-        public Vector3 CurrentPosition => maestroHand.mc.PalmBase.transform.position;
+        public Vector3 CurrentPosition => maestroHand.mc.PalmContainer.position;
 
-        public Quaternion CurrentRotation => maestroHand.mc.PalmBase.transform.rotation;
+        public Quaternion CurrentRotation => maestroHand.mc.PalmContainer.rotation;
 
         public MaestroHand MaestroHand => maestroHand;
 
@@ -44,8 +44,8 @@ namespace Maestro
 
         public void EnforcePosition(Transform t)
         {
-            maestroHand.mc.PalmBase.transform.position = t.position;
-            maestroHand.mc.PalmBase.transform.rotation = t.rotation;
+            //maestroHand.mc.PalmBase.transform.position = t.position;
+            //maestroHand.mc.PalmBase.transform.rotation = t.rotation;
         }
         
         protected MaestroIndex getMaestroIndex(Poser.HandBones bone)

@@ -1,6 +1,7 @@
 ﻿using Maestro.Vibration;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Maestro
@@ -55,7 +56,7 @@ namespace Maestro
     }
 
     [Serializable]
-    public struct HandTransforms
+    public struct HandTransforms : IEnumerable, IEnumerable<Transform>
     {
         public Transform ThumbTip;
         public Transform IndexTip;
@@ -72,8 +73,55 @@ namespace Maestro
         public Transform MiddleKnuckle;
         public Transform RingKnuckle;
         public Transform LittleKnuckle;
-        public Transform PalmBase;
-        public Transform PalmLittleBase;
+
+        public Transform PalmBaseThumb;
+        public Transform PalmBaseLittle;
+        public Transform BetweenIndexMiddle;
+        public Transform BetweenRingLittle;
+        public Transform PalmCreaseThumb;
+        public Transform PalmCreaseMiddle;
+        public Transform PalmCreaseLittle;
+
+        public bool FullyDefined {
+            get {
+                foreach (Transform t in this) {
+                    if (t == null) return false;
+                }
+                return true;
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return ((IEnumerable<Transform>)this).GetEnumerator();
+        }
+
+        IEnumerator<Transform> IEnumerable<Transform>.GetEnumerator()
+        {
+            yield return ThumbTip;
+            yield return IndexTip;
+            yield return MiddleTip;
+            yield return RingTip;
+            yield return LittleTip;
+            yield return ThumbMiddle;
+            yield return IndexMiddle;
+            yield return MiddleMiddle;
+            yield return RingMiddle;
+            yield return LittleMiddle;
+            yield return ThumbKnuckle;
+            yield return IndexKnuckle;
+            yield return MiddleKnuckle;
+            yield return RingKnuckle;
+            yield return LittleKnuckle;
+            yield return PalmBaseThumb;
+            yield return PalmBaseLittle;
+
+            yield return BetweenIndexMiddle;
+            yield return BetweenRingLittle;
+            yield return PalmCreaseThumb;
+            yield return PalmCreaseMiddle;
+            yield return PalmCreaseLittle;
+        }
     }
 
     public struct MaestroHapticContext
@@ -148,6 +196,9 @@ namespace Maestro
         }
 
         public WhichHand whichHand;
+        public IGrabManager grabManager;
+
+        public bool ShowOnlyWhileTouching = true;
 
         public abstract Transform Palm { get; }
 
