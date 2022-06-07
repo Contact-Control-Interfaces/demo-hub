@@ -2,9 +2,9 @@
     "name": "com.contactci.unity.Runtime.Core.OpenVR",
     "rootNamespace": "",
     "references": [
-        "GUID:1fbf338ef6b952a448262a7ff7df5fe4",
-        "GUID:6181dbb1a26d6f2408f04fae957e2911",
-        "GUID:35b9c7a103b322f43805bf1744257ac7"
+        "SteamVR",
+        "com.contactci.unity.Runtime.Core",
+        "Unity.XR.OpenVR"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -12,7 +12,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "OPENVR_XR_API"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
