@@ -6,7 +6,8 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.xr.management": "4.2.0",
-        "com.unity.xr.oculus": "1.11.2"
+        "com.unity.xr.oculus": "1.11.2",
+        "com.ultraleap.tracking": "5.0.0"
       }
     },
     "com.contactci.unity.android": {
@@ -15,6 +16,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "761ed93a26eb8a4b57a5ff40105a92d2cb4b49d0"
+    },
+    "com.ultraleap.tracking": {
+      "version": "5.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.unity.collab-proxy": {
       "version": "1.15.1",
@@ -54,6 +62,13 @@
     "com.unity.ide.vscode": {
       "version": "1.2.4",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.0.2",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -146,15 +161,16 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.valvesoftware.unity.openvr": {
-      "version": "file:../Assets/SteamVR/OpenVRUnityXRPackage/Editor/com.valvesoftware.unity.openvr-1.1.4.tgz",
+    "com.unity.xr.openxr": {
+      "version": "1.2.8",
       "depth": 0,
-      "source": "local-tarball",
+      "source": "registry",
       "dependencies": {
-        "com.unity.xr.management": "3.2.13",
-        "com.unity.ugui": "1.0.0",
-        "com.unity.xr.legacyinputhelpers": "2.1.4"
-      }
+        "com.unity.xr.management": "4.0.1",
+        "com.unity.xr.legacyinputhelpers": "2.1.2",
+        "com.unity.inputsystem": "1.0.2"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
