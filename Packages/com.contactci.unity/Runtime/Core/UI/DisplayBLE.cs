@@ -4,11 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
 
 namespace Maestro.UI
 {
     public class DisplayBLE : MonoBehaviour
     {
+        [DllImport("WinRTDLL")]
+        public static extern bool is_bluetooth_available();
+
+        [DllImport("WinRTDLL")]
+        public static extern bool is_watcher_running();
+
         private static DisplayBLE instance;
 
         private float opacity = 0.5f;
@@ -127,6 +134,11 @@ namespace Maestro.UI
             leftHistory = new List<Vector3>();
             rightHistory = new List<Vector3>();
 
+            // Issue warning if bluetooth not available
+            if (!is_bluetooth_available()) {
+                Debug.LogError("Bluetooth Low Energy is not available! Be sure that it is enabled on this device.");
+            }
+
             // Check if inputs exist
             CheckInput("ToggleLeftPanel", out inputLeftPanel);
             CheckInput("ToggleRightPanel", out inputRightPanel);
@@ -240,10 +252,12 @@ namespace Maestro.UI
             } else if (isBleProcessing()) {
                 dot.color = fromColor(Color.magenta);
             } else {
-                if (getBlinkState(handedness))
-                    dot.color = fromColor(Color.blue);
-                else
-                    dot.color = fromColor(Color.red);
+                if (is_watcher_running()) {
+                    if (getBlinkState(handedness))
+                        dot.color = fromColor(Color.blue);
+                    else
+                        dot.color = fromColor(Color.red);
+                }
             }   
         }
 

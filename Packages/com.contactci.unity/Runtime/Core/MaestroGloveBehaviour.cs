@@ -9,6 +9,9 @@ namespace Maestro
 {
     public abstract class MaestroGloveBehaviour : MonoBehaviour
     {
+        private static bool TriedToStart = false;
+        private static bool DetectionStarted = false;
+
         public enum HapticCollisionModes
         {
             ON_ALL,
@@ -25,13 +28,8 @@ namespace Maestro
         {
             Connected = MaestroGloveConnector.isGloveConnected(GetPointer());
 
-            if (!Connected)
-            {
-                bool detectionRunning = MaestroGloveConnector.StartScanningForGloves();
-                if (detectionRunning)
-                    Debug.Log("Maestro detection service is running.");
-                else
-                    Debug.LogError("Maestro detection service is not running!");
+            if (!Connected && !TriedToStart) {
+                StartDetection();
             }
         }
 
@@ -40,6 +38,18 @@ namespace Maestro
             bool still = MaestroGloveConnector.isGloveConnected(GetPointer());
 
             Connected = still;
+        }
+
+        private void StartDetection()
+        {
+            DetectionStarted = MaestroGloveConnector.StartScanningForGloves();
+
+            if (DetectionStarted)
+                Debug.Log("Maestro detection service is running.");
+            else
+                Debug.LogError("Maestro detection service is not running!");
+
+            TriedToStart = true;
         }
     }
 }
