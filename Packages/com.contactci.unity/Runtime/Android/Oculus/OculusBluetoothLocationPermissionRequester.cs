@@ -47,16 +47,7 @@ namespace Maestro
 
         private void StartScanningForGloves()
         {
-            bool detectionStarted = MaestroGloveConnector.StartScanningForGloves();
-        
-            if (detectionStarted)
-            {
-                Debug.Log("Maestro detection service was started.");
-            }
-            else
-            {
-                Debug.LogError("Maestro detection service failed to start!");
-            }
+            MaestroAndroidWrapper.Start();
         }
 #endif
     }
