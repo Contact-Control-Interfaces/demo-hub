@@ -10,11 +10,16 @@ namespace Maestro.UI
 {
     public class DisplayBLE : MonoBehaviour
     {
+        public delegate void Log(IntPtr ptrToChar, UIntPtr size);
+
         [DllImport("WinRTDLL")]
         public static extern bool is_bluetooth_available();
 
         [DllImport("WinRTDLL")]
         public static extern bool is_watcher_running();
+
+        [DllImport("WinRTDLL")]
+        public static extern void install_log_callback(Log logger);
 
         private static DisplayBLE instance;
 
@@ -43,9 +48,10 @@ namespace Maestro.UI
         private string inputRightPanel = null;
 
         private int ellipsisTicks = 2, currentTicks = 0, currentEllipsis = 3;
+        private bool blinkState;
 
         public Image leftDot, rightDot;
-        private bool blinkState;
+        public bool debug;
 
         public static void SetLeftText(string text)
         {
@@ -122,6 +128,16 @@ namespace Maestro.UI
         }
         #endregion
 
+        private void Awake()
+        {
+            if (debug) install_log_callback(UnityLog);
+        }
+
+        private void UnityLog(IntPtr p, UIntPtr length)
+        {
+            Debug.Log(Marshal.PtrToStringAnsi(p, (int)length));
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -133,11 +149,6 @@ namespace Maestro.UI
 
             leftHistory = new List<Vector3>();
             rightHistory = new List<Vector3>();
-
-            // Issue warning if bluetooth not available
-            if (!is_bluetooth_available()) {
-                Debug.LogError("Bluetooth Low Energy is not available! Be sure that it is enabled on this device.");
-            }
 
             // Check if inputs exist
             CheckInput("ToggleLeftPanel", out inputLeftPanel);
@@ -252,12 +263,10 @@ namespace Maestro.UI
             } else if (isBleProcessing()) {
                 dot.color = fromColor(Color.magenta);
             } else {
-                if (is_watcher_running()) {
-                    if (getBlinkState(handedness))
-                        dot.color = fromColor(Color.blue);
-                    else
-                        dot.color = fromColor(Color.red);
-                }
+                if (getBlinkState(handedness))
+                    dot.color = fromColor(Color.blue);
+                else
+                    dot.color = fromColor(Color.red);
             }   
         }
 
@@ -284,6 +293,7 @@ namespace Maestro.UI
                     currentTicks = 0;
                 }
 
+                ToggleAllChildren(is_bluetooth_available());
                 UpdateUI();
             }
 
@@ -335,6 +345,13 @@ namespace Maestro.UI
             result /= hist.Count;
 
             return result;
+        }
+
+        private void ToggleAllChildren(bool state)
+        {
+            for (int i = 0; i < transform.childCount; i++) {
+                transform.GetChild(i).gameObject.SetActive(state);
+            }
         }
 
         private void OrientPanel(WhichHand handedness)
