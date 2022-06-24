@@ -20,10 +20,11 @@ public class OVRManagerEditor : Editor
 {
 	override public void OnInspectorGUI()
 	{
-#if UNITY_ANDROID
+		OVRRuntimeSettings runtimeSettings = OVRRuntimeSettings.GetRuntimeSettings();
 		OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
-		OVRProjectConfigEditor.DrawTargetDeviceInspector(projectConfig);
 
+#if UNITY_ANDROID
+		OVRProjectConfigEditor.DrawTargetDeviceInspector(projectConfig);
 		EditorGUILayout.Space();
 #endif
 
@@ -37,17 +38,23 @@ public class OVRManagerEditor : Editor
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Display", EditorStyles.boldLabel);
 
-		OVRManager.ColorSpace colorGamut = manager.colorGamut;
+		OVRManager.ColorSpace colorGamut = runtimeSettings.colorSpace;
 		OVREditorUtil.SetupEnumField(target, new GUIContent("Color Gamut",
 			"The target color gamut when displayed on the HMD"), ref colorGamut, ref modified,
 			"https://developer.oculus.com/documentation/unity/unity-color-space/");
 		manager.colorGamut = colorGamut;
+
+		if (modified)
+		{
+			runtimeSettings.colorSpace = colorGamut;
+			OVRRuntimeSettings.CommitRuntimeSettings(runtimeSettings);
+		}
 #endif
 
-#if UNITY_ANDROID
 		EditorGUILayout.Space();
         OVRProjectConfigEditor.DrawProjectConfigInspector(projectConfig);
 
+#if UNITY_ANDROID
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Mixed Reality Capture for Quest", EditorStyles.boldLabel);
 		EditorGUI.indentLevel++;
@@ -134,14 +141,15 @@ public class OVRManagerEditor : Editor
 
 			EditorGUI.indentLevel--;
 		}
+		EditorGUILayout.EndFoldoutHeaderGroup();
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_ANDROID
 		// Insight Passthrough section
 #if UNITY_ANDROID
-		bool passthroughCapabilityEnabled = projectConfig.insightPassthroughEnabled && projectConfig.experimentalFeaturesEnabled;
+		bool passthroughCapabilityEnabled = projectConfig.insightPassthroughEnabled;
 		EditorGUI.BeginDisabledGroup(!passthroughCapabilityEnabled);
-		GUIContent enablePassthroughContent = new GUIContent("Enable Passthrough", "Enables passthrough functionality for the scene. Can be toggled at runtime. Experimental Features and Passthrough Capability must be enabled in the Experimental section.");
+		GUIContent enablePassthroughContent = new GUIContent("Enable Passthrough", "Enables passthrough functionality for the scene. Can be toggled at runtime. Passthrough Capability must be enabled in the project settings.");
 #else
 		GUIContent enablePassthroughContent = new GUIContent("Enable Passthrough", "Enables passthrough functionality for the scene. Can be toggled at runtime.");
 #endif
@@ -149,7 +157,7 @@ public class OVRManagerEditor : Editor
 		EditorGUILayout.LabelField("Insight Passthrough", EditorStyles.boldLabel);
 #if UNITY_ANDROID
 		if (!passthroughCapabilityEnabled) {
-			EditorGUILayout.LabelField("Requires Experimental Features and Passthrough Capability to be enabled in the Experimental section.", EditorStyles.wordWrappedLabel);
+			EditorGUILayout.LabelField("Requires Passthrough Capability to be enabled in the General section of the Quest features.", EditorStyles.wordWrappedLabel);
 		}
 #endif
 		OVREditorUtil.SetupBoolField(target, enablePassthroughContent, ref manager.isInsightPassthroughEnabled, ref modified);
@@ -157,6 +165,7 @@ public class OVRManagerEditor : Editor
 		EditorGUI.EndDisabledGroup();
 #endif
 #endif
+
 
 		if (modified)
 		{

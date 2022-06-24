@@ -25,6 +25,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 #if UNITY_EDITOR
@@ -53,11 +54,42 @@ public class OVRProjectConfig : ScriptableObject
 		MAX = 2
 	}
 
+	public enum HandTrackingVersion
+	{
+		Default = 0,
+		V1 = 1,
+		V2 = 2
+	}
+
+	public enum AnchorSupport
+	{
+		Disabled = 0,
+		Enabled = 1,
+	}
+
+	public enum RenderModelSupport
+	{
+		Disabled = 0,
+		Enabled = 1,
+	}
+
+	public enum TrackedKeyboardSupport
+	{
+		None = 0,
+		Supported = 1,
+		Required = 2
+	}
+
 
 	public List<DeviceType> targetDeviceTypes = new List<DeviceType> {DeviceType.Quest, DeviceType.Quest2};
 	public bool allowOptional3DofHeadTracking = false;
 	public HandTrackingSupport handTrackingSupport = HandTrackingSupport.ControllersOnly;
 	public HandTrackingFrequency handTrackingFrequency = HandTrackingFrequency.LOW;
+	public HandTrackingVersion handTrackingVersion = HandTrackingVersion.Default;
+	[FormerlySerializedAs("spatialAnchorsSupport")]
+	public AnchorSupport anchorSupport = AnchorSupport.Disabled;
+	public RenderModelSupport renderModelSupport = RenderModelSupport.Disabled;
+	public TrackedKeyboardSupport trackedKeyboardSupport = TrackedKeyboardSupport.None;
 
 	public bool disableBackups = true;
 	public bool enableNSCConfig = true;
@@ -138,6 +170,10 @@ public class OVRProjectConfig : ScriptableObject
 			projectConfig.allowOptional3DofHeadTracking = false;
 			projectConfig.handTrackingSupport = HandTrackingSupport.ControllersOnly;
 			projectConfig.handTrackingFrequency = HandTrackingFrequency.LOW;
+			projectConfig.handTrackingVersion = HandTrackingVersion.Default;
+			projectConfig.anchorSupport = AnchorSupport.Disabled;
+			projectConfig.trackedKeyboardSupport = TrackedKeyboardSupport.None;
+			projectConfig.renderModelSupport = RenderModelSupport.Disabled;
 			projectConfig.disableBackups = true;
 			projectConfig.enableNSCConfig = true;
 			projectConfig.skipUnneededShaders = false;
