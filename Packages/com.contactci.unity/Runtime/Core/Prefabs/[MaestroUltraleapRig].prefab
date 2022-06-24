@@ -243,7 +243,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
         Description: 
@@ -251,7 +251,7 @@ MonoBehaviour:
         options:
           id: 1
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 5
         strength: 7
@@ -277,7 +277,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &3843091711489666920
 Transform:
-  m_ObjectHideFlags: 8
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -354,9 +354,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editTimePose: 1
   _interactionVolumeVisualization: 1
+  FOV_Visualization: 0
+  OptimalFOV_Visualization: 1
+  MaxFOV_Visualization: 1
   _frameOptimization: 0
   _physicsExtrapolation: 1
   _physicsExtrapolationTime: 0.011111111
+  _multipleDeviceMode: 0
+  _specificSerialNumber: 
   _trackingOptimization: 0
   _preventInitializingTrackingMode: 0
   _workerThreadProfiling: 0
@@ -3805,6 +3810,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4334571179188117363, guid: 1d338fed0ed7df84a86c220153fbcc35,
+        type: 3}
+      propertyPath: disableOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5136989322184526339, guid: 1d338fed0ed7df84a86c220153fbcc35,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -3989,6 +3999,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.48065314
+      objectReference: {fileID: 0}
+    - target: {fileID: 6920895163243188713, guid: 1d338fed0ed7df84a86c220153fbcc35,
+        type: 3}
+      propertyPath: disableOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5622023045437503341, guid: 1d338fed0ed7df84a86c220153fbcc35, type: 3}
@@ -4320,7 +4335,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
         Description: 
@@ -4328,7 +4343,7 @@ MonoBehaviour:
         options:
           id: 1
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 5
         strength: 7
@@ -4412,7 +4427,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
         Description: 
@@ -4420,7 +4435,7 @@ MonoBehaviour:
         options:
           id: 1
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 5
         strength: 7
