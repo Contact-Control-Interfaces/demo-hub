@@ -48,6 +48,9 @@ namespace Maestro
         #region Hand position helpers
         public bool isTip { 
             get {
+                if (parent == null)
+                    return false;
+
                 return isFinger && index.point == PointOnFinger.Tip;
             } 
         }

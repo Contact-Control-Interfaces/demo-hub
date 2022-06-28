@@ -84,7 +84,10 @@ namespace Maestro
             brushObject.transform.position = first.point - first.normal * 0.001f;
             brushObject.transform.rotation = Quaternion.LookRotation(first.normal);
             brushObject.transform.parent = this.transform;
-            brushObject.AddComponent<GetErasedBehavior>();
+
+            if (brushObject.GetComponent<GetErasedBehavior>() == null) {
+                brushObject.AddComponent<GetErasedBehavior>();
+            }
         }
 
         private void OnCollisionExit(Collision collision)
