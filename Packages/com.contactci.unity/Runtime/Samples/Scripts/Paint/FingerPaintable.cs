@@ -19,6 +19,8 @@ namespace Maestro
 
         private bool ClearDefined = false;
 
+        public float maxSeparation = 0.0001f;
+
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
 
@@ -58,12 +60,17 @@ namespace Maestro
 
                     PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
                     if (pt.paintColor != Color.clear && !pt.erase) {
-                        if (source != null && !source.isPlaying) {
-                            source.Play();
-                        }
-                        elapsed = 0.0f;
 
-                        InitSplotch(pt, collision.contacts[0]);
+                        ContactPoint first = collision.contacts[0];
+                        if (first.separation <= maxSeparation) {
+
+                            if (source != null && !source.isPlaying) {
+                                source.Play();
+                            }
+                            elapsed = 0.0f;
+
+                            InitSplotch(pt, first);
+                        }
                     }
                 }
             }
@@ -81,7 +88,7 @@ namespace Maestro
             sr.color = pt.paintColor;
             sr.sortingOrder = this.transform.childCount;
 
-            brushObject.transform.position = first.point - first.normal * 0.001f;
+            brushObject.transform.position = first.point + first.normal * (first.separation - 0.001f);
             brushObject.transform.rotation = Quaternion.LookRotation(first.normal);
             brushObject.transform.parent = this.transform;
 
