@@ -12,14 +12,13 @@ namespace Maestro.UI
     {
         public delegate void Log(IntPtr ptrToChar, UIntPtr size);
 
+#if !UNITY_ANDROID
         [DllImport("WinRTDLL")]
         public static extern bool is_bluetooth_available();
 
         [DllImport("WinRTDLL")]
-        public static extern bool is_watcher_running();
-
-        [DllImport("WinRTDLL")]
         public static extern void install_log_callback(Log logger);
+#endif
 
         private static DisplayBLE instance;
 
@@ -52,6 +51,15 @@ namespace Maestro.UI
 
         public Image leftDot, rightDot;
         public bool debug;
+
+        private bool isBluetoothAvailable()
+        {
+#if UNITY_ANDROID
+            return true;
+#else
+            return is_bluetooth_available();
+#endif
+        }
 
         public static void SetLeftText(string text)
         {
@@ -130,7 +138,10 @@ namespace Maestro.UI
 
         private void Awake()
         {
-            if (debug) install_log_callback(UnityLog);
+#if !UNITY_ANDROID
+            if (debug)
+                install_log_callback(UnityLog);
+#endif
         }
 
         private void UnityLog(IntPtr p, UIntPtr length)
@@ -293,7 +304,7 @@ namespace Maestro.UI
                     currentTicks = 0;
                 }
 
-                ToggleAllChildren(is_bluetooth_available());
+                ToggleAllChildren(isBluetoothAvailable());
                 UpdateUI();
             }
 
