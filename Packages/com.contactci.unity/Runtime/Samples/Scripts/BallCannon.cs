@@ -62,6 +62,11 @@ namespace Maestro
             }
         }
 
+        public void RecordTouch(FingerCollider fc)
+        {
+            aimAt = fc.hpi.transforms.PalmCreaseMiddle;
+        }
+
         void Update()
         {
             if (lockOn && aimAt != null) {
