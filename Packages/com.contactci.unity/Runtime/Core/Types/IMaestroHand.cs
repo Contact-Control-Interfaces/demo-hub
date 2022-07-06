@@ -147,6 +147,8 @@ namespace Maestro
 
         protected abstract MaestroHapticContext ProcessHaptics();
 
+        public HandTransforms transforms;
+
         public virtual void Start()
         {
             // Get parent glove behavior to retrieve pointer

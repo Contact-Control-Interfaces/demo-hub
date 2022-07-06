@@ -101,8 +101,6 @@ namespace Maestro
         }
         #endregion
 
-        public HandTransforms transforms;
-
         public override Transform Palm { get { return transforms.PalmBaseThumb; } }
 
         //TODO check all things we're holding, instead of just one
