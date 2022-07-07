@@ -55,7 +55,7 @@ namespace Maestro
             FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
             if (fc != null) {
 
-                Transform paintTransform = fc.transform.Find("Paint");
+                Transform paintTransform = fc.parent.transform.Find("Paint");
                 if (paintTransform != null) {
 
                     PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();

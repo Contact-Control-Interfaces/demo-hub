@@ -30,16 +30,20 @@ namespace Maestro
                     source.Play();
                 }
 
-                Transform paintTransform = collision.gameObject.transform.Find("Paint");
+                //Transform paintTransform = collision.gameObject.transform.Find("Paint");
+                Transform paintTransform = fc.parent.transform.Find("Paint");
                 GameObject paint;
                 if (paintTransform == null) {
                     paint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     paint.GetComponent<SphereCollider>().enabled = false;
-                    paint.transform.SetParent(collision.gameObject.transform);
+                    //paint.GetComponent<SphereCollider>().isTrigger = true;
+                    paint.transform.localScale = new Vector3(0.02f,0.02f,0.02f);
+                    paint.transform.SetParent(fc.parent.transform);
                     paint.name = "Paint";
-                    paint.transform.position = collision.gameObject.transform.position;
-                    paint.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+                    //paint.transform.position = fc.parent.transform.position;
+                    paint.transform.localPosition = Vector3.zero;
                     paint.AddComponent<PaintType>();
+                        
                 } else {
                     paint = paintTransform.gameObject;
                 }
