@@ -11,7 +11,9 @@ namespace Maestro
         public static float brushSize = 100f;
         public static int maxDots = 5000;
         public static float dist = 0.1f;
-        public static float desiredSize = 0.02f;
+        
+        //radius, in meters
+        public float desiredSize;
 
         private AudioSource source;
         private float waitTime = 0.05f;
@@ -24,6 +26,10 @@ namespace Maestro
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
 
+        public void SetLineWidth(float diameterCm)
+        {
+            desiredSize = diameterCm / 50f;
+        }
         private void Start()
         {
             try {
