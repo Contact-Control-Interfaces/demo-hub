@@ -6,6 +6,8 @@ namespace Maestro
 {
     public class BallCannon : MonoBehaviour
     {
+        private static float MPHtoMS = 0.447f;
+
         public GameObject toSpawn;
         public Transform barrelTransform;
         public GameObject targetPrefab;
@@ -60,6 +62,11 @@ namespace Maestro
                 yield return new WaitForSeconds(2.0f);
                 Destroy(smoke);
             }
+        }
+
+        public void RecordTouch(FingerCollider fc)
+        {
+            aimAt = fc.hpi.transforms.PalmCreaseMiddle;
         }
 
         void Update()
@@ -169,7 +176,7 @@ namespace Maestro
 
         public void SetSpeed(float speed)
         {
-            launchSpeed = speed;
+            launchSpeed = speed * MPHtoMS;
         }
     }
 }
