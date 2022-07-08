@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Codice.Client.IssueTracker;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,11 +9,6 @@ namespace Maestro
 {
     public class FingerPaintable : MonoBehaviour
     {
-        public static float brushSize = 100f;
-        public static int maxDots = 5000;
-        public static float dist = 0.1f;
-        
-        //radius, in meters
         public float desiredSize;
 
         private AudioSource source;
@@ -22,13 +18,16 @@ namespace Maestro
         private bool ClearDefined = false;
 
         public float maxSeparation = 0.0001f;
+        public float vertexSeparation = 0.002f;
 
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
 
+        private int lineCount = 0;
+
         public void SetLineWidth(float diameterCm)
         {
-            desiredSize = diameterCm / 50f;
+            desiredSize = diameterCm * 5f;
         }
         private void Start()
         {
@@ -56,56 +55,112 @@ namespace Maestro
             }
         }
 
+        public void OnCollisionEnter(Collision collision)
+        {
+            FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
+            if (fc == null) 
+                return;
+            
+            Transform paintTransform = fc.parent.transform.Find("Paint");
+            if (paintTransform == null) 
+                return;
+            
+            PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
+            if (pt.paintColor == Color.clear || pt.erase) 
+                return;
+            
+            ContactPoint first = collision.contacts[0];
+            if (!(first.separation <= maxSeparation)) 
+                return;
+            
+            elapsed = 0.0f;
+
+            InitSplotch(pt, first);
+        }
+
         private void OnCollisionStay(Collision collision)
         {
             FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
-            if (fc != null) {
-
-                Transform paintTransform = fc.parent.transform.Find("Paint");
-                if (paintTransform != null) {
-
-                    PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
-                    if (pt.paintColor != Color.clear && !pt.erase) {
-
-                        ContactPoint first = collision.contacts[0];
-                        if (first.separation <= maxSeparation) {
-
-                            if (source != null && !source.isPlaying) {
-                                source.Play();
-                            }
-                            elapsed = 0.0f;
-
-                            InitSplotch(pt, first);
-                        }
-                    }
-                }
+            if (fc == null) 
+                return;
+            
+            Transform paintTransform = fc.parent.transform.Find("Paint");
+            if (paintTransform == null) 
+                return;
+            
+            PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
+            if (pt.paintColor == Color.clear || pt.erase) 
+                return;
+            
+            ContactPoint first = collision.contacts[0];
+            if (!(first.separation <= maxSeparation)) 
+                return;
+            
+            if (source != null && !source.isPlaying)
+            {
+                source.Play();
             }
+
+            elapsed = 0.0f;
+            
+            var tr = pt.splotch.GetComponent<TrailRenderer>();
+            var vtx = first.point - first.normal * maxSeparation;
+            tr.transform.position = vtx;
         }
 
         private void InitSplotch(PaintType pt, ContactPoint first)
         {
             GameObject brushObject = Instantiate(pt.splotch);
 
-            // Set scale in world space
-            brushObject.transform.parent = null;
-            brushObject.transform.localScale = Vector3.one * desiredSize;
-
-            SpriteRenderer sr = brushObject.GetComponent<SpriteRenderer>();
-            sr.color = pt.paintColor;
-            sr.sortingOrder = this.transform.childCount;
+            var tr = brushObject.GetComponent<TrailRenderer>();
+            tr.startColor = pt.paintColor;
+            tr.endColor = pt.paintColor;
+            tr.sortingOrder = lineCount++; // stack new lines over old ones
+            tr.startWidth = desiredSize;
+            tr.endWidth = desiredSize;
+            // increase vertex separation with thicker lines. looks better
+            tr.minVertexDistance = (desiredSize / 5f) * vertexSeparation;
+            
+            tr.transform.localScale = Vector3.one;
 
             brushObject.transform.position = first.point + first.normal * (first.separation - 0.001f);
             brushObject.transform.rotation = Quaternion.LookRotation(first.normal);
             brushObject.transform.parent = this.transform;
+            
+            // Set scale in world space
+            //brushObject.transform.parent = null;
+            brushObject.transform.localScale = Vector3.one * desiredSize;
+
+            tr.emitting = true;
 
             if (brushObject.GetComponent<GetErasedBehavior>() == null) {
                 brushObject.AddComponent<GetErasedBehavior>();
             }
+            
+            pt.splotch = brushObject;
         }
 
         private void OnCollisionExit(Collision collision)
         {
-            // NOTHING
+            FingerCollider fc = collision.gameObject.GetComponent<FingerCollider>();
+            if (fc == null) 
+                return;
+            
+            Transform paintTransform = fc.parent.transform.Find("Paint");
+            if (paintTransform == null) 
+                return;
+            
+            PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
+            var tr = pt.splotch.GetComponent<TrailRenderer>();
+            if (tr == null)
+                return;
+
+            var first = collision.contacts[0];
+            
+            var vtx = first.point - first.normal * maxSeparation;
+            tr.transform.position = vtx;
+            
+            tr.emitting = false;
         }
 
         public void Clear()
