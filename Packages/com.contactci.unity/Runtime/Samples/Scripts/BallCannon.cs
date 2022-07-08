@@ -6,6 +6,8 @@ namespace Maestro
 {
     public class BallCannon : MonoBehaviour
     {
+        private static float MPHtoMS = 0.447f;
+
         public GameObject toSpawn;
         public Transform barrelTransform;
         public GameObject targetPrefab;
@@ -174,7 +176,7 @@ namespace Maestro
 
         public void SetSpeed(float speed)
         {
-            launchSpeed = speed;
+            launchSpeed = speed * MPHtoMS;
         }
     }
 }

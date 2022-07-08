@@ -7,7 +7,6 @@ using UnityEngine.Events;
 
 namespace Maestro
 {
-
     [Serializable]
     public class SliderEvent : UnityEvent<float> { }
 
@@ -30,19 +29,21 @@ namespace Maestro
         public bool showSpecialValues = true;
 
         private float lastZ;
+        private static float epsilon = 0.000001f;
 
         public SliderEvent onValueChanged;
 
-        // Use this for initialization
         void Start()
         {
             rb = GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+
             startLocalPosition = transform.localPosition;
 
             if (onValueChanged == null)
                 onValueChanged = new SliderEvent();
 
-            lastZ = 0;
+            lastZ = float.MaxValue;
 
             CallEvent();
         }
@@ -51,15 +52,13 @@ namespace Maestro
         {
             float z = transform.localPosition.z;
 
-            if (z != lastZ) {
-                if (z > range)
-                    z = range;
-                else if (z < -range)
-                    z = -range;
+            if (Mathf.Abs(z - lastZ) > epsilon) {
+
+                z = Mathf.Clamp(z, -range, range);
 
                 transform.localPosition = new Vector3(startLocalPosition.x, startLocalPosition.y, z);
 
-                value = Mathf.InverseLerp(-range, range, transform.localPosition.z);
+                value = Mathf.InverseLerp(-range, range, z);
                 outputValue = outputOffset + outputScale * value;
 
                 if (outputTextMesh != null) {
