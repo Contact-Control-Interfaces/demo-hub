@@ -53,11 +53,8 @@ namespace Maestro
             float z = transform.localPosition.z;
 
             if (Mathf.Abs(z - lastZ) > epsilon) {
-                if (z > range) {
-                    z = range;
-                } else if (z < -range) {
-                    z = -range;
-                }
+
+                z = Mathf.Clamp(z, -range, range);
 
                 transform.localPosition = new Vector3(startLocalPosition.x, startLocalPosition.y, z);
 
