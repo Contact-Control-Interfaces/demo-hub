@@ -207,11 +207,9 @@ namespace Maestro
             var mesh = new Mesh();
             trail.BakeMesh(mesh);
             
-            //_com.Clear();
             _com.SetRenderTarget(canvasTexture);
             _com.SetViewProjectionMatrices(viewMatrix, projMatrix);
             _com.DrawMesh(mesh, transMatrix, material, 0, 0);
-        
         }
 
         public void OnWillRenderObject()
