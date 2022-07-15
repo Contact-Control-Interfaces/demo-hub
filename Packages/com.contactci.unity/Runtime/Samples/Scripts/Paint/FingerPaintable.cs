@@ -234,6 +234,16 @@ namespace Maestro
             foreach (Transform child in this.transform) {//Clear brushes
                 Destroy(child.gameObject);
             }
+            CleanHands();
+        }
+        
+        public static void CleanHands()
+        {
+            PaintType[] paintBlobs = GameObject.FindObjectsOfType<PaintType>();
+            foreach (PaintType pt in paintBlobs) {
+                pt.gameObject.SetActive(false);
+                Destroy(pt.gameObject);
+            }
         }
     }
 }
