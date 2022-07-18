@@ -23,7 +23,7 @@ namespace Maestro
         private float _maxSeparation = 0.001f;
         private float _vertexSeparation = 0.02f;
         private float _minRadius = 0.8f;
-        private float _cornerVertices = 8;
+        private float _cornerVertices = 16;
 
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
