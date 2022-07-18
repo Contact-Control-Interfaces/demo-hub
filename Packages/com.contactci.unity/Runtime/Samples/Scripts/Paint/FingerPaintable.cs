@@ -172,6 +172,8 @@ namespace Maestro
             tr.endWidth = desiredSize;
             // increase vertex separation with thicker lines. looks better
             tr.minVertexDistance = desiredSize / 25f;
+            tr.numCapVertices = 32;
+            tr.numCornerVertices = 0;
 
             brushObject.transform.position = first.point + first.normal * (first.separation - 0.001f);
             brushObject.transform.rotation = Quaternion.LookRotation(first.normal);
@@ -205,18 +207,17 @@ namespace Maestro
             if (tr == null)
                 return;
 
-            if (collision.contactCount > 0)
-            {
-                var first = collision.contacts[0];
-
-                var vtx = first.point - first.normal * _maxSeparation;
-                
-                AddPoint(tr, vtx);
-               // tr.transform.position = vtx;
-            }
-
+            //round trail ends by looping back to the previous position
+            var prev = tr.GetPosition(tr.positionCount - 1);
+            var prev2 = tr.GetPosition(tr.positionCount - 2);
+            var rdir = prev2 - prev;
+            rdir.Normalize();
+            var rpos = prev + rdir * tr.minVertexDistance;
+            AddPoint(tr, rpos);
+            tr.transform.position = rpos;
 
             tr.emitting = false;
+            
             if (ENABLE_RENDER)
             {
                 RenderMesh(tr, tr.sharedMaterial, Vector3.zero);
