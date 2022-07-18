@@ -22,6 +22,8 @@ namespace Maestro
 
         private float _maxSeparation = 0.001f;
         private float _vertexSeparation = 0.02f;
+        private float _minRadius = 0.8f;
+        private float _cornerVertices = 8;
 
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
@@ -111,7 +113,46 @@ namespace Maestro
             
             var tr = pt.splotch.GetComponent<TrailRenderer>();
             var vtx = first.point - first.normal * _maxSeparation;
+
+            if (Vector3.Distance(tr.GetPosition(tr.positionCount - 1), vtx) >= tr.minVertexDistance)
+            {
+                AddPoint(tr, vtx);
+            }
+
             tr.transform.position = vtx;
+        }
+
+        private void AddPoint(TrailRenderer tr, Vector3 next)
+        {
+            if (tr.positionCount < _cornerVertices)
+                return;
+            
+            //check if angle to new point is beyond our radius
+            
+            var prev = tr.GetPosition(tr.positionCount - 1);
+            var prev2 = tr.GetPosition(tr.positionCount - 2);
+            var from = prev - prev2;
+            var to = next - prev;
+            var pmag = from.magnitude;
+            from.Normalize();
+            to.Normalize();
+            if (Vector3.Dot(from, to) >= _minRadius)
+                return;
+            
+            //compute bezier curve between the latest 3 points
+            var pa = prev;
+            var pc = next;
+            var pb = pa + (pc - pa) / 2 + from * pmag * _minRadius;
+
+            for (int i = 0; i < _cornerVertices; i++)
+            {
+                var frac = (1 / _cornerVertices) * (i + 1);
+                var m1 = Vector3.Lerp(pa, pb, frac);
+                var m2 = Vector3.Lerp(pb, pc, frac);
+                var npos = Vector3.Lerp(m1, m2, frac);
+                tr.AddPosition(npos);
+            }
+
         }
 
         private void InitSplotch(PaintType pt, ContactPoint first)
@@ -130,7 +171,7 @@ namespace Maestro
             tr.startWidth = desiredSize;
             tr.endWidth = desiredSize;
             // increase vertex separation with thicker lines. looks better
-            tr.minVertexDistance = (desiredSize ) * _vertexSeparation;
+            tr.minVertexDistance = desiredSize / 25f;
 
             brushObject.transform.position = first.point + first.normal * (first.separation - 0.001f);
             brushObject.transform.rotation = Quaternion.LookRotation(first.normal);
@@ -169,6 +210,7 @@ namespace Maestro
                 var first = collision.contacts[0];
 
                 var vtx = first.point - first.normal * _maxSeparation;
+                AddPoint(tr, vtx);
                 tr.transform.position = vtx;
             }
 
