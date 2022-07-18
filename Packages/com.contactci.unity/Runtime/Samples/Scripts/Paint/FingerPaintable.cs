@@ -208,11 +208,23 @@ namespace Maestro
                 return;
 
             //round trail ends by looping back to the previous position
-            var prev = tr.GetPosition(tr.positionCount - 1);
-            var prev2 = tr.GetPosition(tr.positionCount - 2);
-            var rdir = prev2 - prev;
-            rdir.Normalize();
-            var rpos = prev + rdir * tr.minVertexDistance;
+            Vector3 rdir;
+            if (tr.positionCount > 1)
+            {
+                var prev = tr.GetPosition(tr.positionCount - 1);
+                var prev2 = tr.GetPosition(tr.positionCount - 2);
+                rdir = prev2 - prev;
+                rdir.Normalize();
+            }
+            else
+            {
+                rdir = tr.transform.position + Vector3.one * _minRadius;
+                AddPoint(tr, rdir);
+                rdir = -rdir.normalized;
+            }
+            
+
+            var rpos = tr.transform.position + rdir * tr.minVertexDistance;
             AddPoint(tr, rpos);
             tr.transform.position = rpos;
 
