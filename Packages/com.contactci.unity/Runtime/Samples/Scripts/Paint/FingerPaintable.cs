@@ -124,7 +124,7 @@ namespace Maestro
 
         private void AddPoint(TrailRenderer tr, Vector3 next)
         {
-            if (tr.positionCount < _cornerVertices)
+            if (tr.positionCount < 2)
                 return;
             
             //check if angle to new point is beyond our radius
@@ -210,9 +210,11 @@ namespace Maestro
                 var first = collision.contacts[0];
 
                 var vtx = first.point - first.normal * _maxSeparation;
+                
                 AddPoint(tr, vtx);
-                tr.transform.position = vtx;
+               // tr.transform.position = vtx;
             }
+
 
             tr.emitting = false;
             if (ENABLE_RENDER)
