@@ -19,15 +19,14 @@ namespace Maestro
         private bool ClearDefined = false;
 
         private float _maxSeparation = 0.001f;
-        private float _vertexSeparation = 0.02f;
-        private float _minRadius = 0.8f;
+        private float _minRadius = 0.9f;
         private float _cornerVertices = 16;
 
         public UnityEvent onClear;
         public RenderTexture canvasTexture;
 
         private int lineCount = 0;
-        private Stack<Transform> _undoStack = new Stack<Transform>();
+        private Stack<TrailRenderer> _undoStack = new Stack<TrailRenderer>();
 
         private const bool ENABLE_RENDER = false;
         
@@ -163,10 +162,10 @@ namespace Maestro
             tr.startColor = pt.paintColor;
             tr.endColor = pt.paintColor;
             tr.sortingOrder = lineCount++; // stack new lines over old ones
-            tr.startWidth = pt.size / 5f;
-            tr.endWidth = pt.size / 5f;
+            tr.startWidth = pt.size / 25f;
+            tr.endWidth = pt.size / 25f;
             // increase vertex separation with thicker lines. looks better
-            tr.minVertexDistance = pt.size / 25f;
+            tr.minVertexDistance = pt.size / 200f;
             tr.numCapVertices = 32;
             tr.numCornerVertices = 0;
 
@@ -180,10 +179,6 @@ namespace Maestro
             tr.transform.position = brushObject.transform.position;
             tr.emitting = true;
 
-            if (brushObject.GetComponent<GetErasedBehavior>() == null) {
-                brushObject.AddComponent<GetErasedBehavior>();
-            }
-            
             pt.splotch = brushObject;
         }
 
@@ -225,7 +220,7 @@ namespace Maestro
 
             tr.emitting = false;
 
-            _undoStack.Push(paintTransform);
+            _undoStack.Push(tr);
             
             if (ENABLE_RENDER)
             {
@@ -289,6 +284,7 @@ namespace Maestro
                 Destroy(child.gameObject);
             }
             CleanHands();
+            _undoStack.Clear();
         }
         
         public static void CleanHands()
@@ -307,8 +303,8 @@ namespace Maestro
             if (_undoStack.Count < 1)
                 return;
             
-            var paintTransform = _undoStack.Pop();
-            Destroy(paintTransform.gameObject);
+            var tr = _undoStack.Pop();
+            tr.Clear();
             
         }
     }

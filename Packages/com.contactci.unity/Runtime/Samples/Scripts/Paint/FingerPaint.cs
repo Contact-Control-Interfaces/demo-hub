@@ -12,6 +12,8 @@ namespace Maestro
         public bool indexOnly;
         public bool erase;
 
+        public float blobScale = 150f;
+
         public float lineWidth;
 
         public GameObject splotchPrefab;
@@ -37,7 +39,6 @@ namespace Maestro
                 if (paintTransform == null) {
                     paint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     paint.GetComponent<SphereCollider>().enabled = false;
-                    paint.transform.localScale = new Vector3(0.02f,0.02f,0.02f);
                     paint.transform.SetParent(fc.parent.transform);
                     paint.name = "Paint";
                     paint.transform.localPosition = Vector3.zero;
@@ -46,6 +47,9 @@ namespace Maestro
                 } else {
                     paint = paintTransform.gameObject;
                 }
+                
+                //resize paint blob if necessary
+                paint.transform.localScale = Vector3.one * (lineWidth / blobScale);
 
                 PaintType pt = paint.GetComponent<PaintType>();
                 pt.paintColor = rend.material.color;
