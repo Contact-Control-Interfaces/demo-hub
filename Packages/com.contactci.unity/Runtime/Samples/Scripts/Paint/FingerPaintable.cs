@@ -12,8 +12,6 @@ namespace Maestro
 {
     public class FingerPaintable : MonoBehaviour
     {
-        public float desiredSize;
-
         private AudioSource source;
         private float waitTime = 0.05f;
         private float elapsed = 0.0f;
@@ -29,12 +27,10 @@ namespace Maestro
         public RenderTexture canvasTexture;
 
         private int lineCount = 0;
+        private Stack<Transform> _undoStack = new Stack<Transform>();
 
         private const bool ENABLE_RENDER = false;
-        public void SetLineWidth(float diameterCm)
-        {
-            desiredSize = diameterCm / 5f;
-        }
+        
         private void Start()
         {
             try {
@@ -74,7 +70,7 @@ namespace Maestro
                 return;
             
             PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
-            if (pt.paintColor == Color.clear || pt.erase) 
+            if (pt.paintColor == Color.clear) 
                 return;
             
             ContactPoint first = collision.contacts[0];
@@ -97,7 +93,7 @@ namespace Maestro
                 return;
             
             PaintType pt = paintTransform.gameObject.GetComponent<PaintType>();
-            if (pt.paintColor == Color.clear || pt.erase) 
+            if (pt.paintColor == Color.clear) 
                 return;
             
             ContactPoint first = collision.contacts[0];
@@ -128,7 +124,6 @@ namespace Maestro
                 return;
             
             //check if angle to new point is beyond our radius
-            
             var prev = tr.GetPosition(tr.positionCount - 1);
             var prev2 = tr.GetPosition(tr.positionCount - 2);
             var from = prev - prev2;
@@ -168,10 +163,10 @@ namespace Maestro
             tr.startColor = pt.paintColor;
             tr.endColor = pt.paintColor;
             tr.sortingOrder = lineCount++; // stack new lines over old ones
-            tr.startWidth = desiredSize;
-            tr.endWidth = desiredSize;
+            tr.startWidth = pt.size / 5f;
+            tr.endWidth = pt.size / 5f;
             // increase vertex separation with thicker lines. looks better
-            tr.minVertexDistance = desiredSize / 25f;
+            tr.minVertexDistance = pt.size / 25f;
             tr.numCapVertices = 32;
             tr.numCornerVertices = 0;
 
@@ -180,7 +175,7 @@ namespace Maestro
             brushObject.transform.parent = this.transform;
             
             // Set scale in world space
-            brushObject.transform.localScale = Vector3.one * desiredSize;
+            brushObject.transform.localScale = Vector3.one * pt.size;
 
             tr.transform.position = brushObject.transform.position;
             tr.emitting = true;
@@ -229,6 +224,8 @@ namespace Maestro
             tr.transform.position = rpos;
 
             tr.emitting = false;
+
+            _undoStack.Push(paintTransform);
             
             if (ENABLE_RENDER)
             {
@@ -301,6 +298,18 @@ namespace Maestro
                 pt.gameObject.SetActive(false);
                 Destroy(pt.gameObject);
             }
+        }
+
+        //deletes the line at the top of the stack
+        //this won't work when rendering to a texture. Investigate later?
+        public void UndoLast()
+        {
+            if (_undoStack.Count < 1)
+                return;
+            
+            var paintTransform = _undoStack.Pop();
+            Destroy(paintTransform.gameObject);
+            
         }
     }
 }

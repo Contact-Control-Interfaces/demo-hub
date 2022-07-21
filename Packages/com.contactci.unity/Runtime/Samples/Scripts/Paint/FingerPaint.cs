@@ -12,6 +12,8 @@ namespace Maestro
         public bool indexOnly;
         public bool erase;
 
+        public float lineWidth;
+
         public GameObject splotchPrefab;
 
         void Start()
@@ -47,8 +49,8 @@ namespace Maestro
 
                 PaintType pt = paint.GetComponent<PaintType>();
                 pt.paintColor = rend.material.color;
-                pt.erase = erase;
                 pt.splotch = splotchPrefab;
+                pt.size = lineWidth;
 
                 Renderer mr = paint.GetComponent<Renderer>();
                 mr.material.color = rend.material.color;
@@ -61,6 +63,6 @@ namespace Maestro
     {
         public GameObject splotch { get; set; }
         public Color paintColor { get; set; }
-        public bool erase { get; set; }
+        public float size { get; set; }
     }
 }
