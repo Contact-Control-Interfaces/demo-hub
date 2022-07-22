@@ -31,7 +31,7 @@ namespace Maestro
 
         public Renderer rend; // the debug renderer for the collider. Is disabled by default.
 
-        private PointOnHand parent;
+        public PointOnHand parent;
 
         public MaestroIndex index { get { return parent.index; } } // which finger am I?
 

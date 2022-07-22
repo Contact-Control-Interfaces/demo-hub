@@ -12,6 +12,10 @@ namespace Maestro
         public bool indexOnly;
         public bool erase;
 
+        public float blobScale = 150f;
+
+        public float lineWidth;
+
         public GameObject splotchPrefab;
 
         void Start()
@@ -30,24 +34,27 @@ namespace Maestro
                     source.Play();
                 }
 
-                Transform paintTransform = collision.gameObject.transform.Find("Paint");
+                Transform paintTransform = fc.parent.transform.Find("Paint");
                 GameObject paint;
                 if (paintTransform == null) {
                     paint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     paint.GetComponent<SphereCollider>().enabled = false;
-                    paint.transform.SetParent(collision.gameObject.transform);
+                    paint.transform.SetParent(fc.parent.transform);
                     paint.name = "Paint";
-                    paint.transform.position = collision.gameObject.transform.position;
-                    paint.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+                    paint.transform.localPosition = Vector3.zero;
                     paint.AddComponent<PaintType>();
+                        
                 } else {
                     paint = paintTransform.gameObject;
                 }
+                
+                //resize paint blob if necessary
+                paint.transform.localScale = Vector3.one * (lineWidth / blobScale);
 
                 PaintType pt = paint.GetComponent<PaintType>();
                 pt.paintColor = rend.material.color;
-                pt.erase = erase;
                 pt.splotch = splotchPrefab;
+                pt.size = lineWidth;
 
                 Renderer mr = paint.GetComponent<Renderer>();
                 mr.material.color = rend.material.color;
@@ -60,6 +67,6 @@ namespace Maestro
     {
         public GameObject splotch { get; set; }
         public Color paintColor { get; set; }
-        public bool erase { get; set; }
+        public float size { get; set; }
     }
 }
