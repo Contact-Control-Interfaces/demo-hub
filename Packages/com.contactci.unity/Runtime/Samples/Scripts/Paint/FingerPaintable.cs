@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Codice.Client.IssueTracker;
+using Maestro.Core.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using Debug = UnityEngine.Debug;
 
 namespace Maestro
 {
@@ -26,10 +28,13 @@ namespace Maestro
         public RenderTexture canvasTexture;
 
         private int lineCount = 0;
-        private Stack<TrailRenderer> _undoStack = new Stack<TrailRenderer>();
 
-        private const bool ENABLE_RENDER = false;
-        
+        public int maxLines = 200;
+        private CircularBuffer<TrailRenderer> _buffer;
+
+        private CommandBuffer _com;
+        public bool wantClear;
+
         private void Start()
         {
             try {
@@ -39,6 +44,8 @@ namespace Maestro
                 Debug.LogWarning("Input 'Clear' is not bound! Define it for a shortcut to clear the paint canvas.");
                 ClearDefined = false;
             }
+
+            _buffer = new CircularBuffer<TrailRenderer>(maxLines);
 
             source = GetComponent<AudioSource>();
             
@@ -155,7 +162,7 @@ namespace Maestro
 
             var tr = brushObject.GetComponent<TrailRenderer>();
 
-            tr.transform.parent = this.transform;
+            tr.transform.parent = brushObject.transform;
             tr.transform.rotation = this.transform.rotation;
             tr.transform.localScale = this.transform.localScale;
             
@@ -212,26 +219,17 @@ namespace Maestro
                 AddPoint(tr, rdir);
                 rdir = -rdir.normalized;
             }
-            
 
             var rpos = tr.transform.position + rdir * tr.minVertexDistance;
             AddPoint(tr, rpos);
             tr.transform.position = rpos;
-
+            BufferLine(tr);
             tr.emitting = false;
 
-            _undoStack.Push(tr);
-            
-            if (ENABLE_RENDER)
-            {
-                RenderMesh(tr, tr.sharedMaterial, Vector3.zero);
-
-                tr.Clear();
-            }
+            RenderMesh(tr, tr.sharedMaterial, Vector3.zero);
         }
-
-        private CommandBuffer _com;
-        public bool wantClear;
+        
+        [Conditional("RENDER_PAINT")]
         private void InitRender()
         {
             canvasTexture = new RenderTexture(8752, 6108, 24);
@@ -240,8 +238,9 @@ namespace Maestro
             
             var ren = GetComponent<MeshRenderer>();
             ren.material.mainTexture = canvasTexture;
-
         }
+        
+        [Conditional("RENDER_PAINT")]
         private void RenderMesh(TrailRenderer trail, Material material, Vector3 offset)
         {
             var ttr = trail.transform;
@@ -259,13 +258,13 @@ namespace Maestro
             _com.SetRenderTarget(canvasTexture);
             _com.SetViewProjectionMatrices(viewMatrix, projMatrix);
             _com.DrawMesh(mesh, transMatrix, material, 0, 0);
+            
+            trail.Clear();
         }
-
+        
+#if RENDER_PAINT
         public void OnWillRenderObject()
         {
-            if(!ENABLE_RENDER)
-                return;
-            
             if (wantClear)
             {
                 wantClear = false;
@@ -276,6 +275,17 @@ namespace Maestro
             Graphics.ExecuteCommandBuffer(_com);
             _com.Clear();
         }
+#endif
+
+        private void BufferLine(TrailRenderer tr)
+        {
+            if (_buffer.PushFront(tr)) 
+                return;
+            
+            var last = _buffer.PopBack();
+            last.Clear();
+            _buffer.PushFront(tr);
+        }
 
         public void Clear()
         {
@@ -284,7 +294,7 @@ namespace Maestro
                 Destroy(child.gameObject);
             }
             CleanHands();
-            _undoStack.Clear();
+            _buffer.Clear();
         }
         
         public static void CleanHands()
@@ -300,12 +310,11 @@ namespace Maestro
         //this won't work when rendering to a texture. Investigate later?
         public void UndoLast()
         {
-            if (_undoStack.Count < 1)
+            if (_buffer.Count < 1)
                 return;
             
-            var tr = _undoStack.Pop();
+            var tr = _buffer.PopFront();
             tr.Clear();
-            
         }
     }
 }
