@@ -97,8 +97,6 @@ namespace Maestro
             // Init haptics stuff
             mi = TopDial.gameObject.GetComponent<MaestroInteractable>();
             mi2 = BottomDial.gameObject.GetComponent<MaestroInteractable>();
-            originalTopEffect = mi.haptics.Vibration;
-            originalBottomEffect = mi2.haptics.Vibration;
             topFCs = new List<FingerCollider>();
             bottomFCs = new List<FingerCollider>();
         }
@@ -126,14 +124,16 @@ namespace Maestro
 
                     // Trigger haptics
                     timeElapsedSinceTopTick = 0f;
-                    mi.haptics.Vibration = topTickHapticEffect;
+                    var ovr = mi.stayHaptics.Copy();
+                    ovr.Vibration = topTickHapticEffect;
+                    mi.SetHapticOverride(ovr);
 
 
 
                 } else {
                     timeElapsedSinceTopTick += Time.deltaTime;
                     if (timeElapsedSinceTopTick > tickHapticDelay) {
-                        mi.haptics.Vibration = originalTopEffect;
+                        mi.ResetOverride();
                         timeElapsedSinceTopTick = -1f;
                     }
                 }
@@ -152,13 +152,15 @@ namespace Maestro
 
                     // Trigger haptics
                     timeElapsedSinceBottomTick = 0f;
-                    mi2.haptics.Vibration = bottomTickHapticEffect;
+                    var ovr = mi2.stayHaptics.Copy();
+                    ovr.Vibration = bottomTickHapticEffect;
+                    mi2.SetHapticOverride(ovr);
 
 
                 } else {
                     timeElapsedSinceBottomTick += Time.deltaTime;
                     if (timeElapsedSinceBottomTick > tickHapticDelay) {
-                        mi2.haptics.Vibration = originalBottomEffect;
+                        mi2.ResetOverride();
                         timeElapsedSinceBottomTick = -1f;
                     }
                 }

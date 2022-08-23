@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using Maestro.Vibration;
 
 namespace Maestro
 {
@@ -33,6 +34,13 @@ namespace Maestro
 
 		public List<Collider> toIgnore;
 
+		private int downFrame;
+
+		private MaestroInteractable interactable;
+
+		[Header("Haptics - Button Pressed"), Tooltip("Effect played when button hits bottom of travel")]
+		public HapticEffect pressedHaptics = new HapticEffect { Amplitude = 255, Vibration = new StrongClick(FourOptions._100) };
+
 		void Awake()
 		{
 			if (!down) down = Resources.Load<AudioClip>("Sounds/button_down");
@@ -53,6 +61,8 @@ namespace Maestro
 					Physics.IgnoreCollision(temp, c, true);
                 }
             }
+
+			interactable = this.GetComponentInChildren<MaestroInteractable>();
 		}
 
 		void Update()
@@ -65,6 +75,11 @@ namespace Maestro
 				if (y < origin.y - buttonSensitivity) {
 					if (!buttonDown) {
 						ButtonPushed();
+						interactable.SetHapticOverride(pressedHaptics);
+						downFrame = Time.frameCount;
+					}
+					else if (Time.frameCount - downFrame >= 4){
+						interactable.ResetOverride();
 					}
 				}
 			} else {

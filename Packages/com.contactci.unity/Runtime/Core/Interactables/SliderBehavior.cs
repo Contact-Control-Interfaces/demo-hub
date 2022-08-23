@@ -79,12 +79,14 @@ namespace Maestro
 
         public void setInteractableAmplitude(MaestroInteractable mi)
         {
-            mi.setAmplitudeFromScale(value);
+            mi.overrideAmplitudeFromScale(value);
         }
 
         public void setInteractableEffect(MaestroInteractable mi)
         {
-            mi.haptics.Vibration = VibrationEffect.ConstructEffect((byte)(value * 128));
+            var ovr = mi.stayHaptics.Copy();
+            ovr.Vibration = VibrationEffect.ConstructEffect((byte)(value * 128));
+            mi.SetHapticOverride(ovr);
         }
 
         public string OutputText {

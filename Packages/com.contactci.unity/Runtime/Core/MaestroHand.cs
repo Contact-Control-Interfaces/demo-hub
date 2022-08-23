@@ -503,8 +503,8 @@ namespace Maestro
                     nextHaptics.SetAllVibrationEffects(ForcedVibrationEffect);
                 }
             } else if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
-                nextHaptics.SetAllAmplitudes(grabTarget.getMotorAmplitude());
-                nextHaptics.SetAllVibrationEffects(grabTarget.getVibrationEffect());
+                nextHaptics.SetAllAmplitudes(grabTarget.currentHaptics.Amplitude);
+                nextHaptics.SetAllVibrationEffects(grabTarget.currentHaptics.Vibration);
             } else {
 
                 // Persist palm stuff
@@ -515,8 +515,8 @@ namespace Maestro
                     if (touchingInt.isPersistent) {
                         PersistWholeHand(touchingInt);
                     } else {
-                        nextHaptics.SetAllAmplitudes(touchingInt.getMotorAmplitude());
-                        nextHaptics.SetAllVibrationEffects(touchingInt.getVibrationEffect());
+                        nextHaptics.SetAllAmplitudes(touchingInt.currentHaptics.Amplitude);
+                        nextHaptics.SetAllVibrationEffects(touchingInt.currentHaptics.Vibration);
                     }
                 }
 
@@ -527,16 +527,16 @@ namespace Maestro
                     MaestroInteractable interactable = tip.fc.touching;
 
                     if (interactable != null) {
-                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
-                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, interactable.getVibrationEffect());
+                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.currentHaptics.Amplitude);
+                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, interactable.currentHaptics.Vibration);
                         if (interactable.isPersistent) {
                             persistInteractables[tip.index] = interactable;
                             persistTimes[tip.index] = interactable.persistenceDuration;
                         }
 
                     } else if (persistInteractables.ContainsKey(tip.index) && persistInteractables[tip.index] != null && persistTimes[tip.index] > Time.fixedDeltaTime) {
-                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, persistInteractables[tip.index].getMotorAmplitude());
-                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, persistInteractables[tip.index].getVibrationEffect());
+                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, persistInteractables[tip.index].currentHaptics.Amplitude);
+                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, persistInteractables[tip.index].currentHaptics.Vibration);
                         persistTimes[tip.index] -= Time.fixedDeltaTime;
                         if (persistTimes[tip.index] <= 0) {
                             persistTimes.Remove(tip.index);
@@ -553,10 +553,10 @@ namespace Maestro
 
                         interactable = matchingMiddle.fc.touching;
                         if (inheritFromPalm) {
-                            byte? amp = prismGenerator.Touching.getMotorAmplitude();
+                            byte? amp = prismGenerator.Touching.currentHaptics.Amplitude;
                             if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
                         } else if (interactable != null) {
-                            nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.getMotorAmplitude());
+                            nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.currentHaptics.Amplitude);
                         }
                     }
                 }

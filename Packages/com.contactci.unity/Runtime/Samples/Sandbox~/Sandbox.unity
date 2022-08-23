@@ -312,10 +312,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -325,14 +333,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &324822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,10 +820,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  haptics:
-    Amplitude: 0
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -805,12 +839,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 1
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 1
@@ -1386,10 +1438,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -1399,14 +1459,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &105431457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1605,10 +1683,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -1618,14 +1704,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!65 &107686750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2331,10 +2443,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -2344,14 +2464,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &173333051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2504,6 +2650,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   toIgnore: []
+  pressedHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &195828200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3190,10 +3355,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -3203,13 +3376,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &283975610
 BoxCollider:
@@ -3379,10 +3575,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  haptics:
-    Amplitude: 0
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -3392,10 +3596,26 @@ MonoBehaviour:
       data:
         TakesOptions: 0
         Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
         WhichType: 16
         options:
-          id: 1
-    00000001:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!54 &332693357
 Rigidbody:
@@ -3634,10 +3854,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -3647,14 +3875,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!65 &361697840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3847,10 +4101,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -3860,14 +4122,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &370797635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4133,6 +4421,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   toIgnore: []
+  pressedHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &418979409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4220,10 +4527,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -4233,14 +4548,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &418979413
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4511,10 +4852,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -4522,12 +4871,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 14
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 14
@@ -5261,10 +5628,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -5274,14 +5649,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &489034301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,6 +5923,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &522996927
 GameObject:
   m_ObjectHideFlags: 0
@@ -6010,10 +6422,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  haptics:
-    Amplitude: 0
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -6021,12 +6441,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 5
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 5
@@ -6627,10 +7065,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -6640,14 +7086,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &581910076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6928,10 +7392,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -6941,14 +7413,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &586049837
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7312,6 +7810,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &693024178
 GameObject:
   m_ObjectHideFlags: 0
@@ -7325,7 +7842,9 @@ GameObject:
   - component: {fileID: 693024181}
   - component: {fileID: 693024180}
   - component: {fileID: 693024184}
+  - component: {fileID: 693024186}
   - component: {fileID: 693024183}
+  - component: {fileID: 693024185}
   m_Layer: 0
   m_Name: RenderPlane
   m_TagString: Untagged
@@ -7523,6 +8042,118 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &693024185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693024178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 10
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 7
+    00000004:
+      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 10
+        strength: 3
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 0
+        Style: 1
+        Variant: 0
+--- !u!54 &693024186
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693024178}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!4 &703933878
 Transform:
   m_ObjectHideFlags: 0
@@ -7942,10 +8573,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -7955,14 +8594,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &773655858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8117,6 +8774,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &779142666
 GameObject:
   m_ObjectHideFlags: 0
@@ -8176,6 +8852,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &791436465
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,10 +9109,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -8425,12 +9128,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 14
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 14
@@ -9112,10 +9833,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 100
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 145
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 113
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -9125,13 +9854,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &821703810
 BoxCollider:
@@ -9352,10 +10104,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -9365,14 +10125,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &826433833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9527,6 +10305,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &844774769
 GameObject:
   m_ObjectHideFlags: 0
@@ -9682,10 +10479,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -9693,13 +10498,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &857345422
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10460,10 +11291,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -10471,13 +11310,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &993677313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10881,10 +11746,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -10894,14 +11767,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1046328149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11421,10 +12312,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -11434,14 +12333,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!54 &1080314939
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11826,10 +12743,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -11839,14 +12764,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1086606050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12211,10 +13154,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -12224,14 +13175,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1104423711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12401,6 +13370,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   toIgnore: []
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1128089791
 GameObject:
   m_ObjectHideFlags: 0
@@ -12532,10 +13520,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -12545,14 +13541,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &1129033250
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12914,10 +13936,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -12925,12 +13955,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 14
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 14
@@ -13328,10 +14376,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -13339,13 +14395,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &1201734645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13537,10 +14619,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  haptics:
-    Amplitude: 0
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -13550,10 +14640,26 @@ MonoBehaviour:
       data:
         TakesOptions: 0
         Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
         WhichType: 9
         options:
-          id: 1
-    00000001:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!54 &1220996614
 Rigidbody:
@@ -13749,10 +14855,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -13762,14 +14876,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!65 &1237773373
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13939,10 +15079,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -13952,13 +15100,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &1270044288
 BoxCollider:
@@ -14214,10 +15385,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -14227,14 +15406,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!65 &1292835836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14598,10 +15803,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -14611,14 +15824,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1322630356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14999,6 +16230,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1371807834
 GameObject:
   m_ObjectHideFlags: 0
@@ -15299,10 +16549,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -15312,14 +16570,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1401113719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15988,6 +17264,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1493041762
 GameObject:
   m_ObjectHideFlags: 0
@@ -16144,10 +17439,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -16155,12 +17458,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 14
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 14
@@ -16336,6 +17657,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1523536194
 GameObject:
   m_ObjectHideFlags: 0
@@ -16970,10 +18310,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -16983,14 +18331,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &1658620450
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17210,10 +18584,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -17221,13 +18603,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &1673650977
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17379,10 +18787,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -17392,13 +18808,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &1683806900
 BoxCollider:
@@ -17501,10 +18940,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -17514,13 +18961,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &1709450238
 BoxCollider:
@@ -17885,10 +19355,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -17898,14 +19376,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &1754261554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18069,10 +19573,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 131
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -18082,13 +19594,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &1754706459
 BoxCollider:
@@ -18240,10 +19775,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 115
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -18253,13 +19796,36 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
         strength: 2
 --- !u!65 &1773579632
 BoxCollider:
@@ -18364,10 +19930,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -18375,13 +19949,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &1797929364
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18520,6 +20120,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &1804782234
 GameObject:
   m_ObjectHideFlags: 0
@@ -18708,10 +20327,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -18721,14 +20348,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1804782239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18960,10 +20605,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -18973,14 +20626,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!54 &1861534478
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19318,10 +20997,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -19331,14 +21018,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1904508664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19622,10 +21327,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -19635,14 +21348,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1918388494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20121,10 +21852,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -20134,14 +21873,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!54 &1969968104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20422,10 +22179,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -20433,13 +22198,39 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 0
         Description: 
         WhichType: 0
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
       type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!54 &1978193356
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20707,10 +22498,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -20720,14 +22519,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &1978548086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20926,10 +22743,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -20939,14 +22764,40 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 10
+        WhichType: 1
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: Buzz/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 10
-        strength: 6
+        TakesOptions: 0
+        Description: 
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 9
+        Duration: 1
+        Style: 1
+        Variant: 0
 --- !u!65 &1979507796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21359,10 +23210,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -21372,14 +23231,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &2019351595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21844,10 +23721,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -21857,14 +23742,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &2047761729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22148,10 +24051,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -22161,14 +24072,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &2049186729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22452,10 +24381,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -22465,14 +24402,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!114 &2053135508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22680,10 +24635,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  haptics:
-    Amplitude: 0
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -22691,12 +24654,30 @@ MonoBehaviour:
     00000000:
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
         TakesOptions: 1
         Description: 
         WhichType: 7
         options:
-          id: 1
-    00000001:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
       type: {class: DoubleClickStrong/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 7
@@ -22930,6 +24911,25 @@ MonoBehaviour:
       m_Calls: []
   toIgnore:
   - {fileID: 476917099}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &2129281188
 GameObject:
   m_ObjectHideFlags: 0
@@ -23103,10 +25103,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 220
+  startHaptics:
+    Amplitude: 30
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 0
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -23116,14 +25124,32 @@ MonoBehaviour:
       data:
         TakesOptions: 1
         Description: 
-        WhichType: 5
+        WhichType: 4
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 4
+    00000003:
+      type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 4
+        strength: 5
+    00000004:
+      type: {class: , ns: , asm: }
 --- !u!54 &2129281196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25684,10 +27710,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -25699,8 +27733,24 @@ MonoBehaviour:
         Description: 
         WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!54 &6149893607499602434
 Rigidbody:
@@ -25824,10 +27874,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -25839,8 +27897,24 @@ MonoBehaviour:
         Description: 
         WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!153 &6149893607903414249
 ConfigurableJoint:
@@ -26000,10 +28074,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -26015,8 +28097,24 @@ MonoBehaviour:
         Description: 
         WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!136 &6149893607903414251
 CapsuleCollider:
@@ -26302,10 +28400,18 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -26317,8 +28423,24 @@ MonoBehaviour:
         Description: 
         WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!153 &6149893608394108758
 ConfigurableJoint:
