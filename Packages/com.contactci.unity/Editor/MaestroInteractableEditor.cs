@@ -16,7 +16,7 @@ namespace Maestro
         private string showEventsTxt = "Bind Events";
 
         private SerializedProperty OnTouchProp, UnTouchProp, WhileTouchProp, OnGrabProp, OnReleaseProp;
-        private SerializedProperty haptics;
+        private SerializedProperty startHaptics, stayHaptics, exitHaptics;
         private SerializedProperty type, ignoreTaps, persist, persistenceDuration;
         private SerializedProperty UseRenderCenter, maintainOrientation, maintainPosition, stayInHand, SendHapticsToWholeHand;
         private SerializedProperty gripTransform, gripCollider;
@@ -28,7 +28,9 @@ namespace Maestro
             WhileTouchProp = serializedObject.FindProperty("whileTouch");
             OnGrabProp = serializedObject.FindProperty("onGrab");
             OnReleaseProp = serializedObject.FindProperty("onRelease");
-            haptics = serializedObject.FindProperty("haptics");
+            startHaptics = serializedObject.FindProperty("startHaptics");
+            stayHaptics = serializedObject.FindProperty("stayHaptics");
+            exitHaptics = serializedObject.FindProperty("exitHaptics");
 
             type = serializedObject.FindProperty("type");
             ignoreTaps = serializedObject.FindProperty("IgnoreTaps");
@@ -54,7 +56,9 @@ namespace Maestro
             /** 
              * Haptics
              */
-            EditorGUILayout.PropertyField(haptics);
+            EditorGUILayout.PropertyField(startHaptics);
+            EditorGUILayout.PropertyField(stayHaptics);
+            EditorGUILayout.PropertyField(exitHaptics);
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
             EditorGUILayout.Space();

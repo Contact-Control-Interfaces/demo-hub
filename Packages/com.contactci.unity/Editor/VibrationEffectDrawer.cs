@@ -9,7 +9,18 @@ namespace Maestro
     [CustomPropertyDrawer(typeof(VibrationEffect))]
     public class VibrationEffectDrawer : PropertyDrawer
     {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => 0;
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            SerializedProperty takesOptionsProp = property.FindPropertyRelative("TakesOptions");
+            if (takesOptionsProp != null && takesOptionsProp.boolValue)
+            {
+                var options = property.FindPropertyRelative("options");
+                var oHeight = EditorGUI.GetPropertyHeight(options, true);
+                return oHeight + EditorGUIUtility.singleLineHeight;
+            }
+
+            return EditorGUIUtility.singleLineHeight;
+        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -26,15 +37,17 @@ namespace Maestro
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.showMixedValue = whichType.hasMultipleDifferentValues;
 
-                EditorGUILayout.PropertyField(whichType, new GUIContent("Vibration Effect"));
+                var tRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
+                EditorGUI.PropertyField(tRect, whichType, new GUIContent("Vibration Effect"));
 
+                var oRect = new Rect(tRect.x, tRect.y + tRect.height, position.width, position.height - tRect.height);
                 if (takesOptionsProp.boolValue && !whichType.hasMultipleDifferentValues)
-                    EditorGUILayout.PropertyField(options, new GUIContent("Vibration Options"), true);
+                    EditorGUI.PropertyField(oRect, options, new GUIContent("Vibration Options"), true);
                 else if (whichType.hasMultipleDifferentValues)
-                    EditorGUILayout.HelpBox("Multiple effect type values detected! Options not available.", MessageType.Warning, wide: true);
+                    EditorGUI.HelpBox(oRect, "Multiple effect type values detected! Options not available.", MessageType.Warning);
 
             } else {
-                EditorGUILayout.HelpBox("No type found!", MessageType.Warning, wide: true);
+                EditorGUI.HelpBox(position, "No type found!", MessageType.Warning);
             }
             EditorGUI.showMixedValue = false;
             EditorGUI.EndProperty();

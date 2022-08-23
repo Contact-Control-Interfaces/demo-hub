@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Maestro
 {
@@ -45,26 +46,35 @@ namespace Maestro
         public UnityEvent onRelease;
         public TouchEvent onTouch, unTouch, whileTouch;
 
-        [Header("Haptics")]
-        public HapticEffect haptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
+        [HideInInspector] public HapticEffect hapticOverride { get; private set; }
 
+
+        [Header("Haptics - Touch Begin")]
+        public HapticEffect startHaptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
+        [Header("Haptics - Touch Sustain")]
+        [FormerlySerializedAs("haptics")]
+        public HapticEffect stayHaptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
+        [Header("Haptics - Touch End")]
+        public HapticEffect exitHaptics = new HapticEffect { Amplitude = 200, Vibration = new None() };
+        
         [Header("Special Behavior")]
         public bool isPersistent = false;
         public float persistenceDuration = 0.0f;
 
-        [HideInInspector]
-        public byte? ResponseMotorAmplitude { private get; set; }
-        public VibrationEffect ResponseVibrationEffect { private get; set; }
+        public HapticEffect currentHaptics
+        {
+            get =>hapticOverride ?? _currentHaptics;
+            private set => _currentHaptics = value;
+        }
 
         private int oldLayer;
+        private HapticEffect _currentHaptics;
 
         public void Start()
         {
             rb = this.GetComponent<Rigidbody>();
             rend = this.GetComponent<Renderer>();
             isGrabbed = false;
-            ResponseMotorAmplitude = null;
-            ResponseVibrationEffect = null;
         }
 
         public void Touch(FingerCollider finger)
@@ -75,18 +85,21 @@ namespace Maestro
             //{ //index == 1 means index finger
             //    onPoked.Invoke();
             //}
+            currentHaptics = startHaptics;
         }
 
         public void WhileTouch(FingerCollider finger)
         {
             if (whileTouch != null)
                 whileTouch.Invoke(finger);
+            currentHaptics = stayHaptics;
         }
 
         public void Untouch(FingerCollider finger)
         {
             if (unTouch != null)
                 unTouch.Invoke(finger);
+            currentHaptics = exitHaptics;
         }
 
         public void Grab(int newLayer)
@@ -102,8 +115,7 @@ namespace Maestro
         {
             isGrabbed = false;
             this.gameObject.layer = oldLayer;
-            ResponseMotorAmplitude = null;
-            ResponseVibrationEffect = null;
+            currentHaptics = null;
             onRelease.Invoke();
         }
 
@@ -127,30 +139,22 @@ namespace Maestro
             return gripTransform == null ? (UseRenderCenter ? rend.bounds.center : this.transform.position) : gripTransform.position;
         }
 
-        public byte? getMotorAmplitude()
+        public void overrideAmplitudeFromScale(float scale)
         {
-            return ResponseMotorAmplitude ?? haptics.Amplitude;
+            hapticOverride.Amplitude = (byte)(255 * scale);
         }
 
-        public VibrationEffect getVibrationEffect()
+        public void SetHapticOverride(HapticEffect haptics)
         {
-            return ResponseVibrationEffect ?? haptics.Vibration;
+            hapticOverride = haptics;
         }
 
-        public void setHaptics(byte? amp, VibrationEffect vib)
+        public void ResetOverride()
         {
-            if (amp.HasValue)
-                haptics.Amplitude = amp.Value;
-
-            if (vib != null)
-                haptics.Vibration = vib;
+            hapticOverride = null;
         }
 
-        public void setAmplitudeFromScale(float scale)
-        {
-            haptics.Amplitude = (byte)(255 * scale);
-        }
-
+        
         // Default comparer, TODO
         public int CompareTo(MaestroInteractable other)
         {
@@ -158,7 +162,7 @@ namespace Maestro
                 return -1;
 
             //TODO add priority
-            return this.haptics.CompareAmplitudesFirst(other.haptics);
+            return this.currentHaptics.CompareAmplitudesFirst(other.currentHaptics);
         }
     }
 
@@ -166,7 +170,7 @@ namespace Maestro
     {
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
-            return x.haptics.CompareAmplitudesFirst(y.haptics);
+            return x.currentHaptics.CompareAmplitudesFirst(y.currentHaptics);
         }
     }
 
@@ -174,7 +178,7 @@ namespace Maestro
     {
         public int Compare(MaestroInteractable x, MaestroInteractable y)
         {
-            return x.haptics.CompareVibrationEffectsFirst(y.haptics);
+            return x.currentHaptics.CompareVibrationEffectsFirst(y.currentHaptics);
         }
     }
 }
