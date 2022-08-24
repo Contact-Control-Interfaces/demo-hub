@@ -1,20 +1,27 @@
+using System;
 using UnityEngine;
 using UnityEngine.Android;
 
 namespace Maestro
 {
-    public class OculusBluetoothLocationPermissionRequester : MonoBehaviour
+    public class OculusBluetoothLocationPermissionRequester
     {
 #if UNITY_ANDROID
+        public event Action PermissionGranted;
+        public event Action PermissionDenied;
 
-        void Start()
+        public void RequestPermission()
         {
             if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
             {
-                StartScanningForGloves();
+                Debug.Log("Already has FineLocation permission");
+                
+                PermissionGranted?.Invoke();
             }
             else
             {
+                Debug.Log("Requesting FineLocation permission");
+
                 Permission.RequestUserPermission(Permission.FineLocation, CreatePermissionCallbacks());
             }
         }
@@ -25,29 +32,27 @@ namespace Maestro
                 
             callbacks.PermissionGranted += permission =>
             {
-                // We only care about results of `Permission.FineLocation`
-                if (permission != Permission.FineLocation)
-                {
-                    return;
-                }
+                Debug.Log("Permission granted: " + permission);
                 
-                StartScanningForGloves();
+                // We only care about results of `Permission.FineLocation`
+                if (permission == Permission.FineLocation)
+                {
+                    PermissionGranted?.Invoke();
+                }
             };
                 
             callbacks.PermissionDenied += permission =>
             {
+                Debug.Log("Permission denied: " + permission);
+                
+                // We only care about results of `Permission.FineLocation`
                 if (permission == Permission.FineLocation)
                 {
-                   // Don't start the glove detection
+                    PermissionDenied?.Invoke();
                 } 
             };
 
             return callbacks;
-        }
-
-        private void StartScanningForGloves()
-        {
-            MaestroAndroidWrapper.Start();
         }
 #endif
     }
