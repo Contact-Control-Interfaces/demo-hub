@@ -13,7 +13,7 @@ namespace Maestro
     {
         public override IntPtr GetPointer()
         {
-            return MaestroGloveConnector.GetRightGlovePointer();
+            return MaestroGloveConnector.Instance.GetRightGlovePointer();
         }
     }
 }

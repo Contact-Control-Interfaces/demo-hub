@@ -26,7 +26,7 @@ namespace Maestro
 
         public void Start()
         {
-            Connected = MaestroGloveConnector.isGloveConnected(GetPointer());
+            Connected = MaestroGloveConnector.Instance.isGloveConnected(GetPointer());
 
             if (!Connected && !TriedToStart) {
                 StartDetection();
@@ -35,21 +35,30 @@ namespace Maestro
 
         public void Update()
         {
-            bool still = MaestroGloveConnector.isGloveConnected(GetPointer());
+            bool still = MaestroGloveConnector.Instance.isGloveConnected(GetPointer());
 
             Connected = still;
         }
 
         private void StartDetection()
         {
-            DetectionStarted = MaestroGloveConnector.StartScanningForGloves();
+            MaestroGloveConnector.Instance.OnDetectionStarted += OnDetectionStarted;
+            
+            MaestroGloveConnector.Instance.StartScanningForGloves();
 
+            TriedToStart = true;
+        }
+
+        private void OnDetectionStarted(object source, bool detectionStarted)
+        {
+            MaestroGloveConnector.Instance.OnDetectionStarted -= OnDetectionStarted;
+
+            DetectionStarted = detectionStarted;
+                
             if (DetectionStarted)
                 Debug.Log("Maestro detection service is running.");
             else
                 Debug.LogError("Maestro detection service is not running!");
-
-            TriedToStart = true;
         }
     }
 }
