@@ -57,7 +57,7 @@ public class AppleDrop : MonoBehaviour
 
     //Functions below check if an object with a finger collider are within the trigger's bounds.
     //Material is changed accordingly.
-    private void OnTriggerEnter(Collider other)
+/*    private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<FingerCollider>() && !hasHand)
         {
@@ -68,11 +68,31 @@ public class AppleDrop : MonoBehaviour
             //hasHand = true;
 
         }
+    }*/
+
+   public void StartTime()
+    {
+        if (hasHand == false)
+        {
+            hasHand = true;
+            this.GetComponent<Renderer>().material = inMaterial;
+            timeOn = true;
+            timeOnText.text = "Time On";
+            //hasHand = true;
+        }
     }
 
- 
 
-    private void OnTriggerExit(Collider other)
+
+/*    private void OnTriggerExit(Collider other)
+    {
+        this.GetComponent<Renderer>().material = exitMaterial;
+        timeOn = false;
+        timeOnText.text = "Time Off";
+        hasHand = false;
+    }
+*/
+    public void StopTime()
     {
         this.GetComponent<Renderer>().material = exitMaterial;
         timeOn = false;
