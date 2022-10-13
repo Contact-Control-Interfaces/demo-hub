@@ -8,6 +8,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Maestro.Poser;
 using Image = UnityEngine.UI.Image;
 
 public class AppleDrop : MonoBehaviour
@@ -37,6 +38,8 @@ public class AppleDrop : MonoBehaviour
     //UIElements
     public Image fillImage;
 
+    public HandBones handBones;
+
     private void Update()
     {
         if(!hasHand)
@@ -52,25 +55,52 @@ public class AppleDrop : MonoBehaviour
         
     }
 
+    public void Register(FingerCollider fc)
+    {
+       // if (fc.hpi.whichHand == whichHand)
+        //{
+        //    SetState(fc, true);
+        //}
+    }
+
+    public void Deregister(FingerCollider fc)
+    {
+        // Instead we wait until you uncurl
+        //SetState(fc, false);
+    }
+
+    public void SetState(FingerCollider fc, bool state)
+    {
+        switch (fc.index.finger)
+        {
+            //default: return;
+            //case WhichFinger.Thumb: ClampThumb = state; break;
+            //case WhichFinger.Index: ClampIndex = state; break;
+            //case WhichFinger.Middle: ClampMiddle = state; break;
+            //case WhichFinger.Ring: ClampRing = state; break;
+            //case WhichFinger.Little: ClampLittle = state; break;
+        }
+    }
+
 
     #region Material Logic
 
     //Functions below check if an object with a finger collider are within the trigger's bounds.
     //Material is changed accordingly.
-/*    private void OnTriggerEnter(Collider other)
-    {
-        if(other.GetComponent<FingerCollider>() && !hasHand)
+    /*    private void OnTriggerEnter(Collider other)
         {
-            hasHand = true;
-            this.GetComponent<Renderer>().material = inMaterial;
-            timeOn = true;
-            timeOnText.text = "Time On";
-            //hasHand = true;
+            if(other.GetComponent<FingerCollider>() && !hasHand)
+            {
+                hasHand = true;
+                this.GetComponent<Renderer>().material = inMaterial;
+                timeOn = true;
+                timeOnText.text = "Time On";
+                //hasHand = true;
 
-        }
-    }*/
+            }
+        }*/
 
-   public void StartTime()
+    public void StartTime()
     {
         if (hasHand == false)
         {
