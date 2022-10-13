@@ -1,5 +1,6 @@
 using Leap;
 using Maestro;
+using Maestro.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Maestro.Poser;
 using Image = UnityEngine.UI.Image;
 
 public class AppleDrop : MonoBehaviour
@@ -38,7 +38,8 @@ public class AppleDrop : MonoBehaviour
     //UIElements
     public Image fillImage;
 
-    public HandBones handBones;
+    protected int CurrentlyColliding = 0;
+    protected Coroutine CurrentCoroutine = null;
 
     private void Update()
     {
@@ -46,39 +47,23 @@ public class AppleDrop : MonoBehaviour
         {
             this.GetComponent<Renderer>().material = emptyMaterial;
         }
-
-        if (timeOn)
-        {
-            remainingTime = baseTime;
-            StartCoroutine(UpdateTimer());
-        }
-        
     }
 
     public void Register(FingerCollider fc)
     {
-       // if (fc.hpi.whichHand == whichHand)
-        //{
-        //    SetState(fc, true);
-        //}
+        CurrentlyColliding++;
+
+        if (CurrentCoroutine == null) {
+            StartTime();
+        }
     }
 
     public void Deregister(FingerCollider fc)
     {
-        // Instead we wait until you uncurl
-        //SetState(fc, false);
-    }
+        CurrentlyColliding--;
 
-    public void SetState(FingerCollider fc, bool state)
-    {
-        switch (fc.index.finger)
-        {
-            //default: return;
-            //case WhichFinger.Thumb: ClampThumb = state; break;
-            //case WhichFinger.Index: ClampIndex = state; break;
-            //case WhichFinger.Middle: ClampMiddle = state; break;
-            //case WhichFinger.Ring: ClampRing = state; break;
-            //case WhichFinger.Little: ClampLittle = state; break;
+        if (CurrentlyColliding <= 0) {
+            StopTime();
         }
     }
 
@@ -102,17 +87,17 @@ public class AppleDrop : MonoBehaviour
 
     public void StartTime()
     {
-        if (hasHand == false)
-        {
-            hasHand = true;
-            this.GetComponent<Renderer>().material = inMaterial;
-            timeOn = true;
-            timeOnText.text = "Time On";
-            //hasHand = true;
+        this.GetComponent<Renderer>().material = inMaterial;
+        timeOn = true;
+        timeOnText.text = "Time On";
+        remainingTime = baseTime;
+
+        if (CurrentCoroutine != null) {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
         }
+        CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
-
-
 
 /*    private void OnTriggerExit(Collider other)
     {
@@ -127,7 +112,13 @@ public class AppleDrop : MonoBehaviour
         this.GetComponent<Renderer>().material = exitMaterial;
         timeOn = false;
         timeOnText.text = "Time Off";
-        hasHand = false;
+
+        if (CurrentCoroutine != null) {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
+
+        ResetDisplay();
     }
 
     #endregion
@@ -136,47 +127,45 @@ public class AppleDrop : MonoBehaviour
 
     private IEnumerator UpdateTimer()
     {
-        while (remainingTime > 0)
+        while(remainingTime > 0)
         {
-            if (timeOn)
-            {
-                fillImage.fillAmount = Mathf.InverseLerp(0, baseTime, remainingTime);
-                remainingTime--;
-                remainingText.text = remainingTime.ToString();
+            if (!timeOn)
+                break;
 
-                if(remainingTime == 0)
-                {
-                    dropObject.GetComponent<Rigidbody>().useGravity = true;
-                }
-            }
-            else
-            {
-                remainingTime = baseTime;
-                fillImage.fillAmount = Mathf.InverseLerp(0, baseTime, remainingTime);
-                yield break;
-            }
-           
+            fillImage.fillAmount = (float)remainingTime / baseTime;
+            remainingText.text = remainingTime.ToString();
+
+            remainingTime--;
+
             yield return new WaitForSeconds(1f);
         }
-        OnEnd();
 
+        fillImage.fillAmount = 0f;
+        remainingText.text = "0";
+
+        OnEnd();
     }
 
     private void OnEnd()
     {
-        
+        dropObject.GetComponent<Rigidbody>().useGravity = true;
     }
 
-
+    private void ResetDisplay()
+    {
+        remainingTime = baseTime;
+        fillImage.fillAmount = 0f;
+        remainingText.text = "";
+    }
     #endregion
 
-/*           if (remainingTime <= 0)
-        {
-            dropObject.GetComponent<Rigidbody>().useGravity = true;
-        }
-        else
-{
-    remainingTime = baseTime;*/
+    /*           if (remainingTime <= 0)
+            {
+                dropObject.GetComponent<Rigidbody>().useGravity = true;
+            }
+            else
+    {
+        remainingTime = baseTime;*/
 }
 
 
