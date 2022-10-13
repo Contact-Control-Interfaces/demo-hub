@@ -1,5 +1,6 @@
 using Leap;
 using Maestro;
+using Maestro.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,19 +38,33 @@ public class AppleDrop : MonoBehaviour
     //UIElements
     public Image fillImage;
 
+    protected int CurrentlyColliding = 0;
+    protected Coroutine CurrentCoroutine = null;
+
     private void Update()
     {
         if(!hasHand)
         {
             this.GetComponent<Renderer>().material = emptyMaterial;
         }
+    }
 
-        if (timeOn)
-        {
-            remainingTime = baseTime;
-            StartCoroutine(UpdateTimer());
+    public void Register(FingerCollider fc)
+    {
+        CurrentlyColliding++;
+
+        if (CurrentCoroutine == null) {
+            StartTime();
         }
-        
+    }
+
+    public void Deregister(FingerCollider fc)
+    {
+        CurrentlyColliding--;
+
+        if (CurrentlyColliding <= 0) {
+            StopTime();
+        }
     }
 
 
@@ -57,32 +72,32 @@ public class AppleDrop : MonoBehaviour
 
     //Functions below check if an object with a finger collider are within the trigger's bounds.
     //Material is changed accordingly.
-/*    private void OnTriggerEnter(Collider other)
-    {
-        if(other.GetComponent<FingerCollider>() && !hasHand)
+    /*    private void OnTriggerEnter(Collider other)
         {
-            hasHand = true;
-            this.GetComponent<Renderer>().material = inMaterial;
-            timeOn = true;
-            timeOnText.text = "Time On";
-            //hasHand = true;
+            if(other.GetComponent<FingerCollider>() && !hasHand)
+            {
+                hasHand = true;
+                this.GetComponent<Renderer>().material = inMaterial;
+                timeOn = true;
+                timeOnText.text = "Time On";
+                //hasHand = true;
 
-        }
-    }*/
+            }
+        }*/
 
-   public void StartTime()
+    public void StartTime()
     {
-        if (hasHand == false)
-        {
-            hasHand = true;
-            this.GetComponent<Renderer>().material = inMaterial;
-            timeOn = true;
-            timeOnText.text = "Time On";
-            //hasHand = true;
+        this.GetComponent<Renderer>().material = inMaterial;
+        timeOn = true;
+        timeOnText.text = "Time On";
+        remainingTime = baseTime;
+
+        if (CurrentCoroutine != null) {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
         }
+        CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
-
-
 
 /*    private void OnTriggerExit(Collider other)
     {
@@ -97,7 +112,13 @@ public class AppleDrop : MonoBehaviour
         this.GetComponent<Renderer>().material = exitMaterial;
         timeOn = false;
         timeOnText.text = "Time Off";
-        hasHand = false;
+
+        if (CurrentCoroutine != null) {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
+
+        ResetDisplay();
     }
 
     #endregion
@@ -106,47 +127,45 @@ public class AppleDrop : MonoBehaviour
 
     private IEnumerator UpdateTimer()
     {
-        while (remainingTime > 0)
+        while(remainingTime > 0)
         {
-            if (timeOn)
-            {
-                fillImage.fillAmount = Mathf.InverseLerp(0, baseTime, remainingTime);
-                remainingTime--;
-                remainingText.text = remainingTime.ToString();
+            if (!timeOn)
+                break;
 
-                if(remainingTime == 0)
-                {
-                    dropObject.GetComponent<Rigidbody>().useGravity = true;
-                }
-            }
-            else
-            {
-                remainingTime = baseTime;
-                fillImage.fillAmount = Mathf.InverseLerp(0, baseTime, remainingTime);
-                yield break;
-            }
-           
+            fillImage.fillAmount = (float)remainingTime / baseTime;
+            remainingText.text = remainingTime.ToString();
+
+            remainingTime--;
+
             yield return new WaitForSeconds(1f);
         }
-        OnEnd();
 
+        fillImage.fillAmount = 0f;
+        remainingText.text = "0";
+
+        OnEnd();
     }
 
     private void OnEnd()
     {
-        
+        dropObject.GetComponent<Rigidbody>().useGravity = true;
     }
 
-
+    private void ResetDisplay()
+    {
+        remainingTime = baseTime;
+        fillImage.fillAmount = 0f;
+        remainingText.text = "";
+    }
     #endregion
 
-/*           if (remainingTime <= 0)
-        {
-            dropObject.GetComponent<Rigidbody>().useGravity = true;
-        }
-        else
-{
-    remainingTime = baseTime;*/
+    /*           if (remainingTime <= 0)
+            {
+                dropObject.GetComponent<Rigidbody>().useGravity = true;
+            }
+            else
+    {
+        remainingTime = baseTime;*/
 }
 
 
