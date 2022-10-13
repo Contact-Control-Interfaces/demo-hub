@@ -148,7 +148,7 @@ public class AppleDrop : MonoBehaviour
 
     private void OnEnd()
     {
-        dropObject.GetComponent<Rigidbody>().useGravity = true;
+        dropObject.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     private void ResetDisplay()
