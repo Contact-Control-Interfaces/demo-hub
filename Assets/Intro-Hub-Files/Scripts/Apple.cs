@@ -50,7 +50,7 @@ public class Apple : MonoBehaviour
         {
             if(bloomEffect.intensity != 1000)
             {
-                bloomEffect.intensity.value += 1f;
+                bloomEffect.intensity.value += 5f;
             }
             else
             {
@@ -63,7 +63,7 @@ public class Apple : MonoBehaviour
 
             if (bloomEffect.intensity != 0f)
             {   
-                bloomEffect.intensity.value -= 1f;
+                bloomEffect.intensity.value -= 5f;
             }
             else
             {
