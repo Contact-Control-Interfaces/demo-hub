@@ -13,11 +13,54 @@ public class Apple : MonoBehaviour
     public Volume postVolume;
     public Bloom bloomEffect;
     public Material glowOff;
+    public GameObject panelDisplay;
 
     private bool BloomUp;
     private bool BloomDown;
     private bool materialChange;
-    
+
+    private void Start()
+    {
+        panelDisplay.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (BloomUp)
+        {
+            if (bloomEffect.intensity != 1000)
+            {
+                bloomEffect.intensity.value += 5f;
+            }
+            else
+            {
+                BloomDown = true;
+                BloomUp = false;
+            }
+        }
+        else if (BloomDown)
+        {
+
+            if (bloomEffect.intensity != 0f)
+            {
+                bloomEffect.intensity.value -= 5f;
+            }
+            else
+            {
+                Debug.Log("BloomDone");
+                if (!materialChange)
+                {
+                    MaterialChange();
+                    DisplayPanel();
+                }
+                else
+                {
+                    Debug.Log("All Done");
+                }
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,45 +80,16 @@ public class Apple : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if(BloomUp)
-        {
-            if(bloomEffect.intensity != 1000)
-            {
-                bloomEffect.intensity.value += 5f;
-            }
-            else
-            {
-                BloomDown = true;
-                BloomUp = false;
-            }
-        }
-        else if(BloomDown)
-        {
 
-            if (bloomEffect.intensity != 0f)
-            {   
-                bloomEffect.intensity.value -= 5f;
-            }
-            else
-            {
-                Debug.Log("BloomDone");
-                if(!materialChange)
-                {
-                    MaterialChange();
-                }
-                else
-                {
-                    Debug.Log("All Done");
-                }
-            }
-        }
-    }
 
     void MaterialChange()
     {
         materialChange = true;
         this.GetComponent<Renderer>().material = glowOff;
+    }
+
+    void DisplayPanel()
+    {
+        panelDisplay.SetActive(true);
     }
 }
