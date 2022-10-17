@@ -12,9 +12,12 @@ public class Apple : MonoBehaviour
 {
     public Volume postVolume;
     public Bloom bloomEffect;
+    public Material glowOff;
 
     private bool BloomUp;
     private bool BloomDown;
+    private bool materialChange;
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,17 +36,7 @@ public class Apple : MonoBehaviour
 
     }
 
-    
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(BloomUp)
@@ -67,8 +60,22 @@ public class Apple : MonoBehaviour
             }
             else
             {
-                Debug.Log("Done");
+                Debug.Log("BloomDone");
+                if(!materialChange)
+                {
+                    MaterialChange();
+                }
+                else
+                {
+                    Debug.Log("All Done");
+                }
             }
         }
+    }
+
+    void MaterialChange()
+    {
+        materialChange = true;
+        this.GetComponent<Renderer>().material = glowOff;
     }
 }
