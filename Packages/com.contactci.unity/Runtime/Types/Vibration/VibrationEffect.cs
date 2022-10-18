@@ -287,6 +287,25 @@ namespace Maestro.Vibration
 
         public byte Value { get { return this.TakesOptions ? options.Value : GetStaticValue(this.WhichType); } }
 
+        public byte Modifier
+        {
+            get
+            {
+                int val = 0;
+                val |= OneShot ? 0x80 : 0;
+                val |= (RepeatDelay / 10) & 0x7f;
+
+                return (byte)val;
+            }
+        }
+
+        [Tooltip("Effect will play exactly once and not repeat")]
+        public bool OneShot = false;
+
+        [Tooltip("Delay, in milliseconds, between loops of this effect")]
+        [Range(0, 1250)]
+        public int RepeatDelay = 0;
+
         public EffectType WhichType;
 
         public EffectStrength? Strength;
@@ -326,18 +345,18 @@ namespace Maestro.Vibration
 
         public override bool Equals(object obj)
         {
-            VibrationEffect other = obj as VibrationEffect;
-            if (other == null)
+            if (!(obj is VibrationEffect other))
                 return false;
 
-            if (this.WhichType != other.WhichType)
-                return false;
-            else {
-                if (!this.TakesOptions  /*_staticValues.ContainsKey(this.WhichType)*/)
-                    return true;
-                else
-                    return this.options.Equals(other.options);
-            }
+            return this.Value == other.Value && this.Modifier == other.Modifier;
+        }
+
+        public override int GetHashCode()
+        {
+            int code = 97;
+            code = code * Value ^ 53;
+            code = code * Modifier ^ 53;
+            return code;
         }
     }
 

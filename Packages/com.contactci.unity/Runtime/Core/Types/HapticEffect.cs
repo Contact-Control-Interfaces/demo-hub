@@ -38,5 +38,20 @@ namespace Maestro
         {
             return new HapticEffect() { Amplitude = this.Amplitude, Vibration = this.Vibration };
         }
+        
+        public override bool Equals(object obj)
+        {
+            if (!(obj is HapticEffect other))
+                return false;
+            return this.Amplitude == other.Amplitude && this.Vibration == other.Vibration;
+        }
+
+        public override int GetHashCode()
+        {
+            int code = 71;
+            code = code * 17 ^ Amplitude;
+            code = code * 17 ^ Vibration.GetHashCode();
+            return code;
+        }
     }
 }
