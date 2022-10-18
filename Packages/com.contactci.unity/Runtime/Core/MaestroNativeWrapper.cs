@@ -50,21 +50,43 @@ namespace Maestro
          * Vibration endpoints
          */
         [DllImport("MaestroAPI")]
-        public static extern void set_thumb_vibration_effect(IntPtr maestroPtr, byte effectCode);
+        public static extern void set_thumb_vibration_effect(IntPtr maestroPtr, byte effectCode, byte modifier);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_index_vibration_effect(IntPtr maestroPtr, byte effectCode);
+        public static extern void set_index_vibration_effect(IntPtr maestroPtr, byte effectCode, byte modifier);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_middle_vibration_effect(IntPtr maestroPtr, byte effectCode);
+        public static extern void set_middle_vibration_effect(IntPtr maestroPtr, byte effectCode, byte modifier);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_ring_vibration_effect(IntPtr maestroPtr, byte effectCode);
+        public static extern void set_ring_vibration_effect(IntPtr maestroPtr, byte effectCode, byte modifier);
 
         [DllImport("MaestroAPI")]
-        public static extern void set_little_vibration_effect(IntPtr maestroPtr, byte effectCode);
+        public static extern void set_little_vibration_effect(IntPtr maestroPtr, byte effectCode, byte modifier);
 
-        public delegate void MaestroMutator(IntPtr maestroPtr, byte amplitude);
+        /**
+         * Serial comms endpoints
+         */
+
+        [DllImport("MaestroAPI")]
+        public static extern uint rx_bytes_available(IntPtr maestroPtr);
+        
+        [DllImport("MaestroAPI")]
+        public static extern uint read_rx_bytes(ref byte[] buffer, uint length, IntPtr maestroPtr);
+        
+        [DllImport("MaestroAPI")]
+        public static extern uint poll_rx(IntPtr maestroPtr);
+        
+        [DllImport("MaestroAPI")]
+        public static extern void write_bytes(byte[] buffer, uint length, IntPtr maestroPtr);
+        
+        [DllImport("MaestroAPI")]
+        public static extern void write_bytes_async(byte[] buffer, uint length, IntPtr maestroPtr);
+
+        
+        public delegate void MaestroVibrationMutator(IntPtr maestroPtr, byte effect, byte modifier);
+
+        public delegate void MaestroFFMutator(IntPtr maestroPtr, byte amplitude);
 
         public static void SetAllAmplitudes(IntPtr maestroPtr, byte amplitude)
         {
@@ -77,11 +99,11 @@ namespace Maestro
 
         public static void SetAllVibrationEffects(IntPtr maestroPtr, VibrationEffect effect)
         {
-            set_thumb_vibration_effect(maestroPtr, effect.Value);
-            set_index_vibration_effect(maestroPtr, effect.Value);
-            set_middle_vibration_effect(maestroPtr, effect.Value);
-            set_ring_vibration_effect(maestroPtr, effect.Value);
-            set_little_vibration_effect(maestroPtr, effect.Value);
+            set_thumb_vibration_effect(maestroPtr, effect.Value, effect.Modifier);
+            set_index_vibration_effect(maestroPtr, effect.Value, effect.Modifier);
+            set_middle_vibration_effect(maestroPtr, effect.Value, effect.Modifier);
+            set_ring_vibration_effect(maestroPtr, effect.Value, effect.Modifier);
+            set_little_vibration_effect(maestroPtr, effect.Value, effect.Modifier);
         }
 
         public static void SetAllHaptics(IntPtr maestroPtr, byte amplitude, VibrationEffect vibrationEffect)
@@ -107,7 +129,8 @@ namespace Maestro
             TrySetVibrationMutator(maestroPtr, set_little_vibration_effect, context.LittleVibrationEffect, lastContext.LittleVibrationEffect);
         }
 
-        private static void TrySetMutator(IntPtr maestroPtr, MaestroMutator mutator, byte? value, byte? previousValue)
+
+        private static void TrySetMutator(IntPtr maestroPtr, MaestroFFMutator mutator, byte? value, byte? previousValue)
         {
             if (value.HasValue) {
                 // Send value if there's one to send
@@ -118,13 +141,33 @@ namespace Maestro
             }
         }
 
-        private static void TrySetVibrationMutator(IntPtr maestroPtr, MaestroMutator mutator, VibrationEffect value, VibrationEffect previousValue)
+        private static void TrySetVibrationMutator(IntPtr maestroPtr, MaestroVibrationMutator mutator, VibrationEffect value, VibrationEffect previousValue)
         {
             if (value != null && !value.Equals(VibrationEffect.None)) {
-                mutator(maestroPtr, value.Value);
+                mutator(maestroPtr, value.Value, value.Modifier);
             } else if (previousValue != null && !previousValue.Equals(VibrationEffect.None)) {
-                mutator(maestroPtr, 0);
+                mutator(maestroPtr, 0, 0);
             }
+        }
+
+
+        public static uint RxAvailable(IntPtr maestroPtr)
+        {
+            return rx_bytes_available(maestroPtr);
+        }
+
+        public static uint PollRx(IntPtr maestroPtr)
+        {
+            return poll_rx(maestroPtr);
+        }
+
+        public static void SendBytes(IntPtr maestroPtr, byte[] data)
+        {
+            write_bytes(data, (uint)data.Length, maestroPtr);
+        }
+        public static void SendBytesAsync(IntPtr maestroPtr, byte[] data)
+        {
+            write_bytes_async(data, (uint)data.Length, maestroPtr);
         }
     }
 }

@@ -63,7 +63,21 @@ namespace Maestro
 
         public HapticEffect currentHaptics
         {
-            get =>hapticOverride ?? _currentHaptics;
+            get
+            {
+                return hapticOverride ?? _currentHaptics;
+                //TODO! We need to reset OneShot effects once played
+                //maybe ask device when it's done?
+                if (hapticOverride != null)
+                {
+                    var ret = hapticOverride;
+                    if(hapticOverride.Vibration.OneShot)
+                        ResetOverride();
+                    return ret;
+                }
+                return _currentHaptics; 
+                
+            }
             private set => _currentHaptics = value;
         }
 

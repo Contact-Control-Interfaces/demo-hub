@@ -34,21 +34,6 @@ namespace Maestro
             }
         }
 
-        // TODO do this much cleaner
-        public byte? ForcedMotorAmplitude
-        {
-            get;
-            set;
-        }
-
-        // TODO do this much cleaner
-        [CanBeNull]
-        public VibrationEffect ForcedVibrationEffect
-        {
-            get;
-            set;
-        }
-        
         private HandSize handSize {
             get {
                 return Inheriting ? manager.handSize : handSizeOverride;
@@ -492,17 +477,7 @@ namespace Maestro
 
             bool palmTouch = prismGenerator.AnyTouching;
 
-            // TODO do this much cleaner
-            if (ForcedMotorAmplitude != null || ForcedVibrationEffect != null)
-            {
-                if (ForcedMotorAmplitude != null) {
-                    nextHaptics.SetAllAmplitudes(ForcedMotorAmplitude);
-                }
-
-                if (ForcedVibrationEffect != null) {
-                    nextHaptics.SetAllVibrationEffects(ForcedVibrationEffect);
-                }
-            } else if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
+            if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.currentHaptics.Amplitude);
                 nextHaptics.SetAllVibrationEffects(grabTarget.currentHaptics.Vibration);
             } else {
