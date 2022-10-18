@@ -34,6 +34,10 @@ namespace Maestro
         [Header("Debug")]
         public bool autoUnlock = true;
 
+        public MaestroInteractable interactable;
+
+        public HapticEffect toggleHaptics = new HapticEffect() {Amplitude = 175, Vibration = VibrationEffect.None };
+
         public void Register(FingerCollider fc)
         {
             if (fc.hpi.whichHand == whichHand) {
@@ -65,6 +69,9 @@ namespace Maestro
 
             if (trackRealHand == null)
                 trackRealHand = new TrackEvent();
+
+            if (interactable == null)
+                interactable = GetComponent<MaestroInteractable>();
         }
 
         protected override void LateUpdate()
@@ -96,18 +103,14 @@ namespace Maestro
                     // Free hand
                     locked = false;
                     
-                    // TODO do this much cleaner
-                    _provider.MaestroHand.ForcedMotorAmplitude = null;
-                    _provider.MaestroHand.ForcedVibrationEffect = null;
+                    interactable.ResetOverride();
                     
                     onFree.Invoke();
                 } else if (isAnythingClamped && !lastIsAnythingClamped) {
                     // Lock hand
                     locked = true;
-                    
-                    // TODO do this much cleaner
-                    _provider.MaestroHand.ForcedMotorAmplitude = 175;
-                    _provider.MaestroHand.ForcedVibrationEffect = null;
+
+                    interactable.SetHapticOverride(toggleHaptics);
                     
                     onLock.Invoke();
                 }

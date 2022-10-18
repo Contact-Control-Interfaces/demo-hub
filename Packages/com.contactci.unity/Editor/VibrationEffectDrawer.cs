@@ -9,17 +9,24 @@ namespace Maestro
     [CustomPropertyDrawer(typeof(VibrationEffect))]
     public class VibrationEffectDrawer : PropertyDrawer
     {
+        public bool showModifiers = false;
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            float height;
             SerializedProperty takesOptionsProp = property.FindPropertyRelative("TakesOptions");
             if (takesOptionsProp != null && takesOptionsProp.boolValue)
             {
                 var options = property.FindPropertyRelative("options");
                 var oHeight = EditorGUI.GetPropertyHeight(options, true);
-                return oHeight + EditorGUIUtility.singleLineHeight;
+                height = oHeight + EditorGUIUtility.singleLineHeight * EditorGUIUtility.standardVerticalSpacing;
             }
+            else
+                height = EditorGUIUtility.singleLineHeight * 2;
 
-            return EditorGUIUtility.singleLineHeight;
+            if (showModifiers)
+                height += EditorGUIUtility.singleLineHeight * 2;
+            
+            return height;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -39,8 +46,28 @@ namespace Maestro
 
                 var tRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
                 EditorGUI.PropertyField(tRect, whichType, new GUIContent("Vibration Effect"));
+                
+                var mRect = new Rect(tRect.x, tRect.y + tRect.height, position.width, tRect.height);
+                showModifiers = EditorGUI.Foldout(mRect, showModifiers, "Modifiers");
+                if (showModifiers)
+                {
+                    mRect.x += EditorGUIUtility.standardVerticalSpacing * 4;
+                    mRect.height = EditorGUIUtility.singleLineHeight;
+                    mRect.width -= EditorGUIUtility.standardVerticalSpacing * 4;
+                    mRect.y += mRect.height;
+                    EditorGUI.PropertyField(mRect, property.FindPropertyRelative("OneShot"));
+                    var delProp = property.FindPropertyRelative("RepeatDelay");
+                    mRect.y += mRect.height;
+                    EditorGUI.PropertyField(mRect, delProp);
+                    var delVal = delProp.intValue;
+                    if (delVal % 10 > 0)
+                    {
+                        delVal -= delVal % 10;
+                        delProp.intValue = delVal;
+                    }
+                }
 
-                var oRect = new Rect(tRect.x, tRect.y + tRect.height, position.width, position.height - tRect.height);
+                var oRect = new Rect(mRect.x, mRect.y + mRect.height, position.width, position.height - mRect.height);
                 if (takesOptionsProp.boolValue && !whichType.hasMultipleDifferentValues)
                     EditorGUI.PropertyField(oRect, options, new GUIContent("Vibration Options"), true);
                 else if (whichType.hasMultipleDifferentValues)

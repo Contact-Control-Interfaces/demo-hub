@@ -83,6 +83,12 @@ namespace Maestro
             adapter.Call("applyMiddleVibration", maestroPtrInt, sbyteOrZero(newContext.MiddleVibrationEffect?.Value));
             adapter.Call("applyRingVibration", maestroPtrInt, sbyteOrZero(newContext.RingVibrationEffect?.Value));
             adapter.Call("applyLittleVibration", maestroPtrInt, sbyteOrZero(newContext.LittleVibrationEffect?.Value));
+            
+            adapter.Call("applyThumbVibrationModifier", maestroPtrInt, sbyteOrZero(newContext.ThumbVibrationEffect?.Modifier));
+            adapter.Call("applyIndexVibrationModifier", maestroPtrInt, sbyteOrZero(newContext.IndexVibrationEffect?.Modifier));
+            adapter.Call("applyMiddleVibrationModifier", maestroPtrInt, sbyteOrZero(newContext.MiddleVibrationEffect?.Modifier));
+            adapter.Call("applyRingVibrationModifier", maestroPtrInt, sbyteOrZero(newContext.RingVibrationEffect?.Modifier));
+            adapter.Call("applyLittleVibrationModifier", maestroPtrInt, sbyteOrZero(newContext.LittleVibrationEffect?.Modifier));
         }
     }
 }
