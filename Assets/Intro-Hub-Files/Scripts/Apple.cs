@@ -26,14 +26,16 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
+        TestBloom();
         if (BloomUp)
         {
-            if (bloomEffect.intensity != 1000)
+            if (bloomEffect.intensity.value <= 10000)
             {
-                bloomEffect.intensity.value += 5f;
+                bloomEffect.intensity.value += 10f;
             }
             else
             {
+                DisplayPanel();
                 BloomDown = true;
                 BloomUp = false;
             }
@@ -41,17 +43,18 @@ public class Apple : MonoBehaviour
         else if (BloomDown)
         {
 
-            if (bloomEffect.intensity != 0f)
+            if(bloomEffect.intensity.value > 0f)
             {
-                bloomEffect.intensity.value -= 5f;
+                bloomEffect.intensity.value -= 10f;
             }
             else
             {
                 Debug.Log("BloomDone");
                 if (!materialChange)
                 {
+                    BloomDown = false;
+                    bloomEffect.intensity.value = 100f;
                     MaterialChange();
-                    DisplayPanel();
                 }
                 else
                 {
@@ -79,12 +82,28 @@ public class Apple : MonoBehaviour
 
     }
 
+    private void TestBloom()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            var volume = this.GetComponent<Volume>();
+            if (volume.profile.TryGet<Bloom>(out bloomEffect))
+            {
+                bloomEffect.intensity.value = 0f;
+                Debug.Log("Bloom");
+                BloomUp = true;
+            }
+        }
+    }
+
 
 
 
     void MaterialChange()
     {
         materialChange = true;
+        bloomEffect.intensity.value = 5f;
         this.GetComponent<Renderer>().material = glowOff;
     }
 
