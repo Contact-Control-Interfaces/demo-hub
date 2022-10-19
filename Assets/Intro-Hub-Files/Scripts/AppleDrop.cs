@@ -13,12 +13,15 @@ using Image = UnityEngine.UI.Image;
 
 public class AppleDrop : MonoBehaviour
 {
+    bool missed;
 
     //Materials
     public Material enteredMaterial;
     public Material inMaterial;
     public Material exitMaterial;
     public Material emptyMaterial;
+
+    public Material glowOn;
 
     //HandBool
     private bool hasHand = false;
@@ -34,6 +37,7 @@ public class AppleDrop : MonoBehaviour
     //ObjecttoDrop
 
     public GameObject dropObject;
+    public Transform dropOrigin;
 
     //UIElements
     public Image fillImage;
@@ -46,6 +50,11 @@ public class AppleDrop : MonoBehaviour
         if(!hasHand)
         {
             this.GetComponent<Renderer>().material = emptyMaterial;
+        }
+
+        if(dropObject.transform.position.y <= 0)
+        {
+            ResetApple();
         }
     }
 
@@ -157,15 +166,15 @@ public class AppleDrop : MonoBehaviour
         fillImage.fillAmount = 0f;
         remainingText.text = "";
     }
-    #endregion
 
-    /*           if (remainingTime <= 0)
-            {
-                dropObject.GetComponent<Rigidbody>().useGravity = true;
-            }
-            else
+    #endregion
+    
+    private void ResetApple()
     {
-        remainingTime = baseTime;*/
+        dropObject.GetComponent<Renderer>().material = glowOn;
+        dropObject.GetComponent<Rigidbody>().isKinematic = true;
+        dropObject.transform.position = dropOrigin.position;
+    }
 }
 
 
