@@ -14,6 +14,7 @@ public class Apple : MonoBehaviour
     public Bloom bloomEffect;
     public Material glowOff;
     public GameObject panelDisplay;
+    public GameObject tree;
 
     private bool BloomUp;
     private bool BloomDown;
@@ -29,12 +30,13 @@ public class Apple : MonoBehaviour
         TestBloom();
         if (BloomUp)
         {
-            if (bloomEffect.intensity.value <= 10000)
+            if (bloomEffect.intensity.value <= 100000f)
             {
-                bloomEffect.intensity.value += 10f;
+                bloomEffect.intensity.value += 1000f;
             }
             else
             {
+                TreeDisable();
                 DisplayPanel();
                 BloomDown = true;
                 BloomUp = false;
@@ -45,7 +47,7 @@ public class Apple : MonoBehaviour
 
             if(bloomEffect.intensity.value > 0f)
             {
-                bloomEffect.intensity.value -= 10f;
+                bloomEffect.intensity.value -= 1000f;
             }
             else
             {
@@ -74,6 +76,7 @@ public class Apple : MonoBehaviour
             var volume = this.GetComponent<Volume>();
             if (volume.profile.TryGet<Bloom>(out bloomEffect))
             {
+                bloomEffect.intensity.value = 0f;
                 Debug.Log("Bloom");
                 BloomUp = true;
             }
@@ -110,5 +113,10 @@ public class Apple : MonoBehaviour
     void DisplayPanel()
     {
         panelDisplay.SetActive(true);
+    }
+
+    void TreeDisable()
+    {
+        tree.SetActive(false);
     }
 }
