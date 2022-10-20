@@ -51,11 +51,6 @@ public class AppleDrop : MonoBehaviour
         {
             this.GetComponent<Renderer>().material = emptyMaterial;
         }
-
-        if(dropObject.transform.position.y <= 0)
-        {
-            ResetApple();
-        }
     }
 
     public void Register(FingerCollider fc)
@@ -79,20 +74,6 @@ public class AppleDrop : MonoBehaviour
 
     #region Material Logic
 
-    //Functions below check if an object with a finger collider are within the trigger's bounds.
-    //Material is changed accordingly.
-    /*    private void OnTriggerEnter(Collider other)
-        {
-            if(other.GetComponent<FingerCollider>() && !hasHand)
-            {
-                hasHand = true;
-                this.GetComponent<Renderer>().material = inMaterial;
-                timeOn = true;
-                timeOnText.text = "Time On";
-                //hasHand = true;
-
-            }
-        }*/
 
     public void StartTime()
     {
@@ -108,14 +89,6 @@ public class AppleDrop : MonoBehaviour
         CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
 
-/*    private void OnTriggerExit(Collider other)
-    {
-        this.GetComponent<Renderer>().material = exitMaterial;
-        timeOn = false;
-        timeOnText.text = "Time Off";
-        hasHand = false;
-    }
-*/
     public void StopTime()
     {
         this.GetComponent<Renderer>().material = exitMaterial;
@@ -168,13 +141,10 @@ public class AppleDrop : MonoBehaviour
     }
 
     #endregion
+
+
     
-    private void ResetApple()
-    {
-        dropObject.GetComponent<Renderer>().material = glowOn;
-        dropObject.GetComponent<Rigidbody>().isKinematic = true;
-        dropObject.transform.position = dropOrigin.position;
-    }
+   
 }
 
 

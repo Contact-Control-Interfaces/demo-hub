@@ -12,13 +12,28 @@ public class Apple : MonoBehaviour
 {
     public Volume postVolume;
     public Bloom bloomEffect;
+
+
     public Material glowOff;
+    public Material glowOn;
+    public Material hologramGlow;
+
+
+
+    public GameObject countDisplay;
     public GameObject panelDisplay;
     public GameObject tree;
+    public GameObject touchTrigger;
+
+    public GameObject dropObject;
+    public Transform dropOrigin;
+
+ 
 
     private bool BloomUp;
     private bool BloomDown;
     private bool materialChange;
+    private bool EffectDone;
 
     private void Start()
     {
@@ -27,40 +42,51 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
-        TestBloom();
-        if (BloomUp)
+        if (this.GetComponent<Rigidbody>().isKinematic == false && !EffectDone)
         {
-            if (bloomEffect.intensity.value <= 100000f)
-            {
-                bloomEffect.intensity.value += 1000f;
-            }
-            else
-            {
-                TreeDisable();
-                DisplayPanel();
-                BloomDown = true;
-                BloomUp = false;
-            }
+            dropObject.GetComponent<Renderer>().material = glowOn;
         }
-        else if (BloomDown)
+        if (dropObject.transform.position.y <= 2.2 && !EffectDone)
         {
+            ResetApple();
+        }
 
-            if(bloomEffect.intensity.value > 0f)
+        if (!EffectDone)
+        {
+            TestBloom();
+            if (BloomUp)
             {
-                bloomEffect.intensity.value -= 1000f;
-            }
-            else
-            {
-                Debug.Log("BloomDone");
-                if (!materialChange)
+                if (bloomEffect.intensity.value <= 1000f)
                 {
-                    BloomDown = false;
-                    bloomEffect.intensity.value = 100f;
-                    MaterialChange();
+                    bloomEffect.intensity.value += 5f;
                 }
                 else
                 {
-                    Debug.Log("All Done");
+                    TreeDisable();
+                    DisplayPanel();
+                    BloomDown = true;
+                    BloomUp = false;
+                }
+            }
+            else if (BloomDown)
+            {
+
+                if (bloomEffect.intensity.value > 0f)
+                {
+                    bloomEffect.intensity.value -= 10f;
+                }
+                else
+                {
+                    Debug.Log("BloomDone");
+                    if (!materialChange)
+                    {
+                        BloomDown = false;
+                        bloomEffect.intensity.value = 100f;
+                        MaterialChange();
+                        touchTrigger.SetActive(false);
+                        countDisplay.SetActive(false);
+                        EffectDone = true;
+                    }
                 }
             }
         }
@@ -72,7 +98,8 @@ public class Apple : MonoBehaviour
 
         if (other.gameObject.tag == "MainCamera")
         {
-
+            touchTrigger.SetActive(false);
+            countDisplay.SetActive(false);
             var volume = this.GetComponent<Volume>();
             if (volume.profile.TryGet<Bloom>(out bloomEffect))
             {
@@ -118,5 +145,14 @@ public class Apple : MonoBehaviour
     void TreeDisable()
     {
         tree.SetActive(false);
+    }
+
+    private void ResetApple()
+    {
+        touchTrigger.SetActive(true);
+        countDisplay.SetActive(true);
+        dropObject.GetComponent<Renderer>().material = hologramGlow;
+        dropObject.GetComponent<Rigidbody>().isKinematic = true;
+        dropObject.transform.position = dropOrigin.position;
     }
 }
