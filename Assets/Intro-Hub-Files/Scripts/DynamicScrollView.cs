@@ -18,7 +18,7 @@ public class DynamicScrollView : MonoBehaviour
     {
         foreach (Sprite demoIcon in DemoIcons)
         {
-            GameObject newDemoIcon = Instantiate(prefab, scrollViewContent);
+           GameObject newDemoIcon = Instantiate(prefab, scrollViewContent);
            if (newDemoIcon.TryGetComponent<DemoItem>(out DemoItem demoItem))
             {
                 demoItem.ChangeImage(demoIcon);
