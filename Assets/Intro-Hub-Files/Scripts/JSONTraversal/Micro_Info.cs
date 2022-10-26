@@ -5,15 +5,13 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
-public class Micro_Info //: MonoBehaviour
+public class Micro_Info
 {
-    
-    public string demoName { get; set; }
+    public string demoName;
 
-    public string demoIconPath { get; set; }
+    public string demoIconPath;
 
-    public string demoScenePath { get; set; }
-
+    public string demoScenePath;
 
     /*    public string JSONResult()
         {

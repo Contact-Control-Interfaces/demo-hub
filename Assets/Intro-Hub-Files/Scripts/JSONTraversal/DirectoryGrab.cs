@@ -15,7 +15,7 @@ public class DirectoryGrab : MonoBehaviour
     public static Micro_Info curInfo;
 
     
-    static void SubFolderExample()
+    static void ReadJSONS()
     {
         //This method prints out the entire folder list of a project into the console
         var folders = AssetDatabase.GetSubFolders("Assets/Intro-Hub-Files/Scripts");
@@ -23,7 +23,6 @@ public class DirectoryGrab : MonoBehaviour
         {
             if(Recursive(folder).Contains("JSON"))
             {
-
                 DirectoryInfo dir = new DirectoryInfo(folder);
                 FileInfo[] info = dir.GetFiles("*.json");
                 foreach (FileInfo f in info)
@@ -32,14 +31,9 @@ public class DirectoryGrab : MonoBehaviour
 
                     curInfo = JsonUtility.FromJson<Micro_Info>(File.ReadAllText(dirName));
 
-                    //rInfo = JsonUtility.FromJsonOverwrite(File.ReadAllText(dirName);
-
                     string result = f.Name + " - " + "\nDemo Name: "+ curInfo.demoName + "\nDemo Icon Path:" + curInfo.demoIconPath + "\nDemo Scene Path:" + curInfo.demoScenePath;
 
                     Debug.Log(result);
-
-
-
                 }
             }
         }
@@ -62,7 +56,7 @@ public class DirectoryGrab : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            SubFolderExample();
+            ReadJSONS();
         }
     }
 }
