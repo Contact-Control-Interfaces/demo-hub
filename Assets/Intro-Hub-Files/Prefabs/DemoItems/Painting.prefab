@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1412790071336354958}
   - component: {fileID: 4048379814006541631}
   m_Layer: 5
-  m_Name: Logo
+  m_Name: Painting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abe96a659e51a9946a10643b0d7688c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7886bbff812b50341ae1a626f9a40c49, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,7 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a967671d4c53264eb95d6b37e396d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childImage: {fileID: 8699890626973094789}
+  whichScene: 0
+  dNameText: {fileID: 0}
+  dName: Painting
 --- !u!114 &4048379814006541631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,4 +135,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8699890626973094789}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1412790071336354958}
+        m_TargetAssemblyTypeName: DemoItem, Assembly-CSharp
+        m_MethodName: DemoSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
