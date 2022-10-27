@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class MenuTest : MonoBehaviour
 {
 
+    [SerializeField]
+    public GameObject Content;
+
     public void Demo1Click()
     {
         SceneManager.LoadScene("Fake1");
