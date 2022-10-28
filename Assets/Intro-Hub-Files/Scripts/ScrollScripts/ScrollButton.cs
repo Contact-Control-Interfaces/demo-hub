@@ -1,7 +1,9 @@
 using Maestro;
 using Maestro.UI;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -22,6 +24,8 @@ public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHand
         isDown = false;
     }
 
+    
+
 
 /*    public void OnTriggerEnter(Collider collider)
     {
@@ -40,12 +44,14 @@ public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHand
 
     public void Register(FingerCollider fc)
     {
+        Debug.Log("Pressed " + this.name);
         CurrentlyColliding++;
         isDown = true;
     }
 
     public void Deregister(FingerCollider fc)
     {
+        Debug.Log("Let Go " + this.name);
         CurrentlyColliding--;
 
         if (CurrentlyColliding <= 0)

@@ -15,11 +15,25 @@ public class DemoItem : MonoBehaviour
     [SerializeField]
     public string dName;
 
+    [SerializeField]
+    private DynamicScrollView dynamicScrollView;
+
+    [SerializeField]
+    public bool isSelected;
+
+    public void Start()
+    {
+        dynamicScrollView = FindObjectOfType<DynamicScrollView>();
+    }
 
     public void DemoSelected()
     {
+        dynamicScrollView.newSelectedDemo(this);
         dNameText.text = dName;
+        
     }
+
+ 
     
     public void GoToScene()
     {
