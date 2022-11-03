@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartDemo : MonoBehaviour
 {
 
-    public int desiredScene;
+    public int desiredScene; //Test
 
 
     public void StartScene()

@@ -10,22 +10,26 @@ using Bloom = UnityEngine.Rendering.Universal.Bloom;
 
 public class Apple : MonoBehaviour
 {
+    [Header("Bloom Variables")]
     public Volume postVolume;
     public Bloom bloomEffect;
+    [Range(1f, 1000f)]
+    public float bloomIntensity;
+    [Space(10)]
 
-
+    [Header("Shaders")]
     public Material glowOff;
     public Material glowOn;
     public Material hologramGlow;
+    [Space(10)]
 
-
-
+    [Header("Effected Objects")]
     public GameObject countDisplay;
     public GameObject panelDisplay;
     public GameObject tree;
     public GameObject touchTrigger;
-
     public GameObject dropObject;
+    [Header("Dropped Object Reset Point")]
     public Transform dropOrigin;
 
  
@@ -56,7 +60,7 @@ public class Apple : MonoBehaviour
             TestBloom();
             if (BloomUp)
             {
-                if (bloomEffect.intensity.value <= 1000f)
+                if (bloomEffect.intensity.value <= bloomIntensity)
                 {
                     bloomEffect.intensity.value += 5f;
                 }
@@ -108,8 +112,6 @@ public class Apple : MonoBehaviour
                 BloomUp = true;
             }
         }
-        
-
     }
 
     private void TestBloom()
