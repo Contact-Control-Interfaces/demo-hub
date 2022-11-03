@@ -13,44 +13,37 @@ using Image = UnityEngine.UI.Image;
 
 public class AppleDrop : MonoBehaviour
 {
+    [Header("Drop Components")]
     bool missed;
+    public GameObject dropObject;
+    public Transform dropOrigin;
 
-    //Materials
-    public Material enteredMaterial;
-    public Material inMaterial;
-    public Material exitMaterial;
-    public Material emptyMaterial;
-
+    [Header("Drop Object Material")]
     public Material glowOn;
 
     //HandBool
     private bool hasHand = false;
 
     //Counter
+    [Header("Countdown Components")]
     public TextMeshProUGUI countText;
     public TextMeshProUGUI remainingText;
     public TextMeshProUGUI timeOnText;
     public float baseTime;
     public float remainingTime;
     public bool timeOn;
-
-    //ObjecttoDrop
-
-    public GameObject dropObject;
-    public Transform dropOrigin;
-
-    //UIElements
     public Image fillImage;
 
+
+
+
+    
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
 
     private void Update()
     {
-        if(!hasHand)
-        {
-            this.GetComponent<Renderer>().material = emptyMaterial;
-        }
+
     }
 
     public void Register(FingerCollider fc)
@@ -77,7 +70,6 @@ public class AppleDrop : MonoBehaviour
 
     public void StartTime()
     {
-        this.GetComponent<Renderer>().material = inMaterial;
         timeOn = true;
         timeOnText.text = "Time On";
         remainingTime = baseTime;
@@ -91,7 +83,6 @@ public class AppleDrop : MonoBehaviour
 
     public void StopTime()
     {
-        this.GetComponent<Renderer>().material = exitMaterial;
         timeOn = false;
         timeOnText.text = "Time Off";
 
