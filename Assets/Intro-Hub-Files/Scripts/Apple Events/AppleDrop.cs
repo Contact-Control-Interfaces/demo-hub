@@ -29,13 +29,10 @@ public class AppleDrop : MonoBehaviour
     public TextMeshProUGUI countText;
     public TextMeshProUGUI remainingText;
     public TextMeshProUGUI timeOnText;
-    public float baseTime;
+    public float baseTime; //test
     public float remainingTime;
-    public bool timeOn;
+    public bool timeOn; //test
     public Image fillImage;
-
-
-
 
     
     protected int CurrentlyColliding = 0;
