@@ -12,6 +12,6 @@ public class RotateSky : MonoBehaviour
     {
        
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotateSpeed);
-        Debug.Log(RenderSettings.skybox.GetFloat("_Rotation"));
+        //Debug.Log(RenderSettings.skybox.GetFloat("_Rotation"));
     }
 }
