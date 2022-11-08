@@ -68,7 +68,7 @@ public class AppleDrop : MonoBehaviour
     public void StartTime()
     {
         timeOn = true;
-        timeOnText.text = "Time On";
+        timeOnText.text = "Hold your hand still.";
         remainingTime = baseTime;
 
         if (CurrentCoroutine != null) {
