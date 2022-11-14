@@ -28,7 +28,11 @@ public class TextType : MonoBehaviour
     {
        if(Input.GetKeyUp(KeyCode.N))
         {
-            NextState();
+            UpText();
+        }
+        else if (Input.GetKeyUp(KeyCode.M))
+        {
+            BackText();
         }
     }
 
@@ -39,44 +43,22 @@ public class TextType : MonoBehaviour
         promptTexts.Add("Put your hand out under the apple.");
         promptTexts.Add("Please hold still...");
         promptTexts.Add("Apple Dropped.");
-
     }
 
-    public void NextState()
-    {
-        switch (state)
-        {
-            case DEMO_STATE.START:
-                UpNum();
-                state = DEMO_STATE.HAND_OUT;
-                break;
-            case DEMO_STATE.HAND_OUT:
-                UpNum();
-                state = DEMO_STATE.HOLD_STILL;
-                break;
-            case DEMO_STATE.HOLD_STILL:
-                UpNum();
-                state = DEMO_STATE.BITE;
-                break;
-            case DEMO_STATE.BITE:
-                UpNum();
-                state = DEMO_STATE.MENU;
-                break;
-            case DEMO_STATE.MENU:
-                UpNum();
-                break;
-            default:
-                break;
-        }
-    }
 
-    private void UpNum()
+    public void UpText()
     {
         StartCoroutine(DisplayLine(promptText.text = promptTexts[stateNum]));
         stateNum++;
     }
 
-    private IEnumerator DisplayLine(string line)
+    public void BackText()
+    {
+        StartCoroutine(DisplayLine(promptText.text = promptTexts[stateNum]));
+        stateNum++;
+    }
+
+    public IEnumerator DisplayLine(string line)
     {
         promptText.text = "";
 
@@ -87,7 +69,8 @@ public class TextType : MonoBehaviour
         }
     }
 
-
-
-
+    public void TextGen(string text)
+    {
+        StartCoroutine(DisplayLine(text));
+    }
 }

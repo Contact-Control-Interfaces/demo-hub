@@ -1,3 +1,4 @@
+using Leap.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,19 +30,20 @@ public class Apple : MonoBehaviour
     public GameObject tree;
     public GameObject touchTrigger;
     public GameObject dropObject;
-    [Header("Dropped Object Reset Point")]
-    public Transform dropOrigin;
-
- 
+    [Header("Lock Points")]
+    public Transform resetPoint;
+    //public Transform lockPoint;
 
     private bool BloomUp;
     private bool BloomDown;
     private bool materialChange;
     private bool EffectDone;
+    private TextType textType;
 
     private void Start()
     {
         panelDisplay.SetActive(false);
+        textType = FindObjectOfType<TextType>();
     }
 
     void Update()
@@ -90,15 +92,26 @@ public class Apple : MonoBehaviour
                         touchTrigger.SetActive(false);
                         countDisplay.SetActive(false);
                         EffectDone = true;
+                        textType.TextGen("");
+
                     }
                 }
             }
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
+       if(other.gameObject.name == "RightLockPoint" || other.gameObject.name == "LeftLockPoint")
+        {
+            this.transform.position = other.transform.position;
+            this.transform.SetParent(other.transform);
+            this.GetComponent<Rigidbody>().isKinematic = true;
+            DoDelayAction(2);
+            this.transform.SetParent(null);
+            Debug.Log("Delay Done");
+            this.GetComponent<Rigidbody>().isKinematic = false;
+        }
 
         if (other.gameObject.tag == "MainCamera")
         {
@@ -129,9 +142,6 @@ public class Apple : MonoBehaviour
         }
     }
 
-
-
-
     void MaterialChange()
     {
         materialChange = true;
@@ -151,10 +161,25 @@ public class Apple : MonoBehaviour
 
     private void ResetApple()
     {
+        this.transform.SetParent(null);
         touchTrigger.SetActive(true);
         countDisplay.SetActive(true);
         dropObject.GetComponent<Renderer>().material = hologramGlow;
         dropObject.GetComponent<Rigidbody>().isKinematic = true;
-        dropObject.transform.position = dropOrigin.position;
+        dropObject.transform.position = resetPoint.position;
+    }
+
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        Debug.Log("Tick");
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
     }
 }

@@ -10,7 +10,11 @@ public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHand
     [SerializeField]
     public bool isDown = false;
 
-    public float scrollSpeed = 100f;
+    [SerializeField]
+    public AudioSource clickAudio;
+
+
+    public float scrollSpeed = 50f;
 
     protected int CurrentlyColliding;
 
@@ -47,6 +51,7 @@ public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHand
         Debug.Log("Pressed " + this.name);
         CurrentlyColliding++;
         isDown = true;
+       // clickAudio.Play();
     }
 
     public void Deregister(FingerCollider fc)

@@ -40,6 +40,9 @@ public class DynamicScrollView : MonoBehaviour
     [SerializeField] private ScrollButton leftButton;
     [SerializeField] private ScrollButton rightButton;
 
+    [SerializeField]
+    public AudioSource clickAudio;
+
 
 
     private void Start()
@@ -98,6 +101,7 @@ public class DynamicScrollView : MonoBehaviour
         if (Content.horizontalNormalizedPosition <= 1f)
         {
             Content.horizontalNormalizedPosition += scrollSpeed;
+            clickAudio.Play();
         }
     }
 
@@ -106,6 +110,7 @@ public class DynamicScrollView : MonoBehaviour
         if (Content.horizontalNormalizedPosition >= 0f)
         {
             Content.horizontalNormalizedPosition -= scrollSpeed;
+            clickAudio.Play();
         }
     }
 
@@ -124,10 +129,7 @@ public class DynamicScrollView : MonoBehaviour
         sceneNum.desiredScene = selected.whichScene;
         selected.GetComponent<Image>().color = selectedColor;
         oldSelect = selected;
+
+        clickAudio.Play();
     }
-
-
-
-
-
 }

@@ -17,6 +17,7 @@ public class AppleDrop : MonoBehaviour
     bool missed;
     public GameObject dropObject;
     public Transform dropOrigin;
+    public AudioSource dropSound;
 
     [Header("Drop Object Material")]
     public Material glowOn;
@@ -28,7 +29,7 @@ public class AppleDrop : MonoBehaviour
     [Header("Countdown Components")]
     public TextMeshProUGUI countText;
     public TextMeshProUGUI remainingText;
-    public TextMeshProUGUI timeOnText;
+    public TextType timeOnText;
     public float baseTime; //test
     public float remainingTime;
     public bool timeOn; //test
@@ -38,9 +39,11 @@ public class AppleDrop : MonoBehaviour
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
 
-    private void Update()
+    private void Start()
     {
-
+        timeOnText = FindObjectOfType<TextType>();
+        timeOnText.TextGen("Welcome");
+        timeOnText.TextGen("Put your hand under the apple.");
     }
 
     public void Register(FingerCollider fc)
@@ -68,26 +71,28 @@ public class AppleDrop : MonoBehaviour
     public void StartTime()
     {
         timeOn = true;
-        timeOnText.text = "Hold your hand still.";
+        //timeOnText.text = "Hold your hand still.";
         remainingTime = baseTime;
-
+        timeOnText.TextGen("Please hold still...");
         if (CurrentCoroutine != null) {
             StopCoroutine(CurrentCoroutine);
             CurrentCoroutine = null;
         }
+        //timeOnText.UpText();
+        
         CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
 
     public void StopTime()
     {
         timeOn = false;
-        timeOnText.text = "Time Off";
-
+        timeOnText.TextGen("Put your hand under the apple.");
         if (CurrentCoroutine != null) {
             StopCoroutine(CurrentCoroutine);
             CurrentCoroutine = null;
         }
 
+        //timeOnText.BackText();
         ResetDisplay();
     }
 
@@ -119,6 +124,8 @@ public class AppleDrop : MonoBehaviour
     private void OnEnd()
     {
         dropObject.GetComponent<Rigidbody>().isKinematic = false;
+        dropSound.Play();
+        timeOnText.TextGen("Apple Dropped");
     }
 
     private void ResetDisplay()
