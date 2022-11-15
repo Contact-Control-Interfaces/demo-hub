@@ -1,3 +1,4 @@
+using OculusSampleFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,24 @@ public class StartDemo : MonoBehaviour
 
     public int desiredScene; //Test
 
+    public AudioSource startAudio;
+
+    public DynamicScrollView dsv;
+
+    public void Start()
+    {
+
+    }
 
     public void StartScene()
     {
-        SceneManager.LoadScene(desiredScene);
+        if (dsv.hasSelection)
+        {
+            startAudio.Play();
+            SceneManager.LoadScene(desiredScene);
+        }
+        
     }
+
 
 }

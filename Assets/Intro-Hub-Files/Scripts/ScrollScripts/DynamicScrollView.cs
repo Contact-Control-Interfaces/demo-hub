@@ -43,12 +43,16 @@ public class DynamicScrollView : MonoBehaviour
     [SerializeField]
     public AudioSource clickAudio;
 
+    public AudioSource scrollAudio;
+
+    public bool hasSelection;
+
 
 
     private void Start()
     {
 
-
+        hasSelection = false;
         for(int i = 0; i < demoIcons.Count; i++)
         {
 
@@ -72,11 +76,13 @@ public class DynamicScrollView : MonoBehaviour
         if(rightButton.isDown)
         {
             scrollRight();
+            
         }
 
         else if(leftButton.isDown)
         {
             scrollLeft();
+            //scrollAudio.Play();
         }
     }
 
@@ -101,7 +107,8 @@ public class DynamicScrollView : MonoBehaviour
         if (Content.horizontalNormalizedPosition <= 1f)
         {
             Content.horizontalNormalizedPosition += scrollSpeed;
-            clickAudio.Play();
+            scrollAudio.Play();
+            //clickAudio.Play();
         }
     }
 
@@ -110,7 +117,8 @@ public class DynamicScrollView : MonoBehaviour
         if (Content.horizontalNormalizedPosition >= 0f)
         {
             Content.horizontalNormalizedPosition -= scrollSpeed;
-            clickAudio.Play();
+            scrollAudio.Play();
+            //clickAudio.Play();
         }
     }
 
@@ -119,6 +127,7 @@ public class DynamicScrollView : MonoBehaviour
         if(oldSelect == null)
         {
             oldSelect = demo;
+            hasSelection = true;
         }
 
         oldSelect.isSelected = false;
@@ -129,7 +138,7 @@ public class DynamicScrollView : MonoBehaviour
         sceneNum.desiredScene = selected.whichScene;
         selected.GetComponent<Image>().color = selectedColor;
         oldSelect = selected;
-
         clickAudio.Play();
+        hasSelection = true;
     }
 }

@@ -93,6 +93,7 @@ public class Apple : MonoBehaviour
                         countDisplay.SetActive(false);
                         EffectDone = true;
                         textType.TextGen("");
+                        Destroy(gameObject);
 
                     }
                 }
@@ -152,6 +153,7 @@ public class Apple : MonoBehaviour
     void DisplayPanel()
     {
         panelDisplay.SetActive(true);
+
     }
 
     void TreeDisable()

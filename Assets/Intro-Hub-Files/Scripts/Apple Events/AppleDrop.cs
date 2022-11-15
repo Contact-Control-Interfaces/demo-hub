@@ -23,7 +23,7 @@ public class AppleDrop : MonoBehaviour
     public Material glowOn;
 
     //HandBool
-    private bool hasHand = false;
+    //private bool hasHand = false;
 
     //Counter
     [Header("Countdown Components")]
@@ -42,7 +42,7 @@ public class AppleDrop : MonoBehaviour
     private void Start()
     {
         timeOnText = FindObjectOfType<TextType>();
-        timeOnText.TextGen("Welcome");
+        //timeOnText.TextGen("Welcome");
         timeOnText.TextGen("Put your hand under the apple.");
     }
 
@@ -86,7 +86,7 @@ public class AppleDrop : MonoBehaviour
     public void StopTime()
     {
         timeOn = false;
-        timeOnText.TextGen("Put your hand under the apple.");
+        timeOnText.TextGen(" Put your hand under the apple.");
         if (CurrentCoroutine != null) {
             StopCoroutine(CurrentCoroutine);
             CurrentCoroutine = null;
@@ -126,6 +126,7 @@ public class AppleDrop : MonoBehaviour
         dropObject.GetComponent<Rigidbody>().isKinematic = false;
         dropSound.Play();
         timeOnText.TextGen("Apple Dropped");
+       
     }
 
     private void ResetDisplay()
