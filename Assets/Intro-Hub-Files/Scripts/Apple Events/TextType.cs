@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMPro.EditorUtilities;
 //using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,10 +10,11 @@ public class TextType : MonoBehaviour
 {
 
     public TextMeshProUGUI promptText;
-    public List<string> promptTexts = new List<string>();
     public int stateNum = 0;
     public float typingSpeed = 0.04f;
+    public AudioSource textAudio;
 
+    public Coroutine textCoroutine = null;
 
 
 
@@ -37,14 +39,14 @@ public class TextType : MonoBehaviour
 
     public void UpText()
     {
-        StartCoroutine(DisplayLine(promptText.text = promptTexts[stateNum]));
-        stateNum++;
+        TextGen("Neeeaarr... faarr.. WHEREVER YOU ARE!");
+        //StartCoroutine(DisplayLine("Neeeaarr... faarr.. WHEREVER YOU ARE!"));
     }
 
     public void BackText()
     {
-        StartCoroutine(DisplayLine(promptText.text = promptTexts[stateNum]));
-        stateNum++;
+        TextGen("Short text is nice :)");
+        //StartCoroutine(DisplayLine("Short text is nice :)"));
     }
 
     public IEnumerator DisplayLine(string line)
@@ -53,13 +55,27 @@ public class TextType : MonoBehaviour
 
         foreach(char letter in line.ToCharArray())
         {
+            textAudio.Play();
             promptText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
+       
+        textCoroutine = null;
+        Debug.Log(textCoroutine);
+        Debug.Log("Done");
     }
 
     public void TextGen(string text)
     {
-        StartCoroutine(DisplayLine(text));
+        if (textCoroutine == null)
+        {
+            Debug.Log("Add Coroutine");
+            Debug.Log(textCoroutine);
+            textCoroutine = StartCoroutine(DisplayLine(text));
+        }
+        else
+        {
+            Debug.Log("Text already generating. Wait.");
+        }
     }
 }

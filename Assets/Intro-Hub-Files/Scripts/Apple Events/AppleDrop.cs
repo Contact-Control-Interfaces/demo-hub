@@ -38,12 +38,12 @@ public class AppleDrop : MonoBehaviour
     
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
-
+    
     private void Start()
     {
         timeOnText = FindObjectOfType<TextType>();
         //timeOnText.TextGen("Welcome");
-        timeOnText.TextGen("Put your hand under the apple.");
+        timeOnText.TextGen(" Put your hand under the apple.");
     }
 
     public void Register(FingerCollider fc)
