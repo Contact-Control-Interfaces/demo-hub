@@ -1,4 +1,5 @@
 using Leap.Unity;
+using Leap.Unity.HandsModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ public class Apple : MonoBehaviour
     public GameObject tree;
     public GameObject touchTrigger;
     public GameObject dropObject;
+    public AudioSource biteSound;
     [Header("Lock Points")]
     public Transform resetPoint;
     //public Transform lockPoint;
@@ -48,6 +50,11 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Bite();
+        }
+
         if (this.GetComponent<Rigidbody>().isKinematic == false && !EffectDone)
         {
             dropObject.GetComponent<Renderer>().material = glowOn;
@@ -105,26 +112,12 @@ public class Apple : MonoBehaviour
     {
        if(other.gameObject.name == "RightLockPoint" || other.gameObject.name == "LeftLockPoint")
         {
-            this.transform.position = other.transform.position;
-            this.transform.SetParent(other.transform);
-            this.GetComponent<Rigidbody>().isKinematic = true;
-            DoDelayAction(2);
-            this.transform.SetParent(null);
-            Debug.Log("Delay Done");
-            this.GetComponent<Rigidbody>().isKinematic = false;
+            HandBind(other);
         }
 
         if (other.gameObject.tag == "MainCamera")
         {
-            touchTrigger.SetActive(false);
-            countDisplay.SetActive(false);
-            var volume = this.GetComponent<Volume>();
-            if (volume.profile.TryGet<Bloom>(out bloomEffect))
-            {
-                bloomEffect.intensity.value = 0f;
-                Debug.Log("Bloom");
-                BloomUp = true;
-            }
+            Bite();
         }
     }
 
@@ -183,5 +176,31 @@ public class Apple : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         //Do the action after the delay time has finished.
+    }
+
+    public void Bite()
+    {
+        touchTrigger.SetActive(false);
+        countDisplay.SetActive(false);
+        biteSound.Play();
+        var volume = this.GetComponent<Volume>();
+        if (volume.profile.TryGet<Bloom>(out bloomEffect))
+        {
+            bloomEffect.intensity.value = 0f;
+            Debug.Log("Bloom");
+
+            BloomUp = true;
+        }
+    }
+
+    public void HandBind(Collider other)
+    {
+        this.transform.position = other.transform.position;
+        this.transform.SetParent(other.transform);
+        this.GetComponent<Rigidbody>().isKinematic = true;
+        DoDelayAction(2);
+        this.transform.SetParent(null);
+        Debug.Log("Delay Done");
+        this.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
