@@ -50,10 +50,6 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Bite();
-        }
 
         if (this.GetComponent<Rigidbody>().isKinematic == false && !EffectDone)
         {
@@ -132,6 +128,7 @@ public class Apple : MonoBehaviour
                 bloomEffect.intensity.value = 0f;
                 Debug.Log("Bloom");
                 BloomUp = true;
+                biteSound.Play();
             }
         }
     }

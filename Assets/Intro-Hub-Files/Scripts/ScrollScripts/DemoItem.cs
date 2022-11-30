@@ -33,8 +33,6 @@ public class DemoItem : MonoBehaviour
         
     }
 
- 
-    
     public void GoToScene()
     {
         SceneManager.LoadScene(whichScene);

@@ -62,20 +62,14 @@ public class TextType : MonoBehaviour
        
         textCoroutine = null;
         Debug.Log(textCoroutine);
-        Debug.Log("Done");
     }
 
     public void TextGen(string text)
     {
         if (textCoroutine == null)
         {
-            Debug.Log("Add Coroutine");
             Debug.Log(textCoroutine);
             textCoroutine = StartCoroutine(DisplayLine(text));
-        }
-        else
-        {
-            Debug.Log("Text already generating. Wait.");
         }
     }
 }
