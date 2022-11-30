@@ -13,6 +13,7 @@ using Bloom = UnityEngine.Rendering.Universal.Bloom;
 public class Apple : MonoBehaviour
 {
     [Header("Bloom Variables")]
+    public VolumeProfile universalBloom;
     public Volume postVolume;
     public Bloom bloomEffect;
     [Range(1f, 1000f)]
@@ -121,9 +122,10 @@ public class Apple : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            
-            var volume = this.GetComponent<Volume>();
-            if (volume.profile.TryGet<Bloom>(out bloomEffect))
+
+            //var volume = this.GetComponent<Volume>();
+            //if (volume.profile.TryGet<Bloom>(out bloomEffect))
+            if (universalBloom.TryGet<Bloom>(out bloomEffect))
             {
                 bloomEffect.intensity.value = 0f;
                 Debug.Log("Bloom");
@@ -169,7 +171,7 @@ public class Apple : MonoBehaviour
     IEnumerator DelayAction(float delayTime)
     {
         //Wait for the specified delay time before continuing.
-        Debug.Log("Tick");
+        //Debug.Log("Tick");
         yield return new WaitForSeconds(delayTime);
 
         //Do the action after the delay time has finished.
@@ -180,11 +182,12 @@ public class Apple : MonoBehaviour
         touchTrigger.SetActive(false);
         countDisplay.SetActive(false);
         biteSound.Play();
-        var volume = this.GetComponent<Volume>();
-        if (volume.profile.TryGet<Bloom>(out bloomEffect))
+        //var volume = this.GetComponent<Volume>();
+        //if (volume.profile.TryGet<Bloom>(out bloomEffect))
+        if (universalBloom.TryGet<Bloom>(out bloomEffect))
         {
             bloomEffect.intensity.value = 0f;
-            Debug.Log("Bloom");
+            //Debug.Log("Bloom");
 
             BloomUp = true;
         }
@@ -197,7 +200,7 @@ public class Apple : MonoBehaviour
         this.GetComponent<Rigidbody>().isKinematic = true;
         DoDelayAction(2);
         this.transform.SetParent(null);
-        Debug.Log("Delay Done");
+        //Debug.Log("Delay Done");
         this.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
