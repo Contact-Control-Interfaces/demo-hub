@@ -15,6 +15,9 @@ public class DynamicScrollView : MonoBehaviour
     [Header("Demo Setup")]
     [SerializeField] private List<DemoItem> demoIcons;
     [SerializeField] public Text demoTitle;
+    [SerializeField] public Image demoImageHolder;
+
+
     [SerializeField] public DemoItem selected; //Test
     [SerializeField] public DemoItem oldSelect = null; //Test
 
@@ -58,6 +61,7 @@ public class DynamicScrollView : MonoBehaviour
 
             DemoItem newDemoButton = Instantiate(demoIcons[i], scrollViewContent);
             newDemoButton.dNameText = demoTitle;
+            newDemoButton.menuImageHolder = demoImageHolder;
         }
     }
 

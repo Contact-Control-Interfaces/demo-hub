@@ -15,6 +15,9 @@ public class DemoItem : MonoBehaviour
     [SerializeField]
     public string dName;
 
+    public Image menuImageHolder;
+    public Image demoImage;
+
     [SerializeField]
     private DynamicScrollView dynamicScrollView;
 
@@ -24,12 +27,13 @@ public class DemoItem : MonoBehaviour
     public void Start()
     {
         dynamicScrollView = FindObjectOfType<DynamicScrollView>();
-    }
+    }   
 
     public void DemoSelected()
     {
         dynamicScrollView.newSelectedDemo(this);
         dNameText.text = dName;
+        menuImageHolder.sprite = demoImage.sprite;
         
     }
 
