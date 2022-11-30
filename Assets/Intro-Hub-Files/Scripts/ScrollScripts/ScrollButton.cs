@@ -51,7 +51,7 @@ public class ScrollButton : MonoBehaviour, IEventSystemHandler, IPointerDownHand
         Debug.Log("Pressed " + this.name);
         CurrentlyColliding++;
         isDown = true;
-       // clickAudio.Play();
+        //clickAudio.Play();
     }
 
     public void Deregister(FingerCollider fc)

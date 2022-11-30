@@ -14,7 +14,6 @@ public class Apple : MonoBehaviour
 {
     [Header("Bloom Variables")]
     public VolumeProfile universalBloom;
-    public Volume postVolume;
     public Bloom bloomEffect;
     [Range(1f, 1000f)]
     public float bloomIntensity;
