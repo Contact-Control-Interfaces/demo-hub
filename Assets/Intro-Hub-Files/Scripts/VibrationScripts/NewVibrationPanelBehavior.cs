@@ -10,32 +10,36 @@ namespace Maestro
 {
 public class NewVibrationPanelBehavior : MonoBehaviour
 {
-  
 
-    public List<MaestroInteractable> Interactables;
-    
-    // Start is called before the first frame update
-    void Start()
+        public List<Color> paletteColors = new List<Color>()
     {
-        var rad = GetComponentInChildren<RadioButtonPanel>();
-        if (rad != null)
+        Color.red,
+        Color.blue,
+        Color.magenta,
+        Color.green
+    };
+        public List<MaestroInteractable> Interactables;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            for (int i = 0; i < rad.gangedButtons.Count; i++)
+            var rad = GetComponentInChildren<RadioButtonPanel>();
+            if (rad != null)
             {
-                var bt = rad.gangedButtons[i];
-                var ren = bt.GetComponentInChildren<MeshRenderer>();
-                if (ren == null)
-                    continue;
+                for (int i = 0; i < rad.gangedButtons.Count; i++)
+                {
+                    var bt = rad.gangedButtons[i];
+                    var ren = bt.GetComponentInChildren<MeshRenderer>();
+                    if (ren == null)
+                        continue;
                     if (Application.isPlaying)
-                        Debug.Log("Start");
-                    Interactables[1].enabled= true;
-                    //ren.material.color = paletteColors[i];
+                        ren.material.color = paletteColors[i];
+                }
             }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
+        // Update is called once per frame
+        void Update()
     {
         
     }
@@ -46,11 +50,11 @@ public class NewVibrationPanelBehavior : MonoBehaviour
             {
                 if(i == index)
                 {
-                    Interactables[i].enabled = true;
+                    Interactables[i].gameObject.SetActive(true);
                 }
                 else 
                 {
-                    Interactables[i].enabled = false;
+                    Interactables[i].gameObject.SetActive(false);
                 }
             }
     }

@@ -29,7 +29,8 @@ namespace Maestro
         [Tooltip("Currently latched button. -1 indicates no latched button.")]
         public int latchedIndex = -1;
 
-        void Awake()
+
+        private void Start()
         {
             foreach (var rad in gangedButtons)
             {
@@ -39,6 +40,16 @@ namespace Maestro
                     rad.Latch();
             }
         }
+/*        void Awake()
+        {
+            foreach (var rad in gangedButtons)
+            {
+                rad.OnLatch += ButtonLatched;
+                //if there is a default state, set it up here
+                if (latchedIndex > -1 && rad.index == latchedIndex)
+                    rad.Latch();
+            }
+        }*/
 
         private void ButtonLatched(int index)
         {
