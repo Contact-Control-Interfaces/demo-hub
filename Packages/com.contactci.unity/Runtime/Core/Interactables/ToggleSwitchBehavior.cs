@@ -1,41 +1,39 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
 namespace Maestro
 {
     [System.Serializable]
-    public class ToggleEvent : UnityEvent<bool> { }
+    public class ToggleEvent : UnityEvent<ToggleState> { }
 
-    public enum Axis
+    public enum ToggleState
     {
-        X, Y, Z,
-        [InspectorName("-X")]
-        NegX,
-        [InspectorName("-Y")]
-        NegY,
-        [InspectorName("-Z")]
-        NegZ
+        On, Off, Neutral
     };
 
-    public class ToggleSwitchBehavior : MonoBehaviour
+    public class ToggleSwitchBehavior : RotatingControl
     {
-        public bool Toggled;
+        public override float TargetAngle {
+            get {
+                if (threeState && state == ToggleState.Neutral) {
+                    return 0;
+                } else {
+                    return state == ToggleState.On ? -extent : extent;
+                }
+            }
+        }
 
         [Space]
-        [Header("Config")]
-        public float extent = 27f;
-        public bool initialState = false;
-        public Axis rotationAxis = Axis.Z;
-        public Axis secondaryAxis = Axis.X;
-        public bool invert;
-        public bool fireEventsForInitialState;
+        public ToggleState initialState;
+        public ToggleState state;
+        private ToggleState lastState;
+        public float extent = 27;
 
         [Space]
-        public float slerpSpring = 5f;
-        public float slerpDamper = 0.1f;
+        public bool threeState;
+        public float innerExtent = 15;
 
         [Space]
         public AudioClip toggleSound;
@@ -45,46 +43,16 @@ namespace Maestro
         [Space]
         [Header("Events")]
         public ToggleEvent onToggleChanged;
-        public UnityEvent onToggleOn, onToggleOff;
+        public UnityEvent onToggleOn, onToggleOff, onToggleNeutral;
 
-        [Space]
-        public List<Collider> toIgnore;
-        private Collider[] colliders;
-
-        private ConfigurableJoint cj;
         private AudioSource source;
 
-        private bool lastToggled = false;
-
-        private bool IsNeg(Axis axis)
+        protected override void Awake()
         {
-            return axis == Axis.NegX || axis == Axis.NegY || axis == Axis.NegZ;
-        }
+            base.Awake();
 
-        private float LocalEulerAngle {
-            get {
-                float result;
-
-                switch (rotationAxis) {
-                    default:
-                    case Axis.X: result = this.transform.localRotation.eulerAngles.x; break;
-                    case Axis.Y: result = this.transform.localRotation.eulerAngles.y; break;
-                    case Axis.Z: result = this.transform.localRotation.eulerAngles.z; break;
-                }
-
-                // keep the angles between -180 to 180
-                return result > 180 ? result - 360 : result;
-            }
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            source = GetComponent<AudioSource>();
-            if (source == null)
-                source = this.gameObject.AddComponent<AudioSource>();
-
-            InitAudioSource();
+            angleMin = -extent;
+            angleMax = extent;
 
             if (onToggleOn == null)
                 onToggleOn = new UnityEvent();
@@ -92,190 +60,93 @@ namespace Maestro
             if (onToggleOff == null)
                 onToggleOff = new UnityEvent();
 
-            cj = this.GetComponent<ConfigurableJoint>();
-            if (cj == null)
-                cj = this.gameObject.AddComponent<ConfigurableJoint>();
+            if (onToggleNeutral == null)
+                onToggleNeutral = new UnityEvent();
 
-            InitJoint();
-
-            // Do ignores
-            colliders = this.GetComponentsInChildren<Collider>();
-            if (toIgnore != null && toIgnore.Count > 0) {
-                foreach (Collider ignored in toIgnore) {
-                    foreach (Collider c in colliders) {
-                        Physics.IgnoreCollision(ignored, c);
-                    }
-                }
-            }
-
-            // Move switch to start position
-            this.transform.localRotation = getTargetRotation(initialState);
-
-            Toggled = getToggleState();
-
-            if (fireEventsForInitialState) {
-                if (Toggled)
-                    OnToggledOn();
-                else
-                    OnToggledOff();
-            }
+            source = Pivot.gameObject.GetOrMake<AudioSource>(InitAudioSource);
         }
 
-        // Update is called once per frame
-        void FixedUpdate()
+        protected override void Start()
         {
-            UpdateToggled();
+            base.Start();
+
+            // Move switch to initial position
+            state = initialState;
+            LocalAngle = TargetAngle;
+
+            // Call event for initial state
+            CallToggleEvent(state);
         }
 
-        public void PlayToggleSound()
+        protected override void FixedUpdate()
         {
+            // Update state
+            if (threeState && Mathf.Abs(LocalAngle) < innerExtent) {
+                state = ToggleState.Neutral;
+            } else {
+                state = LocalAngle < 0 ? ToggleState.On : ToggleState.Off;
+            }
+
+            base.FixedUpdate();
+
+            // Call events
+            if (state != lastState) {
+                CallToggleEvent(state);
+                PlayToggleSound();
+            }
+
+            lastState = state;
+        }
+
+        private void PlayToggleSound()
+        {
+            if (source.isPlaying)
+                source.Stop();
+
             source.pitch = Random.Range(pitchMin, pitchMax);
             source.Play();
         }
 
-        private void SetToggleRange(float angle)
+        protected void InitAudioSource(AudioSource audio)
         {
-            SetToggleRange(-angle, angle);
-        }
+            audio.volume = 0.5f;
+            audio.playOnAwake = false;
 
-        private void SetToggleRange(float low, float high)
-        {
-            cj.highAngularXLimit = new SoftJointLimit() { limit = high };
-            cj.lowAngularXLimit = new SoftJointLimit() { limit = low };
-        }
-
-        private void UpdateTargetRotation()
-        {
-            cj.targetRotation = Quaternion.Euler(extent * (Toggled ? 1 : -1) * (invert ? -1 : 1), 0, 0);
-        }
-
-        private Quaternion getTargetRotation()
-        {
-            return getTargetRotation(Toggled);
-        }
-
-        private Quaternion getTargetRotation(bool isToggled)
-        {
-            return Quaternion.Euler(extent * (isToggled ? 1 : -1) * (invert ? -1 : 1), 0, 0);
-        }
-
-        private bool getToggleState()
-        {
-            bool result = LocalEulerAngle < 0;
-            if (invert) {
-                result = !result;
+            if (toggleSound != null) {
+                audio.clip = toggleSound;
+            } else {
+                audio.clip = Resources.Load<AudioClip>("Sounds/switch");
             }
-            if (IsNeg(rotationAxis)) {
-                result = !result;
-            }
+        }
 
-            return result;
+        private void CallToggleEvent(ToggleState state)
+        {
+            switch (state) {
+                case ToggleState.On: OnToggledOn(); break;
+                case ToggleState.Off: OnToggledOff(); break;
+                case ToggleState.Neutral: OnToggledNeutral(); break;
+            }
         }
 
         private void OnToggledOn()
         {
             onToggleOn.Invoke();
             if (onToggleChanged != null)
-                onToggleChanged.Invoke(true);
+                onToggleChanged.Invoke(ToggleState.On);
         }
 
         private void OnToggledOff()
         {
             onToggleOff.Invoke();
             if (onToggleChanged != null)
-                onToggleChanged.Invoke(false);
+                onToggleChanged.Invoke(ToggleState.Off);
         }
 
-        private void UpdateToggled()
+        private void OnToggledNeutral()
         {
-            Toggled = getToggleState();
-
-            if (Toggled && !lastToggled) {
-                UpdateTargetRotation();
-
-                if (!source.isPlaying) {
-                    PlayToggleSound();
-                }
-
-                OnToggledOn();
-
-            } else if (!Toggled && lastToggled) {
-                UpdateTargetRotation();
-
-                if (!source.isPlaying) {
-                    PlayToggleSound();
-                }
-
-                OnToggledOff();
-            }
-
-            lastToggled = Toggled;
-        }
-
-        private Vector3 getAxisVector(Axis axis)
-        {
-            Vector3 result;
-            switch (axis) {
-                default: result = Vector3.right; break;
-                case Axis.Y: result = Vector3.up; break;
-                case Axis.Z: result = Vector3.forward; break;
-                case Axis.NegX: result = -Vector3.right; break;
-                case Axis.NegY: result = -Vector3.up; break;
-                case Axis.NegZ: result = -Vector3.forward; break;
-            }
-
-            return result;
-        }
-
-        private void InitJoint()
-        {
-            if (cj != null) {
-
-                // Setup axes
-                // we want x to be the main axis as far as the joint is concerned
-                // since the X rotation is the only axis that has an upper/lower limit
-                cj.secondaryAxis = getAxisVector(secondaryAxis);
-                cj.axis = getAxisVector(rotationAxis);
-
-                // Lock all translational movement
-                cj.xMotion = ConfigurableJointMotion.Locked;
-                cj.yMotion = ConfigurableJointMotion.Locked;
-                cj.zMotion = ConfigurableJointMotion.Locked;
-
-                // Lock all rotational movement but X
-                cj.angularXMotion = ConfigurableJointMotion.Limited;
-                cj.angularYMotion = ConfigurableJointMotion.Locked;
-                cj.angularZMotion = ConfigurableJointMotion.Locked;
-
-                // Set angular drive
-                JointDrive slerp = new JointDrive { positionSpring = slerpSpring, positionDamper = slerpDamper, maximumForce = 1000000f };
-                cj.rotationDriveMode = RotationDriveMode.Slerp;
-                cj.slerpDrive = slerp;
-
-                // Set main axis range
-                SetToggleRange(extent);
-                cj.projectionAngle = Mathf.Max(Mathf.Abs(cj.lowAngularXLimit.limit), cj.highAngularXLimit.limit);
-
-                // Set initial target
-                UpdateTargetRotation();
-
-            } else {
-                Debug.LogError("Toggle switch has no corresponding ConfigurableJoint!");
-            }
-        }
-
-        private void InitAudioSource()
-        {
-            if (source != null) {
-                source.volume = 0.5f;
-                source.playOnAwake = false;
-
-                if (toggleSound != null) {
-                    source.clip = toggleSound;
-                } else {
-                    source.clip = Resources.Load<AudioClip>("Sounds/switch");
-                }
-            }
+            onToggleNeutral.Invoke();
+            if (onToggleChanged != null)
+                onToggleChanged.Invoke(ToggleState.Neutral);
         }
     }
 }

@@ -560,52 +560,6 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 1
   m_Center: {x: 0, y: 0.02, z: 0}
---- !u!114 &4227475242389049408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5299310985223911352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daf0608cf54ed254781af09b1bb7bdba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Toggled: 0
-  extent: 27
-  initialState: 0
-  rotationAxis: 2
-  secondaryAxis: 0
-  invert: 0
-  fireEventsForInitialState: 0
-  slerpSpring: 5
-  slerpDamper: 0.1
-  toggleSound: {fileID: 0}
-  pitchMin: 0.95
-  pitchMax: 1.05
-  onToggleChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4227475243247330218}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetLight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onToggleOn:
-    m_PersistentCalls:
-      m_Calls: []
-  onToggleOff:
-    m_PersistentCalls:
-      m_Calls: []
-  toIgnore: []
 --- !u!114 &4227475242389049410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,24 +598,105 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
-    Amplitude: 255
+  startHaptics:
+    Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
     version: 1
     00000000:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
-        WhichType: 5
+        WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
-      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Core}
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 5
-        strength: 7
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+--- !u!114 &2603234123145832898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5299310985223911352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93baf12258d00ae43875d149f1550ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pivot: {fileID: 0}
+  rotationAxis: 2
+  secondaryAxis: 0
+  slerpSpring: 5
+  slerpDamper: 0.1
+  angleMin: -25
+  angleMax: 25
+  initialState: 1
+  state: 1
+  extent: 27
+  threeState: 0
+  innerExtent: 15
+  onToggleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onToggleOn:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4227475243247330218}
+        m_TargetAssemblyTypeName: Maestro.ScriptableLight, com.contactci.unity.Runtime.Core
+        m_MethodName: SetLight
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onToggleOff:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4227475243247330218}
+        m_TargetAssemblyTypeName: Maestro.ScriptableLight, com.contactci.unity.Runtime.Core
+        m_MethodName: SetLight
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onToggleNeutral:
+    m_PersistentCalls:
+      m_Calls: []

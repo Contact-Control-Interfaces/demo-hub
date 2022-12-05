@@ -4,10 +4,10 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using System;
 using Maestro.Vibration;
+using UnityEditor;
 
 namespace Maestro
 {
-
 	public enum ButtonAxis
 	{
 		LocalX, LocalY, LocalZ,
@@ -61,14 +61,15 @@ namespace Maestro
 		
 		public MaestroInteractable Interactable;
 
-		[Header("Haptics - Button Pressed"), Tooltip("Effect played when button hits bottom of travel")]
+		[Header("Haptics - Button Pressed"), Tooltip("Effect played when button hits bottom of travel"), Space]
 		public HapticEffect pressedHaptics = new HapticEffect { Amplitude = 255, Vibration = new StrongClick(FourOptions._100){OneShot = true} };
 
-		[Header("Collision ignore"), Tooltip("Which direction to search for colliding entities")]
+		[Header("Collision Ignore"), Tooltip("Which direction to search for colliding entities"), Space]
 		public Axis castDirection = Axis.NegY;
 		[Tooltip("How far to look for collisions")]
 		public float castDistance = 0.1f;
-		void Awake()
+
+		protected virtual void Awake()
 		{
 			if (!down) down = Resources.Load<AudioClip>("Sounds/button_down");
 			if (!up) up = Resources.Load<AudioClip>("Sounds/button_up");
@@ -149,34 +150,44 @@ namespace Maestro
 			rb.velocity = buttonTrans.TransformDirection(AxisToLocalDirection(pressDirection)).normalized * slideForce;
 		}
 
-		private void OnDrawGizmos()
+		protected virtual void OnDrawGizmos()
 		{
-			Gizmos.color = Color.red;
+			if (buttonTrans != null) {
+				Gizmos.color = Color.red;
 
-			Vector3 direction = buttonTrans.TransformDirection(AxisToLocalDirection(pressDirection)).normalized;
+				Vector3 direction = buttonTrans.TransformDirection(AxisToLocalDirection(pressDirection)).normalized;
 
-			//Gizmos.DrawRay(new Ray(buttonTrans.position, direction));
+				float actualDepth = PressDepth * buttonTrans.lossyScale.GetAxisValue(pressDirection);
+				Vector3 end = buttonTrans.position - direction * actualDepth;
 
-			//Gizmos.color = Color.yellow;
+				Gizmos.DrawLine(buttonTrans.position, end);
 
-			Gizmos.DrawLine(buttonTrans.position, buttonTrans.position + direction * PressDepth);
+				// Draw little arrow
+				Vector3 cameraDir = SceneView.lastActiveSceneView.camera.transform.forward;
+				Vector3 orthoToCamera = Vector3.Cross(direction, cameraDir);
+
+				float arrowSize = actualDepth * 0.25f;
+
+				Gizmos.DrawLine(end, end + (orthoToCamera + direction) * arrowSize);
+				Gizmos.DrawLine(end, end + (-orthoToCamera + direction) * arrowSize);
+			}
 		}
 
-		protected bool BeingPressed() {
+		protected virtual bool BeingPressed() {
 			return invertAxis ? AxisPosition > StableAxisPosition : AxisPosition < StableAxisPosition;
         }
 
-		protected float StableAxisPosition => origin.GetAxisValue(pressDirection);
+		protected virtual float StableAxisPosition => origin.GetAxisValue(pressDirection);
 		
-		protected bool FullyPressed() {
+		protected virtual bool FullyPressed() {
 				return invertAxis ? AxisPosition >= FullyPressedAxisPosition : AxisPosition <= FullyPressedAxisPosition;
 			}
 
-		protected float AxisPosition => buttonTrans.localPosition.GetAxisValue(pressDirection);
+		protected virtual float AxisPosition => buttonTrans.localPosition.GetAxisValue(pressDirection);
 
-		protected float FullyPressedAxisPosition => origin.GetAxisValue(pressDirection) - (PressDepth * (invertAxis ? -1f : 1f));
+		protected virtual float FullyPressedAxisPosition => origin.GetAxisValue(pressDirection) - (PressDepth * (invertAxis ? -1f : 1f));
 
-		private Vector3 AxisToLocalDirection(ButtonAxis axis) {
+		protected Vector3 AxisToLocalDirection(ButtonAxis axis) {
 			Vector3 result;
 
 			switch (axis) {
@@ -188,6 +199,7 @@ namespace Maestro
 
 			return invertAxis ? -result : result;
         }
+
 		protected Vector3 ConstrainAxis(ButtonAxis axis, float position)
 		{
 			return axis switch
@@ -211,7 +223,6 @@ namespace Maestro
 				case Axis.NegZ: return -axisToDirection(Axis.Z);
 			}
 		}
-		
 		
         protected virtual void ButtonPushed()
 		{
