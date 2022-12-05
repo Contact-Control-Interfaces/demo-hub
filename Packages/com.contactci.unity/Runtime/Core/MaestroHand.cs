@@ -551,12 +551,6 @@ namespace Maestro
             return vel;
         }
 
-        private T GetOrMake<T>(GameObject obj) where T : Component
-        {
-            T temp = obj.GetComponent<T>();
-            return temp ?? obj.AddComponent<T>();
-        }
-
         private void SetAllFCs(bool enabled)
         {
             if (mc != null) {

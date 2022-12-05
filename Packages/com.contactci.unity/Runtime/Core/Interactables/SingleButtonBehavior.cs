@@ -11,6 +11,7 @@ namespace Maestro
 
 	public class SingleButtonBehavior : ButtonBase
 	{
+		[Header("Events"), Space]
 		public ButtonEvent onStateChanged;
 		public UnityEvent onDown, onUp;
 
