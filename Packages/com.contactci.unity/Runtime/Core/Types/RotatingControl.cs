@@ -57,6 +57,7 @@ namespace Maestro
             if (Pivot == null)
                 Pivot = this.transform;
 
+#if UNITY_EDITOR
             float size = 0.01f;
 
             // Show main rotation axis
@@ -67,6 +68,7 @@ namespace Maestro
 
             // Show secondary axis
             Handles.DrawLine(Pivot.position, Pivot.position + size * Pivot.TransformDirection(AxisUtils.GetAxisVector(this.secondaryAxis)));
+#endif
         }
 
         private void InitJoint(ConfigurableJoint cj)

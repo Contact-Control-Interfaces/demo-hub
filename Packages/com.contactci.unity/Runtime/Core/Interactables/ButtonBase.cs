@@ -152,6 +152,7 @@ namespace Maestro
 
 		protected virtual void OnDrawGizmos()
 		{
+#if UNITY_EDITOR
 			if (buttonTrans != null) {
 				Gizmos.color = Color.red;
 
@@ -171,6 +172,7 @@ namespace Maestro
 				Gizmos.DrawLine(end, end + (orthoToCamera + direction) * arrowSize);
 				Gizmos.DrawLine(end, end + (-orthoToCamera + direction) * arrowSize);
 			}
+#endif
 		}
 
 		protected virtual bool BeingPressed() {
