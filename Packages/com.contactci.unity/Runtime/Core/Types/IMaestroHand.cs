@@ -112,7 +112,11 @@ namespace Maestro
 
         public abstract Transform Palm { get; }
 
-        protected MaestroGloveBehaviour parentGloveBehavior { get; set; }
+        public IntPtr GlovePointer { get; protected set; }
+
+        public bool Connected { get; protected set; }
+        public static bool StartSucceeded { get; protected set; }
+        public static bool StartAttempted { get; protected set; }
 
         protected abstract MaestroHapticContext ProcessHaptics();
 
@@ -120,21 +124,55 @@ namespace Maestro
 
         public virtual void Start()
         {
-            // Get parent glove behavior to retrieve pointer
-            parentGloveBehavior = GetComponentInParent<MaestroGloveBehaviour>();
+            if (GlovePointer == IntPtr.Zero) {
+                if (whichHand == WhichHand.LeftHand)
+                    GlovePointer = MaestroGloveConnector.Instance.GetLeftGlovePointer();
+                else
+                    GlovePointer = MaestroGloveConnector.Instance.GetRightGlovePointer();
+            }
 
-            // Log error if no parent exists
-            if (parentGloveBehavior == null)
-                Debug.LogError("No parent glove behavior found for IMaestroHand!");
+            Connected = MaestroGloveConnector.Instance.isGloveConnected(GlovePointer);
+
+            if (!Connected && !StartAttempted) {
+                StartDetection();
+            }
 
             StartCoroutine("LateFixedUpdate");
+        }
+
+        public virtual void Update()
+        {
+            bool stillConnected = MaestroGloveConnector.Instance.isGloveConnected(GlovePointer);
+
+            Connected = stillConnected;
+        }
+
+        protected virtual void StartDetection()
+        {
+            MaestroGloveConnector.Instance.OnDetectionStarted += OnDetectionStarted;
+
+            MaestroGloveConnector.Instance.StartScanningForGloves();
+
+            StartAttempted = true;
+        }
+
+        protected virtual void OnDetectionStarted(object source, bool detectionStarted)
+        {
+            MaestroGloveConnector.Instance.OnDetectionStarted -= OnDetectionStarted;
+
+            StartSucceeded = detectionStarted;
+
+            if (StartSucceeded)
+                Debug.Log("Maestro detection service is running.");
+            else
+                Debug.LogError("Maestro detection service is not running!");
         }
 
         public virtual IEnumerator LateFixedUpdate()
         {
             for (; ; ) {
                 MaestroHapticContext next = ProcessHaptics();
-                HapticsApplicator.ApplyHaptics(parentGloveBehavior.GetPointer(), next, lastHaptics);
+                HapticsApplicator.ApplyHaptics(GlovePointer, next, lastHaptics);
                 lastHaptics = next;
 
                 yield return new WaitForFixedUpdate();

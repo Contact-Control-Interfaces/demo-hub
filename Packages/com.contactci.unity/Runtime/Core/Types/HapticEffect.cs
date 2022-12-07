@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Maestro
 {
     [Serializable]
-    public class HapticEffect
+    public class HapticEffect : ISerializationCallbackReceiver
     {
         public byte Amplitude;
         [SerializeReference]
@@ -52,6 +52,18 @@ namespace Maestro
             code = code * 17 ^ Amplitude;
             code = code * 17 ^ Vibration.GetHashCode();
             return code;
+        }
+
+        public void OnBeforeSerialize()
+        {
+            if (Vibration == null) {
+                Vibration = VibrationEffect.None;
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            // NOTHING
         }
     }
 }

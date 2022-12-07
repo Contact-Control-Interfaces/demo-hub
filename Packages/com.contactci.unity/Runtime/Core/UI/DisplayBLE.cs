@@ -31,7 +31,6 @@ namespace Maestro.UI
         private List<Vector3> rightHistory, leftHistory;
 
         private IMaestroHand rightHand, leftHand;
-        private MaestroGloveBehaviour rightGlove, leftGlove;
         private Camera mainCamera;
 
         private GameObject leftPanel, rightPanel;
@@ -83,11 +82,6 @@ namespace Maestro.UI
         private IMaestroHand GetHand(WhichHand handedness)
         {
             return get(handedness, leftHand, rightHand);
-        }
-
-        private MaestroGloveBehaviour GetGlove(WhichHand handedness)
-        {
-            return get(handedness, leftGlove, rightGlove);
         }
 
         private GameObject GetPanel(WhichHand handedness)
@@ -176,15 +170,6 @@ namespace Maestro.UI
                     rightHand = hands.FirstOrDefault(x => x.whichHand == WhichHand.RightHand);
             }
 
-            // Get gloves
-            if (rightHand != null) {
-                rightGlove = rightHand.gameObject.GetComponentInParent<MaestroGloveBehaviour>();
-            }
-
-            if (leftHand != null) {
-                leftGlove = leftHand.gameObject.GetComponentInParent<MaestroGloveBehaviour>();
-            }
-
             // Find main camera
             mainCamera = GameObject.FindObjectOfType<Camera>();
             if (mainCamera == null)
@@ -267,7 +252,7 @@ namespace Maestro.UI
         private void UpdateUI(WhichHand handedness)
         {
             Image dot = getDot(handedness);
-            MaestroGloveBehaviour glove = GetGlove(handedness);
+            IMaestroHand glove = GetHand(handedness);
 
             if (glove.Connected) {
                 dot.color = fromColor(Color.green);
@@ -322,7 +307,7 @@ namespace Maestro.UI
 
         private void UpdateForHandedness(WhichHand handedness)
         {
-            MaestroGloveBehaviour glove = GetGlove(handedness);
+            IMaestroHand glove = GetHand(handedness);
             if (glove != null) {
                 bool connected = glove.Connected;
                 bool overrideText = GetOverride(handedness);
