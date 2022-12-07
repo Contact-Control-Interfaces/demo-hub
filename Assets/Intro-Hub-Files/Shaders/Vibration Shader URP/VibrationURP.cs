@@ -1,3 +1,4 @@
+using Leap;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,23 +31,43 @@ public class VibrationURP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (displacementAmount < 0.0003)
+        {
+            
+        }
+        else 
+        {
+            displacementAmount = 0f;
             displacementAmount = Mathf.Lerp(displacementAmount, 0, Time.deltaTime);
             meshRender.material.SetFloat("_Amount", displacementAmount);
+        }
+
+            
+            
             
 
-            if (Input.GetKeyDown(KeyCode.U))
+           /* if (Input.GetKeyDown(KeyCode.U))
             {
                 Debug.Log("Buh");
                 meshRender.material.SetFloat("_Speed", speed);
                 displacementAmount = maxDisplacementAmount;
                 
-            }
+            }*/
 
     }
 
-    public void onTouch()
+    public void OnCollisionEnter(Collision collision)
     {
-        //displacementAmount = MaxAmount;
+        Debug.Log("Buh");
+        meshRender.material.SetFloat("_Speed", speed);
+        displacementAmount = maxDisplacementAmount;
     }
+
+
+    /* public void onTouch()
+     {
+             Debug.Log("Buh");
+             meshRender.material.SetFloat("_Speed", speed);
+             displacementAmount = maxDisplacementAmount;
+     }*/
 }
