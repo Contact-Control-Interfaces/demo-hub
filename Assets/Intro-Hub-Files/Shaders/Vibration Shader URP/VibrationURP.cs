@@ -33,11 +33,11 @@ public class VibrationURP : MonoBehaviour
     {
         if (displacementAmount < 0.0003)
         {
-            
+            displacementAmount = 0f;
         }
         else 
         {
-            displacementAmount = 0f;
+            
             displacementAmount = Mathf.Lerp(displacementAmount, 0, Time.deltaTime);
             meshRender.material.SetFloat("_Amount", displacementAmount);
         }
