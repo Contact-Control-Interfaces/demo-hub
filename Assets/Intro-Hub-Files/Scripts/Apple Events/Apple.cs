@@ -26,7 +26,6 @@ public class Apple : MonoBehaviour
     [Space(10)]
 
     [Header("Effected Objects")]
-    public GameObject countDisplay;
     public GameObject panelDisplay;
     public GameObject tree;
     public GameObject touchTrigger;
@@ -93,7 +92,6 @@ public class Apple : MonoBehaviour
                         bloomEffect.intensity.value = 100f;
                         MaterialChange();
                         touchTrigger.SetActive(false);
-                        countDisplay.SetActive(false);
                         EffectDone = true;
                         textType.TextGen("");
                         Destroy(gameObject);
@@ -156,7 +154,6 @@ public class Apple : MonoBehaviour
     {
         this.transform.SetParent(null);
         touchTrigger.SetActive(true);
-        countDisplay.SetActive(true);
         dropObject.GetComponent<Renderer>().material = hologramGlow;
         dropObject.GetComponent<Rigidbody>().isKinematic = true;
         dropObject.transform.position = resetPoint.position;
@@ -179,7 +176,6 @@ public class Apple : MonoBehaviour
     public void Bite()
     {
         touchTrigger.SetActive(false);
-        countDisplay.SetActive(false);
         biteSound.Play();
         //var volume = this.GetComponent<Volume>();
         //if (volume.profile.TryGet<Bloom>(out bloomEffect))

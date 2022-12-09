@@ -28,13 +28,11 @@ public class AppleDrop : MonoBehaviour
 
     //Counter
     [Header("Countdown Components")]
-    public TextMeshProUGUI countText;
-    public TextMeshProUGUI remainingText;
     public TextType timeOnText;
     public float baseTime; //test
     public float remainingTime;
     public bool timeOn; //test
-    public Image fillImage;
+
 
     
     protected int CurrentlyColliding = 0;
@@ -111,16 +109,10 @@ public class AppleDrop : MonoBehaviour
             if (!timeOn)
                 break;
 
-            fillImage.fillAmount = (float)remainingTime / baseTime;
-            remainingText.text = remainingTime.ToString();
-
             remainingTime--;
 
             yield return new WaitForSeconds(1f);
         }
-
-        fillImage.fillAmount = 0f;
-        remainingText.text = "0";
 
         OnEnd();
     }
@@ -136,8 +128,6 @@ public class AppleDrop : MonoBehaviour
     private void ResetDisplay()
     {
         remainingTime = baseTime;
-        fillImage.fillAmount = 0f;
-        remainingText.text = "";
     }
 
     #endregion
