@@ -20,7 +20,8 @@ public class AppleDrop : MonoBehaviour
     public AudioSource dropSound;
 
     [Header("Drop Object Material")]
-    public Material glowOn;
+    public Material promptFlickerOn;
+    public Material promptFlickerOff;
 
     //HandBool
     //private bool hasHand = false;
@@ -70,6 +71,8 @@ public class AppleDrop : MonoBehaviour
 
     public void StartTime()
     {
+        dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
+        
         timeOn = true;
         //timeOnText.text = "Hold your hand still.";
         remainingTime = baseTime;
@@ -85,6 +88,7 @@ public class AppleDrop : MonoBehaviour
 
     public void StopTime()
     {
+        dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
         timeOn = false;
         timeOnText.TextGen(" Put your hand under the apple.");
         if (CurrentCoroutine != null) {
