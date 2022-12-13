@@ -167,6 +167,7 @@ namespace Maestro
             tr.transform.localScale = this.transform.localScale;
             
             tr.startColor = pt.paintColor;
+            Debug.Log(pt.paintColor.ToString());
             tr.endColor = pt.paintColor;
             tr.sortingOrder = lineCount++; // stack new lines over old ones
             tr.startWidth = pt.size / 25f;

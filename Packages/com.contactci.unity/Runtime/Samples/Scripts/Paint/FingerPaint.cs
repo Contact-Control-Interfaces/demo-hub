@@ -52,6 +52,7 @@ namespace Maestro
                 paint.transform.localScale = Vector3.one * (lineWidth / blobScale);
 
                 PaintType pt = paint.GetComponent<PaintType>();
+                Debug.Log(rend.material.color.ToString());
                 pt.paintColor = rend.material.color;
                 pt.splotch = splotchPrefab;
                 pt.size = lineWidth;
