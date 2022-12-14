@@ -9,7 +9,7 @@ namespace Maestro
 {
     public enum GrabType
     {
-        Arcade
+        Arcade, Physics, None
     };
 
     public struct GrabState
@@ -54,6 +54,9 @@ namespace Maestro
         public List<MaestroInteractable> grabCandidates { get; protected set; }
 
         public virtual MaestroInteractable grabTarget { get { return grabCandidates.Count > 0 ? grabCandidates[0] : null; } }
+
+        protected List<Vector3> HeldObjectLastPositions = new List<Vector3>();
+        protected int HistoryCount = 10;
 
         protected IGrabManager(MaestroContainer mc)
         {
@@ -107,6 +110,33 @@ namespace Maestro
         }
 
         /**
+         * Is this manager currently holding this object?
+         */
+        protected bool IsGrabbing(MaestroInteractable toCheck)
+        {
+            return grabStates.Any(x => x.target == toCheck);
+        }
+
+        /**
+         * Force this grab manager to drop a given held object
+         */
+        public virtual bool Relinquish(MaestroInteractable toRelinquish)
+        {
+            if (grabStates.Count == 0)
+                return false; // Nothing to drop
+
+            var toEnd = grabStates.Where(x => x.target == toRelinquish).ToList();
+            if (toEnd.Count == 0)
+                return false; // No matching states found
+
+            foreach (GrabState state in toEnd) {
+                GrabEnd(state);
+                grabStates.Remove(state);
+            }
+            return true; // All grabs ended
+        }
+
+        /**
          * Called each FixedUpdate
          */
         public virtual void FixedUpdate()
@@ -140,6 +170,26 @@ namespace Maestro
                 OnGrabbing();
 
             wasGrabbing = isGrabbing;
+        }
+
+        protected virtual void RecordHeldObjectPosition(Vector3 position)
+        {
+            HeldObjectLastPositions.Add(position);
+            while (HeldObjectLastPositions.Count > HistoryCount)
+                HeldObjectLastPositions.RemoveAt(0);
+        }
+
+        protected virtual Vector3 GetThrowVelocity()
+        {
+            if (HeldObjectLastPositions.Count <= 1)
+                return Vector3.zero;
+
+            List<Vector3> velocities = new List<Vector3>();
+            for (int i = 1; i < HeldObjectLastPositions.Count; i++) {
+                velocities.Add(HeldObjectLastPositions[i] - HeldObjectLastPositions[i - 1]);
+            }
+
+            return velocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (velocities.Count * Time.fixedDeltaTime);
         }
 
         public virtual void Touch(MaestroInteractable touched, FingerCollider touchedBy)

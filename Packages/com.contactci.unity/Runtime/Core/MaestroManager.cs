@@ -17,6 +17,8 @@ namespace Maestro
 
         public GrabType grabType = GrabType.Arcade;
 
+        public PhysicMaterial handPhysicMaterial;
+
         public FlatnessChecker flatnessChecker;
         public float tooClose = 0.1f;
         public float tooFast = 0.2f;

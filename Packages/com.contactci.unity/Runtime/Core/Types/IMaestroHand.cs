@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Maestro
 {
@@ -108,6 +109,9 @@ namespace Maestro
         public WhichHand whichHand;
         public IGrabManager grabManager;
 
+        protected float WholeHandReverb = 0f;
+        public List<float> PendingImpacts = new List<float>();
+
         public bool ShowOnlyWhileTouching = true;
 
         public abstract Transform Palm { get; }
@@ -137,7 +141,7 @@ namespace Maestro
                 StartDetection();
             }
 
-            StartCoroutine("LateFixedUpdate");
+            StartCoroutine(LateFixedUpdate());
         }
 
         public virtual void Update()
@@ -145,6 +149,13 @@ namespace Maestro
             bool stillConnected = MaestroGloveConnector.Instance.isGloveConnected(GlovePointer);
 
             Connected = stillConnected;
+        }
+
+        public virtual void OnDisable()
+        {
+            MaestroHapticContext zero = MaestroHapticContext.zero;
+            HapticsApplicator.ApplyHaptics(GlovePointer, zero, lastHaptics);
+            lastHaptics = zero;
         }
 
         protected virtual void StartDetection()
@@ -171,6 +182,11 @@ namespace Maestro
         public virtual IEnumerator LateFixedUpdate()
         {
             for (; ; ) {
+                if (PendingImpacts.Count > 0) {
+                    WholeHandReverb = Mathf.Max(WholeHandReverb, PendingImpacts.Max());
+                    PendingImpacts.Clear();
+                }
+
                 MaestroHapticContext next = ProcessHaptics();
                 HapticsApplicator.ApplyHaptics(GlovePointer, next, lastHaptics);
                 lastHaptics = next;

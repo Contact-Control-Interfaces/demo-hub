@@ -45,6 +45,7 @@ namespace Maestro
         public UnityEvent onGrab;
         public UnityEvent onRelease;
         public TouchEvent onTouch, unTouch, whileTouch;
+        public TouchEvent onTriggerTouch, unTriggerTouch, whileTriggerTouch;
 
         [HideInInspector] public HapticEffect hapticOverride { get; private set; }
 
@@ -95,10 +96,6 @@ namespace Maestro
         {
             if (onTouch != null)
                 onTouch.Invoke(finger);
-            //if (finger.index == 1)
-            //{ //index == 1 means index finger
-            //    onPoked.Invoke();
-            //}
             currentHaptics = startHaptics;
         }
 
@@ -116,11 +113,26 @@ namespace Maestro
             currentHaptics = exitHaptics;
         }
 
-        public void Grab(int newLayer)
+        public void OnTriggerTouch(FingerCollider finger)
         {
-            oldLayer = this.gameObject.layer;
-            if (newLayer >= 0)
-                this.gameObject.layer = newLayer;
+            if (onTriggerTouch != null)
+                onTriggerTouch.Invoke(finger);
+        }
+
+        public void WhileTriggerTouch(FingerCollider finger)
+        {
+            if (whileTriggerTouch != null)
+                whileTriggerTouch.Invoke(finger);
+        }
+
+        public void UnTriggerTouch(FingerCollider finger)
+        {
+            if (unTriggerTouch != null)
+                unTriggerTouch.Invoke(finger);
+        }
+
+        public void Grab()
+        {
             isGrabbed = true;
             onGrab.Invoke();
         }
@@ -128,7 +140,6 @@ namespace Maestro
         public void Release()
         {
             isGrabbed = false;
-            this.gameObject.layer = oldLayer;
             currentHaptics = null;
             onRelease.Invoke();
         }

@@ -20,6 +20,7 @@ namespace Maestro
         private SerializedProperty type, ignoreTaps, persist, persistenceDuration;
         private SerializedProperty UseRenderCenter, maintainOrientation, maintainPosition, stayInHand, SendHapticsToWholeHand;
         private SerializedProperty gripTransform, gripCollider;
+        private SerializedProperty triggerTouch, triggerUntouch, triggerStay;
 
         private void OnEnable()
         {
@@ -31,6 +32,10 @@ namespace Maestro
             startHaptics = serializedObject.FindProperty("startHaptics");
             stayHaptics = serializedObject.FindProperty("stayHaptics");
             exitHaptics = serializedObject.FindProperty("exitHaptics");
+
+            triggerTouch = serializedObject.FindProperty("onTriggerTouch");
+            triggerUntouch = serializedObject.FindProperty("unTriggerTouch");
+            triggerStay = serializedObject.FindProperty("whileTriggerTouch");
 
             type = serializedObject.FindProperty("type");
             ignoreTaps = serializedObject.FindProperty("IgnoreTaps");
@@ -86,8 +91,12 @@ namespace Maestro
                   mi.onRelease.GetPersistentEventCount() +
                   mi.onTouch.GetPersistentEventCount() +
                   mi.unTouch.GetPersistentEventCount() +
-                  mi.whileTouch.GetPersistentEventCount();
+                  mi.whileTouch.GetPersistentEventCount() +
+                  mi.onTriggerTouch.GetPersistentEventCount() +
+                  mi.unTriggerTouch.GetPersistentEventCount() +
+                  mi.whileTriggerTouch.GetPersistentEventCount();
                 bool areBound = eventsBound > 0;
+
                 showEvents = EditorGUILayout.Foldout(showEvents, showEventsTxt + (areBound?string.Format("({0}) ", eventsBound):""), 
                     areBound?EditorStyles.foldoutHeader:EditorStyles.foldout);
                 if (showEvents) {
@@ -99,6 +108,12 @@ namespace Maestro
                     EditorGUILayout.PropertyField(OnTouchProp);
                     EditorGUILayout.PropertyField(UnTouchProp);
                     EditorGUILayout.PropertyField(WhileTouchProp);
+                    EditorGUILayout.Space();
+
+                    EditorGUILayout.LabelField("Finger Trigger events", EditorStyles.boldLabel);
+                    EditorGUILayout.PropertyField(triggerTouch);
+                    EditorGUILayout.PropertyField(triggerUntouch);
+                    EditorGUILayout.PropertyField(triggerStay);
                 }
             }
 

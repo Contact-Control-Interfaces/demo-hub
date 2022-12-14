@@ -52,6 +52,12 @@ namespace Maestro
             }
         }
 
+        private PhysicMaterial physicMaterial {
+            get {
+                return Inheriting ? manager.handPhysicMaterial : handPhysicMaterial;
+            }
+        }
+
         private FlatnessChecker flatnessChecker {
             get {
                 return Inheriting ? manager.flatnessChecker : flatnessCheckerOverride;
@@ -89,7 +95,7 @@ namespace Maestro
         public override Transform Palm { get { return transforms.PalmBaseThumb; } }
 
         //TODO check all things we're holding, instead of just one
-        public MaestroInteractable grabTarget { get { return grabManager.grabTarget; } }
+        public MaestroInteractable grabTarget { get { return grabManager == null ? null : grabManager.grabTarget; } }
 
         public bool inflatePalm;
 
@@ -110,6 +116,8 @@ namespace Maestro
 
         // Put everything here instead of somewhere random
         public MaestroContainer mc;
+
+        public PhysicMaterial handPhysicMaterial;
 
         /*************
          *  PRIVATE  *
@@ -140,19 +148,9 @@ namespace Maestro
             mc.parent = this;
             InitContainer();
 
-            IEnumerable<CapsuleCollider> distals = mc.GetFingers().Select(x => x.Distal);
-            IEnumerable<CapsuleCollider> proximals = mc.GetFingers().Select(x => x.Proximal);
-            IEnumerable<CapsuleCollider> metacarpals = mc.GetFingers().Select(x => x.Metacarpal);
-
-            // Turn off distal collision
-            foreach (CapsuleCollider cc in distals) {
-                cc.enabled = false;
-            }
-
-            // Turn off proximal collision
-            foreach (CapsuleCollider cc in proximals) {
-                cc.enabled = false;
-            }
+            IEnumerable<Collider> distals = mc.GetFingers().Select(x => x.Distal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> proximals = mc.GetFingers().Select(x => x.Proximal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> metacarpals = mc.GetFingers().Select(x => x.Metacarpal.transform.GetComponent<Collider>());
 
             // Turn off bottom knuckles, covered by the palm meshes
             IEnumerable<PointOnHand> fingerknuckles = mc.Where(x => x.fc.isFingerBase);
@@ -170,8 +168,8 @@ namespace Maestro
             foreach (PointOnHand poh in tips) {
                 SetVisibility(poh.fc.transform, true);
             }
-                        
-            grabManager = new ArcadeGrabManager(mc);
+
+            ValidateGrabManager();
 
             // Call IMaestroHand's start
             base.Start();
@@ -184,6 +182,10 @@ namespace Maestro
 
             // Move all FCs
             foreach (PointOnHand poh in mc) {
+                // Skip digits as CylinderBetween should handle it
+                if (poh.whereOnFinger == PointOnFinger.Distal || poh.whereOnFinger == PointOnFinger.Proximal)
+                    continue;
+
                 Vector3 dist = (poh.transform.position - poh.fc.rb.position);
                 Vector3 lastLocation = poh.fc.lastLocation;
 
@@ -201,22 +203,19 @@ namespace Maestro
             mc.PalmContainer.transform.SetPositionAndRotation(transforms.PalmBaseThumb.position, transforms.PalmBaseThumb.rotation);
 
             // Make sure we're using the correct GrabManager
-            if (grabManager == null || grabManager.grabType != grabType) {
-                // TODO get factory or something
-                if (grabType == GrabType.Arcade) {
-                    grabManager = new ArcadeGrabManager(mc);
-                } else {
-                    grabManager = new PhysicsGrabManager(mc);
-                }
-            }
+            ValidateGrabManager();
 
-            grabManager.FixedUpdate();
+            if (grabManager != null) {
+                grabManager.FixedUpdate();
+            }
         }
 
-        private void OnDisable()
+        public override void OnDisable()
         {
             // Disable all FCs when the hand itself is disabled
             SetAllFCs(false);
+
+            base.OnDisable();
         }
 
         private void OnEnable()
@@ -243,22 +242,30 @@ namespace Maestro
             mc.ToList().ForEach(x => x.fc.rb.mass = (x.fc.isPalm ? 10.0f : 5.0f));
 
             List<FingerContainer> fingers = mc.GetFingers();
-            IEnumerable<CapsuleCollider> distals = fingers.Select(x => x.Distal);
-            IEnumerable<CapsuleCollider> proximals = fingers.Select(x => x.Proximal);
-            IEnumerable<CapsuleCollider> metacarpals = fingers.Select(x => x.Metacarpal);
+            IEnumerable<Collider> distals = fingers.Select(x => x.Distal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> proximals = fingers.Select(x => x.Proximal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> metacarpals = fingers.Select(x => x.Metacarpal.transform.GetComponent<Collider>());
 
             // Ignore self collision within the hand
             foreach (PointOnHand contained in mc) {
                 foreach (Collider c in contained.fc.GetComponents<Collider>()) {
-                    foreach (CapsuleCollider distal in distals) {
+                    foreach (Collider distal in distals) {
                         Physics.IgnoreCollision(c, distal);
                     }
-                    foreach (CapsuleCollider proximal in proximals) {
+                    foreach (Collider proximal in proximals) {
                         Physics.IgnoreCollision(c, proximal);
                     }
-                    foreach (CapsuleCollider metacarpal in metacarpals) {
+                    foreach (Collider metacarpal in metacarpals) {
                         Physics.IgnoreCollision(c, metacarpal);
                     }
+                }
+            }
+
+            // Don't let palm and proximal digits interact
+            var prismColliders = prisms.prisms.Select(x => x.GetComponent<Collider>());
+            foreach (Collider p in prismColliders) {
+                foreach (CapsuleCollider c in proximals) {
+                    Physics.IgnoreCollision(p, c);
                 }
             }
         }
@@ -322,6 +329,7 @@ namespace Maestro
             points.Add(transforms.BetweenRingLittle);
 
             prismGenerator.points = points.ToArray();
+            prismGenerator.Init(physicMaterial);
             return prismGenerator;
         }
 
@@ -331,13 +339,14 @@ namespace Maestro
             PointOnHand fingerMiddle = SpawnPointOnHand(middle, handSize.MiddleSize);
             PointOnHand fingerBase = SpawnPointOnHand(knuckle, handSize.TipSize);
 
-            CapsuleCollider distal = SpawnCapsule(tip, middle, (handSize.TipSize + handSize.MiddleSize) / 2);
-            CapsuleCollider proximal = SpawnCapsule(middle, knuckle, (handSize.MiddleSize + handSize.KnuckleSize) / 2);
-            CapsuleCollider metacarpal = SpawnCapsule(knuckle, transforms.PalmBaseThumb, handSize.KnuckleSize);
+            PointOnHand distal = SpawnPointOnHand(tip, middle, (handSize.TipSize + handSize.MiddleSize) / 2);
+            PointOnHand proximal = SpawnPointOnHand(middle, knuckle, (handSize.MiddleSize + handSize.KnuckleSize) / 2);
+            PointOnHand metacarpal = SpawnPointOnHand(knuckle, transforms.PalmBaseThumb, handSize.KnuckleSize);
 
             // Don't collide finger with itself
-            Physics.IgnoreCollision(distal, proximal);
-            Physics.IgnoreCollision(proximal, metacarpal);
+            Collider proximalCollider = proximal.transform.GetComponent<Collider>();
+            Physics.IgnoreCollision(distal.transform.GetComponent<Collider>(), proximalCollider); ;
+            Physics.IgnoreCollision(proximalCollider, metacarpal.transform.GetComponent<Collider>());
 
             return new FingerContainer(fingerTip, fingerMiddle, fingerBase, distal, proximal, metacarpal);
         }
@@ -359,6 +368,18 @@ namespace Maestro
             }
         }
 
+        private PointOnHand SpawnPointOnHand(Transform a, Transform b, float size)
+        {
+            CapsuleCollider capsule = SpawnCapsule(a, b, size);
+
+            FingerCollider fc = capsule.gameObject.AddComponent<FingerCollider>();
+            if (fc.rend != null)
+                InitRenderer(fc.rend);
+            fc.SetParentHPI(this);
+
+            return new PointOnHand(capsule.gameObject.transform, fc);
+        }
+
         private PointOnHand SpawnPointOnHand(Transform t, float size)
         {
             return new PointOnHand(t, Spawn(t, size));
@@ -378,6 +399,9 @@ namespace Maestro
             result.rb.freezeRotation = true;
             result.SetParentHPI(this);
 
+            Collider c = result.GetComponent<Collider>();
+            c.sharedMaterial = physicMaterial;
+
             return result;
         }
 
@@ -390,9 +414,11 @@ namespace Maestro
             temp.transform.parent = mc.gameObject.transform;
 
             CapsuleCollider result = temp.GetComponent<CapsuleCollider>();
+            result.sharedMaterial = physicMaterial;
 
             Rigidbody rb = temp.AddComponent<Rigidbody>();
             rb.useGravity = false;
+            rb.isKinematic = true;
 
             rb.mass = 10;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
@@ -475,72 +501,125 @@ namespace Maestro
         {
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
 
-            bool palmTouch = prismGenerator.AnyTouching;
+            if (WholeHandReverb > 0) {
+                nextHaptics.SetAllAmplitudes(255);
+                WholeHandReverb -= Time.fixedDeltaTime;
+            }
 
             if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.currentHaptics.Amplitude);
                 nextHaptics.SetAllVibrationEffects(grabTarget.currentHaptics.Vibration);
             } else {
 
-                // Persist palm stuff
-                float palmDiffusion = 0.75f;
-                MaestroInteractable touchingInt = prismGenerator.Touching;
-                bool inheritFromPalm = palmTouch && touchingInt != null;
-                if (inheritFromPalm && !lastPalmTouch) {
-                    if (touchingInt.isPersistent) {
-                        PersistWholeHand(touchingInt);
-                    } else {
-                        nextHaptics.SetAllAmplitudes(touchingInt.currentHaptics.Amplitude);
-                        nextHaptics.SetAllVibrationEffects(touchingInt.currentHaptics.Vibration);
+                foreach (FingerContainer finger in mc.GetFingers()) {
+
+                    MaestroIndex? touchIndex = null;
+                    MaestroIndex? contactIndex = null;
+
+                    // Traverse tip to base, get first that's touching something
+                    foreach (PointOnHand poh in finger) {
+                        if (!contactIndex.HasValue && poh.fc.Contacting) {
+                            contactIndex = poh.index;
+                        }
+
+                        if (poh.fc.touching) {
+                            touchIndex = poh.index;
+                            if (!contactIndex.HasValue)
+                                contactIndex = touchIndex;
+                            break;
+                        }
                     }
-                }
 
-                // Check each finger specifically
-                IEnumerable<PointOnHand> tips = mc.Where(x => x.fc.isTip);
-                foreach (PointOnHand tip in tips) {
+                    if (touchIndex.HasValue) {
+                        // We're touching some MaestroInteractable with this finger
+                        PointOnFinger source = touchIndex.Value.point;
+                        MaestroInteractable touching = finger[source].fc.touching;
+                        float weight = GetWeight(source);
 
-                    MaestroInteractable interactable = tip.fc.touching;
+                        if (touching != null) {
+                            nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(weight * touching.currentHaptics.Amplitude));
 
-                    if (interactable != null) {
-                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.currentHaptics.Amplitude);
-                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, interactable.currentHaptics.Vibration);
-                        if (interactable.isPersistent) {
-                            persistInteractables[tip.index] = interactable;
-                            persistTimes[tip.index] = interactable.persistenceDuration;
+                            if (ShouldApplyVibration(source)) {
+                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value, touching.currentHaptics.Vibration);
+                            }
+
+                            if (touching.isPersistent) {
+                                SetPersistentHaptics(touchIndex.Value, touching);
+                            }
                         }
+                    } else if (prismGenerator.AnyTouching && prismGenerator.Touching != null) {
+                        // The palm is touching some MaestroInteractable
+                        float palmDiffusion = 0.75f;
+                        MaestroInteractable touching = prismGenerator.Touching;
+                        if (touching.isPersistent) {
+                            PersistWholeHand(touching);
+                        } else {
+                            nextHaptics.SetAllAmplitudes((byte)(palmDiffusion * touching.currentHaptics.Amplitude));
 
-                    } else if (persistInteractables.ContainsKey(tip.index) && persistInteractables[tip.index] != null && persistTimes[tip.index] > Time.fixedDeltaTime) {
-                        nextHaptics.SetAmplitudeFromIndex(tip.fc.index, persistInteractables[tip.index].currentHaptics.Amplitude);
-                        nextHaptics.SetVibrationEffectFromIndex(tip.fc.index, persistInteractables[tip.index].currentHaptics.Vibration);
-                        persistTimes[tip.index] -= Time.fixedDeltaTime;
-                        if (persistTimes[tip.index] <= 0) {
-                            persistTimes.Remove(tip.index);
-                            persistInteractables.Remove(tip.index);
+                            // Ignore palm vibration
+                            //nextHaptics.SetAllVibrationEffects(touchingInt.currentHaptics.Vibration);
                         }
+                    } else if (contactIndex.HasValue && !interactablesOnly) {
+                        // This finger is touching some generic collider in the scene
+                        PointOnFinger where = contactIndex.Value.point;
 
-                    } else if (tip.Contacting && !interactablesOnly) {
-                        nextHaptics.SetAmplitudeFromIndex(tip.index, defaultEffect.Amplitude);
-                        nextHaptics.SetVibrationEffectFromIndex(tip.index, defaultEffect.Vibration);
+                        nextHaptics.SetAmplitudeFromIndex(contactIndex.Value, (byte)(GetWeight(where) * defaultEffect.Amplitude));
 
-                    } else {
-                        // Check middle joint
-                        PointOnHand matchingMiddle = mc[tip.index.finger][PointOnFinger.Middle];
-
-                        interactable = matchingMiddle.fc.touching;
-                        if (inheritFromPalm) {
-                            byte? amp = prismGenerator.Touching.currentHaptics.Amplitude;
-                            if (amp.HasValue) nextHaptics.SetAmplitudeFromIndex(tip.fc.index, (byte)(amp.Value * palmDiffusion));
-                        } else if (interactable != null) {
-                            nextHaptics.SetAmplitudeFromIndex(tip.fc.index, interactable.currentHaptics.Amplitude);
+                        if (ShouldApplyVibration(contactIndex.Value.point)) {
+                            nextHaptics.SetVibrationEffectFromIndex(contactIndex.Value, defaultEffect.Vibration);
                         }
                     }
                 }
             }
-            lastPalmTouch = palmTouch;
+
             return nextHaptics;
         }
 
         #region Helpers
+
+        private float GetWeight(PointOnFinger where)
+        {
+            return where switch {
+                PointOnFinger.Tip => 1.0f,
+                PointOnFinger.Distal => 1.0f,
+                PointOnFinger.Middle => 0.75f,
+                PointOnFinger.Proximal => 0.5f,
+                PointOnFinger.Base => 0.25f,
+                _ => 0f
+            };
+        }
+
+        private bool ShouldApplyVibration(PointOnFinger where)
+        {
+            return where switch {
+                PointOnFinger.Tip => true,
+                PointOnFinger.Distal => true,
+                _ => false
+            };
+        }
+
+        private bool HasPersistentHaptics(MaestroIndex index)
+        {
+            return persistInteractables.ContainsKey(index)
+                && persistInteractables[index] != null
+                && persistTimes[index] > Time.fixedDeltaTime;
+        }
+
+        private void SetPersistentHaptics(MaestroIndex index, MaestroInteractable persistent)
+        {
+            persistInteractables[index] = persistent;
+            persistTimes[index] = persistent.persistenceDuration;
+        }
+
+        private void UpdatePersistentHaptics(MaestroIndex index)
+        {
+            persistTimes[index] -= Time.fixedDeltaTime;
+            if (persistTimes[index] <= 0) {
+                persistTimes.Remove(index);
+                persistInteractables.Remove(index);
+            }
+        }
+
         private Vector3 OffsetToAngular(Quaternion a, Quaternion b, float timestep)
         {
             // Turn the difference between two quaternions to an angular velocity
@@ -549,6 +628,19 @@ namespace Maestro
             vel = vel / timestep;
             vel = vel * Mathf.Deg2Rad;
             return vel;
+        }
+
+        private void ValidateGrabManager()
+        {
+            if (grabType == GrabType.None) {
+                grabManager = null;
+            } else if (grabManager == null || grabManager.grabType != grabType) {
+                switch (grabType) {
+                    default: throw new ArgumentOutOfRangeException($"No grab manager defined for type {grabType}!");
+                    case GrabType.Arcade: grabManager = new ArcadeGrabManager(mc); break;
+                    case GrabType.Physics: grabManager = new PhysicsGrabManager(mc); break;
+                }
+            }
         }
 
         private void SetAllFCs(bool enabled)

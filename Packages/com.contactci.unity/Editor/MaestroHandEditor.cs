@@ -44,6 +44,7 @@ namespace Maestro
         private SerializedProperty grabType;
         private SerializedProperty showWhileTouching;
 
+        private SerializedProperty physicMaterial;
         public void OnEnable()
         {
             settingsOverride = this.serializedObject.FindProperty("settingsOverride");
@@ -70,6 +71,8 @@ namespace Maestro
             showPalmMesh = this.serializedObject.FindProperty("inflatePalm");
             grabType = this.serializedObject.FindProperty("grabTypeOverride");
             showWhileTouching = this.serializedObject.FindProperty("ShowOnlyWhileTouching");
+
+            physicMaterial = this.serializedObject.FindProperty("handPhysicMaterial");
         }
 
         public override void OnInspectorGUI()
@@ -135,6 +138,7 @@ namespace Maestro
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
                     flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", hand.flatnessCheckerOverride, typeof(FlatnessChecker), allowSceneObjects: true);
                     objectLayer.intValue = EditorGUILayout.LayerField("Object Layer", hand.objectLayerOverride);
+                    EditorGUILayout.PropertyField(physicMaterial, new GUIContent("Hand Physic Material"));
                     EditorGUILayout.Space();
 
                     palmMeshWait.floatValue = EditorGUILayout.FloatField("Palm Mesh Generation Tick", hand.palmMeshWaitOverride);

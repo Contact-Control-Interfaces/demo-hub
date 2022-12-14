@@ -17,6 +17,19 @@ namespace Maestro
         public VibrationEffect RingVibrationEffect { get; set; }
         public VibrationEffect LittleVibrationEffect { get; set; }
 
+        private static MaestroHapticContext? _zero;
+        public static MaestroHapticContext zero {
+            get {
+                if (!_zero.HasValue) {
+                    MaestroHapticContext temp = new MaestroHapticContext();
+                    temp.SetAllAmplitudes(null);
+                    temp.SetAllVibrationEffects(VibrationEffect.None);
+                    _zero = temp;
+                }
+                return _zero.Value;
+            }
+        }
+
         public void SetAllAmplitudes(byte? amplitude)
         {
             ThumbAmplitude = amplitude;

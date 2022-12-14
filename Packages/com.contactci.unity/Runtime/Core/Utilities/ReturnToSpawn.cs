@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Linq;
 
 namespace Maestro
 {
@@ -14,6 +15,8 @@ namespace Maestro
         public static AudioClip disappear, appear;
 
         public bool destroyInstead = false;
+
+        public Collider[] resetColliders;
 
         // Use this for initialization
         void Start()
@@ -81,6 +84,13 @@ namespace Maestro
                     rb.angularVelocity = Vector3.zero;
                     rb.constraints = constraints;
                 }
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (resetColliders != null && resetColliders.Contains(collision.collider)) {
+                Poof();
             }
         }
     }
