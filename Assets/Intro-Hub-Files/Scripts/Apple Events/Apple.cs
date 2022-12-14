@@ -3,6 +3,7 @@ using Leap.Unity.HandsModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 //using UnityEngine.Rendering.PostProcessing;
@@ -31,9 +32,11 @@ public class Apple : MonoBehaviour
     public GameObject touchTrigger;
     public GameObject dropObject;
     public AudioSource biteSound;
+    public AudioSource pluckSound;
+
     [Header("Lock Points")]
     public Transform resetPoint;
-    //public Transform lockPoint;
+    public float resetHeight = 2.2f;
 
     private bool BloomUp;
     private bool BloomDown;
@@ -41,20 +44,35 @@ public class Apple : MonoBehaviour
     private bool EffectDone;
     private TextType textType;
 
+    private Rigidbody rb;
+    private Quaternion originalRotation;
+    private Vector3 originalLocalScale;
+
+    public bool StillAttachedToTree => rb.constraints == RigidbodyConstraints.FreezeAll;
+
     private void Start()
     {
         panelDisplay.SetActive(false);
         textType = FindObjectOfType<TextType>();
+
+        rb = dropObject.GetComponent<Rigidbody>();
+
+        originalRotation = dropObject.transform.rotation;
+        originalLocalScale = dropObject.transform.localScale;
+
+        var sources = dropObject.GetComponents<AudioSource>().AsEnumerable().GetEnumerator();
+        if (biteSound == null && sources.MoveNext()) {
+            biteSound = sources.Current;
+        }
+        if (pluckSound == null && sources.MoveNext()) {
+            pluckSound = sources.Current;
+        }
     }
 
     void Update()
     {
 
-        if (this.GetComponent<Rigidbody>().isKinematic == false && !EffectDone)
-        {
-            dropObject.GetComponent<Renderer>().material = glowOn;
-        }
-        if (dropObject.transform.position.y <= 2.2 && !EffectDone)
+        if (dropObject.transform.position.y <= resetHeight && !EffectDone)
         {
             ResetApple();
         }
@@ -142,7 +160,6 @@ public class Apple : MonoBehaviour
     void DisplayPanel()
     {
         panelDisplay.SetActive(true);
-
     }
 
     void TreeDisable()
@@ -150,13 +167,31 @@ public class Apple : MonoBehaviour
         tree.SetActive(false);
     }
 
+    public void Pluck()
+    {
+        if (StillAttachedToTree) {
+            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.None;
+
+            dropObject.GetComponent<Renderer>().material = glowOn;
+
+            if (pluckSound != null)
+                pluckSound.Play();
+        }
+    }
+
     private void ResetApple()
     {
         this.transform.SetParent(null);
         touchTrigger.SetActive(true);
         dropObject.GetComponent<Renderer>().material = hologramGlow;
-        dropObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
         dropObject.transform.position = resetPoint.position;
+        dropObject.transform.rotation = originalRotation;
+        dropObject.transform.localScale = originalLocalScale;
     }
 
     void DoDelayAction(float delayTime)
@@ -192,10 +227,10 @@ public class Apple : MonoBehaviour
     {
         this.transform.position = other.transform.position;
         this.transform.SetParent(other.transform);
-        this.GetComponent<Rigidbody>().isKinematic = true;
+        rb.isKinematic = true;
         DoDelayAction(2);
         this.transform.SetParent(null);
         //Debug.Log("Delay Done");
-        this.GetComponent<Rigidbody>().isKinematic = false;
+        rb.isKinematic = false;
     }
 }

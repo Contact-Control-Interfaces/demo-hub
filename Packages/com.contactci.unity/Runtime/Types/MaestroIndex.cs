@@ -7,7 +7,7 @@ namespace Maestro
 
     public enum PointOnFinger
     {
-        Tip, Middle, Base
+        Tip, Middle, Base, Proximal, Distal
     };
 
     public struct MaestroIndex
@@ -47,6 +47,8 @@ namespace Maestro
                 case PointOnFinger.Base: result = "Base"; break;
                 case PointOnFinger.Middle: result = "Middle"; break;
                 case PointOnFinger.Tip: result = "Tip"; break;
+                case PointOnFinger.Distal: result = "Distal"; break;
+                case PointOnFinger.Proximal: result = "Proximal"; break;
             }
             return result;
         }

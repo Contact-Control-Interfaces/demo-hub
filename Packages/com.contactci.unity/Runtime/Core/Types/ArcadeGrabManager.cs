@@ -135,6 +135,8 @@ namespace Maestro
                 }
             }
 
+            RecordHeldObjectPosition(mc[WhichFinger.Middle][PointOnFinger.Base].transform.position);
+
             endedThisFrame.Clear();
         }
 
@@ -248,6 +250,8 @@ namespace Maestro
                 .ForEach(x => x.MarkForRemoval());
 
             endedThisFrame.Add(target);
+
+            target.rb.velocity = GetThrowVelocity();
         }
 
         public override void OnGrabbing(GrabState grabbed)

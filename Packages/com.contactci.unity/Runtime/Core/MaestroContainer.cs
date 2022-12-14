@@ -87,24 +87,37 @@ namespace Maestro
         public PointOnHand Middle { get; private set; }
         public PointOnHand Base { get; private set; }
 
-        public CapsuleCollider Distal { get; private set; }
-        public CapsuleCollider Proximal { get; private set; }
-        public CapsuleCollider Metacarpal { get; private set; }
+        public PointOnHand Distal { get; private set; }
+        public PointOnHand Proximal { get; private set; }
+        public PointOnHand Metacarpal { get; private set; }
 
-        public FingerContainer(PointOnHand tip, PointOnHand middle, PointOnHand fingerBase, CapsuleCollider distal, CapsuleCollider proximal, CapsuleCollider metacarpal)
+        public FingerContainer(PointOnHand tip, PointOnHand middle, PointOnHand fingerBase, PointOnHand distal, PointOnHand proximal, PointOnHand metacarpal)
         {
             this.Tip = tip;
             this.Tip.whereOnFinger = PointOnFinger.Tip;
             this.Tip.parent = this;
+
             this.Middle = middle;
             this.Middle.whereOnFinger = PointOnFinger.Middle;
             this.Middle.parent = this;
+
             this.Base = fingerBase;
             this.Base.whereOnFinger = PointOnFinger.Base;
             this.Base.parent = this;
+
             this.Distal = distal;
+            this.Distal.whereOnFinger = PointOnFinger.Distal;
+            this.Distal.parent = this;
+
             this.Proximal = proximal;
+            this.Proximal.whereOnFinger = PointOnFinger.Proximal;
+            this.Proximal.parent = this;
+
             this.Metacarpal = metacarpal;
+            // Metacarpals unused because they are covered by the palm
+            // once PointOnFinger has a Metacarpal value we can uncomment this
+            //this.Metacarpal.whereOnFinger = PointOnFinger.Metacarpal;
+            this.Metacarpal.parent = this;
         }
 
         public PointOnHand this[PointOnFinger pof] {
@@ -113,6 +126,8 @@ namespace Maestro
                     case PointOnFinger.Tip: return Tip;
                     case PointOnFinger.Middle: return Middle;
                     case PointOnFinger.Base: return Base;
+                    case PointOnFinger.Distal: return Distal;
+                    case PointOnFinger.Proximal: return Proximal;
                     default: return null;
                 }
             }
@@ -126,9 +141,11 @@ namespace Maestro
 
         IEnumerator<PointOnHand> IEnumerable<PointOnHand>.GetEnumerator()
         {
-            yield return Base;
-            yield return Middle;
             yield return Tip;
+            yield return Distal;
+            yield return Middle;
+            yield return Proximal;
+            yield return Base;
         }
         #endregion
     }

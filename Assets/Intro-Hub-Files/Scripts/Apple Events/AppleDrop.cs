@@ -15,9 +15,8 @@ public class AppleDrop : MonoBehaviour
 {
     [Header("Drop Components")]
     bool missed;
-    public GameObject dropObject;
+    public Apple dropObject;
     public Transform dropOrigin;
-    public AudioSource dropSound;
 
     [Header("Drop Object Material")]
     public Material promptFlickerOn;
@@ -37,6 +36,8 @@ public class AppleDrop : MonoBehaviour
     
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
+
+    private IMaestroHand lastHand;
     
     private void Start()
     {
@@ -48,6 +49,8 @@ public class AppleDrop : MonoBehaviour
     public void Register(FingerCollider fc)
     {
         CurrentlyColliding++;
+
+        lastHand = fc.hpi;
 
         if (CurrentCoroutine == null) {
             StartTime();
@@ -69,6 +72,9 @@ public class AppleDrop : MonoBehaviour
 
     public void StartTime()
     {
+        if (!dropObject.StillAttachedToTree)
+            return; // Only change material, start timer when apple is on the tree
+
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
         
         timeOn = true;
@@ -86,6 +92,9 @@ public class AppleDrop : MonoBehaviour
 
     public void StopTime()
     {
+        if (!dropObject.StillAttachedToTree)
+            return; // Only change material, start timer when apple is on the tree
+
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
         timeOn = false;
         timeOnText.TextGen(" Put your hand under the apple.");
@@ -119,10 +128,20 @@ public class AppleDrop : MonoBehaviour
 
     private void OnEnd()
     {
-        dropObject.GetComponent<Rigidbody>().isKinematic = false;
-        dropSound.Play();
+        dropObject.Pluck();
+
+        Vector3 offsetFromPalm = lastHand.transforms.MiddleKnuckle.position - dropObject.transform.position;
+
+        float fallDistance = Mathf.Abs(offsetFromPalm.y);
+        float a = Mathf.Abs(Physics.gravity.y);
+        float timeToFall = Mathf.Sqrt(2 * a * fallDistance) / a;
+
+        Vector3 lateralOffset = Vector3.Scale(offsetFromPalm, new Vector3(1, 0, 1));
+
+        var rb = dropObject.GetComponent<Rigidbody>();
+        rb.velocity += lateralOffset / timeToFall;
+
         timeOnText.TextGen("Apple Dropped");
-       
     }
 
     private void ResetDisplay()
@@ -131,10 +150,4 @@ public class AppleDrop : MonoBehaviour
     }
 
     #endregion
-
-
-    
-   
 }
-
-

@@ -33,6 +33,8 @@ namespace Maestro
         private SerializedProperty handSize;
         private SerializedProperty defaultEffect;
 
+        private SerializedProperty physicMaterial;
+
         public void OnEnable()
         {
             leftHand = this.serializedObject.FindProperty("LeftHand");
@@ -48,6 +50,8 @@ namespace Maestro
             defaultEffect = this.serializedObject.FindProperty("DefaultEffect");
 
             grabType = this.serializedObject.FindProperty("grabType");
+
+            physicMaterial = this.serializedObject.FindProperty("handPhysicMaterial");
         }
 
         public override void OnInspectorGUI()
@@ -96,6 +100,7 @@ namespace Maestro
                 if (showAdvConfig) {
                     EditorGUILayout.LabelField("Optional", EditorStyles.boldLabel);
                     flatnessChecker.objectReferenceValue = (FlatnessChecker)EditorGUILayout.ObjectField("Flatness Checker", manager.flatnessChecker, typeof(FlatnessChecker), allowSceneObjects: true);
+                    EditorGUILayout.PropertyField(physicMaterial, new GUIContent("Hand Physic Material"));
                     EditorGUILayout.Space();
 
                     EditorGUILayout.LabelField("Finger Collider Reset", EditorStyles.boldLabel);

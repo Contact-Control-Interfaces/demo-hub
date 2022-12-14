@@ -7,6 +7,8 @@ namespace Maestro
 {
     public class FingerVisuals : MonoBehaviour
     {
+        public WhichHand which = WhichHand.RightHand;
+
         public Transform thumbVisual;
         public Transform indexVisual;
         public Transform middleVisual;

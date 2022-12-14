@@ -30,14 +30,12 @@ namespace Maestro
 
         private Rigidbody rb;
 
-        // Start is called before the first frame update
         void Start()
         {
             rb = this.GetComponent<Rigidbody>();
         }
 
-        // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             if (a && b) {
                 Vector3 start = transform.position;
@@ -45,7 +43,7 @@ namespace Maestro
 
                 transform.position = end;
                 if (rb != null)
-                    rb.velocity = (end - start) / Time.deltaTime;
+                    rb.velocity = Vector3.zero;
 
                 transform.localScale = new Vector3(size, (b.position - a.position).magnitude / 2, size);
                 Vector3 diff = b.position - a.position;

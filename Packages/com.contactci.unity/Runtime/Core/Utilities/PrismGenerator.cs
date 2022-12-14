@@ -19,6 +19,7 @@ namespace Maestro
         public Transform parent;
         public GameObject[] prisms;
         private FingerCollider[] fcs;
+        private Rigidbody[] rigidbodies;
 
         private static ushort[] triangles = {
             /* top/bottom */
@@ -39,7 +40,7 @@ namespace Maestro
 
         public MaestroInteractable Touching { get; private set; }
 
-        void Start()
+        public void Init(PhysicMaterial material = null)
         {
             int prismCount = points.Length / 3;
 
@@ -59,6 +60,7 @@ namespace Maestro
                 // Generate each prism
                 prisms = new GameObject[prismCount];
                 fcs = new FingerCollider[prismCount];
+                rigidbodies = new Rigidbody[prismCount];
                 for (int i = 0; i < prismCount; i++) {
 
                     GameObject newObject = new GameObject();
@@ -87,11 +89,15 @@ namespace Maestro
                     MeshCollider mc = newObject.AddComponent<MeshCollider>();
                     mc.convex = true;
 
+                    if (material != null)
+                        mc.sharedMaterial = material;
+
                     FingerCollider fc = newObject.AddComponent<FingerCollider>();
                     fc.SetParentHPI(container.parent);
 
                     prisms[i] = newObject;
                     fcs[i] = fc;
+                    rigidbodies[i] = rb;
                 }
             }
         }
@@ -111,6 +117,7 @@ namespace Maestro
                 Transform c = points[i * 3 + 2];
 
                 prisms[i].transform.position = Centroid(a, b, c);
+                rigidbodies[i].velocity = Vector3.zero;
 
                 Vector3 forward = Normal(a, b, c);
 

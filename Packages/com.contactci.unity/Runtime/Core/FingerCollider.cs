@@ -33,7 +33,7 @@ namespace Maestro
 
         public PointOnHand parent;
 
-        public MaestroIndex index { get { return parent.index; } } // which finger am I?
+        public MaestroIndex index { get { return parent != null ? parent.index : new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base); } } // which finger am I?
 
         public bool Contacting {
             get {
@@ -154,8 +154,9 @@ namespace Maestro
         void Update()
         {
             //update the public touching variable
-            AllTouching.RemoveAll(x => x == null);
-            DefaultTouching.RemoveAll(x => x == null);
+            AllTouching.RemoveAll(x => Inactive(x));
+            DefaultTouching.RemoveAll(x => Inactive(x));
+
             if (AllTouching.Count > 0) {
                 SortedSet<MaestroInteractable> ints;
 
@@ -206,7 +207,20 @@ namespace Maestro
             {
                 if (!AllTouching.Contains(c.collider))
                     AllTouching.Add(c.collider);
-                hpi.grabManager.Touch(interactable, this);
+
+                if (hpi.grabManager == null) {
+                    interactable.Touch(this);
+                } else {
+                    hpi.grabManager.Touch(interactable, this);
+                }
+
+                float impactThreshold = 1.0f;
+                if (c.relativeVelocity.magnitude > impactThreshold) {
+
+                    float toAdd = c.relativeVelocity.magnitude / 10f;
+
+                    hpi.PendingImpacts.Add(toAdd);
+                }
 
                 if (!interactable.IgnoreTaps)
                 {
@@ -232,7 +246,11 @@ namespace Maestro
             {
                 if (mapper.TryGetValue(c.collider, out MaestroInteractable interactable))
                 {
-                    interactable.Untouch(this);
+                    if (hpi.grabManager == null) {
+                        interactable.Untouch(this);
+                    } else {
+                        hpi.grabManager.UnTouch(interactable, this);
+                    }
                 }
                 else
                 {
@@ -253,6 +271,34 @@ namespace Maestro
             }
         }
         #endregion
+
+        #region On Trigger Collision
+        private void OnTriggerEnter(Collider other)
+        {
+            if (TryGetInteractable(other, out MaestroInteractable interactable)) {
+                interactable.OnTriggerTouch(this);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (TryGetInteractable(other, out MaestroInteractable interactable)) {
+                interactable.UnTriggerTouch(this);
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (TryGetInteractable(other, out MaestroInteractable interactable)) {
+                interactable.WhileTriggerTouch(this);
+            }
+        }
+        #endregion
+
+        private bool Inactive(Collider c)
+        {
+            return c == null || !c.enabled || !c.gameObject.activeInHierarchy;
+        }
 
         public void AddAudioSource()
         {
