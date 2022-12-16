@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 12f5e4ffa49461145a40d9e3a2ea61b5, type: 2}
+  - {fileID: 2100000, guid: ae4477a07adb2d3458125b471f080529, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,10 +168,27 @@ MonoBehaviour:
   whileTouch:
     m_PersistentCalls:
       m_Calls: []
-  haptics:
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
     Amplitude: 200
     Vibration:
       id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
   isPersistent: 0
   persistenceDuration: 0
   references:
@@ -181,10 +198,32 @@ MonoBehaviour:
       data:
         TakesOptions: 0
         Description: 
+        OneShot: 0
+        RepeatDelay: 0
         WhichType: 0
         options:
-          id: 1
+          id: 3
     00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          id: 3
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
       type: {class: , ns: , asm: }
 --- !u!54 &2369419763480409889
 Rigidbody:
