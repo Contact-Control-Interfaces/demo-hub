@@ -33,8 +33,10 @@ public class DemoItem : MonoBehaviour
     {
         dynamicScrollView.newSelectedDemo(this);
         dNameText.text = dName;
-        menuImageHolder.sprite = demoImage.sprite;
-        
+
+        if (menuImageHolder != null) {
+            menuImageHolder.sprite = demoImage.sprite;
+        }
     }
 
     public void GoToScene()

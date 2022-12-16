@@ -66,6 +66,13 @@ public class AppleDrop : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        if (CurrentCoroutine != null) {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
+    }
 
     #region Material Logic
 
@@ -87,7 +94,8 @@ public class AppleDrop : MonoBehaviour
         }
         //timeOnText.UpText();
         
-        CurrentCoroutine = StartCoroutine(UpdateTimer());
+        if (this.gameObject.activeInHierarchy)
+            CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
 
     public void StopTime()
