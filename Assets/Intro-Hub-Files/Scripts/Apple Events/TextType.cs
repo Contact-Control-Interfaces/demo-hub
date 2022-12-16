@@ -7,15 +7,12 @@ using UnityEngine.UIElements;
 
 public class TextType : MonoBehaviour
 {
-
     public TextMeshProUGUI promptText;
     public int stateNum = 0;
     public float typingSpeed = 0.04f;
     public AudioSource textAudio;
 
     public Coroutine textCoroutine = null;
-
-
 
     public void Update()
     {
@@ -35,6 +32,13 @@ public class TextType : MonoBehaviour
         promptText.text = "";
     }
 
+    void OnDisable()
+    {
+        if (textCoroutine != null) {
+            StopCoroutine(textCoroutine);
+            textCoroutine = null;
+        }
+    }
 
     public void UpText()
     {
@@ -65,7 +69,7 @@ public class TextType : MonoBehaviour
 
     public void TextGen(string text)
     {
-        if (textCoroutine == null)
+        if (textCoroutine == null && this.gameObject.activeInHierarchy)
         {
             Debug.Log(textCoroutine);
             textCoroutine = StartCoroutine(DisplayLine(text));
