@@ -60,7 +60,7 @@ namespace Maestro
 
         private FlatnessChecker flatnessChecker {
             get {
-                return Inheriting ? manager.flatnessChecker : flatnessCheckerOverride;
+                return (Inheriting && manager.flatnessChecker != null) ? manager.flatnessChecker : flatnessCheckerOverride;
             }
         }
 
