@@ -13,11 +13,11 @@ namespace Maestro
         protected IEnumerable<PhysicsGrabManager> OtherPhysicsGrabManagers => AllPhysicsGrabManagers.Except(new[] { this });
 
         // Keep track of everything being touched, by which fingers
-        private Dictionary<MaestroInteractable, TouchingFingers> interactingWith;
+        private Dictionary<MaestroInteractable, List<MaestroIndex>> interactingWith;
 
-        private FingerVisuals[] visuals;
+        //private FingerVisuals[] visuals;
         private GameObject grabAnchor;
-        private TouchingFingers grabStartState;
+        private List<MaestroIndex> grabStartState;
 
         public override bool Multigrab => false;
 
@@ -37,87 +37,36 @@ namespace Maestro
         private GameObject centroidObj;
         private Renderer centroidRenderer;
 
-        [Flags]
-        public enum TouchingFingers
-        {
-            ThumbTip = 1,
-            IndexTip = 2,
-            MiddleTip = 4,
-            RingTip = 8,
-            LittleTip = 16,
-            Palm = 32
-        }
+        private static WhichFinger[] fingers = new WhichFinger[] { WhichFinger.Index, WhichFinger.Middle, WhichFinger.Ring, WhichFinger.Little };
 
-        private static MaestroIndex ToIndex(TouchingFingers touching)
+        private void AddEntry(MaestroInteractable interactable, MaestroIndex newFinger)
         {
-            switch (touching) {
-                default: throw new NotImplementedException("That finger is not defined!");
-                case TouchingFingers.ThumbTip: return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip);
-                case TouchingFingers.IndexTip: return new MaestroIndex(WhichFinger.Index, PointOnFinger.Tip);
-                case TouchingFingers.MiddleTip: return new MaestroIndex(WhichFinger.Middle, PointOnFinger.Tip);
-                case TouchingFingers.RingTip: return new MaestroIndex(WhichFinger.Ring, PointOnFinger.Tip);
-                case TouchingFingers.LittleTip: return new MaestroIndex(WhichFinger.Little, PointOnFinger.Tip);
-                case TouchingFingers.Palm: return new MaestroIndex(WhichFinger.Palm, PointOnFinger.Base);
+            if (!interactingWith.ContainsKey(interactable)) {
+                interactingWith.Add(interactable, new List<MaestroIndex>());
             }
+
+            interactingWith[interactable].Add(newFinger);
         }
 
-        private static TouchingFingers FromIndex(MaestroIndex index)
-        {
-            switch (index.finger) {
-                default: throw new NotImplementedException("That finger is not defined!");
-                case WhichFinger.Thumb: return TouchingFingers.ThumbTip;
-                case WhichFinger.Index: return TouchingFingers.IndexTip;
-                case WhichFinger.Middle: return TouchingFingers.MiddleTip;
-                case WhichFinger.Ring: return TouchingFingers.RingTip;
-                case WhichFinger.Little: return TouchingFingers.LittleTip;
-                case WhichFinger.Palm: return TouchingFingers.Palm;
-            }
-        }
-
-        private void AddEntry(MaestroInteractable interactable, TouchingFingers newFinger)
+        private void RemoveEntry(MaestroInteractable interactable, MaestroIndex toRemove)
         {
             if (interactingWith.ContainsKey(interactable)) {
-                interactingWith[interactable] |= newFinger;
-            } else {
-                interactingWith.Add(interactable, newFinger);
-            }
-
-            UpdateVisuals(interactable);
-        }
-
-        private void RemoveEntry(MaestroInteractable interactable, TouchingFingers toRemove)
-        {
-            if (toRemove == 0)
-                return;
-
-            if (interactingWith.ContainsKey(interactable)) {
-                interactingWith[interactable] &= ~toRemove;
-                if (interactingWith[interactable] == 0) {
+                interactingWith[interactable].Remove(toRemove);
+                if (interactingWith[interactable].Count == 0) {
                     interactingWith.Remove(interactable);
                 }
             }
-
-            UpdateVisuals(interactable);
         }
 
-        private void SetEntry(MaestroInteractable interactable, TouchingFingers context)
+        private void SetEntry(MaestroInteractable interactable, MaestroIndex context)
         {
+            List<MaestroIndex> temp = new List<MaestroIndex>();
+            temp.Add(context);
+
             if (interactingWith.ContainsKey(interactable)) {
-                interactingWith[interactable] = context;
+                interactingWith[interactable] = temp;
             } else {
-                interactingWith.Add(interactable, context);
-            }
-
-            UpdateVisuals(interactable);
-        }
-
-        private void UpdateVisuals(MaestroInteractable interactable)
-        {
-            if (visuals != null && visuals.Length > 0) {
-                foreach (FingerVisuals pgv in visuals) {
-                    pgv.SetMask(interactingWith.ContainsKey(interactable)
-                        ? interactingWith[interactable] : 0);
-                }
+                interactingWith.Add(interactable, temp);
             }
         }
 
@@ -152,10 +101,7 @@ namespace Maestro
         {
             this.grabType = GrabType.Physics;
 
-            interactingWith = new Dictionary<MaestroInteractable, TouchingFingers>();
-
-            visuals = GameObject.FindObjectsOfType<FingerVisuals>()
-                .Where(x => x.which == this.mc.parent.whichHand).ToArray();
+            interactingWith = new Dictionary<MaestroInteractable, List<MaestroIndex>>();
 
             centroidObj = InitCentroid();
             centroidRenderer = centroidObj.GetComponent<Renderer>();
@@ -249,34 +195,33 @@ namespace Maestro
             return GrabConditionsMet;
         }
 
-        private bool GrabbableFingerState(TouchingFingers touching)
+        private bool GrabbableFingerState(List<MaestroIndex> touching)
         {
             bool palm = HasPalmTouch(touching);
             bool finger = HasFingerTouch(touching);
             bool thumb = HasThumbTouch(touching);
 
-            return (thumb && finger) || (palm && finger) || (palm && thumb);
+            return (thumb && finger) || (palm && thumb) || (!mc.parent.isFlat && palm && finger);
         }
 
-        private bool HasPalmTouch(TouchingFingers touching)
+        private bool HasPalmTouch(List<MaestroIndex> touching)
         {
-            return (touching & TouchingFingers.Palm) > 0;
+            return touching.Any(x => x.finger == WhichFinger.Palm);
         }
 
-        private bool HasThumbTouch(TouchingFingers touching)
+        private bool HasThumbTouch(List<MaestroIndex> touching)
         {
-            return (touching & TouchingFingers.ThumbTip) > 0;
+            return touching.Any(x => x.finger == WhichFinger.Thumb);
         }
 
-        private bool HasFingerTouch(TouchingFingers touching)
+        private bool HasFingerTouch(List<MaestroIndex> touching)
         {
-            TouchingFingers anyFinger =
-                TouchingFingers.IndexTip |
-                TouchingFingers.MiddleTip |
-                TouchingFingers.RingTip |
-                TouchingFingers.LittleTip;
+            return touching.Any(x => IsFinger(x));
+        }
 
-            return (touching & anyFinger) > 0;
+        private bool IsFinger(MaestroIndex index)
+        {
+            return Array.IndexOf(fingers, index.finger) >= 0;
         }
 
         public override void GrabEnd(GrabState toRelease)
@@ -346,13 +291,13 @@ namespace Maestro
                 timeSinceGrabSatisfied = 0.0f;
             }
 
-            return !GrabConditionsMet && timeSinceGrabSatisfied > WaitToRelease;
+            return !DisallowDropping && (!GrabConditionsMet && timeSinceGrabSatisfied > WaitToRelease);
         }
 
         public override void Touch(MaestroInteractable touched, FingerCollider touchedBy)
         {
             if (touched.type != InteractionType.Static)
-                AddEntry(touched, FromIndex(touchedBy.index));
+                AddEntry(touched, touchedBy.index);
 
             base.Touch(touched, touchedBy);
         }
@@ -360,7 +305,7 @@ namespace Maestro
         public override void UnTouch(MaestroInteractable touched, FingerCollider touchedBy)
         {
             if (touched.type != InteractionType.Static)
-                RemoveEntry(touched, FromIndex(touchedBy.index));
+                RemoveEntry(touched, touchedBy.index);
 
             base.UnTouch(touched, touchedBy);
         }
@@ -370,17 +315,15 @@ namespace Maestro
             Vector3 result = Vector3.zero;
             int count = 0;
 
-            TouchingFingers touching = interactingWith.ContainsKey(state.target) ? interactingWith[state.target] : grabStartState;
+            List<MaestroIndex> touching = interactingWith.ContainsKey(state.target) ? interactingWith[state.target] : grabStartState;
 
-            var values = (TouchingFingers[]) Enum.GetValues(typeof(TouchingFingers));
-            foreach (TouchingFingers flag in values) {
-                if (flag == TouchingFingers.Palm)
-                    continue;
-
-                if (touching.HasFlag(flag)) {
-                    result += mc[ToIndex(flag)].transform.position;
-                    count++;
+            foreach(MaestroIndex index in touching) {
+                if (index.finger == WhichFinger.Palm) {
+                    result += mc.parent.Palm.position;
+                } else {
+                    result += mc[index].transform.position;
                 }
+                count++;
             }
 
             if (count > 1)

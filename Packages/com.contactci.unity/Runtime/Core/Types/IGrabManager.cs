@@ -58,6 +58,8 @@ namespace Maestro
         protected List<Vector3> HeldObjectLastPositions = new List<Vector3>();
         protected int HistoryCount = 10;
 
+        public bool DisallowDropping;
+
         protected IGrabManager(MaestroContainer mc)
         {
             this.mc = mc;
@@ -144,7 +146,9 @@ namespace Maestro
             // End all grabs that we can
             List<GrabState> toRemove = new List<GrabState>();
             foreach (GrabState gs in grabStates) {
-                if (ShouldEndGrab(gs)) {
+                if (Inactive(gs.target)) {
+                    toRemove.Add(gs);
+                } else if (ShouldEndGrab(gs)) {
                     GrabEnd(gs);
                     toRemove.Add(gs);
                 }
@@ -152,6 +156,9 @@ namespace Maestro
             foreach (GrabState gs in toRemove) {
                 grabStates.Remove(gs);
             }
+
+            // Prune grab candidates
+            grabCandidates.RemoveAll(x => Inactive(x));
 
             // Start all grabs that we can
             if (!isGrabbing || Multigrab) {
@@ -190,6 +197,11 @@ namespace Maestro
             }
 
             return velocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (velocities.Count * Time.fixedDeltaTime);
+        }
+
+        protected virtual bool Inactive(MaestroInteractable interactable)
+        {
+            return interactable == null || !interactable.gameObject.activeInHierarchy;
         }
 
         public virtual void Touch(MaestroInteractable touched, FingerCollider touchedBy)
