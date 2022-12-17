@@ -27,6 +27,8 @@ namespace Maestro
         public MaestroHand otherHandOverride;
         public GrabType grabTypeOverride = GrabType.Arcade;
 
+        public MaestroTool heldTool;
+
         #region Inherited from MaestroManager
         public GrabType grabType {
             get {
@@ -497,6 +499,58 @@ namespace Maestro
             }
         }
 
+        private bool ProcessToolHaptics(ref MaestroHapticContext nextHaptics)
+        {
+            if (!heldTool)
+                return false;
+
+            MaestroInteractable interacted;
+
+            if (heldTool.touching)
+                interacted = heldTool.touching;
+            else if (heldTool.lastTouching)
+            {
+                if (heldTool.lastTouching.currentHaptics == heldTool.lastTouching.exitHaptics)
+                    interacted = heldTool.lastTouching;
+                else
+                    return false;
+            }
+            else
+                return false;
+
+            if (heldTool.sendThumb)
+            {
+                nextHaptics.ThumbAmplitude = interacted.currentHaptics.Amplitude;
+                nextHaptics.ThumbVibrationEffect = interacted.currentHaptics.Vibration;
+            }
+
+            if (heldTool.sendIndex)
+            {
+                nextHaptics.IndexAmplitude = interacted.currentHaptics.Amplitude;
+                nextHaptics.IndexVibrationEffect = interacted.currentHaptics.Vibration;
+            }
+
+            if (heldTool.sendMiddle)
+            {
+                nextHaptics.MiddleAmplitude = interacted.currentHaptics.Amplitude;
+                nextHaptics.MiddleVibrationEffect = interacted.currentHaptics.Vibration;
+            }
+
+            if (heldTool.sendRing)
+            {
+                nextHaptics.RingAmplitude = interacted.currentHaptics.Amplitude;
+                nextHaptics.RingVibrationEffect = interacted.currentHaptics.Vibration;
+            }
+
+            if (heldTool.sendLittle)
+            {
+                nextHaptics.LittleAmplitude = interacted.currentHaptics.Amplitude;
+                nextHaptics.LittleVibrationEffect = interacted.currentHaptics.Vibration;
+            }
+
+            return true;
+        }
+
         protected override MaestroHapticContext ProcessHaptics()
         {
             MaestroHapticContext nextHaptics = new MaestroHapticContext();
@@ -504,6 +558,11 @@ namespace Maestro
             if (WholeHandReverb > 0) {
                 nextHaptics.SetAllAmplitudes(255);
                 WholeHandReverb -= Time.fixedDeltaTime;
+            }
+
+            if (ProcessToolHaptics(ref nextHaptics))
+            {
+                return nextHaptics;
             }
 
             if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
