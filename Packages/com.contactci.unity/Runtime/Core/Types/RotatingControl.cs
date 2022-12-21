@@ -71,7 +71,7 @@ namespace Maestro
 #endif
         }
 
-        private void InitJoint(ConfigurableJoint cj)
+        protected virtual void InitJoint(ConfigurableJoint cj)
         {
             if (cj != null) {
 

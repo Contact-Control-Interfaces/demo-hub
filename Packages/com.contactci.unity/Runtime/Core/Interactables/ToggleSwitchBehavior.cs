@@ -98,6 +98,15 @@ namespace Maestro
             lastState = state;
         }
 
+        protected override void InitJoint(ConfigurableJoint cj)
+        {
+            base.InitJoint(cj);
+
+            cj.projectionMode = JointProjectionMode.PositionAndRotation;
+            cj.projectionDistance = 0.0001f;
+            cj.projectionAngle = 1f;
+        }
+
         private void PlayToggleSound()
         {
             if (source.isPlaying)
