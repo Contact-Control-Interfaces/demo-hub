@@ -1,5 +1,7 @@
 using Leap.Unity;
 using Leap.Unity.HandsModule;
+using Maestro;
+using Maestro.Vibration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,6 +49,8 @@ public class Apple : MonoBehaviour
     private Rigidbody rb;
     private Quaternion originalRotation;
     private Vector3 originalLocalScale;
+
+    private Coroutine biteCouroutine;
 
     public bool StillAttachedToTree => rb.constraints == RigidbodyConstraints.FreezeAll;
 
@@ -120,6 +124,14 @@ public class Apple : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (biteCouroutine != null) {
+            StopCoroutine(biteCouroutine);
+            biteCouroutine = null;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
        if(other.gameObject.name == "RightLockPoint" || other.gameObject.name == "LeftLockPoint")
@@ -127,7 +139,7 @@ public class Apple : MonoBehaviour
             HandBind(other);
         }
 
-        if (other.gameObject.tag == "MainCamera")
+        if (other.gameObject.tag == "MainCamera" && biteCouroutine == null)
         {
             Bite();
         }
@@ -212,6 +224,9 @@ public class Apple : MonoBehaviour
     {
         touchTrigger.SetActive(false);
         biteSound.Play();
+
+        biteCouroutine = StartCoroutine(BiteHaptics());
+
         //var volume = this.GetComponent<Volume>();
         //if (volume.profile.TryGet<Bloom>(out bloomEffect))
         if (universalBloom.TryGet<Bloom>(out bloomEffect))
@@ -221,6 +236,30 @@ public class Apple : MonoBehaviour
 
             BloomUp = true;
         }
+    }
+
+    IEnumerator BiteHaptics()
+    {
+        MaestroInteractable interactable = dropObject.GetComponent<MaestroInteractable>();
+        float firstBite = 0.15f;
+        float secondBite = 0.8f;
+        float duration = 0.1f;
+
+        interactable.SendHapticsToWholeHand = true;
+
+        yield return new WaitForSeconds(firstBite);
+        interactable.stayHaptics.Vibration = new SharpTick(NarrowThreeOptions._100);
+        interactable.stayHaptics.Vibration.OneShot = true;
+        yield return new WaitForSeconds(duration);
+        interactable.stayHaptics.Vibration = VibrationEffect.None;
+
+        yield return new WaitForSeconds(secondBite - (firstBite + duration));
+        interactable.stayHaptics.Vibration = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
+        interactable.stayHaptics.Vibration.OneShot = true;
+        yield return new WaitForSeconds(duration);
+        interactable.stayHaptics.Vibration = VibrationEffect.None;
+
+        interactable.SendHapticsToWholeHand = false;
     }
 
     public void HandBind(Collider other)
