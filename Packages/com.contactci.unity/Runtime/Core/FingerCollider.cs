@@ -217,7 +217,7 @@ namespace Maestro
                 float impactThreshold = 1.0f;
                 if (c.relativeVelocity.magnitude > impactThreshold) {
 
-                    float toAdd = c.relativeVelocity.magnitude / 10f;
+                    float toAdd = Mathf.Sqrt(c.relativeVelocity.magnitude) / 20f;
 
                     hpi.PendingImpacts.Add(toAdd);
                 }

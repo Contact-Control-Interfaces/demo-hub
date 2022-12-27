@@ -29,6 +29,8 @@ namespace Maestro
         protected internal float WaitToRelease = 0.15f;
         protected internal float CentroidLerp = 0.0f;
 
+        protected internal float DropSpeed = 1f;
+
         protected internal float FollowForceVelocityDamper = 0.5f;
         protected internal float FollowForceVelocityScalar = 750;
 
@@ -238,6 +240,8 @@ namespace Maestro
             toRelease.target.Release();
 
             toRelease.target.rb.velocity = GetThrowVelocity();
+
+            ClearHeldObjectHistory();
         }
 
         public override GrabState GrabStart(MaestroInteractable toHold)
@@ -254,7 +258,7 @@ namespace Maestro
                 }
             }
 
-            HeldObjectLastPositions.Clear();
+            HeldObjectLastVelocities.Clear();
 
             toHold.Grab();
 
@@ -291,7 +295,7 @@ namespace Maestro
                 timeSinceGrabSatisfied = 0.0f;
             }
 
-            return !DisallowDropping && (!GrabConditionsMet && timeSinceGrabSatisfied > WaitToRelease);
+            return !DisallowDropping && (!GrabConditionsMet && (GetThrowVelocity().magnitude > DropSpeed || timeSinceGrabSatisfied > WaitToRelease));
         }
 
         public override void Touch(MaestroInteractable touched, FingerCollider touchedBy)

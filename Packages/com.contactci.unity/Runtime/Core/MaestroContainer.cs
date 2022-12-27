@@ -84,18 +84,25 @@ namespace Maestro
         public MaestroContainer Parent { get; internal set; }
 
         public PointOnHand Tip { get; private set; }
+        public PointOnHand Distal { get; private set; }
         public PointOnHand Middle { get; private set; }
         public PointOnHand Base { get; private set; }
 
-        public PointOnHand Distal { get; private set; }
+        public PointOnHand DistalSegment { get; private set; }
         public PointOnHand Proximal { get; private set; }
         public PointOnHand Metacarpal { get; private set; }
 
-        public FingerContainer(PointOnHand tip, PointOnHand middle, PointOnHand fingerBase, PointOnHand distal, PointOnHand proximal, PointOnHand metacarpal)
+        public FingerContainer(PointOnHand tip, PointOnHand middle, PointOnHand fingerBase, PointOnHand distalSegment, PointOnHand proximal, PointOnHand metacarpal, PointOnHand distal = null)
         {
             this.Tip = tip;
             this.Tip.whereOnFinger = PointOnFinger.Tip;
             this.Tip.parent = this;
+
+            if (distal != null) {
+                this.Distal = distal;
+                this.Distal.whereOnFinger = PointOnFinger.Distal;
+                this.Distal.parent = this;
+            }
 
             this.Middle = middle;
             this.Middle.whereOnFinger = PointOnFinger.Middle;
@@ -105,12 +112,12 @@ namespace Maestro
             this.Base.whereOnFinger = PointOnFinger.Base;
             this.Base.parent = this;
 
-            this.Distal = distal;
-            this.Distal.whereOnFinger = PointOnFinger.Distal;
-            this.Distal.parent = this;
+            this.DistalSegment = distalSegment;
+            this.DistalSegment.whereOnFinger = PointOnFinger.DistalDigit;
+            this.DistalSegment.parent = this;
 
             this.Proximal = proximal;
-            this.Proximal.whereOnFinger = PointOnFinger.Proximal;
+            this.Proximal.whereOnFinger = PointOnFinger.ProximalDigit;
             this.Proximal.parent = this;
 
             this.Metacarpal = metacarpal;
@@ -124,10 +131,11 @@ namespace Maestro
             get {
                 switch (pof) {
                     case PointOnFinger.Tip: return Tip;
+                    case PointOnFinger.Distal: return Distal;
                     case PointOnFinger.Middle: return Middle;
                     case PointOnFinger.Base: return Base;
-                    case PointOnFinger.Distal: return Distal;
-                    case PointOnFinger.Proximal: return Proximal;
+                    case PointOnFinger.DistalDigit: return DistalSegment;
+                    case PointOnFinger.ProximalDigit: return Proximal;
                     default: return null;
                 }
             }
@@ -142,7 +150,7 @@ namespace Maestro
         IEnumerator<PointOnHand> IEnumerable<PointOnHand>.GetEnumerator()
         {
             yield return Tip;
-            yield return Distal;
+            yield return DistalSegment;
             yield return Middle;
             yield return Proximal;
             yield return Base;

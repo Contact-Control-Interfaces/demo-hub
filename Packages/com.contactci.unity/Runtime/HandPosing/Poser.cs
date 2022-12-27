@@ -13,19 +13,18 @@ namespace Maestro
         {
             ThumbProximal   = 1 << 0,
             ThumbMiddle     = 1 << 1,
-            ThumbDistal     = 1 << 2,
-            IndexProximal   = 1 << 3,
-            IndexMiddle     = 1 << 4,
-            IndexDistal     = 1 << 5,
-            MiddleProximal  = 1 << 6,
-            MiddleMiddle    = 1 << 7,
-            MiddleDistal    = 1 << 8,
-            RingProximal    = 1 << 9,
-            RingMiddle      = 1 << 10,
-            RingDistal      = 1 << 11,
-            LittleProximal  = 1 << 12,
-            LittleMiddle    = 1 << 13,
-            LittleDistal    = 1 << 14
+            IndexProximal   = 1 << 2,
+            IndexMiddle     = 1 << 3,
+            IndexDistal     = 1 << 4,
+            MiddleProximal  = 1 << 5,
+            MiddleMiddle    = 1 << 6,
+            MiddleDistal    = 1 << 7,
+            RingProximal    = 1 << 8,
+            RingMiddle      = 1 << 9,
+            RingDistal      = 1 << 10,
+            LittleProximal  = 1 << 11,
+            LittleMiddle    = 1 << 12,
+            LittleDistal    = 1 << 13
         };
         public static HandBones[] AllBones = (HandBones[]) Enum.GetValues(typeof(HandBones));
         public static readonly int BoneCount = AllBones.Length;

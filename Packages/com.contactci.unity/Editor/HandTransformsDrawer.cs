@@ -24,22 +24,28 @@ namespace Maestro
 
             EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             updateObjectField(property, "ThumbTip");
+            // Thumb doesn't have distal joint
+            //updateObjectField(property, "ThumbDistal");
             updateObjectField(property, "ThumbMiddle");
             updateObjectField(property, "ThumbKnuckle");
             EditorGUILayout.Space();
             updateObjectField(property, "IndexTip");
+            updateObjectField(property, "IndexDistal");
             updateObjectField(property, "IndexMiddle");
             updateObjectField(property, "IndexKnuckle");
             EditorGUILayout.Space();
             updateObjectField(property, "MiddleTip");
+            updateObjectField(property, "MiddleDistal");
             updateObjectField(property, "MiddleMiddle");
             updateObjectField(property, "MiddleKnuckle");
             EditorGUILayout.Space();
             updateObjectField(property, "RingTip");
+            updateObjectField(property, "RingDistal");
             updateObjectField(property, "RingMiddle");
             updateObjectField(property, "RingKnuckle");
             EditorGUILayout.Space();
             updateObjectField(property, "LittleTip");
+            updateObjectField(property, "LittleDistal");
             updateObjectField(property, "LittleMiddle");
             updateObjectField(property, "LittleKnuckle");
             EditorGUILayout.Space();

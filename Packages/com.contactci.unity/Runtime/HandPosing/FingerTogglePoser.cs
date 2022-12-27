@@ -33,6 +33,7 @@ namespace Maestro
 
         [Header("Debug")]
         public bool autoUnlock = true;
+        public bool alwaysLockAll = false;
 
         public MaestroInteractable interactable;
 
@@ -53,14 +54,33 @@ namespace Maestro
 
         public void SetState(FingerCollider fc, bool state)
         {
-            switch (fc.index.finger) {
-                default: return;
-                case WhichFinger.Thumb: ClampThumb = state; break;
-                case WhichFinger.Index: ClampIndex = state; break;
-                case WhichFinger.Middle: ClampMiddle = state; break;
-                case WhichFinger.Ring: ClampRing = state; break;
-                case WhichFinger.Little: ClampLittle = state; break;
+            if (alwaysLockAll) {
+                SetAllStates(state);
+            } else {
+                switch (fc.index.finger) {
+                    default: return;
+                    case WhichFinger.Thumb: ClampThumb = state; break;
+                    case WhichFinger.Index: ClampIndex = state; break;
+                    case WhichFinger.Middle: ClampMiddle = state; break;
+                    case WhichFinger.Ring: ClampRing = state; break;
+                    case WhichFinger.Little: ClampLittle = state; break;
+                }
             }
+        }
+
+        public void SetAllStates(bool state)
+        {
+            ClampIndex = ClampThumb = ClampMiddle = ClampRing = ClampLittle = state;
+        }
+
+        public void LockAll()
+        {
+            SetAllStates(true);
+        }
+
+        public void UnlockAll()
+        {
+            SetAllStates(false);
         }
 
         protected override void Start()
@@ -81,7 +101,7 @@ namespace Maestro
             if (active && _provider != null) {
                 
                 if (ClampThumb) {
-                    ClampThumb = !ShouldUnClamp(HandBones.ThumbDistal | HandBones.ThumbMiddle | HandBones.ThumbProximal);
+                    ClampThumb = !ShouldUnClamp(HandBones.ThumbMiddle | HandBones.ThumbProximal);
                 }
                 if (ClampIndex) {
                     ClampIndex = !ShouldUnClamp(HandBones.IndexDistal | HandBones.IndexMiddle | HandBones.IndexProximal);
@@ -131,7 +151,7 @@ namespace Maestro
         {
             HandBones acc = targetedBones;
 
-            if (ClampThumb) acc |= HandBones.ThumbProximal | HandBones.ThumbMiddle | HandBones.ThumbDistal;
+            if (ClampThumb) acc |= HandBones.ThumbProximal | HandBones.ThumbMiddle;
             if (ClampIndex) acc |= HandBones.IndexProximal | HandBones.IndexMiddle | HandBones.IndexDistal;
             if (ClampMiddle) acc |= HandBones.MiddleProximal | HandBones.MiddleMiddle | HandBones.MiddleDistal;
             if (ClampRing) acc |= HandBones.RingProximal | HandBones.RingMiddle | HandBones.RingDistal;

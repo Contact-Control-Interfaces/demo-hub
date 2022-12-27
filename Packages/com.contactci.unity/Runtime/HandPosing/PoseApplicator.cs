@@ -55,24 +55,24 @@ namespace Maestro
 
                 case Poser.HandBones.ThumbProximal: return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Base);
                 case Poser.HandBones.ThumbMiddle:   return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Middle);
-                case Poser.HandBones.ThumbDistal:   return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip);
+                // Thumb doesn't have distal joint
+                //case Poser.HandBones.ThumbDistal:   return new MaestroIndex(WhichFinger.Thumb, PointOnFinger.Tip);
 
                 case Poser.HandBones.IndexProximal: return new MaestroIndex(WhichFinger.Index, PointOnFinger.Base);
                 case Poser.HandBones.IndexMiddle:   return new MaestroIndex(WhichFinger.Index, PointOnFinger.Middle);
-                case Poser.HandBones.IndexDistal:   return new MaestroIndex(WhichFinger.Index, PointOnFinger.Tip);
-
+                case Poser.HandBones.IndexDistal:   return new MaestroIndex(WhichFinger.Index, PointOnFinger.Distal);
 
                 case Poser.HandBones.MiddleProximal: return new MaestroIndex(WhichFinger.Middle, PointOnFinger.Base);
                 case Poser.HandBones.MiddleMiddle:   return new MaestroIndex(WhichFinger.Middle, PointOnFinger.Middle);
-                case Poser.HandBones.MiddleDistal:   return new MaestroIndex(WhichFinger.Middle, PointOnFinger.Tip);
+                case Poser.HandBones.MiddleDistal:   return new MaestroIndex(WhichFinger.Middle, PointOnFinger.Distal);
 
                 case Poser.HandBones.RingProximal: return new MaestroIndex(WhichFinger.Ring, PointOnFinger.Base);
                 case Poser.HandBones.RingMiddle:   return new MaestroIndex(WhichFinger.Ring, PointOnFinger.Middle);
-                case Poser.HandBones.RingDistal:   return new MaestroIndex(WhichFinger.Ring, PointOnFinger.Tip);
+                case Poser.HandBones.RingDistal:   return new MaestroIndex(WhichFinger.Ring, PointOnFinger.Distal);
 
                 case Poser.HandBones.LittleProximal: return new MaestroIndex(WhichFinger.Little, PointOnFinger.Base);
                 case Poser.HandBones.LittleMiddle:   return new MaestroIndex(WhichFinger.Little, PointOnFinger.Middle);
-                case Poser.HandBones.LittleDistal:   return new MaestroIndex(WhichFinger.Little, PointOnFinger.Tip);
+                case Poser.HandBones.LittleDistal:   return new MaestroIndex(WhichFinger.Little, PointOnFinger.Distal);
             }
         }
     }
