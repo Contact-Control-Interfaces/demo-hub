@@ -12,6 +12,7 @@ public class StartDemo : MonoBehaviour
     public AudioSource startAudio;
 
     public DynamicScrollView dsv;
+    public DemoSelect ds;
 
     public void Start()
     {
@@ -20,7 +21,7 @@ public class StartDemo : MonoBehaviour
 
     public void StartScene()
     {
-        if (dsv.hasSelection)
+        if (dsv.hasSelection || ds.hasSelection)
         {
             startAudio.Play();
             SceneManager.LoadScene(desiredScene);

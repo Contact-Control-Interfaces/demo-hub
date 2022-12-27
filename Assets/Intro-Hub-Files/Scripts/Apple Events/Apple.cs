@@ -142,6 +142,7 @@ public class Apple : MonoBehaviour
         if (other.gameObject.tag == "MainCamera" && biteCouroutine == null)
         {
             Bite();
+            touchTrigger.SetActive(false);
         }
     }
 
@@ -189,6 +190,8 @@ public class Apple : MonoBehaviour
 
             if (pluckSound != null)
                 pluckSound.Play();
+
+            textType.TextGen("Take a bite.", true);
         }
     }
 
@@ -196,6 +199,7 @@ public class Apple : MonoBehaviour
     {
         this.transform.SetParent(null);
         touchTrigger.SetActive(true);
+        textType.gameObject.SetActive(true);
         dropObject.GetComponent<Renderer>().material = hologramGlow;
 
         rb.useGravity = false;
@@ -224,16 +228,11 @@ public class Apple : MonoBehaviour
     {
         touchTrigger.SetActive(false);
         biteSound.Play();
-
-        biteCouroutine = StartCoroutine(BiteHaptics());
-
-        //var volume = this.GetComponent<Volume>();
-        //if (volume.profile.TryGet<Bloom>(out bloomEffect))
+	biteCouroutine = StartCoroutine(BiteHaptics());
         if (universalBloom.TryGet<Bloom>(out bloomEffect))
         {
+            textType.gameObject.SetActive(false);
             bloomEffect.intensity.value = 0f;
-            //Debug.Log("Bloom");
-
             BloomUp = true;
         }
     }
