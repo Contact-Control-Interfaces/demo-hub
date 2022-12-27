@@ -94,21 +94,21 @@ namespace Maestro
 
         public void Touch(FingerCollider finger)
         {
-            if (onTouch != null)
+            if (onTouch != null && this.enabled)
                 onTouch.Invoke(finger);
             currentHaptics = startHaptics;
         }
 
         public void WhileTouch(FingerCollider finger)
         {
-            if (whileTouch != null)
+            if (whileTouch != null && this.enabled)
                 whileTouch.Invoke(finger);
             currentHaptics = stayHaptics;
         }
 
         public void Untouch(FingerCollider finger)
         {
-            if (unTouch != null)
+            if (unTouch != null && this.enabled)
                 unTouch.Invoke(finger);
             currentHaptics = exitHaptics;
         }
