@@ -39,6 +39,7 @@ namespace Maestro
                 if (paintTransform == null) {
                     paint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     paint.GetComponent<SphereCollider>().enabled = false;
+                    paint.GetComponent<Renderer>().material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
                     paint.transform.SetParent(fc.parent.transform);
                     paint.name = "Paint";
                     paint.transform.localPosition = Vector3.zero;
