@@ -55,7 +55,8 @@ namespace Maestro
 
         public virtual MaestroInteractable grabTarget { get { return grabCandidates.Count > 0 ? grabCandidates[0] : null; } }
 
-        protected List<Vector3> HeldObjectLastPositions = new List<Vector3>();
+        protected List<Vector3> HeldObjectLastVelocities = new List<Vector3>();
+        protected Vector3? HeldObjectLastPosition = null;
         protected int HistoryCount = 10;
 
         public bool DisallowDropping;
@@ -67,6 +68,12 @@ namespace Maestro
 
             grabStates = new List<GrabState>();
             grabCandidates = new List<MaestroInteractable>();
+        }
+
+        protected void ClearHeldObjectHistory()
+        {
+            HeldObjectLastPosition = null;
+            HeldObjectLastVelocities.Clear();
         }
 
         /**
@@ -181,22 +188,23 @@ namespace Maestro
 
         protected virtual void RecordHeldObjectPosition(Vector3 position)
         {
-            HeldObjectLastPositions.Add(position);
-            while (HeldObjectLastPositions.Count > HistoryCount)
-                HeldObjectLastPositions.RemoveAt(0);
+            if (HeldObjectLastPosition.HasValue) {
+                Vector3 velocity = position - HeldObjectLastPosition.Value;
+
+                HeldObjectLastVelocities.Add(velocity);
+                while (HeldObjectLastVelocities.Count > HistoryCount)
+                    HeldObjectLastVelocities.RemoveAt(0);
+            }
+
+            HeldObjectLastPosition = position;
         }
 
         protected virtual Vector3 GetThrowVelocity()
         {
-            if (HeldObjectLastPositions.Count <= 1)
+            if (HeldObjectLastVelocities.Count <= 0)
                 return Vector3.zero;
 
-            List<Vector3> velocities = new List<Vector3>();
-            for (int i = 1; i < HeldObjectLastPositions.Count; i++) {
-                velocities.Add(HeldObjectLastPositions[i] - HeldObjectLastPositions[i - 1]);
-            }
-
-            return velocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (velocities.Count * Time.fixedDeltaTime);
+            return HeldObjectLastVelocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (HeldObjectLastVelocities.Count * Time.fixedDeltaTime);
         }
 
         protected virtual bool Inactive(MaestroInteractable interactable)

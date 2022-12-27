@@ -33,11 +33,20 @@ namespace Maestro
         public Transform MiddleTip;
         public Transform RingTip;
         public Transform LittleTip;
+
+        // Thumb doesn't have a distal joint
+        //public Transform ThumbDistal;
+        public Transform IndexDistal;
+        public Transform MiddleDistal;
+        public Transform RingDistal;
+        public Transform LittleDistal;
+
         public Transform ThumbMiddle;
         public Transform IndexMiddle;
         public Transform MiddleMiddle;
         public Transform RingMiddle;
         public Transform LittleMiddle;
+
         public Transform ThumbKnuckle;
         public Transform IndexKnuckle;
         public Transform MiddleKnuckle;
@@ -73,16 +82,26 @@ namespace Maestro
             yield return MiddleTip;
             yield return RingTip;
             yield return LittleTip;
+
+            // Thumb doesn't have a distal joint
+            //yield return ThumbDistal;
+            yield return IndexDistal;
+            yield return MiddleDistal;
+            yield return RingDistal;
+            yield return LittleDistal;
+
             yield return ThumbMiddle;
             yield return IndexMiddle;
             yield return MiddleMiddle;
             yield return RingMiddle;
             yield return LittleMiddle;
+
             yield return ThumbKnuckle;
             yield return IndexKnuckle;
             yield return MiddleKnuckle;
             yield return RingKnuckle;
             yield return LittleKnuckle;
+
             yield return PalmBaseThumb;
             yield return PalmBaseLittle;
 

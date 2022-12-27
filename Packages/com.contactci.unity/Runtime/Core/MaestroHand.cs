@@ -148,7 +148,7 @@ namespace Maestro
             mc.parent = this;
             InitContainer();
 
-            IEnumerable<Collider> distals = mc.GetFingers().Select(x => x.Distal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> distals = mc.GetFingers().Select(x => x.DistalSegment.transform.GetComponent<Collider>());
             IEnumerable<Collider> proximals = mc.GetFingers().Select(x => x.Proximal.transform.GetComponent<Collider>());
             IEnumerable<Collider> metacarpals = mc.GetFingers().Select(x => x.Metacarpal.transform.GetComponent<Collider>());
 
@@ -183,7 +183,7 @@ namespace Maestro
             // Move all FCs
             foreach (PointOnHand poh in mc) {
                 // Skip digits as CylinderBetween should handle it
-                if (poh.whereOnFinger == PointOnFinger.Distal || poh.whereOnFinger == PointOnFinger.Proximal)
+                if (poh.whereOnFinger == PointOnFinger.DistalDigit || poh.whereOnFinger == PointOnFinger.ProximalDigit)
                     continue;
 
                 Vector3 dist = (poh.transform.position - poh.fc.rb.position);
@@ -230,10 +230,10 @@ namespace Maestro
         {
             // Create and assign all fingers
             mc[WhichFinger.Thumb] = InitFingerContainer(transforms.ThumbTip, transforms.ThumbMiddle, transforms.ThumbKnuckle);
-            mc[WhichFinger.Index] = InitFingerContainer(transforms.IndexTip, transforms.IndexMiddle, transforms.IndexKnuckle);
-            mc[WhichFinger.Middle] = InitFingerContainer(transforms.MiddleTip, transforms.MiddleMiddle, transforms.MiddleKnuckle);
-            mc[WhichFinger.Ring] = InitFingerContainer(transforms.RingTip, transforms.RingMiddle, transforms.RingKnuckle);
-            mc[WhichFinger.Little] = InitFingerContainer(transforms.LittleTip, transforms.LittleMiddle, transforms.LittleKnuckle);
+            mc[WhichFinger.Index] = InitFingerContainer(transforms.IndexTip, transforms.IndexMiddle, transforms.IndexKnuckle, transforms.IndexDistal);
+            mc[WhichFinger.Middle] = InitFingerContainer(transforms.MiddleTip, transforms.MiddleMiddle, transforms.MiddleKnuckle, transforms.MiddleDistal);
+            mc[WhichFinger.Ring] = InitFingerContainer(transforms.RingTip, transforms.RingMiddle, transforms.RingKnuckle, transforms.RingDistal);
+            mc[WhichFinger.Little] = InitFingerContainer(transforms.LittleTip, transforms.LittleMiddle, transforms.LittleKnuckle, transforms.LittleDistal);
 
             PrismGenerator prisms = InitPalm();
             mc.PalmContainer = prisms.transform;
@@ -242,7 +242,7 @@ namespace Maestro
             mc.ToList().ForEach(x => x.fc.rb.mass = (x.fc.isPalm ? 10.0f : 5.0f));
 
             List<FingerContainer> fingers = mc.GetFingers();
-            IEnumerable<Collider> distals = fingers.Select(x => x.Distal.transform.GetComponent<Collider>());
+            IEnumerable<Collider> distals = fingers.Select(x => x.DistalSegment.transform.GetComponent<Collider>());
             IEnumerable<Collider> proximals = fingers.Select(x => x.Proximal.transform.GetComponent<Collider>());
             IEnumerable<Collider> metacarpals = fingers.Select(x => x.Metacarpal.transform.GetComponent<Collider>());
 
@@ -333,22 +333,30 @@ namespace Maestro
             return prismGenerator;
         }
 
-        private FingerContainer InitFingerContainer(Transform tip, Transform middle, Transform knuckle)
+        private FingerContainer InitFingerContainer(Transform tip, Transform middle, Transform knuckle, Transform distal = null)
         {
             PointOnHand fingerTip = SpawnPointOnHand(tip, handSize.TipSize);
+
+            PointOnHand fingerDistal = null;
+            if (distal != null) {
+                fingerDistal = SpawnPointOnHand(distal, handSize.TipSize);
+                // we don't actually care about this guy's collision yet, so just disable it
+                fingerDistal.fc.GetComponent<Collider>().enabled = false;
+            }
+
             PointOnHand fingerMiddle = SpawnPointOnHand(middle, handSize.MiddleSize);
             PointOnHand fingerBase = SpawnPointOnHand(knuckle, handSize.TipSize);
 
-            PointOnHand distal = SpawnPointOnHand(tip, middle, (handSize.TipSize + handSize.MiddleSize) / 2);
+            PointOnHand distalDigit = SpawnPointOnHand(tip, middle, (handSize.TipSize + handSize.MiddleSize) / 2);
             PointOnHand proximal = SpawnPointOnHand(middle, knuckle, (handSize.MiddleSize + handSize.KnuckleSize) / 2);
             PointOnHand metacarpal = SpawnPointOnHand(knuckle, transforms.PalmBaseThumb, handSize.KnuckleSize);
 
             // Don't collide finger with itself
             Collider proximalCollider = proximal.transform.GetComponent<Collider>();
-            Physics.IgnoreCollision(distal.transform.GetComponent<Collider>(), proximalCollider); ;
+            Physics.IgnoreCollision(distalDigit.transform.GetComponent<Collider>(), proximalCollider); ;
             Physics.IgnoreCollision(proximalCollider, metacarpal.transform.GetComponent<Collider>());
 
-            return new FingerContainer(fingerTip, fingerMiddle, fingerBase, distal, proximal, metacarpal);
+            return new FingerContainer(fingerTip, fingerMiddle, fingerBase, distalDigit, proximal, metacarpal, fingerDistal);
         }
 
         private void InitRenderer(Renderer renderer)
@@ -581,9 +589,9 @@ namespace Maestro
         {
             return where switch {
                 PointOnFinger.Tip => 1.0f,
-                PointOnFinger.Distal => 1.0f,
+                PointOnFinger.DistalDigit => 1.0f,
                 PointOnFinger.Middle => 0.75f,
-                PointOnFinger.Proximal => 0.5f,
+                PointOnFinger.ProximalDigit => 0.5f,
                 PointOnFinger.Base => 0.25f,
                 _ => 0f
             };
@@ -593,7 +601,7 @@ namespace Maestro
         {
             return where switch {
                 PointOnFinger.Tip => true,
-                PointOnFinger.Distal => true,
+                PointOnFinger.DistalDigit => true,
                 _ => false
             };
         }

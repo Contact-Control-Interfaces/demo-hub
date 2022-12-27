@@ -252,6 +252,8 @@ namespace Maestro
             endedThisFrame.Add(target);
 
             target.rb.velocity = GetThrowVelocity();
+
+            ClearHeldObjectHistory();
         }
 
         public override void OnGrabbing(GrabState grabbed)
