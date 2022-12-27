@@ -43,7 +43,7 @@ public class AppleDrop : MonoBehaviour
     {
         timeOnText = FindObjectOfType<TextType>();
         //timeOnText.TextGen("Welcome");
-        timeOnText.TextGen(" Put your hand under the apple.");
+        timeOnText.TextGen(" Place your hand under the apple.");
     }
 
     public void Register(FingerCollider fc)
@@ -85,7 +85,6 @@ public class AppleDrop : MonoBehaviour
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
         
         timeOn = true;
-        //timeOnText.text = "Hold your hand still.";
         remainingTime = baseTime;
         timeOnText.TextGen("Please hold still...");
         if (CurrentCoroutine != null) {
@@ -105,7 +104,7 @@ public class AppleDrop : MonoBehaviour
 
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
         timeOn = false;
-        timeOnText.TextGen(" Put your hand under the apple.");
+        timeOnText.TextGen(" Place your hand under the apple.");
         if (CurrentCoroutine != null) {
             StopCoroutine(CurrentCoroutine);
             CurrentCoroutine = null;
@@ -148,8 +147,6 @@ public class AppleDrop : MonoBehaviour
 
         var rb = dropObject.GetComponent<Rigidbody>();
         rb.velocity += lateralOffset / timeToFall;
-
-        timeOnText.TextGen("Apple Dropped");
     }
 
     private void ResetDisplay()

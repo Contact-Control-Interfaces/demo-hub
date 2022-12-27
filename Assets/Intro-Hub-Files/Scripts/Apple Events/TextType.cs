@@ -67,8 +67,14 @@ public class TextType : MonoBehaviour
         Debug.Log(textCoroutine);
     }
 
-    public void TextGen(string text)
+    public void TextGen(string text, bool overwrite = false)
     {
+        // Interrupt current text
+        if (overwrite && textCoroutine != null) {
+            StopCoroutine(textCoroutine);
+            textCoroutine = null;
+        }
+
         if (textCoroutine == null && this.gameObject.activeInHierarchy)
         {
             Debug.Log(textCoroutine);

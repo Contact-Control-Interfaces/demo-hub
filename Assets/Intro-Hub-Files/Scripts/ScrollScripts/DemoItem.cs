@@ -18,20 +18,26 @@ public class DemoItem : MonoBehaviour
     public Image menuImageHolder;
     public Image demoImage;
 
+    //[SerializeField]
+    //private DynamicScrollView dynamicScrollView;
+
     [SerializeField]
-    private DynamicScrollView dynamicScrollView;
+    private DemoSelect demoSelector;
 
     [SerializeField]
     public bool isSelected;
 
+    public BoxCollider demoCollision;
+
     public void Start()
     {
-        dynamicScrollView = FindObjectOfType<DynamicScrollView>();
+        //dynamicScrollView = FindObjectOfType<DynamicScrollView>();
     }   
 
     public void DemoSelected()
     {
-        dynamicScrollView.newSelectedDemo(this);
+        //dynamicScrollView.newSelectedDemo(this);
+        demoSelector.newSelectedDemo(this);
         dNameText.text = dName;
 
         if (menuImageHolder != null) {
@@ -42,5 +48,15 @@ public class DemoItem : MonoBehaviour
     public void GoToScene()
     {
         SceneManager.LoadScene(whichScene);
+    }
+
+    public void DisableCollision()
+    {
+        demoCollision.enabled = false;
+    }
+
+    public void EnableCollision()
+    {
+        demoCollision.enabled = true;
     }
 }
