@@ -55,7 +55,7 @@ namespace Maestro
                 PaintType pt = paint.GetComponent<PaintType>();
                 Debug.Log(rend.material.color.ToString());
                 pt.paintColor = rend.material.color;
-                pt.splotch = splotchPrefab;
+                pt.splotchPrefab = splotchPrefab;
                 pt.size = lineWidth;
 
                 Renderer mr = paint.GetComponent<Renderer>();
@@ -67,6 +67,7 @@ namespace Maestro
 
     public class PaintType : MonoBehaviour
     {
+        public GameObject splotchPrefab { get; set; }
         public GameObject splotch { get; set; }
         public Color paintColor { get; set; }
         public float size { get; set; }
