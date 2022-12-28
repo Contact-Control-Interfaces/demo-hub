@@ -158,7 +158,7 @@ namespace Maestro
 
         private void InitSplotch(PaintType pt, ContactPoint first)
         {
-            GameObject brushObject = Instantiate(pt.splotch);
+            GameObject brushObject = Instantiate(pt.splotchPrefab);
 
             var tr = brushObject.GetComponent<TrailRenderer>();
 
@@ -294,7 +294,6 @@ namespace Maestro
             foreach (Transform child in this.transform) {//Clear brushes
                 Destroy(child.gameObject);
             }
-            CleanHands();
             _buffer.Clear();
         }
         
