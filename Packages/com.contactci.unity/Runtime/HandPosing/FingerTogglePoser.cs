@@ -43,6 +43,8 @@ namespace Maestro
         {
             if (fc.hpi.whichHand == whichHand) {
                 SetState(fc, true);
+                if (fc.index.finger != WhichFinger.Palm)
+                    LockCorresponding(FromIndex(fc.index));
             }
         }
 
@@ -101,19 +103,19 @@ namespace Maestro
             if (active && _provider != null) {
                 
                 if (ClampThumb) {
-                    ClampThumb = !ShouldUnClamp(HandBones.ThumbMiddle | HandBones.ThumbProximal);
+                    ClampThumb = !ShouldUnClamp(FromFinger(WhichFinger.Thumb));
                 }
                 if (ClampIndex) {
-                    ClampIndex = !ShouldUnClamp(HandBones.IndexDistal | HandBones.IndexMiddle | HandBones.IndexProximal);
+                    ClampIndex = !ShouldUnClamp(FromFinger(WhichFinger.Index));
                 }
                 if (ClampMiddle) {
-                    ClampMiddle = !ShouldUnClamp(HandBones.MiddleDistal | HandBones.MiddleMiddle | HandBones.MiddleProximal);
+                    ClampMiddle = !ShouldUnClamp(FromFinger(WhichFinger.Middle));
                 }
                 if (ClampRing) {
-                    ClampRing = !ShouldUnClamp(HandBones.RingDistal | HandBones.RingMiddle | HandBones.RingProximal);
+                    ClampRing = !ShouldUnClamp(FromFinger(WhichFinger.Ring));
                 }
                 if (ClampLittle) {
-                    ClampLittle = !ShouldUnClamp(HandBones.LittleDistal | HandBones.LittleMiddle | HandBones.LittleProximal);
+                    ClampLittle = !ShouldUnClamp(FromFinger(WhichFinger.Little));
                 }
 
                 lastIsAnythingClamped = isAnythingClamped;
@@ -151,11 +153,11 @@ namespace Maestro
         {
             HandBones acc = targetedBones;
 
-            if (ClampThumb) acc |= HandBones.ThumbProximal | HandBones.ThumbMiddle;
-            if (ClampIndex) acc |= HandBones.IndexProximal | HandBones.IndexMiddle | HandBones.IndexDistal;
-            if (ClampMiddle) acc |= HandBones.MiddleProximal | HandBones.MiddleMiddle | HandBones.MiddleDistal;
-            if (ClampRing) acc |= HandBones.RingProximal | HandBones.RingMiddle | HandBones.RingDistal;
-            if (ClampLittle) acc |= HandBones.LittleProximal | HandBones.LittleMiddle | HandBones.LittleDistal;
+            if (ClampThumb) acc |= FromFinger(WhichFinger.Thumb);
+            if (ClampIndex) acc |= FromFinger(WhichFinger.Index);
+            if (ClampMiddle) acc |= FromFinger(WhichFinger.Middle);
+            if (ClampRing) acc |= FromFinger(WhichFinger.Ring);
+            if (ClampLittle) acc |= FromFinger(WhichFinger.Little);
 
             return acc;
         }

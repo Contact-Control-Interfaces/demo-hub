@@ -47,7 +47,25 @@ namespace Maestro
             //maestroHand.mc.PalmBase.transform.position = t.position;
             //maestroHand.mc.PalmBase.transform.rotation = t.rotation;
         }
-        
+
+        public float GetCurrentCurl(Poser.HandBones target)
+        {
+            Vector3 eulers = GetCurrentRotation(target);
+
+            float z = eulers.z;
+            if (z > 180)
+                z = z - 360;
+
+            return z;
+        }
+
+        public Vector3 GetCurrentRotation(Poser.HandBones target)
+        {
+            PointOnHand poh = maestroHand.mc[getMaestroIndex(target)];
+
+            return poh.transform.localRotation.eulerAngles;
+        }
+
         protected MaestroIndex getMaestroIndex(Poser.HandBones bone)
         {
             switch (bone) {

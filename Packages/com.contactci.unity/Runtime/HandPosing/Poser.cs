@@ -63,9 +63,36 @@ namespace Maestro
             }
         }
 
+        public void LockCorresponding(HandBones target)
+        {
+            for (int i = 0; i < BoneCount; i++) {
+                if (target.HasFlag(AllBones[i])) {
+                    clamps[i] = -1 * _provider.GetCurrentCurl(AllBones[i]);
+                }
+            }
+        }
+
         protected virtual HandBones GetTargetMask()
         {
             return targetedBones;
+        }
+
+        public static HandBones FromIndex(MaestroIndex index)
+        {
+            return FromFinger(index.finger);
+        }
+
+        public static HandBones FromFinger(WhichFinger finger)
+        {
+            return finger switch {
+                WhichFinger.Index => HandBones.IndexProximal | HandBones.IndexMiddle | HandBones.IndexDistal,
+                WhichFinger.Middle => HandBones.MiddleProximal | HandBones.MiddleMiddle | HandBones.MiddleDistal,
+                WhichFinger.Ring => HandBones.RingProximal | HandBones.RingMiddle | HandBones.RingDistal,
+                WhichFinger.Little => HandBones.LittleProximal | HandBones.LittleMiddle | HandBones.LittleDistal,
+                WhichFinger.Thumb => HandBones.ThumbProximal | HandBones.ThumbMiddle,
+                WhichFinger.Palm => 0,
+                _ => throw new ArgumentOutOfRangeException("Couldn't convert to HandBones!")
+            };
         }
     }
 }
