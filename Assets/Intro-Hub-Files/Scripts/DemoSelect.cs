@@ -21,7 +21,7 @@ public class DemoSelect : MonoBehaviour
     [Space(5)]
     [SerializeField] private Color unSelectedColor;
 
-
+    public AudioSource clickAudio;
 
     public void newSelectedDemo(DemoItem demo)
     {
@@ -39,7 +39,7 @@ public class DemoSelect : MonoBehaviour
         sceneNum.desiredScene = selected.whichScene;
         selected.GetComponent<Image>().color = selectedColor;
         oldSelect = selected;
-        //clickAudio.Play();
+        clickAudio.Play();
         hasSelection = true;
     }
 }
