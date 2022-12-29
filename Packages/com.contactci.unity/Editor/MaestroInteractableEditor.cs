@@ -21,6 +21,8 @@ namespace Maestro
         private SerializedProperty UseRenderCenter, maintainOrientation, maintainPosition, stayInHand, SendHapticsToWholeHand;
         private SerializedProperty gripTransform, gripCollider;
         private SerializedProperty triggerTouch, triggerUntouch, triggerStay;
+        private SerializedProperty palmDiffusion, palmIgnore;
+        private SerializedProperty interactionPriority;
 
         private void OnEnable()
         {
@@ -50,6 +52,10 @@ namespace Maestro
 
             gripTransform = serializedObject.FindProperty("gripTransform");
             gripCollider = serializedObject.FindProperty("gripCollider");
+            
+            palmDiffusion = serializedObject.FindProperty(nameof(MaestroInteractable.palmDiffusion));
+            palmIgnore = serializedObject.FindProperty(nameof(MaestroInteractable.ignorePalmVibration));
+            interactionPriority = serializedObject.FindProperty(nameof(MaestroInteractable.interactionPriority));
         }
 
         public override void OnInspectorGUI()
@@ -124,6 +130,9 @@ namespace Maestro
             if (showAdvConfig) {
                 PropertyField(UseRenderCenter);
                 PropertyField(SendHapticsToWholeHand);
+                PropertyField(palmDiffusion);
+                PropertyField(palmIgnore);
+                PropertyField(interactionPriority);
                 EditorGUILayout.Space();
 
                 PropertyField(maintainOrientation);

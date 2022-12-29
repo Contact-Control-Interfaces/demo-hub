@@ -154,26 +154,35 @@ namespace Maestro
         void Update()
         {
             //update the public touching variable
-            AllTouching.RemoveAll(x => Inactive(x));
-            DefaultTouching.RemoveAll(x => Inactive(x));
+            AllTouching.RemoveAll(Inactive);
+            DefaultTouching.RemoveAll(Inactive);
 
-            if (AllTouching.Count > 0) {
-                SortedSet<MaestroInteractable> ints;
+            if (AllTouching.Count > 0)
+            {
+                touching = FindPriorityInteraction();
 
-                switch (hpi.interactionPriority) {
-                    default:
-                    case InteractionPriority.PrioritizeAmplitude:
-                        ints = new SortedSet<MaestroInteractable>(AllTouching.Select(x => mapper[x]), new PrioritizeAmplitude());
-                        break;
-                    case InteractionPriority.PrioritizeVibrationEffect:
-                        ints = new SortedSet<MaestroInteractable>(AllTouching.Select(x => mapper[x]), new PrioritizeVibrationEffect());
-                        break;
+                if(touching == null) //no interactables found with set priority
+                {
+                    SortedSet<MaestroInteractable> ints;
+
+                    switch (hpi.interactionPriority)
+                    {
+                        default:
+                        case InteractionPriority.PrioritizeAmplitude:
+                            ints = new SortedSet<MaestroInteractable>(AllTouching.Select(x => mapper[x]),
+                                new PrioritizeAmplitude());
+                            break;
+                        case InteractionPriority.PrioritizeVibrationEffect:
+                            ints = new SortedSet<MaestroInteractable>(AllTouching.Select(x => mapper[x]),
+                                new PrioritizeVibrationEffect());
+                            break;
+                    }
+
+                    if (ints.Count > 0)
+                        touching = ints.Max;
+                    else
+                        Debug.LogWarning("No interactable for colliders!");
                 }
-
-                if (ints.Count > 0)
-                    touching = ints.Max;
-                else
-                    Debug.LogWarning("No interactable for colliders!");
             } else {
                 touching = null;
             }
@@ -277,6 +286,15 @@ namespace Maestro
         {
             if (TryGetInteractable(other, out MaestroInteractable interactable)) {
                 interactable.OnTriggerTouch(this);
+                
+                if (!AllTouching.Contains(other))
+                    AllTouching.Add(other);
+
+                if (hpi.grabManager == null) {
+                    interactable.Touch(this);
+                } else {
+                    hpi.grabManager.Touch(interactable, this);
+                }
             }
         }
 
@@ -284,6 +302,21 @@ namespace Maestro
         {
             if (TryGetInteractable(other, out MaestroInteractable interactable)) {
                 interactable.UnTriggerTouch(this);
+            }
+            if (AllTouching.Remove(other))
+            {
+                if (mapper.TryGetValue(other, out interactable))
+                {
+                    if (hpi.grabManager == null) {
+                        interactable.Untouch(this);
+                    } else {
+                        hpi.grabManager.UnTouch(interactable, this);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Removed collider without mapping!");
+                }
             }
         }
 
@@ -325,6 +358,27 @@ namespace Maestro
             }
 
             return parentInteractable != null && c.GetComponentInParent<FingerCollider>() == null;
+        }
+
+        private MaestroInteractable FindPriorityInteraction()
+        {
+            int max = 0;
+            MaestroInteractable top = null;
+            
+            foreach (var c in AllTouching)
+            {
+                var mi = mapper[c];
+                if (mi.interactionPriority > max)
+                {
+                    max = mi.interactionPriority;
+                    top = mi;
+                }
+            }
+
+            if (max == 0)
+                return null;
+
+            return top;
         }
     }
 }

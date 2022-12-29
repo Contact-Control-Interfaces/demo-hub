@@ -39,6 +39,9 @@ public class Apple : MonoBehaviour
     [Header("Lock Points")]
     public Transform resetPoint;
     public float resetHeight = 2.2f;
+    
+    public HapticEffect DropEffect = new HapticEffect(){Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100){OneShot = true}};
+    public float DropEffectDuration = 500; //ms
 
     private bool BloomUp;
     private bool BloomDown;
@@ -51,6 +54,7 @@ public class Apple : MonoBehaviour
     private Vector3 originalLocalScale;
 
     private Coroutine biteCouroutine;
+    private Coroutine dropCoroutine;
 
     public bool StillAttachedToTree => rb.constraints == RigidbodyConstraints.FreezeAll;
 
@@ -130,10 +134,17 @@ public class Apple : MonoBehaviour
             StopCoroutine(biteCouroutine);
             biteCouroutine = null;
         }
+
+        if (dropCoroutine != null)
+        {
+            StopCoroutine(dropCoroutine);
+            dropCoroutine = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        dropCoroutine = StartCoroutine(DropHaptics());
        if(other.gameObject.name == "RightLockPoint" || other.gameObject.name == "LeftLockPoint")
         {
             HandBind(other);
@@ -258,6 +269,16 @@ public class Apple : MonoBehaviour
         yield return new WaitForSeconds(duration);
         interactable.stayHaptics.Vibration = VibrationEffect.None;
 
+        interactable.SendHapticsToWholeHand = false;
+    }
+
+    IEnumerator DropHaptics()
+    {
+        var interactable = dropObject.GetComponent<MaestroInteractable>();
+        interactable.SendHapticsToWholeHand = true;
+        interactable.SetHapticOverride(DropEffect);
+        yield return new WaitForSeconds(DropEffectDuration / 1000f);
+        interactable.ResetOverride();
         interactable.SendHapticsToWholeHand = false;
     }
 
