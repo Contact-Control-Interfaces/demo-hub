@@ -39,6 +39,16 @@ public class Apple : MonoBehaviour
     [Header("Lock Points")]
     public Transform resetPoint;
     public float resetHeight = 2.2f;
+
+    public Transform mouthTransform;
+    public SphereCollider failsafeBubble;
+
+    [Header("Bite timing")]
+    public float firstBite = 0.15f;
+    public float secondBite = 0.8f;
+    public float eachBiteDuration = 0.1f;
+
+    private float BiteDuration => secondBite + eachBiteDuration;
     
     public HapticEffect DropEffect = new HapticEffect(){Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100){OneShot = true}};
     public float DropEffectDuration = 500; //ms
@@ -56,7 +66,11 @@ public class Apple : MonoBehaviour
     private Coroutine biteCouroutine;
     private Coroutine dropCoroutine;
 
-    public bool StillAttachedToTree => rb.constraints == RigidbodyConstraints.FreezeAll;
+    private bool bitten = false;
+
+    public bool StillAttachedToTree => rb != null && rb.constraints == RigidbodyConstraints.FreezeAll;
+
+
 
     private void Start()
     {
@@ -79,13 +93,7 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
-
-        if(BloomUp)
-        {
-            touchTrigger.SetActive(false);
-        }
-
-        if (dropObject.transform.position.y <= resetHeight && !EffectDone)
+        if (dropObject.transform.position.y <= resetHeight && !bitten)
         {
             ResetApple();
         }
@@ -103,13 +111,13 @@ public class Apple : MonoBehaviour
                 {
                     TreeDisable();
                     DisplayPanel();
+
                     BloomDown = true;
                     BloomUp = false;
                 }
             }
             else if (BloomDown)
             {
-
                 if (bloomEffect.intensity.value > 0f)
                 {
                     bloomEffect.intensity.value -= 10f;
@@ -122,11 +130,9 @@ public class Apple : MonoBehaviour
                         BloomDown = false;
                         bloomEffect.intensity.value = 100f;
                         MaterialChange();
-                        touchTrigger.SetActive(false);
                         EffectDone = true;
-                        textType.TextGen("");
-                        Destroy(gameObject);
 
+                        Destroy(gameObject);
                     }
                 }
             }
@@ -150,10 +156,6 @@ public class Apple : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         dropCoroutine = StartCoroutine(DropHaptics());
-       if(other.gameObject.name == "RightLockPoint" || other.gameObject.name == "LeftLockPoint")
-        {
-            HandBind(other);
-        }
 
         if (other.gameObject.tag == "MainCamera" && biteCouroutine == null)
         {
@@ -164,11 +166,8 @@ public class Apple : MonoBehaviour
 
     private void TestBloom()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-
-            //var volume = this.GetComponent<Volume>();
-            //if (volume.profile.TryGet<Bloom>(out bloomEffect))
             if (universalBloom.TryGet<Bloom>(out bloomEffect))
             {
                 bloomEffect.intensity.value = 0f;
@@ -214,8 +213,7 @@ public class Apple : MonoBehaviour
     private void ResetApple()
     {
         this.transform.SetParent(null);
-        touchTrigger.SetActive(true);
-        textType.gameObject.SetActive(true);
+
         dropObject.GetComponent<Renderer>().material = hologramGlow;
 
         rb.useGravity = false;
@@ -224,57 +222,77 @@ public class Apple : MonoBehaviour
         dropObject.transform.position = resetPoint.position;
         dropObject.transform.rotation = originalRotation;
         dropObject.transform.localScale = originalLocalScale;
-    }
 
-    void DoDelayAction(float delayTime)
-    {
-        StartCoroutine(DelayAction(delayTime));
-    }
-
-    IEnumerator DelayAction(float delayTime)
-    {
-        //Wait for the specified delay time before continuing.
-        //Debug.Log("Tick");
-        yield return new WaitForSeconds(delayTime);
-
-        //Do the action after the delay time has finished.
+        // Gross but easiest way to trigger another drop if the hand hasn't left the box
+        AppleDrop drop = FindObjectOfType<AppleDrop>();
+        drop.TryStartTime();
     }
 
     public void Bite()
     {
         touchTrigger.SetActive(false);
+
+        // Don't allow user to drop the apple at this point
+        failsafeBubble.radius = 10f;
+
         biteSound.Play();
-	biteCouroutine = StartCoroutine(BiteHaptics());
+        biteCouroutine = StartCoroutine(BiteHaptics());
+
+        bitten = true;
+
+        // Lock apple in place relative to camera
+        dropObject.transform.parent = Camera.main.transform;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        // Lerp the apple toward the mouth during bite
+        StartCoroutine(LerpRoutine());
+
         if (universalBloom.TryGet<Bloom>(out bloomEffect))
         {
-            textType.gameObject.SetActive(false);
             bloomEffect.intensity.value = 0f;
             BloomUp = true;
+        }
+    }
+
+    IEnumerator LerpRoutine()
+    {
+        float totalWait = BiteDuration;
+        float elapsed = 0f;
+
+        Vector3 startPosition = dropObject.transform.position;
+
+        while (elapsed < totalWait) {
+            elapsed += Time.fixedDeltaTime;
+
+            dropObject.transform.position = Vector3.Lerp(startPosition, mouthTransform.position, elapsed / totalWait);
+            
+            yield return new WaitForFixedUpdate();
         }
     }
 
     IEnumerator BiteHaptics()
     {
         MaestroInteractable interactable = dropObject.GetComponent<MaestroInteractable>();
-        float firstBite = 0.15f;
-        float secondBite = 0.8f;
-        float duration = 0.1f;
 
         interactable.SendHapticsToWholeHand = true;
 
         yield return new WaitForSeconds(firstBite);
         interactable.stayHaptics.Vibration = new SharpTick(NarrowThreeOptions._100);
         interactable.stayHaptics.Vibration.OneShot = true;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(eachBiteDuration);
         interactable.stayHaptics.Vibration = VibrationEffect.None;
 
-        yield return new WaitForSeconds(secondBite - (firstBite + duration));
+        yield return new WaitForSeconds(secondBite - (firstBite + eachBiteDuration));
         interactable.stayHaptics.Vibration = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
         interactable.stayHaptics.Vibration.OneShot = true;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(eachBiteDuration);
         interactable.stayHaptics.Vibration = VibrationEffect.None;
 
         interactable.SendHapticsToWholeHand = false;
+
+        // Stop showing apple after bite
+        var rend = dropObject.GetComponent<Renderer>();
+        rend.enabled = false;
     }
 
     IEnumerator DropHaptics()
@@ -285,16 +303,5 @@ public class Apple : MonoBehaviour
         yield return new WaitForSeconds(DropEffectDuration / 1000f);
         interactable.ResetOverride();
         interactable.SendHapticsToWholeHand = false;
-    }
-
-    public void HandBind(Collider other)
-    {
-        this.transform.position = other.transform.position;
-        this.transform.SetParent(other.transform);
-        rb.isKinematic = true;
-        DoDelayAction(2);
-        this.transform.SetParent(null);
-        //Debug.Log("Delay Done");
-        rb.isKinematic = false;
     }
 }
