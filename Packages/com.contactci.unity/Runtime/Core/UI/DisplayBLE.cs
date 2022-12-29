@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Maestro.UI
 {
@@ -59,16 +60,31 @@ namespace Maestro.UI
             return is_bluetooth_available();
 #endif
         }
+        
+        public static void SetTextForHand(WhichHand whichHand, string text)
+        {
+            switch (whichHand)
+            {
+                case WhichHand.RightHand:
+                    SetRightText(text);
+                    break;
+                case WhichHand.LeftHand:
+                    SetLeftText(text);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(whichHand), whichHand, null);
+            }
+        }
 
         public static void SetLeftText(string text)
         {
-            instance.overrideLeftText = true;
+            instance.overrideLeftText = !string.IsNullOrEmpty(text);
             SetText(text, instance.leftText);
         }
 
         public static void SetRightText(string text)
         {
-            instance.overrideRightText = true;
+            instance.overrideRightText = !string.IsNullOrEmpty(text);
             SetText(text, instance.rightText);
         }
 
@@ -133,8 +149,8 @@ namespace Maestro.UI
         private void Awake()
         {
 #if !UNITY_ANDROID
-            if (debug)
-                install_log_callback(UnityLog);
+            //if (debug)
+            //    install_log_callback(UnityLog);
 #endif
         }
 
@@ -310,6 +326,10 @@ namespace Maestro.UI
             IMaestroHand glove = GetHand(handedness);
             if (glove != null) {
                 bool connected = glove.Connected;
+                
+                if(connected && debug)
+                    DebugUpdate(handedness);
+
                 bool overrideText = GetOverride(handedness);
 
                 GetPanel(handedness).SetActive(showPanel(handedness) && (!connected || overrideText));
@@ -359,5 +379,96 @@ namespace Maestro.UI
                 panel.transform.rotation = Quaternion.LookRotation(mainCamera.transform.position - panel.transform.position);
             }
         }
+               private class HandDebug
+        {
+            private Dictionary<WhichHand, Hand_Internal> _hands;
+            public HandDebug()
+            {
+                _hands = new Dictionary<WhichHand, Hand_Internal>();
+                _hands[WhichHand.LeftHand] = new Hand_Internal();
+                _hands[WhichHand.RightHand] = new Hand_Internal();
+            }
+
+            public void Push(WhichHand whichHand, string text)
+            {
+                _hands[whichHand].Push(text);
+            }
+
+            public string GetText(WhichHand whichHand)
+            {
+                return _hands[whichHand].GetText();
+            }
+
+            private class Hand_Internal
+            {
+                private DateTime _start = DateTime.Now;
+                private const int MaxLines = 5;
+                private Queue<Tuple<TimeSpan, string>> _history = new Queue<Tuple<TimeSpan, string>>(MaxLines);
+                private string _lastMessage = string.Empty;
+                private StringBuilder sb = new StringBuilder();
+
+                public void Push(string text)
+                {
+                    if (string.IsNullOrEmpty(text) || text.Equals(_lastMessage))
+                        return;
+
+                    _lastMessage = text;
+
+                    if (_history.Count >= MaxLines)
+                        _history.Dequeue();
+
+                    _history.Enqueue(new Tuple<TimeSpan, string>(DateTime.Now - _start, text));
+                }
+
+                public string GetText()
+                {
+                    sb.Clear();
+                    foreach (var tp in _history)
+                    {
+                        sb.AppendLine($"{tp.Item1.TotalSeconds:N3}: {tp.Item2}");
+                    }
+
+                    return sb.ToString();
+                }
+            }
+        }
+
+        private static HandDebug _debugs = new HandDebug();
+        
+        private void DebugUpdate(WhichHand hand)
+        {
+            var h = (MaestroHand)GetHand(hand);
+            var sb = new StringBuilder();
+            var sb1 = new StringBuilder();
+            var sb2 = new StringBuilder();
+                foreach (var fc in h.mc.GetFingers())
+                {
+                    MaestroInteractable interactable = null;
+                    foreach (PointOnHand pof in fc)
+                    {
+                        if (h.AllTouching.TryGetValue(pof.index, out interactable) && interactable)
+                        {
+                            var haptic = interactable.currentHaptics;
+                            
+                            sb.Append($"{haptic.Vibration.Value} ({haptic.Vibration.Modifier}) ");
+                            sb1.Append($"{haptic.Amplitude} ");
+                            sb2.Append($"{interactable.name}, ");
+                            break;
+                        }
+                    }
+                    if (interactable == null)
+                    {
+                        sb.Append("0 (0) ");
+                        sb1.Append("0 ");
+                    }
+                }
+
+            sb.Append("| ").Append(sb1).Append(":").Append(sb2);
+            
+            _debugs.Push(hand, sb.ToString());
+            
+            SetTextForHand(hand, _debugs.GetText(hand));
+        }
+
     }
 }

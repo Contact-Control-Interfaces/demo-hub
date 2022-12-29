@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
+using Maestro.Vibration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,22 +33,28 @@ public class AppleDrop : MonoBehaviour
     public float remainingTime;
     public bool timeOn; //test
 
-
+    [Header("Haptics")]
+    [Tooltip("Haptic effect when hand enters the trigger area")]
+    public HapticEffect EnterHaptics = new HapticEffect{ Amplitude = 50, Vibration = new SoftBump(WideThreeOptions._30){OneShot = true} };
     
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
 
     private IMaestroHand lastHand;
+    private MaestroInteractable interactable;
     
     private void Start()
     {
         timeOnText = FindObjectOfType<TextType>();
         //timeOnText.TextGen("Welcome");
         timeOnText.TextGen(" Place your hand under the apple.");
+        interactable = GetComponent<MaestroInteractable>();
+        interactable.SendHapticsToWholeHand = true;
     }
 
     public void Register(FingerCollider fc)
     {
+        interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
 
         lastHand = fc.hpi;
@@ -59,6 +66,7 @@ public class AppleDrop : MonoBehaviour
 
     public void Deregister(FingerCollider fc)
     {
+        interactable.ResetOverride();
         CurrentlyColliding--;
 
         if (CurrentlyColliding <= 0) {
@@ -81,7 +89,7 @@ public class AppleDrop : MonoBehaviour
     {
         if (!dropObject.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
-
+        
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
         
         timeOn = true;
@@ -99,6 +107,8 @@ public class AppleDrop : MonoBehaviour
 
     public void StopTime()
     {
+        interactable.ResetOverride();
+        
         if (!dropObject.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
 
@@ -136,6 +146,7 @@ public class AppleDrop : MonoBehaviour
     private void OnEnd()
     {
         dropObject.Pluck();
+        interactable.ResetOverride();
 
         Vector3 offsetFromPalm = lastHand.transforms.MiddleKnuckle.position - dropObject.transform.position;
 

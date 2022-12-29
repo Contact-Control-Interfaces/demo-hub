@@ -124,11 +124,13 @@ namespace Maestro
          *************/
 
         // Palm approximation
-        private PrismGenerator prismGenerator;
+        internal PrismGenerator prismGenerator;
 
         // Persistance storage
         private Dictionary<MaestroIndex, MaestroInteractable> persistInteractables;
         private Dictionary<MaestroIndex, float> persistTimes;
+
+        public Dictionary<MaestroIndex, MaestroInteractable> AllTouching;
 
         private bool Inheriting { get { return !(settingsOverride || manager == null); } }
         private bool lastPalmTouch;
@@ -139,6 +141,7 @@ namespace Maestro
             // Init collections
             persistInteractables = new Dictionary<MaestroIndex, MaestroInteractable>();
             persistTimes = new Dictionary<MaestroIndex, float>();
+            AllTouching = new Dictionary<MaestroIndex, MaestroInteractable>();
 
             this.ShowCollidersWhileTouching = true;
 
@@ -517,57 +520,90 @@ namespace Maestro
             if (grabTarget != null && grabTarget.SendHapticsToWholeHand) {
                 nextHaptics.SetAllAmplitudes(grabTarget.currentHaptics.Amplitude);
                 nextHaptics.SetAllVibrationEffects(grabTarget.currentHaptics.Vibration);
-            } else {
+            }
+            else {
+                //find interactable touching palm in case it wants to override fingers
+                MaestroInteractable palmTouching = null;
+                if (prismGenerator.AnyTouching && prismGenerator.Touching != null)
+                {
+                    // The palm is touching some MaestroInteractable
+                    palmTouching = prismGenerator.Touching;
+                }
 
                 foreach (FingerContainer finger in mc.GetFingers()) {
 
                     MaestroIndex? touchIndex = null;
                     MaestroIndex? contactIndex = null;
+                    MaestroInteractable touching = null;
 
                     // Traverse tip to base, get first that's touching something
                     foreach (PointOnHand poh in finger) {
-                        if (!contactIndex.HasValue && poh.fc.Contacting) {
-                            contactIndex = poh.index;
+                        UpdatePersistentHaptics(poh.index);
+                        var time = TryGetPersistentHaptics(poh.index, out var persistInteractable);
+                        
+                        if (poh.Contacting)
+                            contactIndex = poh.fc.index;
+                        
+                        if (poh.fc.touching)
+                        {
+                            touching = poh.fc.touching;
+                            touchIndex = poh.fc.index;
                         }
 
-                        if (poh.fc.touching) {
-                            touchIndex = poh.index;
-                            if (!contactIndex.HasValue)
-                                contactIndex = touchIndex;
+                        //sort out which of the interactable sources we should choose
+                        if (touching)
+                        {
+                            //prefer persistent over finger
+                            if (persistInteractable && persistInteractable.interactionPriority >= touching.interactionPriority) 
+                                touching = persistInteractable;
+                            //prefer finger over palm
+                            if (palmTouching && palmTouching.interactionPriority > touching.interactionPriority)
+                                touching = palmTouching;
+                        }
+                        else
+                        {
+                            //prefer persistent over palm
+                            if (persistInteractable && palmTouching)
+                                touching = persistInteractable.interactionPriority >= palmTouching.interactionPriority ? persistInteractable : palmTouching;
+                            //find anything that isn't null
+                            else if (persistInteractable)
+                                touching = persistInteractable;
+                            else if (palmTouching)
+                                touching = palmTouching;
+                        }
+
+
+                        AllTouching[poh.index] = touching;
+                        if (touching)
                             break;
-                        }
                     }
-
                     if (touchIndex.HasValue) {
                         // We're touching some MaestroInteractable with this finger
                         PointOnFinger source = touchIndex.Value.point;
-                        MaestroInteractable touching = finger[source].fc.touching;
                         float weight = GetWeight(source);
-
-                        if (touching != null) {
+                        if (touching.isPersistent)
+                        {
+                            SetPersistentHaptics(touchIndex.Value, touching);
+                        }
+                        //palm collider either doesn't exist or has a lower priority
+                        if (touching != palmTouching)
+                        {
                             nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(weight * touching.currentHaptics.Amplitude));
 
-                            if (ShouldApplyVibration(source)) {
-                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value, touching.currentHaptics.Vibration);
-                            }
-
-                            if (touching.isPersistent) {
-                                SetPersistentHaptics(touchIndex.Value, touching);
+                            if (ShouldApplyVibration(source))
+                            {
+                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value,
+                                    touching.currentHaptics.Vibration);
                             }
                         }
-                    } else if (prismGenerator.AnyTouching && prismGenerator.Touching != null) {
-                        // The palm is touching some MaestroInteractable
-                        float palmDiffusion = 0.75f;
-                        MaestroInteractable touching = prismGenerator.Touching;
-                        if (touching.isPersistent) {
-                            PersistWholeHand(touching);
-                        } else {
-                            nextHaptics.SetAllAmplitudes((byte)(palmDiffusion * touching.currentHaptics.Amplitude));
-
-                            // Ignore palm vibration
-                            //nextHaptics.SetAllVibrationEffects(touchingInt.currentHaptics.Vibration);
+                        else if (palmTouching != null) //palm collider takes priority
+                        {
+                            nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(palmTouching.palmDiffusion * palmTouching.currentHaptics.Amplitude));
+                            if(!palmTouching.ignorePalmVibration)
+                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value, palmTouching.currentHaptics.Vibration);
                         }
-                    } else if (contactIndex.HasValue && !interactablesOnly) {
+                    }  
+                    else if (contactIndex.HasValue && !interactablesOnly) {
                         // This finger is touching some generic collider in the scene
                         PointOnFinger where = contactIndex.Value.point;
 
@@ -576,6 +612,11 @@ namespace Maestro
                         if (ShouldApplyVibration(contactIndex.Value.point)) {
                             nextHaptics.SetVibrationEffectFromIndex(contactIndex.Value, defaultEffect.Vibration);
                         }
+                    }
+                    else if (palmTouching && palmTouching.SendHapticsToWholeHand)
+                    {
+                        nextHaptics.SetAmplitudeFromIndex(finger.Tip.index, (byte)(palmTouching.palmDiffusion * palmTouching.currentHaptics.Amplitude));
+                        nextHaptics.SetVibrationEffectFromIndex(finger.Tip.index, palmTouching.currentHaptics.Vibration);
                     }
                 }
             }
@@ -613,6 +654,14 @@ namespace Maestro
                 && persistTimes[index] > Time.fixedDeltaTime;
         }
 
+        private float TryGetPersistentHaptics(MaestroIndex index, out MaestroInteractable interactable)
+        {
+            if (persistInteractables.TryGetValue(index, out interactable))
+                return persistTimes[index];
+            interactable = null;
+            return -1;
+        }
+
         private void SetPersistentHaptics(MaestroIndex index, MaestroInteractable persistent)
         {
             persistInteractables[index] = persistent;
@@ -621,6 +670,8 @@ namespace Maestro
 
         private void UpdatePersistentHaptics(MaestroIndex index)
         {
+            if (!HasPersistentHaptics(index))
+                return;
             persistTimes[index] -= Time.fixedDeltaTime;
             if (persistTimes[index] <= 0) {
                 persistTimes.Remove(index);

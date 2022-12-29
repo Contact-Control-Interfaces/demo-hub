@@ -128,16 +128,21 @@ namespace Maestro
 
         private MaestroInteractable GetCurrentTouching()
         {
+            MaestroInteractable touching = null;
+            int max = 0;
             if (fcs != null) {
-                var allTouching = fcs.Where(x => x.Contacting);
-                if (allTouching != null && allTouching.Count() > 0) {
-                    var allTouchingInteractables = allTouching.Select(x => x.touching);
-                    if (allTouchingInteractables != null && allTouchingInteractables.Count() > 0) {
-                        return allTouchingInteractables.First();
+                foreach (var mi in fcs.Where(x => x.Contacting).Select(x => x.touching))
+                {
+                    if (mi && mi.interactionPriority > max)
+                    {
+                        max = mi.interactionPriority;
+                        touching = mi;
                     }
                 }
             }
-            return null;
+            if(max == 0)
+                return null;
+            return touching;
         }
 
         /*

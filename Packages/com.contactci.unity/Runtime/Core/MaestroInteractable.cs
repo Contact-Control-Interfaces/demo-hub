@@ -61,6 +61,16 @@ namespace Maestro
         [Header("Special Behavior")]
         public bool isPersistent = false;
         public float persistenceDuration = 0.0f;
+        [Tooltip("Force feedback will be multiplied by this value when contacting only the palm")]
+        public float palmDiffusion = 0.75f;
+        [Tooltip("Ignore vibration when only contacting the palm")]
+        public bool ignorePalmVibration = true;
+        
+        //interaction priority allows manually sorting interactables
+        //leaving this value at 0 disables the behavior and reverts to haptic sorting
+        //see FingerCollider.FindPriorityInteraction()
+        [Tooltip("Values greater than 0 represent higher priority")]
+        public int interactionPriority = 0;
 
         public HapticEffect currentHaptics
         {
@@ -117,18 +127,21 @@ namespace Maestro
         {
             if (onTriggerTouch != null)
                 onTriggerTouch.Invoke(finger);
+            currentHaptics = startHaptics;
         }
 
         public void WhileTriggerTouch(FingerCollider finger)
         {
             if (whileTriggerTouch != null)
                 whileTriggerTouch.Invoke(finger);
+            currentHaptics = stayHaptics;
         }
 
         public void UnTriggerTouch(FingerCollider finger)
         {
             if (unTriggerTouch != null)
                 unTriggerTouch.Invoke(finger);
+            currentHaptics = exitHaptics;
         }
 
         public void Grab()
