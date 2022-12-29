@@ -80,6 +80,11 @@ public class Apple : MonoBehaviour
     void Update()
     {
 
+        if(BloomUp)
+        {
+            touchTrigger.SetActive(false);
+        }
+
         if (dropObject.transform.position.y <= resetHeight && !EffectDone)
         {
             ResetApple();
