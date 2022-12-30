@@ -93,7 +93,7 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
-        if (dropObject.transform.position.y <= resetHeight && !bitten)
+       if (dropObject.transform.position.y <= resetHeight && !bitten)
         {
             ResetApple();
         }
@@ -210,9 +210,10 @@ public class Apple : MonoBehaviour
         }
     }
 
-    private void ResetApple()
+    public void ResetApple()
     {
         this.transform.SetParent(null);
+        this.GetComponent<ReturnToSpawn>().Poof();
 
         dropObject.GetComponent<Renderer>().material = hologramGlow;
 
