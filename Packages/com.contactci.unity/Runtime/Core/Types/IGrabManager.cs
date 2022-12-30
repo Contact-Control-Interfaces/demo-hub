@@ -57,7 +57,9 @@ namespace Maestro
 
         protected List<Vector3> HeldObjectLastVelocities = new List<Vector3>();
         protected Vector3? HeldObjectLastPosition = null;
-        protected int HistoryCount = 10;
+
+        public int HistoryCount = 1;
+        public float ThrowScalar = 3f;
 
         public bool DisallowDropping;
 
@@ -204,7 +206,7 @@ namespace Maestro
             if (HeldObjectLastVelocities.Count <= 0)
                 return Vector3.zero;
 
-            return HeldObjectLastVelocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (HeldObjectLastVelocities.Count * Time.fixedDeltaTime);
+            return ThrowScalar * HeldObjectLastVelocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (HeldObjectLastVelocities.Count * Time.fixedDeltaTime);
         }
 
         protected virtual bool Inactive(MaestroInteractable interactable)

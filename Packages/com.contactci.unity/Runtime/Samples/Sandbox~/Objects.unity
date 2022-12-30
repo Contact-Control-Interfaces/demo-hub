@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.014691368, g: 0.006482692, b: 0.013616191, a: 1}
+  m_IndirectSpecularColor: {r: 0.017604778, g: 0.007871485, b: 0.016349118, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -162,6 +162,7 @@ Transform:
   - {fileID: 1129033247}
   - {fileID: 1754261551}
   - {fileID: 1292835832}
+  - {fileID: 1753695172}
   m_Father: {fileID: 819736509}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -405,6 +406,246 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107686745}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &150245740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 150245741}
+  - component: {fileID: 150245747}
+  - component: {fileID: 150245746}
+  - component: {fileID: 150245745}
+  - component: {fileID: 150245744}
+  - component: {fileID: 150245743}
+  - component: {fileID: 150245742}
+  m_Layer: 0
+  m_Name: L Cube (14)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &150245741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_LocalRotation: {x: 0.029727265, y: 0, z: 0.9995581, w: 0}
+  m_LocalPosition: {x: 6.3, y: 46.68, z: -3.5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 3.407, z: 180}
+--- !u!114 &150245742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &150245743
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &150245744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &150245745
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &150245746
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &150245747
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150245740}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &162584359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -471,7 +712,6 @@ GameObject:
   m_Component:
   - component: {fileID: 170076735}
   - component: {fileID: 170076734}
-  - component: {fileID: 170076736}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -555,102 +795,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
---- !u!82 &170076736
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170076733}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 43e91bc5c04267a4c9d8fa0ae251f85b, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &173333047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1521,246 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370797631}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &417068293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 417068294}
+  - component: {fileID: 417068300}
+  - component: {fileID: 417068299}
+  - component: {fileID: 417068298}
+  - component: {fileID: 417068297}
+  - component: {fileID: 417068296}
+  - component: {fileID: 417068295}
+  m_Layer: 0
+  m_Name: L Cube (1)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &417068294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_LocalRotation: {x: -0.19669062, y: -0, z: 0.98046565, w: 0}
+  m_LocalPosition: {x: -19, y: 26.000006, z: -6.7}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -22.687, z: 180}
+--- !u!114 &417068295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &417068296
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &417068297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &417068298
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &417068299
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &417068300
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417068293}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &418979409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1791,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418979409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.483, y: 0.2366, z: 0.082}
+  m_LocalPosition: {x: 0.124, y: 0.2366, z: -0.098}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 103508277}
@@ -1886,7 +2270,7 @@ PrefabInstance:
     - target: {fileID: 5674895181912358687, guid: 8ed28cbcebe96a6458ff26197ec05ef5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5674895181912358687, guid: 8ed28cbcebe96a6458ff26197ec05ef5,
         type: 3}
@@ -1946,6 +2330,246 @@ MeshCollider:
     type: 3}
   m_PrefabInstance: {fileID: 474574580}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &573733512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 573733513}
+  - component: {fileID: 573733519}
+  - component: {fileID: 573733518}
+  - component: {fileID: 573733517}
+  - component: {fileID: 573733516}
+  - component: {fileID: 573733515}
+  - component: {fileID: 573733514}
+  m_Layer: 0
+  m_Name: L Cube (7)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &573733513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_LocalRotation: {x: -0.22880968, y: -0, z: 0.9734712, w: 0}
+  m_LocalPosition: {x: -23.96, y: 36.24, z: -9.73}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: -26.454, z: 180}
+--- !u!114 &573733514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &573733515
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &573733516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &573733517
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &573733518
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &573733519
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573733512}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &584100800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2255,6 +2879,825 @@ MonoBehaviour:
   destroyInstead: 0
   resetColliders:
   - {fileID: 474574581}
+--- !u!1 &603120320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 603120322}
+  - component: {fileID: 603120321}
+  m_Layer: 0
+  m_Name: Reset Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &603120321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603120320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e2dd4cf83e8284a8c887a57f88ccf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {x: 0, y: 0, z: 0}
+  buttonTrans: {fileID: 1370073790}
+  pressDirection: 1
+  invertAxis: 0
+  isPressed: 0
+  PressDepth: 0.04
+  slideForce: 0.25
+  pitchOffset: -0.375
+  ignored: []
+  Interactable: {fileID: 0}
+  pressedHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  castDirection: 4
+  castDistance: 0.1
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 987489704}
+        m_TargetAssemblyTypeName: Maestro.Core.Utilities.ReturnChildrenToSpawn, com.contactci.unity.Runtime.Core
+        m_MethodName: PoofAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 1
+    00000000:
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 5
+        options:
+          id: 1
+    00000001:
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
+--- !u!4 &603120322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603120320}
+  m_LocalRotation: {x: -0, y: -0.9721636, z: -0, w: -0.23430301}
+  m_LocalPosition: {x: 0.7589319, y: 1.0421, z: 0.33865446}
+  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
+  m_Children:
+  - {fileID: 1370073790}
+  - {fileID: 1707064522}
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: -207.101, z: 0}
+--- !u!1 &637322092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637322093}
+  - component: {fileID: 637322099}
+  - component: {fileID: 637322098}
+  - component: {fileID: 637322097}
+  - component: {fileID: 637322096}
+  - component: {fileID: 637322095}
+  - component: {fileID: 637322094}
+  m_Layer: 0
+  m_Name: L Cube (15)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &637322093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_LocalRotation: {x: 0.15009613, y: 0, z: 0.9886714, w: 0}
+  m_LocalPosition: {x: 18.8, y: 46.679996, z: -5.7}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 17.265, z: 180}
+--- !u!114 &637322094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &637322095
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &637322096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &637322097
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &637322098
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &637322099
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637322092}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &685351971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 685351972}
+  - component: {fileID: 685351978}
+  - component: {fileID: 685351977}
+  - component: {fileID: 685351976}
+  - component: {fileID: 685351975}
+  - component: {fileID: 685351974}
+  - component: {fileID: 685351973}
+  m_Layer: 0
+  m_Name: L Cube (19)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &685351972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_LocalRotation: {x: -0.095593885, y: -0, z: 0.9954204, w: 0}
+  m_LocalPosition: {x: -7.1, y: 67.25, z: -4.2}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: -10.971, z: 180}
+--- !u!114 &685351973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &685351974
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &685351975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &685351976
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &685351977
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &685351978
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685351971}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &718331110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718331111}
+  - component: {fileID: 718331117}
+  - component: {fileID: 718331116}
+  - component: {fileID: 718331115}
+  - component: {fileID: 718331114}
+  - component: {fileID: 718331113}
+  - component: {fileID: 718331112}
+  m_Layer: 0
+  m_Name: L Cube (16)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &718331111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_LocalRotation: {x: -0.12830237, y: -0, z: 0.9917351, w: 0}
+  m_LocalPosition: {x: -12.9, y: 56.92, z: -5.5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: -14.743, z: 180}
+--- !u!114 &718331112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &718331113
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &718331114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &718331115
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &718331116
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &718331117
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718331110}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &758709550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,6 +3794,246 @@ Transform:
   m_Father: {fileID: 1473862731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &760116430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760116431}
+  - component: {fileID: 760116437}
+  - component: {fileID: 760116436}
+  - component: {fileID: 760116435}
+  - component: {fileID: 760116434}
+  - component: {fileID: 760116433}
+  - component: {fileID: 760116432}
+  m_Layer: 0
+  m_Name: L Cube (8)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &760116431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_LocalRotation: {x: -0.1437258, y: -0, z: 0.9896175, w: 0}
+  m_LocalPosition: {x: -12.32, y: 36.240013, z: -4.98}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: -16.527, z: 180}
+--- !u!114 &760116432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &760116433
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &760116434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &760116435
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &760116436
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &760116437
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760116430}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &818526935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2513,6 +4196,1217 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &833743138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833743139}
+  - component: {fileID: 833743145}
+  - component: {fileID: 833743144}
+  - component: {fileID: 833743143}
+  - component: {fileID: 833743142}
+  - component: {fileID: 833743141}
+  - component: {fileID: 833743140}
+  m_Layer: 0
+  m_Name: L Cube (3)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &833743139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_LocalRotation: {x: 0.04128272, y: 0, z: 0.99914753, w: 0}
+  m_LocalPosition: {x: 5.6, y: 26.000006, z: -3.1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 4.732, z: 180}
+--- !u!114 &833743140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &833743141
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &833743142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &833743143
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &833743144
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &833743145
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833743138}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &844605101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 844605102}
+  - component: {fileID: 844605108}
+  - component: {fileID: 844605107}
+  - component: {fileID: 844605106}
+  - component: {fileID: 844605105}
+  - component: {fileID: 844605104}
+  - component: {fileID: 844605103}
+  m_Layer: 0
+  m_Name: L Cube (21)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &844605102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_LocalRotation: {x: -0.07569237, y: -0, z: 0.9971313, w: 0}
+  m_LocalPosition: {x: -1.1, y: 77.77002, z: -3}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: -8.682, z: 180}
+--- !u!114 &844605103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &844605104
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &844605105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &844605106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &844605107
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &844605108
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844605101}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &906890137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906890138}
+  - component: {fileID: 906890144}
+  - component: {fileID: 906890143}
+  - component: {fileID: 906890142}
+  - component: {fileID: 906890141}
+  - component: {fileID: 906890140}
+  - component: {fileID: 906890139}
+  m_Layer: 0
+  m_Name: L Cube (12)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906890138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_LocalRotation: {x: -0.14364812, y: -0, z: 0.9896288, w: 0}
+  m_LocalPosition: {x: -18.16, y: 46.68, z: -7.73}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: -16.518, z: 180}
+--- !u!114 &906890139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &906890140
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &906890141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &906890142
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &906890143
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &906890144
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906890137}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &919125000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919125001}
+  - component: {fileID: 919125007}
+  - component: {fileID: 919125006}
+  - component: {fileID: 919125005}
+  - component: {fileID: 919125004}
+  - component: {fileID: 919125003}
+  - component: {fileID: 919125002}
+  m_Layer: 0
+  m_Name: L Cube (18)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919125001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_LocalRotation: {x: 0.09086724, y: 0, z: 0.995863, w: 0}
+  m_LocalPosition: {x: 12.7, y: 56.920013, z: -4}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 10.427, z: 180}
+--- !u!114 &919125002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &919125003
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &919125004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &919125005
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &919125006
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &919125007
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919125000}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &987489697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 987489703}
+  - component: {fileID: 987489702}
+  - component: {fileID: 987489701}
+  - component: {fileID: 987489700}
+  - component: {fileID: 987489699}
+  - component: {fileID: 987489698}
+  - component: {fileID: 987489704}
+  m_Layer: 0
+  m_Name: BoxTower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &987489698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 14
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          id: 3
+    00000003:
+      type: {class: , ns: , asm: }
+    00000004:
+      type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 14
+        strength: 4
+--- !u!54 &987489699
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &987489700
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 1c3de3103c9d0c347b987c26ee79c8eb, type: 3}
+--- !u!23 &987489701
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8aaee2b3b9bbd7c4599eefc3dfb00ea0, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &987489702
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_Mesh: {fileID: -2432090755550338912, guid: 1c3de3103c9d0c347b987c26ee79c8eb, type: 3}
+--- !u!4 &987489703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_LocalRotation: {x: -0, y: 0.37677413, z: -0, w: 0.9263052}
+  m_LocalPosition: {x: 1.28, y: 0.68, z: 1.305}
+  m_LocalScale: {x: 0.015000004, y: 0.015, z: 0.015000004}
+  m_Children:
+  - {fileID: 417068294}
+  - {fileID: 1398682922}
+  - {fileID: 833743139}
+  - {fileID: 1055552300}
+  - {fileID: 1474147647}
+  - {fileID: 1343892196}
+  - {fileID: 573733513}
+  - {fileID: 760116431}
+  - {fileID: 1326672297}
+  - {fileID: 1743195042}
+  - {fileID: 1474991370}
+  - {fileID: 906890138}
+  - {fileID: 1151008802}
+  - {fileID: 150245741}
+  - {fileID: 637322093}
+  - {fileID: 718331111}
+  - {fileID: 2141056722}
+  - {fileID: 919125001}
+  - {fileID: 685351972}
+  - {fileID: 1250754608}
+  - {fileID: 844605102}
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 44.268, z: 0}
+--- !u!114 &987489704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987489697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ab0f65202f47f8b866485b8f4badf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1050766784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2673,6 +5567,246 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1050766784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1055552299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1055552300}
+  - component: {fileID: 1055552306}
+  - component: {fileID: 1055552305}
+  - component: {fileID: 1055552304}
+  - component: {fileID: 1055552303}
+  - component: {fileID: 1055552302}
+  - component: {fileID: 1055552301}
+  m_Layer: 0
+  m_Name: L Cube (4)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1055552300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_LocalRotation: {x: 0.1602085, y: 0, z: 0.98708326, w: 0}
+  m_LocalPosition: {x: 18.1, y: 26, z: -5.6}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 18.438, z: 180}
+--- !u!114 &1055552301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1055552302
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1055552303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1055552304
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1055552305
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1055552306
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055552299}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1129033246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2913,6 +6047,246 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129033246}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1151008801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1151008802}
+  - component: {fileID: 1151008808}
+  - component: {fileID: 1151008807}
+  - component: {fileID: 1151008806}
+  - component: {fileID: 1151008805}
+  - component: {fileID: 1151008804}
+  - component: {fileID: 1151008803}
+  m_Layer: 0
+  m_Name: L Cube (13)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1151008802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_LocalRotation: {x: -0.06587337, y: -0, z: 0.997828, w: 0}
+  m_LocalPosition: {x: -5.91, y: 46.68, z: -4.7}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: -7.554, z: 180}
+--- !u!114 &1151008803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1151008804
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1151008805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1151008806
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1151008807
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1151008808
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151008801}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1182863377
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,6 +6748,246 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237773368}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1250754607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250754608}
+  - component: {fileID: 1250754614}
+  - component: {fileID: 1250754613}
+  - component: {fileID: 1250754612}
+  - component: {fileID: 1250754611}
+  - component: {fileID: 1250754610}
+  - component: {fileID: 1250754609}
+  m_Layer: 0
+  m_Name: L Cube (20)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250754608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_LocalRotation: {x: -0.02102964, y: -0, z: 0.99977887, w: 0}
+  m_LocalPosition: {x: 5.5, y: 67.25, z: -2.8}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: -2.41, z: 180}
+--- !u!114 &1250754609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1250754610
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1250754611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1250754612
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1250754613
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1250754614
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250754607}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1292835831
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,7 +7018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292835831}
   m_LocalRotation: {x: 0, y: -0.17796062, z: 0, w: 0.9840376}
-  m_LocalPosition: {x: -0.721, y: 0.2477, z: 0.519}
+  m_LocalPosition: {x: -0.824, y: 0.2477, z: 0.6}
   m_LocalScale: {x: 0.075, y: 0.075, z: 0.075}
   m_Children: []
   m_Father: {fileID: 103508277}
@@ -3614,6 +7228,246 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292835831}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1326672296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326672297}
+  - component: {fileID: 1326672303}
+  - component: {fileID: 1326672302}
+  - component: {fileID: 1326672301}
+  - component: {fileID: 1326672300}
+  - component: {fileID: 1326672299}
+  - component: {fileID: 1326672298}
+  m_Layer: 0
+  m_Name: L Cube (9)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1326672297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_LocalRotation: {x: -0.044735286, y: -0, z: 0.9989989, w: 0}
+  m_LocalPosition: {x: -0.13, y: 36.240013, z: -3.38}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: -5.128, z: 180}
+--- !u!114 &1326672298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1326672299
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1326672300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1326672301
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1326672302
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1326672303
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326672296}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1330446975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3759,6 +7613,739 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1330446975}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1343892195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1343892196}
+  - component: {fileID: 1343892202}
+  - component: {fileID: 1343892201}
+  - component: {fileID: 1343892200}
+  - component: {fileID: 1343892199}
+  - component: {fileID: 1343892198}
+  - component: {fileID: 1343892197}
+  m_Layer: 0
+  m_Name: L Cube (6)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1343892196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_LocalRotation: {x: 0.23525232, y: 0, z: 0.9719344, w: 0}
+  m_LocalPosition: {x: 29.27, y: 26.000006, z: -10.31}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 27.213, z: 180}
+--- !u!114 &1343892197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1343892198
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1343892199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1343892200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1343892201
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1343892202
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343892195}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1370073789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1370073790}
+  - component: {fileID: 1370073793}
+  - component: {fileID: 1370073792}
+  - component: {fileID: 1370073791}
+  m_Layer: 0
+  m_Name: ButtonAnchor (1)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1370073790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370073789}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.09500115, y: -0.026000356, z: -0.0009999755}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2002971774}
+  - {fileID: 1462956752}
+  m_Father: {fileID: 603120322}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370073791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370073789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 1
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 115
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 15
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
+--- !u!65 &1370073792
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370073789}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 0.054037508, z: 0.3}
+  m_Center: {x: 0, y: 0.1970188, z: 0}
+--- !u!54 &1370073793
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370073789}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!1 &1398682921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1398682922}
+  - component: {fileID: 1398682928}
+  - component: {fileID: 1398682927}
+  - component: {fileID: 1398682926}
+  - component: {fileID: 1398682925}
+  - component: {fileID: 1398682924}
+  - component: {fileID: 1398682923}
+  m_Layer: 0
+  m_Name: L Cube (2)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1398682922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_LocalRotation: {x: -0.082060225, y: -0, z: 0.99662745, w: 0}
+  m_LocalPosition: {x: -6.5, y: 26.000006, z: -3.8}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -9.414, z: 180}
+--- !u!114 &1398682923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1398682924
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1398682925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1398682926
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1398682927
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1398682928
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398682921}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1462956751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462956752}
+  - component: {fileID: 1462956754}
+  - component: {fileID: 1462956753}
+  m_Layer: 0
+  m_Name: Button_S
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1462956752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462956751}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: -0.026, z: -0}
+  m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
+  m_Children: []
+  m_Father: {fileID: 1370073790}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1462956753
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462956751}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5c7c899f35590949969f29004469c35, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1462956754
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462956751}
+  m_Mesh: {fileID: 4300000, guid: d7eed1aac16adc545ab236e3a831fa33, type: 3}
 --- !u!1 &1473862730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3790,6 +8377,486 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1474147646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474147647}
+  - component: {fileID: 1474147653}
+  - component: {fileID: 1474147652}
+  - component: {fileID: 1474147651}
+  - component: {fileID: 1474147650}
+  - component: {fileID: 1474147649}
+  - component: {fileID: 1474147648}
+  m_Layer: 0
+  m_Name: L Cube (5)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1474147647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_LocalRotation: {x: -0.26863408, y: -0, z: 0.96324235, w: 0}
+  m_LocalPosition: {x: -29.400007, y: 26.000004, z: -12.099994}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -31.166, z: 180}
+--- !u!114 &1474147648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1474147649
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1474147650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1474147651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1474147652
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1474147653
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474147646}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1474991369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474991370}
+  - component: {fileID: 1474991376}
+  - component: {fileID: 1474991375}
+  - component: {fileID: 1474991374}
+  - component: {fileID: 1474991373}
+  - component: {fileID: 1474991372}
+  - component: {fileID: 1474991371}
+  m_Layer: 0
+  m_Name: L Cube (11)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1474991370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_LocalRotation: {x: 0.22039104, y: 0, z: 0.97541165, w: 0}
+  m_LocalPosition: {x: 25.6, y: 36.240013, z: -8.05}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 25.464, z: 180}
+--- !u!114 &1474991371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1474991372
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1474991373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1474991374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1474991375
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1474991376
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474991369}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1658620446
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,6 +9164,567 @@ RectTransform:
   m_AnchoredPosition: {x: -114.9, y: 57.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1707064521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1707064522}
+  - component: {fileID: 1707064524}
+  - component: {fileID: 1707064523}
+  m_Layer: 0
+  m_Name: Box_S_Button_S
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1707064522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707064521}
+  m_LocalRotation: {x: -0.7071068, y: -0.000000005587934, z: 0.000000016763803, w: 0.70710677}
+  m_LocalPosition: {x: -0.095, y: 0.008, z: -0.001}
+  m_LocalScale: {x: 100, y: 100.0002, z: 100.00015}
+  m_Children: []
+  m_Father: {fileID: 603120322}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1707064523
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707064521}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8aaee2b3b9bbd7c4599eefc3dfb00ea0, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1707064524
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707064521}
+  m_Mesh: {fileID: 4300000, guid: d8bfab593f77e4a4f9fe905bd47ffdea, type: 3}
+--- !u!1 &1743195041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743195042}
+  - component: {fileID: 1743195048}
+  - component: {fileID: 1743195047}
+  - component: {fileID: 1743195046}
+  - component: {fileID: 1743195045}
+  - component: {fileID: 1743195044}
+  - component: {fileID: 1743195043}
+  m_Layer: 0
+  m_Name: L Cube (10)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1743195042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_LocalRotation: {x: 0.10020543, y: 0, z: 0.9949668, w: 0}
+  m_LocalPosition: {x: 12.94, y: 36.240013, z: -4.33}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 11.502, z: 180}
+--- !u!114 &1743195043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &1743195044
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1743195045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &1743195046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1743195047
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1743195048
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743195041}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1753695171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1753695172}
+  - component: {fileID: 1753695178}
+  - component: {fileID: 1753695177}
+  - component: {fileID: 1753695176}
+  - component: {fileID: 1753695175}
+  - component: {fileID: 1753695174}
+  - component: {fileID: 1753695173}
+  m_Layer: 0
+  m_Name: M Sphere (5)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1753695172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.771, y: 0.2598, z: 0.742}
+  m_LocalScale: {x: 0.099999994, y: 0.1, z: 0.099999994}
+  m_Children: []
+  m_Father: {fileID: 103508277}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1753695173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!114 &1753695174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!54 &1753695175
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!135 &1753695176
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1753695177
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5c7c899f35590949969f29004469c35, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1753695178
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753695171}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1754261550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4650,7 +10278,7 @@ PrefabInstance:
     - target: {fileID: 4616476297637983141, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4616476297637983141, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
         type: 3}
@@ -4751,6 +10379,86 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673213228891643305, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673213228891643305, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673213228891643305, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673213228891643305, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317462840998275308, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317462840998275308, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317462840998275308, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317462840998275308, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296002947955476772, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296002947955476772, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296002947955476772, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296002947955476772, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722087023687037209, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722087023687037209, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722087023687037209, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722087023687037209, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7bf82e3580fb974d8d0b5e0eb5f4fae, type: 3}
@@ -4993,6 +10701,341 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979507791}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2002971773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002971774}
+  - component: {fileID: 2002971776}
+  - component: {fileID: 2002971775}
+  m_Layer: 0
+  m_Name: TEXT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2002971774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002971773}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.223, z: -0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_Children: []
+  m_Father: {fileID: 1370073790}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!102 &2002971775
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002971773}
+  m_Text: RESET
+  m_OffsetZ: 0
+  m_CharacterSize: 0.6
+  m_LineSpacing: 0.5
+  m_Anchor: 4
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 100
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: cd25d80d03a864fdd90534b28f15208a, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294111986
+--- !u!23 &2002971776
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002971773}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: faba770ddc156044f90c298c57090f2c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2141056721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141056722}
+  - component: {fileID: 2141056728}
+  - component: {fileID: 2141056727}
+  - component: {fileID: 2141056726}
+  - component: {fileID: 2141056725}
+  - component: {fileID: 2141056724}
+  - component: {fileID: 2141056723}
+  m_Layer: 0
+  m_Name: L Cube (17)
+  m_TagString: Haptics
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2141056722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  m_LocalRotation: {x: -0.031794596, y: -0, z: 0.99949443, w: 0}
+  m_LocalPosition: {x: -0, y: 56.920002, z: -3.5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 987489703}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: -3.644, z: 180}
+--- !u!114 &2141056723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3f8b27b2c40af40bceedfe8ae67a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyInstead: 0
+  resetColliders:
+  - {fileID: 474574581}
+--- !u!54 &2141056724
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  serializedVersion: 2
+  m_Mass: 0.25
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &2141056725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 0
+  stayHaptics:
+    Amplitude: 255
+    Vibration:
+      id: 1
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      id: 2
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          id: 3
+    00000001:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 16
+        options:
+          id: 4
+    00000002:
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 1
+        RepeatDelay: 0
+        WhichType: 19
+        options:
+          id: 5
+    00000003:
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 1
+        strength: 7
+    00000004:
+      type: {class: , ns: , asm: }
+    00000005:
+      type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 19
+        strength: 11
+        Duration: 1
+        Style: 1
+        Variant: 0
+--- !u!65 &2141056726
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &2141056727
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e5ded615d56ffda4295be90b67ae2a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2141056728
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141056721}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2121510798927874539 stripped
 Transform:
@@ -5884,7 +11927,7 @@ PrefabInstance:
     - target: {fileID: 4551603938954617562, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8984087
+      value: 0.89840865
       objectReference: {fileID: 0}
     - target: {fileID: 4551603938954617562, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6054,7 +12097,7 @@ PrefabInstance:
     - target: {fileID: 4551603938954617586, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.97152144
+      value: 0.9715214
       objectReference: {fileID: 0}
     - target: {fileID: 4551603938954617586, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6149,7 +12192,7 @@ PrefabInstance:
     - target: {fileID: 4551603938954617594, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9628299
+      value: 0.9628298
       objectReference: {fileID: 0}
     - target: {fileID: 4551603938954617594, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6324,7 +12367,7 @@ PrefabInstance:
     - target: {fileID: 8775053805002193425, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9628299
+      value: 0.9628298
       objectReference: {fileID: 0}
     - target: {fileID: 8775053805002193425, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6409,7 +12452,7 @@ PrefabInstance:
     - target: {fileID: 8775053805002193433, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.97152144
+      value: 0.9715214
       objectReference: {fileID: 0}
     - target: {fileID: 8775053805002193433, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6659,7 +12702,7 @@ PrefabInstance:
     - target: {fileID: 8775053805002193457, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8984087
+      value: 0.89840865
       objectReference: {fileID: 0}
     - target: {fileID: 8775053805002193457, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -6967,7 +13010,7 @@ RectTransform:
   - {fileID: 8101796272153826953}
   - {fileID: 1662357047}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

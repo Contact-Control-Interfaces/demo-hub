@@ -143,7 +143,7 @@ namespace Maestro
             // Lerp object towards centroid
             if (isGrabbing) {
 
-                RecordHeldObjectPosition(grabAnchor.transform.position);
+                RecordHeldObjectPosition(mc.parent.transform.position);
 
                 Vector3 centroid = GetCentroid(grabStates[0]);
                 if (!centroid.Equals(Vector3.negativeInfinity) && !HasNaN(centroid)) {
