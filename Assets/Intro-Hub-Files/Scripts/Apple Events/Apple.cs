@@ -157,7 +157,7 @@ public class Apple : MonoBehaviour
     {
         dropCoroutine = StartCoroutine(DropHaptics());
 
-        if (other.gameObject.tag == "MainCamera" && biteCouroutine == null)
+        if (other.gameObject.tag == "MainCamera" && biteCouroutine == null && !StillAttachedToTree)
         {
             Bite();
             touchTrigger.SetActive(false);
@@ -219,6 +219,7 @@ public class Apple : MonoBehaviour
 
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
+        rb.drag = 0f;
 
         dropObject.transform.position = resetPoint.position;
         dropObject.transform.rotation = originalRotation;

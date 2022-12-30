@@ -156,7 +156,7 @@ public class AppleDrop : MonoBehaviour
         dropObject.Pluck();
         interactable.ResetOverride();
 
-        Vector3 offsetFromPalm = lastHand.transforms.MiddleKnuckle.position - dropObject.transform.position;
+        Vector3 offsetFromPalm = lastHand.transforms.MiddleMiddle.position - dropObject.transform.position;
 
         float fallDistance = Mathf.Abs(offsetFromPalm.y);
         float a = Mathf.Abs(Physics.gravity.y);
