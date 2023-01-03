@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.016135355, g: 0.0071952515, b: 0.015003586, a: 1}
+  m_IndirectSpecularColor: {r: 0.016483137, g: 0.007355221, b: 0.015327055, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13071,6 +13071,29 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &2892570281501133419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3843091710741201794, guid: e3952388617c98147b066982f1051e3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2892570281501133416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2892570281501133420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2892570281501133419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b506c5d251c401a4ea401770ba433410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaitToRelease: 0.15
+  CentroidLerp: 0.3
+  FollowForceVelocityDamper: 0.5
+  FollowForceVelocityScalar: 750
+  Debug: 0
 --- !u!114 &6633739838758179641
 MonoBehaviour:
   m_ObjectHideFlags: 0
