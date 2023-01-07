@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
+using System.Linq;
 
 public class AppleDrop : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class AppleDrop : MonoBehaviour
     protected int CurrentlyColliding = 0;
     protected Coroutine CurrentCoroutine = null;
 
-    private IMaestroHand lastHand;
+    public IMaestroHand leftHand, rightHand;
     private MaestroInteractable interactable;
     
     private void Start()
@@ -50,14 +51,23 @@ public class AppleDrop : MonoBehaviour
         timeOnText.TextGen(" Place your hand under the apple.");
         interactable = GetComponent<MaestroInteractable>();
         interactable.SendHapticsToWholeHand = true;
+
+        // Find hands if they are unset
+        var hands = FindObjectsOfType<IMaestroHand>();
+
+        if (leftHand == null) {
+            leftHand = hands.First(x => x.whichHand == WhichHand.LeftHand);
+        }
+
+        if (rightHand == null) {
+            rightHand = hands.First(x => x.whichHand == WhichHand.RightHand);
+        }
     }
 
     public void Register(FingerCollider fc)
     {
         interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
-
-        lastHand = fc.hpi;
 
         TryStartTime();
     }
@@ -156,18 +166,41 @@ public class AppleDrop : MonoBehaviour
         dropObject.Pluck();
         interactable.ResetOverride();
 
-        Vector3 offsetFromPalm = lastHand.transforms.MiddleMiddle.position - dropObject.transform.position;
+        Vector3 leftOffset = GetOffset(leftHand);
+        Vector3 rightOffset = GetOffset(rightHand);
 
-        float fallDistance = Mathf.Abs(offsetFromPalm.y);
-        float a = Mathf.Abs(Physics.gravity.y);
-        float timeToFall = Mathf.Sqrt(2 * a * fallDistance) / a;
+        Vector3 leftLateral = GetLateralOffset(leftOffset);
+        Vector3 rightLateral = GetLateralOffset(rightOffset);
 
-        Vector3 lateralOffset = Vector3.Scale(offsetFromPalm, new Vector3(1, 0, 1));
+        Vector3 offset = leftOffset;
+        Vector3 lateral = leftLateral;
+        if (rightLateral.sqrMagnitude < leftLateral.sqrMagnitude)
+        {
+            offset = rightOffset;
+            lateral = rightLateral;
+        }
 
         var rb = dropObject.GetComponent<Rigidbody>();
-        rb.velocity += lateralOffset / timeToFall;
+        rb.velocity += lateral / GetFallDuration(offset);
 
         CurrentCoroutine = null;
+    }
+
+    private Vector3 GetOffset(IMaestroHand hand)
+    {
+        return hand.transforms.MiddleMiddle.position - dropObject.transform.position;
+    }
+
+    private Vector3 GetLateralOffset(Vector3 offset)
+    {
+        return Vector3.Scale(offset, new Vector3(1, 0, 1));
+    }
+
+    private float GetFallDuration(Vector3 offsetFromPalm)
+    {
+        float fallDistance = Mathf.Abs(offsetFromPalm.y);
+        float a = Mathf.Abs(Physics.gravity.y);
+        return Mathf.Sqrt(2 * a * fallDistance) / a;
     }
 
     private void ResetDisplay()

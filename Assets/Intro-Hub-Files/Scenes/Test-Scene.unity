@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.017640654, g: 0.007888315, b: 0.016382193, a: 1}
+  m_IndirectSpecularColor: {r: 0.016147966, g: 0.007200693, b: 0.015013914, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2749,7 +2749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552530706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0937, y: 0.0794, z: 0}
+  m_LocalPosition: {x: -0.0918, y: 0.0582, z: 0.0119}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 2083576790}
@@ -2766,7 +2766,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &552530709
 MeshRenderer:
@@ -2829,7 +2829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b77f263237c42e4588fdc6b4c412ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  insideDrag: 5
+  insideDrag: 15
   appleCollider: {fileID: 1702290254}
 --- !u!54 &552530712
 Rigidbody:
@@ -2961,7 +2961,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755202802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0937, y: 0.0794, z: 0}
+  m_LocalPosition: {x: -0.0937, y: 0.055, z: -0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 773661895}
@@ -2978,7 +2978,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &755202805
 MeshRenderer:
@@ -3041,7 +3041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b77f263237c42e4588fdc6b4c412ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  insideDrag: 5
+  insideDrag: 15
   appleCollider: {fileID: 1702290254}
 --- !u!54 &755202808
 Rigidbody:
@@ -8585,7 +8585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1509002930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.302, y: 2.646, z: -0.403}
+  m_LocalPosition: {x: -0.302, y: 2.782, z: -0.403}
   m_LocalScale: {x: 0.3, y: 1.219852, z: 0.3}
   m_Children:
   - {fileID: 1611482772}
@@ -8616,6 +8616,8 @@ MonoBehaviour:
     Amplitude: 50
     Vibration:
       id: 0
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
   references:
     version: 1
     00000000:

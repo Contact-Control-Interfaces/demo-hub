@@ -23,17 +23,40 @@ public class DemoTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Apple scene
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
         }
 
+        // Interaction panel scene
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SceneManager.LoadScene(3);
+        }
+
+        // Paint scene
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SceneManager.LoadScene(2);
+        }
+
+        // Shapes scene
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        // Vibration scene
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene(4);
+        }
+
         //1 Minute Override
         if (Input.GetKeyDown(KeyCode.Q))
         {
-
             timeLeft = 61;
-
         }
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -98,6 +121,10 @@ public class DemoTimer : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            DisableTimer();
+        }
 
 
         if (timeLeft > 1)
@@ -116,6 +143,12 @@ public class DemoTimer : MonoBehaviour
                 timerText.text = "Time's Up!";
             }
         }
+    }
+
+    public void DisableTimer()
+    {
+        timeLeft = 0;
+        timerText.text = "";
     }
 
     public void UpdateTimerText()
