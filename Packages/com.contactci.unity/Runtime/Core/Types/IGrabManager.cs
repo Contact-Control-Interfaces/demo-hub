@@ -206,7 +206,12 @@ namespace Maestro
             if (HeldObjectLastVelocities.Count <= 0)
                 return Vector3.zero;
 
-            return ThrowScalar * HeldObjectLastVelocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (HeldObjectLastVelocities.Count * Time.fixedDeltaTime);
+            Vector3 avgVelocity = HeldObjectLastVelocities.Aggregate(Vector3.zero, (acc, next) => acc + next) / (HeldObjectLastVelocities.Count * Time.fixedDeltaTime);
+
+            if (avgVelocity.sqrMagnitude > 0.1f)
+                avgVelocity *= ThrowScalar;
+
+            return avgVelocity;
         }
 
         protected virtual bool Inactive(MaestroInteractable interactable)
