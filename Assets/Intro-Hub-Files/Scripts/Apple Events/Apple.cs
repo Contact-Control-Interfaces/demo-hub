@@ -70,8 +70,6 @@ public class Apple : MonoBehaviour
 
     public bool StillAttachedToTree => rb != null && rb.constraints == RigidbodyConstraints.FreezeAll;
 
-
-
     private void Start()
     {
         panelDisplay.SetActive(false);
@@ -93,7 +91,12 @@ public class Apple : MonoBehaviour
 
     void Update()
     {
-       if (dropObject.transform.position.y <= resetHeight && !bitten)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Pluck();
+        }
+
+        if (dropObject.transform.position.y <= resetHeight && !bitten)
         {
             ResetApple();
         }
@@ -168,13 +171,7 @@ public class Apple : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (universalBloom.TryGet<Bloom>(out bloomEffect))
-            {
-                bloomEffect.intensity.value = 0f;
-                Debug.Log("Bloom");
-                BloomUp = true;
-                biteSound.Play();
-            }
+            StartBloom();
         }
     }
 
@@ -203,6 +200,9 @@ public class Apple : MonoBehaviour
 
             dropObject.GetComponent<Renderer>().material = glowOn;
 
+            var interactable = dropObject.GetComponent<MaestroInteractable>();
+            interactable.type = InteractionType.OneHandGrab;
+
             if (pluckSound != null)
                 pluckSound.Play();
 
@@ -220,6 +220,9 @@ public class Apple : MonoBehaviour
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
         rb.drag = 0f;
+
+        var inter = dropObject.GetComponent<MaestroInteractable>();
+        inter.type = InteractionType.Static;
 
         dropObject.transform.position = resetPoint.position;
         dropObject.transform.rotation = originalRotation;
@@ -249,6 +252,11 @@ public class Apple : MonoBehaviour
         // Lerp the apple toward the mouth during bite
         StartCoroutine(LerpRoutine());
 
+        StartBloom();
+    }
+
+    private void StartBloom()
+    {
         if (universalBloom.TryGet<Bloom>(out bloomEffect))
         {
             bloomEffect.intensity.value = 0f;

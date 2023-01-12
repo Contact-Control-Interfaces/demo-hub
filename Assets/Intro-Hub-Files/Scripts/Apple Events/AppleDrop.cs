@@ -160,7 +160,7 @@ public class AppleDrop : MonoBehaviour
 
     private void OnEnd()
     {
-        if (dropObject == null)
+        if (dropObject == null || !dropObject.StillAttachedToTree)
             return;
 
         dropObject.Pluck();

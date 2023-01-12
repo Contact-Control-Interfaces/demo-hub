@@ -112,6 +112,14 @@ namespace Maestro
             PhysicsGrabManagerSettings.Apply(this);
         }
 
+        public override void Destroy()
+        {
+            AllPhysicsGrabManagers.Remove(this);
+
+            centroidObj.SetActive(false);
+            UnityEngine.Object.Destroy(centroidObj);
+        }
+
         public override void FixedUpdate()
         {
             // gather candidates
