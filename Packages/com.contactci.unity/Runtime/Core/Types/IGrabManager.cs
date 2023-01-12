@@ -72,6 +72,8 @@ namespace Maestro
             grabCandidates = new List<MaestroInteractable>();
         }
 
+        public abstract void Destroy();
+
         protected void ClearHeldObjectHistory()
         {
             HeldObjectLastPosition = null;

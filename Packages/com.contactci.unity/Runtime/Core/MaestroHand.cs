@@ -588,19 +588,30 @@ namespace Maestro
                         //palm collider either doesn't exist or has a lower priority
                         if (touching != palmTouching)
                         {
-                            nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(weight * touching.currentHaptics.Amplitude));
-
-                            if (ShouldApplyVibration(source))
+                            try
                             {
-                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value,
-                                    touching.currentHaptics.Vibration);
+                                nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(weight * touching.currentHaptics.Amplitude));
+
+                                if (ShouldApplyVibration(source))
+                                {
+                                    nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value,
+                                        touching.currentHaptics.Vibration);
+                                }
+                            } catch (Exception){
+
                             }
                         }
                         else if (palmTouching != null) //palm collider takes priority
                         {
-                            nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(palmTouching.palmDiffusion * palmTouching.currentHaptics.Amplitude));
-                            if(!palmTouching.ignorePalmVibration)
-                                nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value, palmTouching.currentHaptics.Vibration);
+                            try {
+                                nextHaptics.SetAmplitudeFromIndex(touchIndex.Value, (byte)(palmTouching.palmDiffusion * palmTouching.currentHaptics.Amplitude));
+                                if(!palmTouching.ignorePalmVibration)
+                                    nextHaptics.SetVibrationEffectFromIndex(touchIndex.Value, palmTouching.currentHaptics.Vibration);
+                                } 
+                            catch (Exception)
+                            {
+
+                            }
                         }
                     }  
                     else if (contactIndex.HasValue && !interactablesOnly) {
@@ -694,6 +705,10 @@ namespace Maestro
             if (grabType == GrabType.None) {
                 grabManager = null;
             } else if (grabManager == null || grabManager.grabType != grabType) {
+                if (grabManager != null){
+                    grabManager.Destroy();
+                }
+
                 switch (grabType) {
                     default: throw new ArgumentOutOfRangeException($"No grab manager defined for type {grabType}!");
                     case GrabType.Arcade: grabManager = new ArcadeGrabManager(mc); break;

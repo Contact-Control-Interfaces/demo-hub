@@ -47,6 +47,11 @@ namespace Maestro
             allManagers.Add(agm);
         }
 
+        public static void Deregister(ArcadeGrabManager agm)
+        {
+            allManagers.Remove(agm);
+        }
+
         static bool IsAlreadyGrabbedAnywhere(MaestroInteractable mi)
         {
             return allManagers.Any(x => x.IsAlreadyGrabbed(mi));
@@ -108,6 +113,14 @@ namespace Maestro
             endedThisFrame = new List<MaestroInteractable>();
 
             Register(this);
+        }
+
+        public override void Destroy()
+        {
+            Deregister(this);
+
+            nearbyObjects.gameObject.SetActive(false);
+            UnityEngine.Object.Destroy(nearbyObjects.gameObject);
         }
 
         public override void FixedUpdate()

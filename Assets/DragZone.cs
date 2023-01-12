@@ -7,13 +7,19 @@ public class DragZone : MonoBehaviour
     private static int InsideHowManyZones = 0;
     private float initialDrag;
 
+    private bool insideThisZone = false;
+
     public float insideDrag;
 
     public Collider appleCollider;
+    public GameObject objectHolder;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other == appleCollider) {
+            insideThisZone = true;
+            objectHolder.SetActive(insideThisZone);
+
             Rigidbody r = other.GetComponent<Rigidbody>();
             if (r != null) {
                 if (InsideHowManyZones == 0) {
@@ -29,6 +35,9 @@ public class DragZone : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other == appleCollider) {
+            insideThisZone = false;
+            objectHolder.SetActive(insideThisZone);
+
             Rigidbody r = other.GetComponent<Rigidbody>();
             if (r != null) {
                 InsideHowManyZones--;
