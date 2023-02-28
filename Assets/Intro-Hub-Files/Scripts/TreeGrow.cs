@@ -23,6 +23,12 @@ public class TreeGrow : MonoBehaviour
         {
             GrowTree();
         }
+
+
+        if(OVRInput.Get(OVRInput.Button.Two))
+        {
+            GrowTree();
+        }
     }
 
     public void GrowTree()

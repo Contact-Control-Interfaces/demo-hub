@@ -11,22 +11,16 @@ using UnityEngine.SceneManagement;
 
 public class DemoPress : MonoBehaviour
 {
-
     [Header("Set Time")]
-    public float baseTime;
-    private float remainingTime;
+    public float pressLength;
 
     [Header("Properties")]
 
     public int assignedScene;
     public TextMeshProUGUI holdText;
+    public Material buttonMaterial;
 
-
-    private bool timeOn;
-    protected int CurrentlyColliding = 0;
-    protected Coroutine CurrentCoroutine = null;
-    private MaestroInteractable interactable;
-
+   
     //value for the fill shader to not fill the button
     private float emptyNum = -.002f;
     private float fullNum = .002f;
@@ -34,7 +28,15 @@ public class DemoPress : MonoBehaviour
     //value being manipulated and filling the button
     private float fillNum = 0;
 
-    public Material buttonMaterial;
+
+    private float timePressed;
+    float elapsedTime;
+
+    private bool timeOn;
+    protected int CurrentlyColliding = 0;
+    protected Coroutine CurrentCoroutine = null;
+    private MaestroInteractable interactable;
+
 
     void Start()
     {
@@ -48,7 +50,6 @@ public class DemoPress : MonoBehaviour
             StartTime();
         }
     }
-
 
     public void Register(FingerCollider fc)
     {
@@ -104,9 +105,10 @@ public class DemoPress : MonoBehaviour
 
     public void StartTime()
     {
+        timePressed = Time.time;
+
         fillNum = emptyNum;
         timeOn = true;
-        remainingTime = baseTime;
         if (CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);
@@ -134,25 +136,22 @@ public class DemoPress : MonoBehaviour
 
     private void ShaderValueUp()
     {
-        fillNum += (fullNum - emptyNum) / 300f;
+        elapsedTime = Time.time - timePressed;
+        fillNum = Mathf.Lerp(emptyNum, fullNum, elapsedTime/pressLength);
         buttonMaterial.SetFloat("FillRate", fillNum);
-
     }
 
     private IEnumerator UpdateTimer()
     {
-        while (remainingTime > 0)
+        do
         {
-            if (!timeOn)
-                break;           
-
-            remainingTime--;
             ShaderValueUp();
-
             holdText.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(.01f);
         }
+        while (elapsedTime < pressLength);
+       
         SceneManager.LoadScene(assignedScene);
     }
 
@@ -167,6 +166,5 @@ public class DemoPress : MonoBehaviour
     private void ResetDisplay()
     {
         fillNum = emptyNum;
-        remainingTime = baseTime;
     }
 }

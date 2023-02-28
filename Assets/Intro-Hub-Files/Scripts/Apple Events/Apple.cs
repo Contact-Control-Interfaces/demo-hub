@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-//using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Rendering.Universal;
 using static UnityEngine.GraphicsBuffer;
 using Bloom = UnityEngine.Rendering.Universal.Bloom;
@@ -226,7 +225,6 @@ public class Apple : MonoBehaviour
 
         dropObject.transform.position = resetPoint.position;
         dropObject.transform.rotation = originalRotation;
-        dropObject.transform.localScale = originalLocalScale;
 
         // Gross but easiest way to trigger another drop if the hand hasn't left the box
         AppleDrop drop = FindObjectOfType<AppleDrop>();
