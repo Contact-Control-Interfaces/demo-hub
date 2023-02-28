@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.01775261, g: 0.007944233, b: 0.016488524, a: 1}
+  m_IndirectSpecularColor: {r: 0.013522774, g: 0.0065949894, b: 0.012850083, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -806,6 +806,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DemoCanvas3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 5628338682026594789, guid: 49e8ccd93f2ecce419ad0f90bacf4e19,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5628338682026594809, guid: 49e8ccd93f2ecce419ad0f90bacf4e19,
         type: 3}
@@ -2875,6 +2880,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FogEffects
       objectReference: {fileID: 0}
+    - target: {fileID: 3813170399937526871, guid: 138cdea22dd142c4aa72a8d8e407ceae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138cdea22dd142c4aa72a8d8e407ceae, type: 3}
 --- !u!1 &586049835
@@ -4914,6 +4924,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844605101}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &849547484
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807587620564677949, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7377864609763685188, guid: 572d4b49d739ef04ea73951260478b4d,
+        type: 3}
+      propertyPath: m_Name
+      value: Oculus Fog Effects
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 572d4b49d739ef04ea73951260478b4d, type: 3}
 --- !u!1 &906890137
 GameObject:
   m_ObjectHideFlags: 0
@@ -9350,7 +9429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1660911073
 Transform:
   m_ObjectHideFlags: 0
@@ -11700,7 +11779,7 @@ PrefabInstance:
     - target: {fileID: 3843091710741201794, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3843091710741201795, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -13427,6 +13506,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4737721494137647935, guid: f80202ee9ca541e4ea1df9e9d70d0ebf,
         type: 3}
+      propertyPath: enablePassthrough
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737721494137647935, guid: f80202ee9ca541e4ea1df9e9d70d0ebf,
+        type: 3}
       propertyPath: disableDuringPassthrough.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -13508,7 +13592,7 @@ PrefabInstance:
     - target: {fileID: 8495682206495948764, guid: f80202ee9ca541e4ea1df9e9d70d0ebf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8495682206434405480, guid: f80202ee9ca541e4ea1df9e9d70d0ebf, type: 3}

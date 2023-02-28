@@ -3,6 +3,26 @@ using UnityEngine;
 
 namespace Maestro
 {
+    public struct MaestroHapticSingletons
+    {
+        private static MaestroHapticContext? _zero;
+
+        public static MaestroHapticContext Zero
+        {
+            get
+            {
+                if (!_zero.HasValue)
+                {
+                    MaestroHapticContext temp = new MaestroHapticContext();
+                    temp.SetAllAmplitudes(null);
+                    temp.SetAllVibrationEffects(VibrationEffect.None);
+                    _zero = temp;
+                }
+
+                return _zero.Value;
+            }
+        }
+    }
     public struct MaestroHapticContext
     {
         public byte? ThumbAmplitude { get; set; }
@@ -17,16 +37,11 @@ namespace Maestro
         public VibrationEffect RingVibrationEffect { get; set; }
         public VibrationEffect LittleVibrationEffect { get; set; }
 
-        private static MaestroHapticContext? _zero;
-        public static MaestroHapticContext zero {
-            get {
-                if (!_zero.HasValue) {
-                    MaestroHapticContext temp = new MaestroHapticContext();
-                    temp.SetAllAmplitudes(null);
-                    temp.SetAllVibrationEffects(VibrationEffect.None);
-                    _zero = temp;
-                }
-                return _zero.Value;
+        public static MaestroHapticContext zero
+        {
+            get
+            {
+                return MaestroHapticSingletons.Zero;
             }
         }
 
