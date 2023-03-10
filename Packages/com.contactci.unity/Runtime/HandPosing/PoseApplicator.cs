@@ -17,6 +17,11 @@ namespace Maestro
         {
             Poser.HandBones clamped = 0;
 
+            if(maestroHand.mc == null)
+            {
+                return clamped;
+            }
+
             for (int i = 0; i < Poser.BoneCount; i++) {
                 if (targets.HasFlag(Poser.AllBones[i])) {
                     PointOnHand poh = maestroHand.mc[getMaestroIndex(Poser.AllBones[i])];
