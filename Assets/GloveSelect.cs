@@ -5,11 +5,10 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
+using Maestro;
 
 public class GloveSelect : MonoBehaviour
 {
-    //public int setNumber; //0 - One Glove | 1 - Two Glove
-
     public enum DemoMode
     {
         None,
@@ -18,10 +17,8 @@ public class GloveSelect : MonoBehaviour
     }
 
     public DemoMode mode;
-
     public Color selectColor;
     public GloveSelect otherButton;
-
 
     public void UpdateGloveMode()
     {

@@ -7,7 +7,6 @@ using Bloom = UnityEngine.Rendering.Universal.Bloom;
 
 public class BloomTest : MonoBehaviour
 {
-
     [Header("Bloom Variables")]
     public Volume postVolume;
     public Bloom bloomEffect;
@@ -18,7 +17,6 @@ public class BloomTest : MonoBehaviour
     private bool BloomDown;
 
     public VolumeProfile universalBloom;
-
 
     // Update is called once per frame
     void Update()
@@ -50,9 +48,6 @@ public class BloomTest : MonoBehaviour
                 BloomDown= false;
             }
         }
-
-
-
     }
 
     private void TestBloom()

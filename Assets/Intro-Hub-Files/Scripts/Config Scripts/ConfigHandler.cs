@@ -1,37 +1,44 @@
 using Oculus.Platform;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class ConfigHandler : MonoBehaviour
+namespace Maestro
 {
-    public GameObject tree;
-    public GameObject configPanel;
-
-    // Start is called before the first frame update
-    void Start()
+    public class ConfigHandler : MonoBehaviour
     {
+        public GameObject tree;
+        public GameObject configPanel;
 
-        if(tree != null && configPanel != null)
-        ConfigSettings.AppleDemoStart(tree, configPanel);
-        else
-        Debug.Log("Objects Don't Exist in the Scene");
-    }
-
-    void Update()
-    {
-        if(ConfigSettings.configCompleted)
+        // Start is called before the first frame update
+        void Start()
         {
             if (tree != null && configPanel != null)
-                ConfigSettings.DemoCheck(tree);
-            else
-                Debug.Log("Not in Tree Scene");
+                ConfigSettings.AppleDemoStart(tree, configPanel);
+        }
+
+        void Update()
+        {
+            if (ConfigSettings.configCompleted)
+            {
+                //testText.text = "Left: " + BluetoothKeepAlive.IsLeftConnected() + "Right " + BluetoothKeepAlive.IsRightConnected();
+
+                if (tree != null && configPanel != null)
+                {
+                    ConfigSettings.DemoCheck(tree);
+                }
+                
+                else
+                {
+                    Debug.Log("Not in Tree Scene");
+                }
+            }
+        }
+
+        public void ButtonPress()
+        {
+            ConfigSettings.CloseConfig(configPanel);
         }
     }
-
-    public void ButtonPress()
-    {
-        ConfigSettings.CloseConfig(configPanel);
-    }
-
 }

@@ -57,5 +57,27 @@ namespace Maestro
             return MaestroAndroidWrapper.checkIsGloveConnected(glovePointer);
 #endif
         }
+
+        private bool checkConnection(IntPtr pointer)
+        {
+            if (pointer == null)
+            {
+                return false;
+            }
+            else
+            {
+                return isGloveConnected(pointer);
+            }
+        }
+
+        public bool isLeftConnected()
+        {
+            return checkConnection(GetLeftGlovePointer());
+        }
+
+        public bool isRightConnected()
+        {
+            return checkConnection(GetRightGlovePointer());
+        }
     }
 }
