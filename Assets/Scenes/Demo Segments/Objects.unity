@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.012228225, g: 0.0053426, b: 0.011293992, a: 1}
+  m_IndirectSpecularColor: {r: 0.017770406, g: 0.007951659, b: 0.016504688, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3376,6 +3376,7 @@ GameObject:
   - component: {fileID: 424984209}
   - component: {fileID: 424984210}
   - component: {fileID: 424984211}
+  - component: {fileID: 424984212}
   m_Layer: 0
   m_Name: Segment 4
   m_TagString: Untagged
@@ -3479,7 +3480,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &424984211
 MonoBehaviour:
@@ -3585,6 +3586,19 @@ MonoBehaviour:
       data:
         Type: 14
         strength: 4
+--- !u!114 &424984212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424984205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfdc811f6b2f964f9839cad8ceba7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisableHandCollisions: 0
 --- !u!1 &438683391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4708,6 +4722,10 @@ MonoBehaviour:
       rid: 0
   castDirection: 4
   castDistance: 0.1
+  useLayerMask: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5517,10 +5535,8 @@ MonoBehaviour:
     layerIndex: 10
   _automaticHandsResetLayer: 0
   _interHandCollisions: 0
-  _strength: 2
   _perBoneMass: 0.6
-  _handTeleportDistance: 0.1
-  _handGraspTeleportDistance: 0.2
+  _handTeleportDistance: 0.2
   _handSolverIterations: 20
   _handSolverVelocityIterations: 15
   _enableHelpers: 1
@@ -7120,9 +7136,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _physicsHand:
     triggerDistance: 0.004
+    maximumPalmVelocity: 300
+    minimumPalmVelocity: 50
+    maximumFingerVelocity: 200
+    minimumFingerVelocity: 50
+    maximumPalmAngularVelocity: 8000
+    minimumPalmAngularVelocity: 6000
+    currentPalmVelocity: 300
+    currentPalmAngularVelocity: 8000
+    currentPalmVelocityInterp: 0
+    currentPalmWeightInterp: 0
+    currentPalmWeight: 0
     oldPosition: {x: 0, y: 0, z: 0}
     gameObject: {fileID: 1212198234}
     rootObject: {fileID: 864201575}
+    previousDataPosition: {x: 0, y: 0, z: 0}
+    computedPhysicsPosition: {x: 0, y: 0, z: 0}
+    elbowPosition: {x: 0, y: 0, z: 0}
+    computedHandDistance: 0
+    previousDataRotation: {x: 0, y: 0, z: 0, w: 0}
+    computedPhysicsRotation: {x: 0, y: 0, z: 0, w: 0}
     transform: {fileID: 1212198238}
     palmBone: {fileID: 1212198237}
     palmBody: {fileID: 1212198236}
@@ -7183,7 +7216,7 @@ MonoBehaviour:
     - {x: -0.013266354, y: -0.54483914, z: -0.8380312, w: 0.026037607}
     - {x: 0.08120667, y: -0.50801295, z: -0.85746795, w: -0.00878219}
     - {x: -0.12940955, y: -0.4829629, z: -0.8627299, w: 0.07547912}
-    strength: 2
+    justGhosted: 0
     stiffness: 100
     forceLimit: 1000
     boneMass: 0.6
@@ -9544,6 +9577,7 @@ GameObject:
   - component: {fileID: 1182863381}
   - component: {fileID: 1182863382}
   - component: {fileID: 1182863383}
+  - component: {fileID: 1182863384}
   m_Layer: 0
   m_Name: Segment 1
   m_TagString: Untagged
@@ -9647,7 +9681,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1182863383
 MonoBehaviour:
@@ -9753,6 +9787,19 @@ MonoBehaviour:
       data:
         Type: 14
         strength: 4
+--- !u!114 &1182863384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182863377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfdc811f6b2f964f9839cad8ceba7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisableHandCollisions: 0
 --- !u!1 &1197781784
 GameObject:
   m_ObjectHideFlags: 0
@@ -16134,9 +16181,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _physicsHand:
     triggerDistance: 0.004
+    maximumPalmVelocity: 300
+    minimumPalmVelocity: 50
+    maximumFingerVelocity: 200
+    minimumFingerVelocity: 50
+    maximumPalmAngularVelocity: 8000
+    minimumPalmAngularVelocity: 6000
+    currentPalmVelocity: 300
+    currentPalmAngularVelocity: 8000
+    currentPalmVelocityInterp: 0
+    currentPalmWeightInterp: 0
+    currentPalmWeight: 0
     oldPosition: {x: 0, y: 0, z: 0}
     gameObject: {fileID: 1162711366}
     rootObject: {fileID: 1946027655}
+    previousDataPosition: {x: 0, y: 0, z: 0}
+    computedPhysicsPosition: {x: 0, y: 0, z: 0}
+    elbowPosition: {x: 0, y: 0, z: 0}
+    computedHandDistance: 0
+    previousDataRotation: {x: 0, y: 0, z: 0, w: 0}
+    computedPhysicsRotation: {x: 0, y: 0, z: 0, w: 0}
     transform: {fileID: 1162711370}
     palmBone: {fileID: 1162711369}
     palmBody: {fileID: 1162711368}
@@ -16197,7 +16261,7 @@ MonoBehaviour:
     - {x: -0.013266281, y: 0.54483914, z: 0.8380312, w: 0.026037559}
     - {x: 0.081206754, y: 0.50801295, z: 0.85746795, w: -0.008782235}
     - {x: -0.12940948, y: 0.4829629, z: 0.8627299, w: 0.07547908}
-    strength: 2
+    justGhosted: 0
     stiffness: 100
     forceLimit: 1000
     boneMass: 0.6
@@ -18755,6 +18819,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1536893763949188131, guid: e3952388617c98147b066982f1051e3c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3031313807403851667, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
@@ -22377,7 +22446,7 @@ PrefabInstance:
     - target: {fileID: 8101796272047976840, guid: 401fe59b6cb37e04eb04105a713da309,
         type: 3}
       propertyPath: debug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8101796272047976840, guid: 401fe59b6cb37e04eb04105a713da309,
         type: 3}
