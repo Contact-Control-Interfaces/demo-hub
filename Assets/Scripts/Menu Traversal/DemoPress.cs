@@ -20,10 +20,9 @@ public class DemoPress : MonoBehaviour
     public TextMeshProUGUI holdText;
     public Material buttonMaterial;
 
-   
     //value for the fill shader to not fill the button
-    private float emptyNum = -.002f;
-    private float fullNum = .002f;
+    private float emptyNum = -.0012f;
+    private float fullNum = .0012f;
 
     //value being manipulated and filling the button
     private float fillNum = 0;
@@ -72,7 +71,6 @@ public class DemoPress : MonoBehaviour
         {
             StopTime();
         }
-
     }
 
     public void Deregister(FingerCollider fc)
@@ -130,7 +128,6 @@ public class DemoPress : MonoBehaviour
             CurrentCoroutine = null;
             holdText.gameObject.SetActive(false);
         }
-
         ResetDisplay();
     }
 
