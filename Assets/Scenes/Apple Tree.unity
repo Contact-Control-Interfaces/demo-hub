@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.017650368, g: 0.007893181, b: 0.01639089, a: 1}
+  m_IndirectSpecularColor: {r: 0.016992819, g: 0.0075849784, b: 0.01579307, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2350,6 +2350,20 @@ MonoBehaviour:
   FollowForceVelocityDamper: 0.5
   FollowForceVelocityScalar: 750
   Debug: 0
+--- !u!114 &246791603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246791598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigTransform: {fileID: 246791598}
+  maxY: 0
 --- !u!1 &284107203 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5628338682026594789, guid: 49e8ccd93f2ecce419ad0f90bacf4e19,
@@ -10225,6 +10239,7 @@ GameObject:
   - component: {fileID: 1621923496}
   - component: {fileID: 1621923497}
   - component: {fileID: 1621923498}
+  - component: {fileID: 1621923499}
   m_Layer: 0
   m_Name: Rigs
   m_TagString: Untagged
@@ -10275,6 +10290,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa23538bf30626042a865f2093f5db7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1621923499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621923495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigTransform: {fileID: 0}
+  maxY: 0
 --- !u!1 &1661646439
 GameObject:
   m_ObjectHideFlags: 0
