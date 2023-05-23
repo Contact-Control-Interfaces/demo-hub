@@ -34,7 +34,6 @@ public class ArticulationBodyData
 public class ArticulationBodyConstraint : MonoBehaviour
 {
     private PhysicsHand physicsHand;
-    private List<ArticulationBody> bodies = new List<ArticulationBody>();
     private Dictionary<ArticulationBody, ArticulationBodyData> initialBodyVelocities = new Dictionary<ArticulationBody, ArticulationBodyData>();
     private float initialMaximumPalmVelocity;
     private float initialMaxmimumFingerVelocity;
@@ -74,12 +73,12 @@ public class ArticulationBodyConstraint : MonoBehaviour
 
     private void Update()
     {
-        ConstrainHand();
+        ConstrainWholeHand();
     }
 
-    private void ConstrainHand()
+    private void ConstrainWholeHand()
     {
-        if(IsAnyBoneContacting() || IsPalmContacting() && !physicsHand.IsGrasping)
+        if (IsAnyBoneContacting() || IsPalmContacting() && !physicsHand.IsGrasping)
         {
             hand.maximumPalmVelocity = 0.05f;
             hand.maximumPalmAngularVelocity = 2f;
@@ -94,6 +93,11 @@ public class ArticulationBodyConstraint : MonoBehaviour
         {
             ConstrainFinger(bone);
         }
+        ConstrainPalm();
+    }
+
+    private void ConstrainPalm()
+    {
         PhysicsBone palmBone = hand.palmBone;
         List<Rigidbody> palmRigidbodies = palmBone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null).ToList();
         if (palmBone.IsContacting && palmRigidbodies.Count > 0)
@@ -122,6 +126,7 @@ public class ArticulationBodyConstraint : MonoBehaviour
             palmBone.ArticulationBody.mass = data.mass;
         }
     }
+
     private void ConstrainFinger(PhysicsBone bone)
     {
         List<Collider> correctColliders = bone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null && o.GetComponent<Collider>() != null).Select(c => c.GetComponent<Collider>()).ToList();
@@ -142,29 +147,6 @@ public class ArticulationBodyConstraint : MonoBehaviour
                 target = bone.ArticulationBody.xDrive.target,
                 targetVelocity = bone.ArticulationBody.xDrive.targetVelocity
             };
-            //if (bone.ArticulationBody.jointType == ArticulationJointType.SphericalJoint)
-            //{
-            //    bone.ArticulationBody.yDrive = new ArticulationDrive
-            //    {
-            //        forceLimit = 0.01f,
-            //        stiffness = 10000f,
-            //        damping = 25f,
-            //        lowerLimit = -10f,
-            //        upperLimit = 10f,
-            //        target = bone.ArticulationBody.yDrive.target,
-            //        targetVelocity = bone.ArticulationBody.yDrive.targetVelocity
-            //    };
-            //    bone.ArticulationBody.zDrive = new ArticulationDrive
-            //    {
-            //        forceLimit = 0.01f,
-            //        stiffness = 10000f,
-            //        damping = bone.ArticulationBody.zDrive.damping,
-            //        lowerLimit = 0f,
-            //        upperLimit = 0f,
-            //        target = bone.ArticulationBody.zDrive.target,
-            //        targetVelocity = bone.ArticulationBody.zDrive.targetVelocity
-            //    };
-            //}
             bone.ArticulationBody.velocity = Vector3.zero;
             bone.ArticulationBody.angularVelocity = Vector3.zero;
         }
