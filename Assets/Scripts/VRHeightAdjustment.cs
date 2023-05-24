@@ -2,6 +2,7 @@ using Leap.Unity;
 using Maestro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -38,6 +39,11 @@ public class VRHeightAdjustment : MonoBehaviour
             maxY = rigTransform.transform.position.y;
             AdjustSceneHeight();
         }
+
+        if(Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            
+        }
     }
 
     public void AdjustSceneHeight()
@@ -50,8 +56,13 @@ public class VRHeightAdjustment : MonoBehaviour
     }
 
 
-    public void AdjustPlayerHeight()
+    public void ManualAdjustUp()
     {
-        
+        demoTable.transform.position += new Vector3(0, .1f, 0);
+    }
+
+    public void ManualAdjustDown()
+    {
+        demoTable.transform.position -= new Vector3(0, .1f, 0);
     }
 }
