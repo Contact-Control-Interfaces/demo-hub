@@ -11,7 +11,7 @@ public class VRHeightAdjustment : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] GameObject rigTransform;
-    [SerializeField] GameObject demoTable;
+    [SerializeField] GameObject changeObject;
 
     //Remove Later
     //Used for Visual Debugging
@@ -24,10 +24,6 @@ public class VRHeightAdjustment : MonoBehaviour
 
     void Start()
     {
-        Vector3 startPos = demoTable.transform.position;
-        startPos.y = 0;
-        demoTable.transform.position = startPos;
-
         maxY = rigTransform.transform.position.y;
     }
 
@@ -39,30 +35,25 @@ public class VRHeightAdjustment : MonoBehaviour
             maxY = rigTransform.transform.position.y;
             AdjustSceneHeight();
         }
-
-        if(Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            
-        }
     }
 
     public void AdjustSceneHeight()
     {
-        Vector3 tempPos = demoTable.transform.position;
+        Vector3 tempPos = changeObject.transform.position;
         tempPos.y = maxY * ((float)heightPercentage / 100f);
         Debug.Log(tempPos.y);
-        demoTable.transform.position = tempPos;
+        changeObject.transform.position = tempPos;
         demoTableY = tempPos.y;
     }
 
 
     public void ManualAdjustUp()
     {
-        demoTable.transform.position += new Vector3(0, .1f, 0);
+        rigTransform.transform.position += new Vector3(0, .1f, 0);
     }
 
     public void ManualAdjustDown()
     {
-        demoTable.transform.position -= new Vector3(0, .1f, 0);
+        rigTransform.transform.position -= new Vector3(0, .1f, 0);
     }
 }
