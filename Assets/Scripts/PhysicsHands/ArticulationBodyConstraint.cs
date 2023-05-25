@@ -45,7 +45,6 @@ public class ArticulationBodyConstraint : MonoBehaviour
         foreach (PhysicsBone bone in hand.jointBones)
         {
             initialBodyVelocities.Add(bone.ArticulationBody, new ArticulationBodyData(bone.ArticulationBody));
-            bone.ArticulationBody.maxAngularVelocity = 0.1f;
         }
         initialBodyVelocities.Add(hand.palmBone.ArticulationBody, new ArticulationBodyData(hand.palmBone.ArticulationBody));
         initialMaximumPalmVelocity = hand.maximumPalmVelocity;
@@ -61,7 +60,7 @@ public class ArticulationBodyConstraint : MonoBehaviour
                 return true;
             }
         }
-            return false;
+        return false;
     }
 
     private bool IsPalmContacting()
@@ -78,17 +77,6 @@ public class ArticulationBodyConstraint : MonoBehaviour
 
     private void ConstrainWholeHand()
     {
-        if (IsAnyBoneContacting() || IsPalmContacting() && !physicsHand.IsGrasping)
-        {
-            hand.maximumPalmVelocity = 0.05f;
-            hand.maximumPalmAngularVelocity = 2f;
-        }
-        else
-        {
-            hand.maximumPalmVelocity = initialMaximumPalmVelocity;
-            hand.maximumFingerVelocity = initialMaxmimumFingerVelocity;
-            hand.maximumPalmAngularVelocity = 6000f;
-        }
         foreach (PhysicsBone bone in hand.jointBones)
         {
             ConstrainFinger(bone);
@@ -100,7 +88,7 @@ public class ArticulationBodyConstraint : MonoBehaviour
     {
         PhysicsBone palmBone = hand.palmBone;
         List<Rigidbody> palmRigidbodies = palmBone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null).ToList();
-        if (palmBone.IsContacting && palmRigidbodies.Count > 0)
+        if (!physicsHand.IsGrasping && palmBone.IsContacting && palmRigidbodies.Count > 0)
         {
             hand.maximumPalmVelocity = 0.05f;
             palmBone.ArticulationBody.jointFriction = 10000f;
@@ -130,7 +118,7 @@ public class ArticulationBodyConstraint : MonoBehaviour
     private void ConstrainFinger(PhysicsBone bone)
     {
         List<Collider> correctColliders = bone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null && o.GetComponent<Collider>() != null).Select(c => c.GetComponent<Collider>()).ToList();
-        if (bone.IsContacting && correctColliders.Count > 0)
+        if (!physicsHand.IsGrasping && bone.IsContacting && correctColliders.Count > 0)
         {
             bone.ArticulationBody.maxAngularVelocity = 0.01f;
             bone.ArticulationBody.maxDepenetrationVelocity = 0.01f;
