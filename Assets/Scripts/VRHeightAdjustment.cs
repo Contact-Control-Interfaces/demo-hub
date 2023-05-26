@@ -35,6 +35,11 @@ public class VRHeightAdjustment : MonoBehaviour
             maxY = rigTransform.transform.position.y;
             AdjustSceneHeight();
         }
+
+        if (Input.GetKeyDown(KeyCode.Equals))
+        {
+            SceneHeightOverride();
+        }
     }
 
     public void AdjustSceneHeight()
@@ -46,14 +51,10 @@ public class VRHeightAdjustment : MonoBehaviour
         demoTableY = tempPos.y;
     }
 
-
-    public void ManualAdjustUp()
+    public void SceneHeightOverride()
     {
-        rigTransform.transform.position += new Vector3(0, .1f, 0);
+        maxY = rigTransform.transform.position.y;
+        AdjustSceneHeight();
     }
 
-    public void ManualAdjustDown()
-    {
-        rigTransform.transform.position -= new Vector3(0, .1f, 0);
-    }
 }
