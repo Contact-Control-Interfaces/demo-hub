@@ -40,7 +40,6 @@ public class VRHeightAdjustment : MonoBehaviour
     {
         Vector3 tempPos = this.transform.position;
         tempPos.y = maxY * ((float)heightPercentage / 100f);
-        Debug.Log(tempPos.y);
         this.transform.position = tempPos;
     }
 
