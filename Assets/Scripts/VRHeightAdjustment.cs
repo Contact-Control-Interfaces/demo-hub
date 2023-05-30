@@ -16,9 +16,9 @@ public class VRHeightAdjustment : MonoBehaviour
 
     void Start()
     {
-        maxY = rigGameObject.transform.position.y;
-
         rigGameObject = Camera.main.gameObject;
+
+        maxY = rigGameObject.transform.position.y;
     }
 
     // Update is called once per frame
