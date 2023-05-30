@@ -11,13 +11,8 @@ public class VRHeightAdjustment : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] GameObject rigTransform;
-    [SerializeField] GameObject changeObject;
 
-    //Remove Later
-    //Used for Visual Debugging
-    [SerializeField] float maxY;
-    [SerializeField] float minY = 0;
-    [SerializeField] float demoTableY;
+    private float maxY;
 
     [Range(0.0f, 100f)]
     [SerializeField] int heightPercentage;
@@ -44,11 +39,10 @@ public class VRHeightAdjustment : MonoBehaviour
 
     public void AdjustSceneHeight()
     {
-        Vector3 tempPos = changeObject.transform.position;
+        Vector3 tempPos = this.transform.position;
         tempPos.y = maxY * ((float)heightPercentage / 100f);
         Debug.Log(tempPos.y);
-        changeObject.transform.position = tempPos;
-        demoTableY = tempPos.y;
+        this.transform.position = tempPos;
     }
 
     public void SceneHeightOverride()
