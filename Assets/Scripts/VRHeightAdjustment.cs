@@ -8,10 +8,7 @@ using UnityEngine.XR;
 
 public class VRHeightAdjustment : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    [SerializeField] GameObject rigTransform;
-
+    private GameObject rigGameObject;
     private float maxY;
 
     [Range(0.0f, 100f)]
@@ -19,15 +16,17 @@ public class VRHeightAdjustment : MonoBehaviour
 
     void Start()
     {
-        maxY = rigTransform.transform.position.y;
+        maxY = rigGameObject.transform.position.y;
+
+        rigGameObject = Camera.main.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(maxY < rigTransform.transform.position.y)
+        if (maxY < rigGameObject.transform.position.y)
         {
-            maxY = rigTransform.transform.position.y;
+            maxY = rigGameObject.transform.position.y;
             AdjustSceneHeight();
         }
 
@@ -47,8 +46,7 @@ public class VRHeightAdjustment : MonoBehaviour
 
     public void SceneHeightOverride()
     {
-        maxY = rigTransform.transform.position.y;
+        maxY = rigGameObject.transform.position.y;
         AdjustSceneHeight();
     }
-
 }
