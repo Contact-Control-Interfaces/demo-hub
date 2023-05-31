@@ -3219,6 +3219,7 @@ GameObject:
   - component: {fileID: 792713658}
   - component: {fileID: 792713659}
   - component: {fileID: 792713660}
+  - component: {fileID: 792713661}
   m_Layer: 0
   m_Name: Segment 2
   m_TagString: Untagged
@@ -3429,6 +3430,34 @@ MonoBehaviour:
       data:
         Type: 14
         strength: 4
+--- !u!114 &792713661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792713654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdjustmentEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 693024183}
+        m_TargetAssemblyTypeName: Maestro.FingerPaintable, com.contactci.unity.Runtime.Samples
+        m_MethodName: AdjustLineHeights
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  heightPercentage: 50
 --- !u!1 &819736508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,6 +3831,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AdjustmentEvent:
+    m_PersistentCalls:
+      m_Calls: []
   heightPercentage: 100
 --- !u!1 &882604024
 GameObject:

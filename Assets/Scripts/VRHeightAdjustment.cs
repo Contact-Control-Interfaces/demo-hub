@@ -1,9 +1,16 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
+
+[Serializable]
+public class HeightAdjustmentEvent : UnityEvent<float> { }
 
 public class VRHeightAdjustment : MonoBehaviour
 {
     private GameObject rigGameObject;
     private float maxY;
+
+    public HeightAdjustmentEvent AdjustmentEvent;
 
     [Range(0.0f, 100f)]
     [SerializeField] int heightPercentage;
@@ -32,9 +39,14 @@ public class VRHeightAdjustment : MonoBehaviour
 
     public void AdjustSceneHeight()
     {
+        float lastY = this.transform.position.y;
+        float newY = maxY * ((float)heightPercentage / 100f);
+
         Vector3 tempPos = this.transform.position;
-        tempPos.y = maxY * ((float)heightPercentage / 100f);
+        tempPos.y = newY;
         this.transform.position = tempPos;
+
+        AdjustmentEvent?.Invoke(newY - lastY);
     }
 
     public void SceneHeightOverride()
