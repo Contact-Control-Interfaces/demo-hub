@@ -125,7 +125,9 @@ public class Apple : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        dropCoroutine = StartCoroutine(DropHaptics());
+        if (dropCoroutine == null) {
+            dropCoroutine = StartCoroutine(DropHaptics());
+        }
 
         if (other.gameObject.tag == "MainCamera" && biteCouroutine == null && !StillAttachedToTree)
         {
@@ -260,7 +262,9 @@ public class Apple : MonoBehaviour
         interactable.SendHapticsToWholeHand = true;
         interactable.SetHapticOverride(DropEffect);
         yield return new WaitForSeconds(DropEffectDuration / 1000f);
+
         interactable.ResetOverride();
         interactable.SendHapticsToWholeHand = false;
+        dropCoroutine = null;
     }
 }

@@ -24,11 +24,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891616262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1665, y: 1.055, z: -0.2135}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.333, y: 2.11, z: -0.427}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1058014438354782522}
-  m_RootOrder: 1
+  m_Father: {fileID: 7383438472221066955}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &291983639321345044
 GameObject:
@@ -58,6 +59,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0.25881997, z: -0, w: 0.96592563}
   m_LocalPosition: {x: 0, y: 0, z: 0.571}
   m_LocalScale: {x: 0.11275453, y: 0.112754524, z: 0.11275453}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 291983639805506543}
   m_RootOrder: 1
@@ -192,6 +194,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0.2588186, z: -0, w: 0.96592593}
   m_LocalPosition: {x: 0, y: 0, z: 0.85150516}
   m_LocalScale: {x: 0.11056382, y: 0.15100001, z: 0.15100001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 291983639805506543}
   m_RootOrder: 0
@@ -268,6 +271,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.3433332}
   m_LocalScale: {x: 3.333333, y: 0.8197715, z: 3.333333}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291983639770584988}
   - {fileID: 291983639321345033}
@@ -378,6 +382,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.1665, y: 1.055, z: -0.2135}
   m_LocalScale: {x: 0.00375, y: 0.0037500008, z: 0.0037500008}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8281294094043173945}
   m_RootOrder: 3
@@ -401,6 +406,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -479,11 +485,12 @@ MonoBehaviour:
   DropEffect:
     Amplitude: 255
     Vibration:
-      id: 0
+      rid: 0
   DropEffectDuration: 500
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: SoftBump, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -492,8 +499,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          id: 1
-    00000001:
+          rid: 1
+    - rid: 1
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
@@ -620,23 +627,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 255
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 102
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 1
   ignorePalmVibration: 0
   interactionPriority: 50
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -645,18 +655,18 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          id: 3
-    00000001:
+          rid: 3
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 0
         options:
-          id: 4
-    00000002:
+          rid: -2
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -665,15 +675,13 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 19
         options:
-          id: 5
-    00000003:
+          rid: 5
+    - rid: 3
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
         strength: 7
-    00000004:
-      type: {class: , ns: , asm: }
-    00000005:
+    - rid: 5
       type: {class: TransitionRamp/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 19
@@ -900,6 +908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  WristRotate: 0
   targetedBones: 0
   provider: {fileID: 0}
   defaultClamp: 30
@@ -928,10 +937,13 @@ MonoBehaviour:
   toggleHaptics:
     Amplitude: 175
     Vibration:
-      id: 0
+      rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -940,9 +952,7 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 1
-    00000001:
-      type: {class: , ns: , asm: }
+          rid: -2
 --- !u!114 &291983639886861871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,6 +966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  WristRotate: 0
   targetedBones: 0
   provider: {fileID: 0}
   defaultClamp: 30
@@ -984,10 +995,13 @@ MonoBehaviour:
   toggleHaptics:
     Amplitude: 175
     Vibration:
-      id: 0
+      rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -996,9 +1010,7 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 1
-    00000001:
-      type: {class: , ns: , asm: }
+          rid: -2
 --- !u!114 &291983639886861869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,6 +1075,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.151, y: 0.7335, z: -0.2015}
   m_LocalScale: {x: 0.15, y: 0.609926, z: 0.15}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291983639805506543}
   m_Father: {fileID: 8281294094043173945}
@@ -1087,6 +1100,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1220,23 +1234,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 0
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 0
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1245,8 +1262,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000001:
+          rid: -2
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1255,8 +1272,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000002:
+          rid: -2
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1265,9 +1282,7 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000003:
-      type: {class: , ns: , asm: }
+          rid: -2
 --- !u!114 &291983640482151372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,12 +1306,13 @@ MonoBehaviour:
   EnterHaptics:
     Amplitude: 50
     Vibration:
-      id: 0
+      rid: 0
   leftHand: {fileID: 0}
   rightHand: {fileID: 0}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: SoftBump, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -1305,8 +1321,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          id: 1
-    00000001:
+          rid: 1
+    - rid: 1
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
@@ -1451,6 +1467,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.25, y: 0.31149995, z: -0.25}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8281294094043173945}
   m_RootOrder: 1
@@ -1478,6 +1495,7 @@ Terrain:
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
@@ -1525,6 +1543,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 678890530196970903}
   - {fileID: 8546120991583900697}
@@ -1562,6 +1581,7 @@ Transform:
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963060011077299842}
   m_RootOrder: 0
@@ -1585,6 +1605,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1679,23 +1700,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 0
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 50
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1704,8 +1728,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000001:
+          rid: -2
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -1714,8 +1738,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          id: 4
-    00000002:
+          rid: 4
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1724,10 +1748,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000003:
-      type: {class: , ns: , asm: }
-    00000004:
+          rid: -2
+    - rid: 4
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
@@ -1778,6 +1800,7 @@ Transform:
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7383438472221066955}
   m_RootOrder: 1
@@ -1801,6 +1824,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1895,23 +1919,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 0
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 150
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1920,8 +1947,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000001:
+          rid: -2
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -1930,8 +1957,8 @@ MonoBehaviour:
         RepeatDelay: 10
         WhichType: 4
         options:
-          id: 4
-    00000002:
+          rid: 4
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1940,10 +1967,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000003:
-      type: {class: , ns: , asm: }
-    00000004:
+          rid: -2
+    - rid: 4
       type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 4
@@ -1974,6 +1999,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963060011077299842}
   - {fileID: 291983640690203188}
@@ -2011,15 +2037,15 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.315, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7383438472221066955}
-  - {fileID: 1891616263}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8669031320319066458
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2032,10 +2058,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8669031320319066457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2076,10 +2104,12 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7080116588767196638}
   - {fileID: 2140243444106001488}
   - {fileID: 8281294094043173945}
+  - {fileID: 1891616263}
   m_Father: {fileID: 1058014438354782522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2114,6 +2144,7 @@ Transform:
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963060011077299842}
   m_RootOrder: 1
@@ -2137,6 +2168,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2231,23 +2263,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 0
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 150
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 5
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -2256,8 +2291,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000001:
+          rid: -2
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -2266,8 +2301,8 @@ MonoBehaviour:
         RepeatDelay: 10
         WhichType: 4
         options:
-          id: 4
-    00000002:
+          rid: 4
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -2276,10 +2311,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000003:
-      type: {class: , ns: , asm: }
-    00000004:
+          rid: -2
+    - rid: 4
       type: {class: MediumClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 4
@@ -2330,6 +2363,7 @@ Transform:
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7383438472221066955}
   m_RootOrder: 0
@@ -2353,6 +2387,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2447,23 +2482,26 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 0
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 80
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 0
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -2472,8 +2510,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000001:
+          rid: -2
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -2482,8 +2520,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          id: 4
-    00000002:
+          rid: 4
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -2492,10 +2530,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 0
         options:
-          id: 3
-    00000003:
-      type: {class: , ns: , asm: }
-    00000004:
+          rid: -2
+    - rid: 4
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
@@ -3075,21 +3111,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 641ea1540f57aea439b213bb01065c75, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e201a24a09e942042b93390d0444d728, type: 3}
---- !u!1 &1396136474213963574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1340743589949492, guid: e201a24a09e942042b93390d0444d728,
-    type: 3}
-  m_PrefabInstance: {fileID: 1397472543758395138}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1312427978039979802 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95278821033363480, guid: e201a24a09e942042b93390d0444d728,
     type: 3}
   m_PrefabInstance: {fileID: 1397472543758395138}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1401815080654522920 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4766092344323370, guid: e201a24a09e942042b93390d0444d728,
+--- !u!1 &1396136474213963574 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1340743589949492, guid: e201a24a09e942042b93390d0444d728,
     type: 3}
   m_PrefabInstance: {fileID: 1397472543758395138}
   m_PrefabAsset: {fileID: 0}
@@ -3107,3 +3137,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterationAmount: 3
   timesPlayed: 0
+--- !u!4 &1401815080654522920 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4766092344323370, guid: e201a24a09e942042b93390d0444d728,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397472543758395138}
+  m_PrefabAsset: {fileID: 0}

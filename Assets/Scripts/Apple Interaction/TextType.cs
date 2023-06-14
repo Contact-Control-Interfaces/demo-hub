@@ -64,7 +64,7 @@ public class TextType : MonoBehaviour
         }
        
         textCoroutine = null;
-        Debug.Log(textCoroutine);
+        //Debug.Log(textCoroutine);
     }
 
     public void TextGen(string text, bool overwrite = false)
@@ -77,7 +77,7 @@ public class TextType : MonoBehaviour
 
         if (textCoroutine == null && this.gameObject.activeInHierarchy)
         {
-            Debug.Log(textCoroutine);
+            //Debug.Log(textCoroutine);
             textCoroutine = StartCoroutine(DisplayLine(text));
         }
     }

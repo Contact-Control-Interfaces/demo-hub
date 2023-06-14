@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0178357, y: 1.5691925, z: 2.2254698}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 54466316016642973}
   m_RootOrder: 0
@@ -114,6 +115,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.41499153, y: 0.29083726, z: 0.46199998}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 54466315973868828}
   m_Father: {fileID: 54466315472445203}
@@ -294,54 +296,55 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 200
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 200
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 200
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000001:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000002:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000003:
+    version: 2
+    RefIds:
+    - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 0
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 1
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 2
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!54 &54466314680462327
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -401,6 +404,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.9124, y: 1.9124, z: 1.9124}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 54466314680462326}
   - {fileID: 54466316016642973}
@@ -539,6 +543,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1888208, y: 1.543974, z: 2.0995}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 54466314680462326}
   m_RootOrder: 0
@@ -625,6 +630,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.41499153, y: 0.29083726, z: 0.46199998}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 54466314313134929}
   m_Father: {fileID: 54466315472445203}
@@ -805,54 +811,55 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 200
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 200
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 200
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000001:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000002:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000003:
+    version: 2
+    RefIds:
+    - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 0
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 1
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 2
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!54 &54466316016642970
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -912,6 +919,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5995441144056822950}
   m_RootOrder: 0
@@ -993,6 +1001,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.9561499, y: 1.9561499, z: 1.95615}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3303839584894021737}
   m_Father: {fileID: 5995441144056822950}
@@ -1188,54 +1197,55 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 200
     Vibration:
-      id: 0
+      rid: 0
   stayHaptics:
     Amplitude: 200
     Vibration:
-      id: 1
+      rid: 1
   exitHaptics:
     Amplitude: 200
     Vibration:
-      id: 2
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
   references:
-    version: 1
-    00000000:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000001:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000002:
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          id: 3
-    00000003:
+    version: 2
+    RefIds:
+    - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 0
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 1
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 2
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!114 &3303839584807672529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1386,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3303839584807672538}
   m_RootOrder: 0
@@ -1439,6 +1450,7 @@ GameObject:
   - component: {fileID: 5995441144056822951}
   - component: {fileID: 5995441144056822968}
   - component: {fileID: 5995441144056822969}
+  - component: {fileID: 6998080543249845097}
   m_Layer: 5
   m_Name: Configuration Panel
   m_TagString: Untagged
@@ -1456,6 +1468,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0.7047271, z: 0, w: 0.7094785}
   m_LocalPosition: {x: 0, y: 0, z: -0.565}
   m_LocalScale: {x: 0.0011096582, y: 0.0011096582, z: 0.00010365731}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3303839584787168974}
   - {fileID: 5995441145606234658}
@@ -1530,6 +1543,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6998080543249845097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995441144056822970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdjustmentEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  heightPercentage: 85
 --- !u!1 &5995441145606234659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1587,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.9646267, y: 1.9646267, z: 1.9646268}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5995441144056822950}
   m_RootOrder: 1
