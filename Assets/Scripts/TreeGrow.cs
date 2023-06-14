@@ -13,14 +13,12 @@ public class TreeGrow : MonoBehaviour
     private int Animate;
     private int AnimateHand;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Animate = Animator.StringToHash("Animate");
         AnimateHand = Animator.StringToHash("Animate Hand");
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.G))

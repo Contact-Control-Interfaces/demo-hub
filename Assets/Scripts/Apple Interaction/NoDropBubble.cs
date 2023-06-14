@@ -48,7 +48,9 @@ public class NoDropBubble : MonoBehaviour
     private void SetDisallowDropping(IEnumerable<IMaestroHand> big, IEnumerable<IMaestroHand> small, bool toSet)
     {
         var handsToModify = big.Except(small);
-        foreach (IMaestroHand hand in handsToModify) {
+        foreach (IMaestroHand hand in handsToModify)
+        {
+            if (hand.grabManager == null) return;
             hand.grabManager.DisallowDropping = toSet;
             Debug.Log($"{hand.gameObject.name} set to {toSet.ToString()}");
         }
