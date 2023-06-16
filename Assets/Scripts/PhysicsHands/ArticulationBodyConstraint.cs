@@ -1,4 +1,5 @@
 using Leap;
+using Leap.Unity;
 using Leap.Unity.Interaction.PhysicsHands;
 using Maestro;
 using System;
@@ -18,6 +19,7 @@ public class ArticulationBodyData
     public float angularDamping;
     public float mass;
     public float jointFriction;
+    public float linearDamping;
 
     public ArticulationBodyData(ArticulationBody body)
     {
@@ -29,6 +31,7 @@ public class ArticulationBodyData
         angularDamping = body.angularDamping;
         mass = body.mass;
         jointFriction = body.jointFriction;
+        linearDamping = body.linearDamping;
     }
 }
 public class ArticulationBodyConstraint : MonoBehaviour
@@ -38,67 +41,54 @@ public class ArticulationBodyConstraint : MonoBehaviour
     private float initialMaximumPalmVelocity;
     private float initialMaxmimumFingerVelocity;
     private PhysicsHand.Hand hand;
+    private Transform rig;
+    private Vector3 originalPosition;
     private void Awake()
     {
         physicsHand = GetComponent<PhysicsHand>();
         hand = physicsHand.GetPhysicsHand();
-        foreach (PhysicsBone bone in hand.jointBones)
-        {
-            initialBodyVelocities.Add(bone.ArticulationBody, new ArticulationBodyData(bone.ArticulationBody));
-        }
-        initialBodyVelocities.Add(hand.palmBone.ArticulationBody, new ArticulationBodyData(hand.palmBone.ArticulationBody));
+        rig = FindObjectOfType<MaestroManager>().transform;
+        physicsHand.OnUpdatePhysics += ConstrainWholeHand;
+        physicsHand.OnBeginPhysics += SetupJoints;
+    }
+
+    private void SetupJoints()
+    {
+        initialBodyVelocities[hand.palmBone.ArticulationBody] = new ArticulationBodyData(hand.palmBone.ArticulationBody);
         initialMaximumPalmVelocity = hand.maximumPalmVelocity;
         initialMaxmimumFingerVelocity = hand.maximumFingerVelocity;
-    }
-    private bool IsAnyBoneContacting()
-    {
         foreach (PhysicsBone bone in hand.jointBones)
         {
-            List<Collider> correctColliders = bone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null && o.GetComponent<Collider>() != null).Select(c => c.GetComponent<Collider>()).ToList();
-            if (bone.IsContacting && correctColliders.Count > 0)
+            initialBodyVelocities[bone.ArticulationBody] = new ArticulationBodyData(bone.ArticulationBody);
+            if(bone.TryGetComponent(out CapsuleCollider collider))
             {
-                return true;
+               CapsuleCollider trigger = bone.gameObject.AddComponent<CapsuleCollider>();
+                trigger.center = collider.center; 
+                trigger.radius = collider.radius / 2f;
+                trigger.height = collider.height;
+                trigger.direction = collider.direction;
+                trigger.isTrigger = true;
             }
         }
-        return false;
     }
-
-    private bool IsPalmContacting()
+    private void OnDestroy()
     {
-        PhysicsBone palmBone = hand.palmBone;
-        List<Rigidbody> palmRigidbodies = palmBone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null).ToList();
-        return palmBone.IsContacting && palmRigidbodies.Count > 0;
-    }
-
-    private void Update()
-    {
-        ConstrainWholeHand();
+        physicsHand.OnUpdatePhysics -= ConstrainWholeHand;
     }
 
     private void ConstrainWholeHand()
     {
-        foreach (PhysicsBone bone in hand.jointBones)
-        {
-            ConstrainFinger(bone);
-        }
         ConstrainPalm();
     }
 
     private void ConstrainPalm()
     {
         PhysicsBone palmBone = hand.palmBone;
-        List<Rigidbody> palmRigidbodies = palmBone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null).ToList();
-        if (!physicsHand.IsGrasping && palmBone.IsContacting && palmRigidbodies.Count > 0)
+        PhysicsBoneContactInfo contactInfo = palmBone.GetComponent<PhysicsBoneContactInfo>();
+        bool palmIsContacting = palmBone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null).Any();
+        if (!physicsHand.IsGrasping && palmBone.IsContacting && palmIsContacting)
         {
-            hand.maximumPalmVelocity = 0.05f;
-            palmBone.ArticulationBody.jointFriction = 10000f;
-            palmBone.ArticulationBody.velocity = Vector3.zero;
-            palmBone.ArticulationBody.angularVelocity = Vector3.zero;
-            palmBone.ArticulationBody.maxAngularVelocity = 0.0f;
-            palmBone.ArticulationBody.maxDepenetrationVelocity = 0.0f;
-            palmBone.ArticulationBody.maxJointVelocity = 0.0f;
-            palmBone.ArticulationBody.maxLinearVelocity = 0.0f;
-            palmBone.ArticulationBody.angularDamping = 500f;
+            palmBone.ArticulationBody.maxDepenetrationVelocity = 1000f;
         }
         else
         {
@@ -114,41 +104,4 @@ public class ArticulationBodyConstraint : MonoBehaviour
             palmBone.ArticulationBody.mass = data.mass;
         }
     }
-
-    private void ConstrainFinger(PhysicsBone bone)
-    {
-        List<Collider> correctColliders = bone.ContactingObjects.Where(o => o.GetComponent<FingerCollider>() == null && o.GetComponent<Collider>() != null).Select(c => c.GetComponent<Collider>()).ToList();
-        if (!physicsHand.IsGrasping && bone.IsContacting && correctColliders.Count > 0)
-        {
-            bone.ArticulationBody.maxAngularVelocity = 0.01f;
-            bone.ArticulationBody.maxDepenetrationVelocity = 0.01f;
-            bone.ArticulationBody.maxJointVelocity = 0.01f;
-            bone.ArticulationBody.maxLinearVelocity = 0.01f;
-            bone.ArticulationBody.jointFriction = 1000f;
-            bone.ArticulationBody.xDrive = new ArticulationDrive
-            {
-                forceLimit = 0.01f,
-                stiffness = 10000f,
-                damping = bone.ArticulationBody.xDrive.damping,
-                lowerLimit = -10f,
-                upperLimit = 10f,
-                target = bone.ArticulationBody.xDrive.target,
-                targetVelocity = bone.ArticulationBody.xDrive.targetVelocity
-            };
-            bone.ArticulationBody.velocity = Vector3.zero;
-            bone.ArticulationBody.angularVelocity = Vector3.zero;
-        }
-        else
-        {
-            ArticulationBodyData data = initialBodyVelocities[bone.ArticulationBody];
-            bone.ArticulationBody.maxAngularVelocity = data.maxAngularVelocity;
-            bone.ArticulationBody.maxDepenetrationVelocity = data.maxDepenetrationVelocity;
-            bone.ArticulationBody.maxJointVelocity = data.maxJointVelocity;
-            bone.ArticulationBody.maxLinearVelocity = data.maxLinearVelocity;
-            bone.ArticulationBody.xDrive = data.xDrive;
-            bone.ArticulationBody.mass = data.mass;
-            bone.ArticulationBody.jointFriction = data.jointFriction;
-        }
-    }
-
 }
