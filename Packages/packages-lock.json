@@ -19,22 +19,20 @@
       }
     },
     "com.ultraleap.tracking": {
-      "version": "6.8.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "version": "file:ultraleap/Packages/Tracking",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.ultraleap.tracking.preview": {
-      "version": "6.8.0",
+      "version": "file:ultraleap/Packages/Tracking Preview",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
-        "com.ultraleap.tracking": "6.8.0",
-        "com.unity.inputsystem": "1.4.4",
+        "com.ultraleap.tracking": "6.8.1",
+        "com.unity.inputsystem": "1.5.0",
         "com.unity.xr.interaction.toolkit": "2.3.1"
-      },
-      "url": "https://package.openupm.com"
+      }
     },
     "com.unity.burst": {
       "version": "1.8.2",

@@ -5,9 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class MaestroThrowable : MonoBehaviour
+public class MaestroGrabbable : MonoBehaviour
 {
+    [SerializeField]
+    private bool throwHelpersEnabled = true;
     private PhysicsProvider PhysicsProvider;
     private Rigidbody rb;
     private PhysicsHand graspedHand;
@@ -17,6 +20,8 @@ public class MaestroThrowable : MonoBehaviour
     private bool isLocatingHand;
     private float extraThrowForce = 2f;
     private float minVelocityForThrow = 1.4f;
+    [SerializeField]
+    private UnityEvent OnGrab;
 
     private void Start()
     {
@@ -29,6 +34,8 @@ public class MaestroThrowable : MonoBehaviour
 
     private void Update()
     {
+        if (!throwHelpersEnabled) 
+            return;
         if (handModelBase == null || isLocatingHand || !isGrasped || handModelBase.IsTracked)
             return;
         isLocatingHand = true;
@@ -76,6 +83,7 @@ public class MaestroThrowable : MonoBehaviour
         if (isGrasped && !PhysicsProvider.IsGraspingObject(rb))
         {
             isGrasped = false;
+            rb.isKinematic = false;
             StartCoroutine(ThrowAveragedVelocity());
             graspedHand = null;
         }
@@ -85,5 +93,6 @@ public class MaestroThrowable : MonoBehaviour
         graspedHand = PhysicsProvider.LeftHand.IsGrasping ? PhysicsProvider.LeftHand : PhysicsProvider.RightHand;
         handModelBase = FindObjectsOfType<HandBinder>().First(o => o.Handedness == graspedHand.Handedness);
         palmTransform = graspedHand.GetComponentsInChildren<Transform>(true)[1];
+        OnGrab?.Invoke();
     }
 }
