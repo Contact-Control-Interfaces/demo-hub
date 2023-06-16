@@ -361,8 +361,6 @@ GameObject:
   - component: {fileID: 291983639886861877}
   - component: {fileID: 291983639886861865}
   - component: {fileID: 291983639886861864}
-  - component: {fileID: 291983639886861870}
-  - component: {fileID: 291983639886861871}
   - component: {fileID: 291983639886861869}
   - component: {fileID: 291983639886861868}
   m_Layer: 6
@@ -476,7 +474,7 @@ MonoBehaviour:
   biteSound: {fileID: 291983639886861865}
   pluckSound: {fileID: 291983639886861864}
   resetPoint: {fileID: 1891616263}
-  resetHeight: 2.2
+  resetHeight: 0.1
   mouthTransform: {fileID: 0}
   failsafeBubble: {fileID: 0}
   firstBite: 0.15
@@ -531,7 +529,7 @@ MonoBehaviour:
   onGrab:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: LockAll
         m_Mode: 1
@@ -543,7 +541,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: LockAll
         m_Mode: 1
@@ -561,7 +559,7 @@ MonoBehaviour:
   onTouch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Register
         m_Mode: 0
@@ -573,7 +571,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Register
         m_Mode: 0
@@ -588,7 +586,7 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Deregister
         m_Mode: 0
@@ -600,7 +598,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Deregister
         m_Mode: 0
@@ -895,122 +893,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &291983639886861870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291983639886861874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b97493f55e50240b088634841b661d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  WristRotate: 0
-  targetedBones: 0
-  provider: {fileID: 0}
-  defaultClamp: 30
-  clamps: []
-  preview: 0
-  whichHand: 1
-  ClampThumb: 0
-  ClampIndex: 0
-  ClampMiddle: 0
-  ClampRing: 0
-  ClampLittle: 0
-  locked: 0
-  SnapTransform: {fileID: 0}
-  onLock:
-    m_PersistentCalls:
-      m_Calls: []
-  onFree:
-    m_PersistentCalls:
-      m_Calls: []
-  trackRealHand:
-    m_PersistentCalls:
-      m_Calls: []
-  autoUnlock: 0
-  alwaysLockAll: 1
-  interactable: {fileID: 0}
-  toggleHaptics:
-    Amplitude: 175
-    Vibration:
-      rid: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          rid: -2
---- !u!114 &291983639886861871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291983639886861874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b97493f55e50240b088634841b661d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  WristRotate: 0
-  targetedBones: 0
-  provider: {fileID: 0}
-  defaultClamp: 30
-  clamps: []
-  preview: 0
-  whichHand: 0
-  ClampThumb: 0
-  ClampIndex: 0
-  ClampMiddle: 0
-  ClampRing: 0
-  ClampLittle: 0
-  locked: 0
-  SnapTransform: {fileID: 0}
-  onLock:
-    m_PersistentCalls:
-      m_Calls: []
-  onFree:
-    m_PersistentCalls:
-      m_Calls: []
-  trackRealHand:
-    m_PersistentCalls:
-      m_Calls: []
-  autoUnlock: 0
-  alwaysLockAll: 1
-  interactable: {fileID: 0}
-  toggleHaptics:
-    Amplitude: 175
-    Vibration:
-      rid: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          rid: -2
 --- !u!114 &291983639886861869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,9 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyInstead: 0
-  resetColliders:
-  - {fileID: 0}
-  - {fileID: 0}
+  resetColliders: []
 --- !u!1 &291983640482151369
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,6 +3017,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterationAmount: 3
   timesPlayed: 0
+--- !u!1 &1396484532029378850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1581749144712736, guid: e201a24a09e942042b93390d0444d728,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397472543758395138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9052269153823381226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396484532029378850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdjustmentEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  heightPercentage: 90
 --- !u!4 &1401815080654522920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4766092344323370, guid: e201a24a09e942042b93390d0444d728,
