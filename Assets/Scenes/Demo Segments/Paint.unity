@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.01745297, g: 0.0077983355, b: 0.016210118, a: 1}
+  m_IndirectSpecularColor: {r: 0.015608364, g: 0.0069500343, b: 0.014501738, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 324826}
   - component: {fileID: 324825}
   - component: {fileID: 324824}
-  - component: {fileID: 324823}
   - component: {fileID: 324822}
   - component: {fileID: 324821}
   - component: {fileID: 324820}
@@ -396,22 +395,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 758939b2c1a41004cb7a0fa962d0d0f7, type: 3}
---- !u!114 &324823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &324824
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -604,7 +587,6 @@ GameObject:
   - component: {fileID: 105431461}
   - component: {fileID: 105431460}
   - component: {fileID: 105431459}
-  - component: {fileID: 105431458}
   - component: {fileID: 105431457}
   - component: {fileID: 105431456}
   - component: {fileID: 105431455}
@@ -864,22 +846,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 68afcaa090c948d4aa588196232a8113, type: 3}
---- !u!114 &105431458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105431452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &105431459
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4676,7 +4642,6 @@ GameObject:
   - component: {fileID: 489034305}
   - component: {fileID: 489034304}
   - component: {fileID: 489034303}
-  - component: {fileID: 489034302}
   - component: {fileID: 489034301}
   - component: {fileID: 489034300}
   - component: {fileID: 489034299}
@@ -4936,22 +4901,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 758939b2c1a41004cb7a0fa962d0d0f7, type: 3}
---- !u!114 &489034302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489034296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &489034303
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5531,7 +5480,6 @@ GameObject:
   - component: {fileID: 581910080}
   - component: {fileID: 581910079}
   - component: {fileID: 581910078}
-  - component: {fileID: 581910077}
   - component: {fileID: 581910076}
   - component: {fileID: 581910075}
   - component: {fileID: 581910074}
@@ -5791,22 +5739,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: df66e16f989023c42baf652f337cb55e, type: 3}
---- !u!114 &581910077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581910071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &581910078
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10711,7 +10643,6 @@ GameObject:
   - component: {fileID: 1046328153}
   - component: {fileID: 1046328152}
   - component: {fileID: 1046328151}
-  - component: {fileID: 1046328150}
   - component: {fileID: 1046328149}
   - component: {fileID: 1046328148}
   - component: {fileID: 1046328147}
@@ -10971,22 +10902,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 9a6bc827fa758dd4ba4a1fd20e9acbd1, type: 3}
---- !u!114 &1046328150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046328144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1046328151
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16394,7 +16309,6 @@ GameObject:
   - component: {fileID: 1104423715}
   - component: {fileID: 1104423714}
   - component: {fileID: 1104423713}
-  - component: {fileID: 1104423712}
   - component: {fileID: 1104423711}
   - component: {fileID: 1104423710}
   - component: {fileID: 1104423709}
@@ -16654,22 +16568,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: df66e16f989023c42baf652f337cb55e, type: 3}
---- !u!114 &1104423712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104423706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1104423713
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19365,7 +19263,6 @@ GameObject:
   - component: {fileID: 1401113723}
   - component: {fileID: 1401113722}
   - component: {fileID: 1401113721}
-  - component: {fileID: 1401113720}
   - component: {fileID: 1401113719}
   - component: {fileID: 1401113718}
   - component: {fileID: 1401113717}
@@ -19625,22 +19522,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 82fb11bee49f91d4387060a168057e78, type: 3}
---- !u!114 &1401113720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1401113714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1401113721
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -22938,7 +22819,6 @@ GameObject:
   - component: {fileID: 1804782243}
   - component: {fileID: 1804782242}
   - component: {fileID: 1804782241}
-  - component: {fileID: 1804782240}
   - component: {fileID: 1804782239}
   - component: {fileID: 1804782238}
   - component: {fileID: 1804782237}
@@ -23198,22 +23078,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 2862121c87f968f499d7cc10c90641d7, type: 3}
---- !u!114 &1804782240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804782234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1804782241
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -23872,7 +23736,6 @@ GameObject:
   - component: {fileID: 1904508668}
   - component: {fileID: 1904508667}
   - component: {fileID: 1904508666}
-  - component: {fileID: 1904508665}
   - component: {fileID: 1904508664}
   - component: {fileID: 1904508663}
   - component: {fileID: 1904508662}
@@ -24132,22 +23995,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 677cded8349883245bee70252c2291a8, type: 3}
---- !u!114 &1904508665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1904508659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1904508666
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24223,7 +24070,6 @@ GameObject:
   - component: {fileID: 1918388498}
   - component: {fileID: 1918388497}
   - component: {fileID: 1918388496}
-  - component: {fileID: 1918388495}
   - component: {fileID: 1918388494}
   - component: {fileID: 1918388493}
   - component: {fileID: 1918388492}
@@ -24483,22 +24329,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 68afcaa090c948d4aa588196232a8113, type: 3}
---- !u!114 &1918388495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918388489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &1918388496
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -25239,7 +25069,6 @@ GameObject:
   - component: {fileID: 2019351599}
   - component: {fileID: 2019351598}
   - component: {fileID: 2019351597}
-  - component: {fileID: 2019351596}
   - component: {fileID: 2019351595}
   - component: {fileID: 2019351594}
   - component: {fileID: 2019351593}
@@ -25499,22 +25328,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 677cded8349883245bee70252c2291a8, type: 3}
---- !u!114 &2019351596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2019351590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &2019351597
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -25692,7 +25505,6 @@ GameObject:
   - component: {fileID: 2047761733}
   - component: {fileID: 2047761732}
   - component: {fileID: 2047761731}
-  - component: {fileID: 2047761730}
   - component: {fileID: 2047761729}
   - component: {fileID: 2047761728}
   - component: {fileID: 2047761727}
@@ -25952,22 +25764,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 1
   splotchPrefab: {fileID: 113140, guid: 9a6bc827fa758dd4ba4a1fd20e9acbd1, type: 3}
---- !u!114 &2047761730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047761724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &2047761731
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -26043,7 +25839,6 @@ GameObject:
   - component: {fileID: 2049186733}
   - component: {fileID: 2049186732}
   - component: {fileID: 2049186731}
-  - component: {fileID: 2049186730}
   - component: {fileID: 2049186729}
   - component: {fileID: 2049186728}
   - component: {fileID: 2049186727}
@@ -26305,22 +26100,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 82fb11bee49f91d4387060a168057e78, type: 3}
---- !u!114 &2049186730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049186724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &2049186731
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -26396,7 +26175,6 @@ GameObject:
   - component: {fileID: 2053135512}
   - component: {fileID: 2053135511}
   - component: {fileID: 2053135510}
-  - component: {fileID: 2053135509}
   - component: {fileID: 2053135508}
   - component: {fileID: 2053135507}
   - component: {fileID: 2053135506}
@@ -26656,22 +26434,6 @@ MonoBehaviour:
   blobScale: 150
   lineWidth: 3
   splotchPrefab: {fileID: 113140, guid: 2862121c87f968f499d7cc10c90641d7, type: 3}
---- !u!114 &2053135509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053135503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 894dce3ce75d5d8478f15ee8bf5f12df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: -0.01
-  forceOffset: 0
-  damping: 5
-  springForce: 10
 --- !u!135 &2053135510
 SphereCollider:
   m_ObjectHideFlags: 0
