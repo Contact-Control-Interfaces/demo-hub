@@ -15,6 +15,8 @@ public class UltraleapTendonLength : TendonLength
     public float Rotation;
     public int LeapFingerIndex;
 
+    public Vector3 FingerDirectionInLocalSpace = Vector3.right;
+
     public override float Radius => leapFinger.Width;
 
     public override float[] JointRotations
@@ -22,11 +24,18 @@ public class UltraleapTendonLength : TendonLength
         get
         {
             Leap.Bone[] bones = leapFinger.bones;
+            Vector3[] directions = new Vector3[bones.Length + 1]; // +1 to store the base hand direction too
 
-            float[] result = new float[bones.Length];
-
+            // Make an array of which direction each joint in pointing
+            directions[0] = this.transform.TransformDirection(FingerDirectionInLocalSpace);
             for (int i = 0; i < bones.Length; i++) {
-                result[i] = Rotation * Mathf.Deg2Rad;
+                directions[i + 1] = bones[i].Direction;
+            }
+
+            // Each joint's rotation is just the angle between this bone and the previous
+            float[] result = new float[bones.Length];
+            for (int i = 0; i < result.Length; i++) {
+                result[i] = Mathf.Deg2Rad * Vector3.Angle(directions[i + 1], directions[i]);
             }
 
             return result;
