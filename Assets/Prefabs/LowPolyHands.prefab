@@ -1620,7 +1620,7 @@ MonoBehaviour:
     reference: {fileID: 3002331764940186611}
   Chirality: 1
   LeapHand:
-    FrameId: 0
+    FrameId: 37677
     Id: 0
     Fingers:
     - bones:
@@ -2213,11 +2213,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TendonLengthVisualizer
       objectReference: {fileID: 0}
-    - target: {fileID: 6379106769658778836, guid: e176da1ed08f1de46a4d7ad1c81ca51b,
-        type: 3}
-      propertyPath: invert
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e176da1ed08f1de46a4d7ad1c81ca51b, type: 3}
 --- !u!1001 &7392555951204016910
@@ -2286,6 +2281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TendonLengthVisualizer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379106769658778836, guid: e176da1ed08f1de46a4d7ad1c81ca51b,
+        type: 3}
+      propertyPath: invert
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e176da1ed08f1de46a4d7ad1c81ca51b, type: 3}
@@ -3696,6 +3696,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8018561890094480844}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6481738977799499430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018561890094512926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1de1368be508d48b9641dfb8889d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7989985975800709456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3786,18 +3798,6 @@ MonoBehaviour:
       data:
         Type: 5
         strength: 7
---- !u!114 &6481738977799499430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8018561890094512926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1de1368be508d48b9641dfb8889d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8018561890094512992 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100012, guid: 5413bab15c3dd4a4085a9fe254a17e96,
