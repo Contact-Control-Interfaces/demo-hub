@@ -1,20 +1,28 @@
 using Leap.Unity;
 using Maestro;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UltraleapTendonLength : TendonLength
 {
-    private LeapProvider provider;
+    private HandModelBase provider;
     private MaestroHand hand;
 
-    private List<Leap.Finger> Fingers;
+    private Leap.Hand leapHand;
 
-    protected override float BoneLength()
+    public override float BoneLength()
     {
-        throw new System.NotImplementedException();
+        float result = 0f;
+
+        if (leapHand == null)
+            return 0f;
+
+        // just using the index for now
+        foreach (Leap.Bone bone in leapHand.Fingers[1].bones) {
+            result += bone.Length;
+        }
+
+        return result;
     }
 
     private void Awake()
@@ -23,7 +31,7 @@ public class UltraleapTendonLength : TendonLength
             hand = this.GetComponentInParent<MaestroHand>();
 
         if (provider == null)
-            provider = this.GetComponentInChildren<LeapProvider>();
+            provider = this.GetComponentInParent<HandModelBase>();
 
         if (provider == null) {
             Debug.LogError($"No LeapProvider found on object [{this.gameObject.name}]! Disabling...");
@@ -32,18 +40,8 @@ public class UltraleapTendonLength : TendonLength
             Debug.LogError($"No MaestroHand found for object [{this.gameObject.name}]! Disabling...");
             this.enabled = false;
         } else {
-            var leapHand = provider.GetHand(HandednessToChirality(hand.whichHand));
-            Fingers = leapHand.Fingers;
+            leapHand = provider.GetLeapHand();
         }
-    }
-
-    private WhichHand ChiralityToHandedness(Chirality chirality)
-    {
-        return chirality switch {
-            Chirality.Left => WhichHand.LeftHand,
-            Chirality.Right => WhichHand.RightHand,
-            _ => throw new ArgumentOutOfRangeException($"Unknown chirality {chirality}!")
-        };
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
