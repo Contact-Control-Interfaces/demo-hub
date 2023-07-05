@@ -10,19 +10,43 @@ public class UltraleapTendonLength : TendonLength
 
     private Leap.Hand leapHand;
 
-    public override float BoneLength()
+    [Range(0f, 90f)]
+    public float Rotation;
+
+    public override float Radius => leapHand.Fingers[1].Width;
+
+    public override float[] JointRotations
     {
-        float result = 0f;
+        get
+        {
+            Leap.Bone[] bones = leapHand.Fingers[0].bones;
 
-        if (leapHand == null)
-            return 0f;
+            float[] result = new float[bones.Length];
 
-        // just using the index for now
-        foreach (Leap.Bone bone in leapHand.Fingers[1].bones) {
-            result += bone.Length;
+            for (int i = 0; i < bones.Length; i++) {
+                result[i] = Rotation * Mathf.Deg2Rad;
+            }
+
+            return result;
         }
+    }
 
-        return result;
+    protected override float BoneLength
+    {
+        get
+        {
+            float result = 0f;
+
+            if (leapHand == null)
+                return 0f;
+
+            // just using the index for now
+            foreach (Leap.Bone bone in leapHand.Fingers[1].bones) {
+                result += bone.Length;
+            }
+
+            return result;
+        }
     }
 
     private void Awake()
