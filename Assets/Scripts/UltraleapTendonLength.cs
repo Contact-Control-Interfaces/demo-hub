@@ -9,17 +9,19 @@ public class UltraleapTendonLength : TendonLength
     private MaestroHand hand;
 
     private Leap.Hand leapHand;
+    private Leap.Finger leapFinger => leapHand.Fingers[LeapFingerIndex];
 
     [Range(0f, 90f)]
     public float Rotation;
+    public int LeapFingerIndex;
 
-    public override float Radius => leapHand.Fingers[1].Width;
+    public override float Radius => leapFinger.Width;
 
     public override float[] JointRotations
     {
         get
         {
-            Leap.Bone[] bones = leapHand.Fingers[0].bones;
+            Leap.Bone[] bones = leapFinger.bones;
 
             float[] result = new float[bones.Length];
 
@@ -41,7 +43,7 @@ public class UltraleapTendonLength : TendonLength
                 return 0f;
 
             // just using the index for now
-            foreach (Leap.Bone bone in leapHand.Fingers[1].bones) {
+            foreach (Leap.Bone bone in leapFinger.bones) {
                 result += bone.Length;
             }
 
