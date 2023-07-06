@@ -1,6 +1,7 @@
 using Leap.Unity;
 using Maestro;
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class UltraleapTendonLength : TendonLength
@@ -9,7 +10,7 @@ public class UltraleapTendonLength : TendonLength
     private MaestroHand hand;
 
     private Leap.Hand leapHand;
-    private Leap.Finger leapFinger => leapHand.Fingers[LeapFingerIndex];
+    private Leap.Finger leapFinger => leapHand?.Fingers[LeapFingerIndex];
 
     [Range(0f, 90f)]
     public float Rotation;
@@ -46,17 +47,11 @@ public class UltraleapTendonLength : TendonLength
     {
         get
         {
-            float result = 0f;
-
-            if (leapHand == null)
+            if (leapFinger == null)
                 return 0f;
 
-            // just using the index for now
-            foreach (Leap.Bone bone in leapFinger.bones) {
-                result += bone.Length;
-            }
-
-            return result;
+            // They provide a bone length already so that's nice
+            return leapFinger.bones.Aggregate(0f, (acc, bone) => acc + bone.Length);
         }
     }
 
