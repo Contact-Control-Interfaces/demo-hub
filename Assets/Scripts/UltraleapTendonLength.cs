@@ -12,6 +12,8 @@ public class UltraleapTendonLength : TendonLength
     private Leap.Hand leapHand;
     private Leap.Finger leapFinger => leapHand?.Fingers[LeapFingerIndex];
 
+    private VectorRenderer vectorRend;
+
     [Range(0f, 90f)]
     public float Rotation;
     public int LeapFingerIndex;
@@ -31,6 +33,11 @@ public class UltraleapTendonLength : TendonLength
             directions[0] = this.transform.TransformDirection(FingerDirectionInLocalSpace);
             for (int i = 0; i < bones.Length; i++) {
                 directions[i + 1] = bones[i].Direction;
+            }
+
+            if (vectorRend != null) {
+                vectorRend.Vectors = directions;
+                vectorRend.RegenerateCylinders();
             }
 
             // Each joint's rotation is just the angle between this bone and the previous
@@ -57,6 +64,9 @@ public class UltraleapTendonLength : TendonLength
 
     private void Awake()
     {
+        if (vectorRend == null)
+            vectorRend = FindObjectOfType<VectorRenderer>();
+
         if (hand == null)
             hand = this.GetComponentInParent<MaestroHand>();
 
