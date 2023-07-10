@@ -13,8 +13,6 @@ public class UltraleapTendonLength : TendonLength
 
     public int LeapFingerIndex;
 
-    public Vector3 FingerDirectionInLocalSpace = Vector3.right;
-
     public override float Radius => leapFinger == null ? 0f : leapFinger.Width;
 
     public float MaxRotationDegrees = 90f;
@@ -26,11 +24,19 @@ public class UltraleapTendonLength : TendonLength
             if (leapHand == null)
                 return new float[] { 0f };
 
-            // 1.0 is fully curled, 0 is not at all
-            float curl = leapHand.GetFingerStrength(LeapFingerIndex);
+            // Get each finger bone direction in world space
+            Vector3[] directions = new Vector3[leapFinger.bones.Length];
+            for (int i = 0; i < directions.Length; i++) {
+                directions[i] = leapFinger.bones[i].Direction;
+            }
 
-            // assume all three digits are curled the same amount for now
-            return Enumerable.Repeat(curl * MaxRotationDegrees * Mathf.Deg2Rad, leapFinger.bones.Length).ToArray();
+            // Calculate angle between each pair of bones
+            float[] angles = new float[directions.Length - 1]; // -1 since we are calculating differences of pairs
+            for (int i = 0; i < angles.Length; i++) {
+                angles[i] = Mathf.Deg2Rad * Vector3.Angle(directions[i], directions[i + 1]);
+            }
+
+            return angles;
         }
     }
 
