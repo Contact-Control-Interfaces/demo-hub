@@ -7,46 +7,30 @@ using UnityEngine;
 public class UltraleapTendonLength : TendonLength
 {
     private HandModelBase provider;
-    private MaestroHand hand;
 
     private Leap.Hand leapHand;
     private Leap.Finger leapFinger => leapHand?.Fingers[LeapFingerIndex];
 
-    private VectorRenderer vectorRend;
-
-    [Range(0f, 90f)]
-    public float Rotation;
     public int LeapFingerIndex;
 
     public Vector3 FingerDirectionInLocalSpace = Vector3.right;
 
-    public override float Radius => leapFinger.Width;
+    public override float Radius => leapFinger == null ? 0f : leapFinger.Width;
+
+    public float MaxRotationDegrees = 90f;
 
     public override float[] JointRotations
     {
         get
         {
-            Leap.Bone[] bones = leapFinger.bones;
-            Vector3[] directions = new Vector3[bones.Length + 1]; // +1 to store the base hand direction too
+            if (leapHand == null)
+                return new float[] { 0f };
 
-            // Make an array of which direction each joint in pointing
-            directions[0] = this.transform.TransformDirection(FingerDirectionInLocalSpace);
-            for (int i = 0; i < bones.Length; i++) {
-                directions[i + 1] = bones[i].Direction;
-            }
+            // 1.0 is fully curled, 0 is not at all
+            float curl = leapHand.GetFingerStrength(LeapFingerIndex);
 
-            if (vectorRend != null) {
-                vectorRend.Vectors = directions;
-                vectorRend.RegenerateCylinders();
-            }
-
-            // Each joint's rotation is just the angle between this bone and the previous
-            float[] result = new float[bones.Length];
-            for (int i = 0; i < result.Length; i++) {
-                result[i] = Mathf.Deg2Rad * Vector3.Angle(directions[i + 1], directions[i]);
-            }
-
-            return result;
+            // assume all three digits are curled the same amount for now
+            return Enumerable.Repeat(curl * MaxRotationDegrees * Mathf.Deg2Rad, leapFinger.bones.Length).ToArray();
         }
     }
 
@@ -64,24 +48,20 @@ public class UltraleapTendonLength : TendonLength
 
     private void Awake()
     {
-        if (vectorRend == null)
-            vectorRend = FindObjectOfType<VectorRenderer>();
-
-        if (hand == null)
-            hand = this.GetComponentInParent<MaestroHand>();
-
         if (provider == null)
             provider = this.GetComponentInParent<HandModelBase>();
 
         if (provider == null) {
             Debug.LogError($"No LeapProvider found on object [{this.gameObject.name}]! Disabling...");
             this.enabled = false;
-        } else if (hand == null) {
-            Debug.LogError($"No MaestroHand found for object [{this.gameObject.name}]! Disabling...");
-            this.enabled = false;
         } else {
             leapHand = provider.GetLeapHand();
         }
+    }
+
+    private void Update()
+    {
+        leapHand = provider.GetLeapHand();
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
