@@ -7,25 +7,34 @@ using UnityEngine;
 
 public class UltraleapTendonLength : TendonLength
 {
+    public int LeapFingerIndex;
+    public float MaxRotationDegrees = 90f;
+
     private HandModelBase provider;
     private PhysicsHand physicsHand;
 
     private Leap.Hand physicsLeapHand;
-    private Leap.Hand trackedLeapHand;
+    private Leap.Hand realLeapHand;
 
     private Leap.Finger leapFinger => GetFinger(physicsLeapHand);
 
-    public int LeapFingerIndex;
-
-    public override float Radius => leapFinger == null ? 0f : leapFinger.Width;
-
-    public float MaxRotationDegrees = 90f;
-
-    private VectorRenderer vectRend;
+    public override float Radius => leapFinger != null ? leapFinger.Width : 0f;
 
     public override float[] VirtualJointRotations => GetJointRotations(physicsLeapHand);
 
-    public override float[] TargetJointRotations => GetJointRotations(trackedLeapHand);
+    public override float[] RealJointRotations => GetJointRotations(realLeapHand);
+
+    protected override float BoneLength
+    {
+        get
+        {
+            if (leapFinger == null)
+                return 0f;
+
+            // They provide a bone length already so that's nice
+            return leapFinger.bones.Aggregate(0f, (acc, bone) => acc + bone.Length);
+        }
+    }
 
     private Leap.Finger GetFinger(Leap.Hand hand) => hand?.Fingers[LeapFingerIndex];
 
@@ -42,11 +51,6 @@ public class UltraleapTendonLength : TendonLength
             directions[i] = leapFinger.bones[i].Direction;
         }
 
-        if (vectRend != null) {
-            vectRend.Vectors = directions;
-            vectRend.RegenerateCylinders();
-        }
-
         // Calculate angle between each pair of bones
         float[] angles = new float[directions.Length - 1]; // -1 since we are calculating differences of pairs
         for (int i = 0; i < angles.Length; i++) {
@@ -56,18 +60,6 @@ public class UltraleapTendonLength : TendonLength
         return angles;
     }
 
-    protected override float BoneLength
-    {
-        get
-        {
-            if (leapFinger == null)
-                return 0f;
-
-            // They provide a bone length already so that's nice
-            return leapFinger.bones.Aggregate(0f, (acc, bone) => acc + bone.Length);
-        }
-    }
-
     private void Awake()
     {
         if (provider == null)
@@ -75,9 +67,6 @@ public class UltraleapTendonLength : TendonLength
 
         if (provider != null && physicsHand == null)
             physicsHand = FindObjectsOfType<PhysicsHand>().Where(x => x.Handedness == provider.Handedness).FirstOrDefault();
-
-        if (vectRend == null)
-            vectRend = this.GetComponentInParent<VectorRenderer>();
 
         if (provider == null) {
             Debug.LogError($"No LeapProvider found on object [{this.gameObject.name}]! Disabling...");
@@ -95,7 +84,7 @@ public class UltraleapTendonLength : TendonLength
     protected void UpdateHandData()
     {
         physicsLeapHand = physicsHand.GetLeapHand();
-        trackedLeapHand = physicsHand.GetOriginalLeapHand();
+        realLeapHand = physicsHand.GetOriginalLeapHand();
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
