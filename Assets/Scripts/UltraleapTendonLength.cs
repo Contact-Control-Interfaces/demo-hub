@@ -1,4 +1,5 @@
 using Leap.Unity;
+using Leap.Unity.Interaction.PhysicsHands;
 using Maestro;
 using System;
 using System.Linq;
@@ -7,9 +8,12 @@ using UnityEngine;
 public class UltraleapTendonLength : TendonLength
 {
     private HandModelBase provider;
+    private PhysicsHand physicsHand;
 
-    private Leap.Hand leapHand;
-    private Leap.Finger leapFinger => leapHand?.Fingers[LeapFingerIndex];
+    private Leap.Hand physicsLeapHand;
+    private Leap.Hand trackedLeapHand;
+
+    private Leap.Finger leapFinger => GetFinger(physicsLeapHand);
 
     public int LeapFingerIndex;
 
@@ -17,27 +21,39 @@ public class UltraleapTendonLength : TendonLength
 
     public float MaxRotationDegrees = 90f;
 
-    public override float[] JointRotations
+    private VectorRenderer vectRend;
+
+    public override float[] VirtualJointRotations => GetJointRotations(physicsLeapHand);
+
+    public override float[] TargetJointRotations => GetJointRotations(trackedLeapHand);
+
+    private Leap.Finger GetFinger(Leap.Hand hand) => hand?.Fingers[LeapFingerIndex];
+
+    private float[] GetJointRotations(Leap.Hand hand)
     {
-        get
-        {
-            if (leapHand == null)
-                return new float[] { 0f };
+        if (hand == null)
+            return new float[] { 0f };
 
-            // Get each finger bone direction in world space
-            Vector3[] directions = new Vector3[leapFinger.bones.Length];
-            for (int i = 0; i < directions.Length; i++) {
-                directions[i] = leapFinger.bones[i].Direction;
-            }
+        Leap.Finger leapFinger = GetFinger(hand);
 
-            // Calculate angle between each pair of bones
-            float[] angles = new float[directions.Length - 1]; // -1 since we are calculating differences of pairs
-            for (int i = 0; i < angles.Length; i++) {
-                angles[i] = Mathf.Deg2Rad * Vector3.Angle(directions[i], directions[i + 1]);
-            }
-
-            return angles;
+        // Get each finger bone direction in world space
+        Vector3[] directions = new Vector3[leapFinger.bones.Length];
+        for (int i = 0; i < directions.Length; i++) {
+            directions[i] = leapFinger.bones[i].Direction;
         }
+
+        if (vectRend != null) {
+            vectRend.Vectors = directions;
+            vectRend.RegenerateCylinders();
+        }
+
+        // Calculate angle between each pair of bones
+        float[] angles = new float[directions.Length - 1]; // -1 since we are calculating differences of pairs
+        for (int i = 0; i < angles.Length; i++) {
+            angles[i] = Mathf.Deg2Rad * Vector3.Angle(directions[i], directions[i + 1]);
+        }
+
+        return angles;
     }
 
     protected override float BoneLength
@@ -57,17 +73,29 @@ public class UltraleapTendonLength : TendonLength
         if (provider == null)
             provider = this.GetComponentInParent<HandModelBase>();
 
+        if (provider != null && physicsHand == null)
+            physicsHand = FindObjectsOfType<PhysicsHand>().Where(x => x.Handedness == provider.Handedness).FirstOrDefault();
+
+        if (vectRend == null)
+            vectRend = this.GetComponentInParent<VectorRenderer>();
+
         if (provider == null) {
             Debug.LogError($"No LeapProvider found on object [{this.gameObject.name}]! Disabling...");
             this.enabled = false;
         } else {
-            leapHand = provider.GetLeapHand();
+            UpdateHandData();
         }
     }
 
     private void Update()
     {
-        leapHand = provider.GetLeapHand();
+        UpdateHandData();
+    }
+
+    protected void UpdateHandData()
+    {
+        physicsLeapHand = physicsHand.GetLeapHand();
+        trackedLeapHand = physicsHand.GetOriginalLeapHand();
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
