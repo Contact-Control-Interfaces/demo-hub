@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 291983639321345033}
   - component: {fileID: 291983639321345034}
   - component: {fileID: 291983639321345035}
+  - component: {fileID: 9210693189459614132}
+  - component: {fileID: 1957781790551654830}
   m_Layer: 5
   m_Name: TimeOnText
   m_TagString: Untagged
@@ -166,6 +168,118 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9210693189459614132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291983639321345044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cfdd398cf2b4e4698a6481def50cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptText: {fileID: 291983639321345035}
+  stateNum: 0
+  typingSpeed: 0.04
+  textAudio: {fileID: 1957781790551654830}
+--- !u!82 &1957781790551654830
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291983639321345044}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3d180c09ef28b21419f7b9f398672bf3, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.044
+  m_Pitch: 2.5
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &291983639770584989
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,18 +383,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291983639805506536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3433332}
-  m_LocalScale: {x: 3.333333, y: 0.8197715, z: 3.333333}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291983639770584988}
   - {fileID: 291983639321345033}
-  m_Father: {fileID: 291983640482151373}
-  m_RootOrder: 0
+  m_Father: {fileID: 8281294094043173945}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1831.0062, y: 254.89323}
+  m_AnchoredPosition: {x: 274.5, y: 156.19946}
   m_SizeDelta: {x: 1098, y: 628}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &291983639805506540
@@ -361,8 +475,6 @@ GameObject:
   - component: {fileID: 291983639886861877}
   - component: {fileID: 291983639886861865}
   - component: {fileID: 291983639886861864}
-  - component: {fileID: 291983639886861870}
-  - component: {fileID: 291983639886861871}
   - component: {fileID: 291983639886861869}
   - component: {fileID: 291983639886861868}
   m_Layer: 6
@@ -472,11 +584,10 @@ MonoBehaviour:
   panelDisplay: {fileID: 0}
   tree: {fileID: 5997634689150274853}
   touchTrigger: {fileID: 291983640482151369}
-  dropObject: {fileID: 291983639886861874}
   biteSound: {fileID: 291983639886861865}
   pluckSound: {fileID: 291983639886861864}
   resetPoint: {fileID: 1891616263}
-  resetHeight: 2.2
+  resetHeight: 0.1
   mouthTransform: {fileID: 0}
   failsafeBubble: {fileID: 0}
   firstBite: 0.15
@@ -531,7 +642,7 @@ MonoBehaviour:
   onGrab:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: LockAll
         m_Mode: 1
@@ -543,7 +654,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: LockAll
         m_Mode: 1
@@ -561,7 +672,7 @@ MonoBehaviour:
   onTouch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Register
         m_Mode: 0
@@ -573,7 +684,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Register
         m_Mode: 0
@@ -588,7 +699,7 @@ MonoBehaviour:
   unTouch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 291983639886861870}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Deregister
         m_Mode: 0
@@ -600,7 +711,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 291983639886861871}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Maestro.FingerTogglePoser, com.contactci.unity.Runtime.HandPosing
         m_MethodName: Deregister
         m_Mode: 0
@@ -895,122 +1006,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &291983639886861870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291983639886861874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b97493f55e50240b088634841b661d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  WristRotate: 0
-  targetedBones: 0
-  provider: {fileID: 0}
-  defaultClamp: 30
-  clamps: []
-  preview: 0
-  whichHand: 1
-  ClampThumb: 0
-  ClampIndex: 0
-  ClampMiddle: 0
-  ClampRing: 0
-  ClampLittle: 0
-  locked: 0
-  SnapTransform: {fileID: 0}
-  onLock:
-    m_PersistentCalls:
-      m_Calls: []
-  onFree:
-    m_PersistentCalls:
-      m_Calls: []
-  trackRealHand:
-    m_PersistentCalls:
-      m_Calls: []
-  autoUnlock: 0
-  alwaysLockAll: 1
-  interactable: {fileID: 0}
-  toggleHaptics:
-    Amplitude: 175
-    Vibration:
-      rid: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          rid: -2
---- !u!114 &291983639886861871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291983639886861874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b97493f55e50240b088634841b661d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  WristRotate: 0
-  targetedBones: 0
-  provider: {fileID: 0}
-  defaultClamp: 30
-  clamps: []
-  preview: 0
-  whichHand: 0
-  ClampThumb: 0
-  ClampIndex: 0
-  ClampMiddle: 0
-  ClampRing: 0
-  ClampLittle: 0
-  locked: 0
-  SnapTransform: {fileID: 0}
-  onLock:
-    m_PersistentCalls:
-      m_Calls: []
-  onFree:
-    m_PersistentCalls:
-      m_Calls: []
-  trackRealHand:
-    m_PersistentCalls:
-      m_Calls: []
-  autoUnlock: 0
-  alwaysLockAll: 1
-  interactable: {fileID: 0}
-  toggleHaptics:
-    Amplitude: 175
-    Vibration:
-      rid: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          rid: -2
 --- !u!114 &291983639886861869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,9 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyInstead: 0
-  resetColliders:
-  - {fileID: 0}
-  - {fileID: 0}
+  resetColliders: []
 --- !u!1 &291983640482151369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,12 +1045,13 @@ GameObject:
   - component: {fileID: 291983640482151373}
   - component: {fileID: 291983640482151374}
   - component: {fileID: 291983640482151375}
-  - component: {fileID: 291983640482151368}
   - component: {fileID: 291983640482151362}
   - component: {fileID: 291983640482151363}
   - component: {fileID: 291983640482151372}
   - component: {fileID: 291983640482151361}
   - component: {fileID: 291983640482151367}
+  - component: {fileID: 2721042322558588689}
+  - component: {fileID: 4537186431139597808}
   m_Layer: 8
   m_Name: TestCube
   m_TagString: Untagged
@@ -1073,11 +1067,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291983640482151369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.151, y: 0.7335, z: -0.2015}
-  m_LocalScale: {x: 0.15, y: 0.609926, z: 0.15}
+  m_LocalPosition: {x: -0.1664, y: 0.829, z: -0.1723}
+  m_LocalScale: {x: 0.16851985, y: 0.083699755, z: 0.165915}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 291983639805506543}
+  m_Children: []
   m_Father: {fileID: 8281294094043173945}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1088,7 +1081,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291983640482151369}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &291983640482151375
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1109,7 +1102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1e3627f5f0b5ed94fb7e6d0ca0d5c343, type: 2}
+  - {fileID: 2100000, guid: 5e53c7a8c2e563c4c90a8fa620eebc2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1131,19 +1124,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &291983640482151368
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291983640482151369}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &291983640482151362
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1303,6 +1283,10 @@ MonoBehaviour:
   baseTime: 3
   remainingTime: 0
   timeOn: 0
+  OnEndCalled: 0
+  progressBar: {fileID: 291983639770584979}
+  startTime: 0
+  fillNum: 0
   EnterHaptics:
     Amplitude: 50
     Vibration:
@@ -1439,6 +1423,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2721042322558588689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291983640482151369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ae53bbaad6a104ba9c43135d90e974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliders:
+  - {fileID: 0}
+--- !u!136 &4537186431139597808
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291983640482151369}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &291983640690203191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +2000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8281294094043173945
 Transform:
   m_ObjectHideFlags: 0
@@ -2006,6 +2018,7 @@ Transform:
   - {fileID: 291983640482151373}
   - {fileID: 291983639886861878}
   - {fileID: 1401815080654522920}
+  - {fileID: 291983639805506543}
   m_Father: {fileID: 7383438472221066955}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3137,6 +3150,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterationAmount: 3
   timesPlayed: 0
+--- !u!1 &1396484532029378850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1581749144712736, guid: e201a24a09e942042b93390d0444d728,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397472543758395138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9052269153823381226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396484532029378850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd87009819192194b9a48254e6557ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AdjustmentEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  heightPercentage: 90
 --- !u!4 &1401815080654522920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4766092344323370, guid: e201a24a09e942042b93390d0444d728,

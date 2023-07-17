@@ -1,4 +1,5 @@
 using Leap;
+using Maestro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,12 +21,10 @@ public class VibrationURP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         meshRender = GetComponent<MeshRenderer>();
         meshRender.material.color = color;
         meshRender.material.SetColor("_GlowColor", _GlowColor);
         meshRender.material.SetColor("_DarkGlow", _DarkGlow);
-
     }
 
     // Update is called once per frame
@@ -36,38 +35,15 @@ public class VibrationURP : MonoBehaviour
             displacementAmount = 0f;
         }
         else 
-        {
-            
+        {   
             displacementAmount = Mathf.Lerp(displacementAmount, 0, Time.deltaTime);
             meshRender.material.SetFloat("_Amount", displacementAmount);
         }
-
-            
-            
-            
-
-           /* if (Input.GetKeyDown(KeyCode.U))
-            {
-                Debug.Log("Buh");
-                meshRender.material.SetFloat("_Speed", speed);
-                displacementAmount = maxDisplacementAmount;
-                
-            }*/
-
     }
 
-    public void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Buh");
-        meshRender.material.SetFloat("_Speed", speed);
-        displacementAmount = maxDisplacementAmount;
+    public void OnCollisionEnter(Collision collision) {
+            meshRender.material.SetFloat("_Speed", speed);
+            displacementAmount = maxDisplacementAmount;
     }
 
-
-    /* public void onTouch()
-     {
-             Debug.Log("Buh");
-             meshRender.material.SetFloat("_Speed", speed);
-             displacementAmount = maxDisplacementAmount;
-     }*/
 }

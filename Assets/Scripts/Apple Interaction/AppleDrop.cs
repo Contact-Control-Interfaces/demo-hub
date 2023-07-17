@@ -12,6 +12,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using System.Linq;
+using UnityEngine.Rendering.UI;
+using UnityEngine.XR.OpenXR.Input;
 
 public class AppleDrop : MonoBehaviour
 {
@@ -34,12 +36,22 @@ public class AppleDrop : MonoBehaviour
     public float remainingTime;
     public bool timeOn; //test
 
+    public bool OnEndCalled;
+
+    //Progress Bar Logic
+    public Image progressBar;
+    public float startTime;
+    float elapsedTime;
+    private float emptyNum = 0f;
+    private float fullNum = 1f;
+
+    public float fillNum = 0;
+
     [Header("Haptics")]
     [Tooltip("Haptic effect when hand enters the trigger area")]
     public HapticEffect EnterHaptics = new HapticEffect{ Amplitude = 50, Vibration = new SoftBump(WideThreeOptions._30){OneShot = true} };
     
     protected int CurrentlyColliding = 0;
-    protected Coroutine CurrentCoroutine = null;
 
     public IMaestroHand leftHand, rightHand;
     private MaestroInteractable interactable;
@@ -48,7 +60,7 @@ public class AppleDrop : MonoBehaviour
     {
         timeOnText = FindObjectOfType<TextType>();
         //timeOnText.TextGen("Welcome");
-        timeOnText.TextGen(" Place your hand under the apple.");
+        timeOnText.TextGen("Put your hand here.");
         interactable = GetComponent<MaestroInteractable>();
         interactable.SendHapticsToWholeHand = true;
 
@@ -64,11 +76,26 @@ public class AppleDrop : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+            if (remainingTime > 0 && timeOn)
+            {
+                remainingTime -= Time.deltaTime;
+                UpdateFill();
+            }
+
+            if (remainingTime < 0 && !OnEndCalled)
+            {
+                progressBar.fillAmount = fullNum;
+                OnEnd();
+                OnEndCalled = true;
+            }
+    }
+
     public void Register(FingerCollider fc)
     {
         interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
-
         TryStartTime();
     }
 
@@ -84,16 +111,8 @@ public class AppleDrop : MonoBehaviour
 
     public void TryStartTime()
     {
-        if (CurrentCoroutine == null && CurrentlyColliding > 0) {
+        if (!timeOn && CurrentlyColliding > 0) {
             StartTime();
-        }
-    }
-
-    void OnDisable()
-    {
-        if (CurrentCoroutine != null) {
-            StopCoroutine(CurrentCoroutine);
-            CurrentCoroutine = null;
         }
     }
 
@@ -104,20 +123,16 @@ public class AppleDrop : MonoBehaviour
     {
         if (!dropObject.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
-        
+
+        startTime = Time.time;
+        OnEndCalled = false;
+        fillNum = 0;
+
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
         
         timeOn = true;
         remainingTime = baseTime;
         timeOnText.TextGen("Please hold still...", true);
-        if (CurrentCoroutine != null) {
-            StopCoroutine(CurrentCoroutine);
-            CurrentCoroutine = null;
-        }
-        //timeOnText.UpText();
-        
-        if (this.gameObject.activeInHierarchy)
-            CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
 
     public void StopTime()
@@ -127,13 +142,10 @@ public class AppleDrop : MonoBehaviour
         if (!dropObject.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
 
+        progressBar.fillAmount = emptyNum;
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
         timeOn = false;
-        timeOnText.TextGen("Place your hand under the apple.", true);
-        if (CurrentCoroutine != null) {
-            StopCoroutine(CurrentCoroutine);
-            CurrentCoroutine = null;
-        }
+        timeOnText.TextGen("Place your hand here", true);
 
         //timeOnText.BackText();
         ResetDisplay();
@@ -141,21 +153,13 @@ public class AppleDrop : MonoBehaviour
 
     #endregion
 
+
     #region Timer
-
-    private IEnumerator UpdateTimer()
+    private void UpdateFill()
     {
-        while(remainingTime > 0)
-        {
-            if (!timeOn)
-                break;
-
-            remainingTime--;
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        OnEnd();
+        elapsedTime = Time.time - startTime;
+        fillNum = Mathf.Lerp(emptyNum, fullNum, elapsedTime/baseTime);
+        progressBar.fillAmount = fillNum;
     }
 
     private void OnEnd()
@@ -165,6 +169,7 @@ public class AppleDrop : MonoBehaviour
 
         dropObject.Pluck();
         interactable.ResetOverride();
+        timeOn = false;
 
         Vector3 leftOffset = GetOffset(leftHand);
         Vector3 rightOffset = GetOffset(rightHand);
@@ -182,8 +187,6 @@ public class AppleDrop : MonoBehaviour
 
         var rb = dropObject.GetComponent<Rigidbody>();
         rb.velocity += lateral / GetFallDuration(offset);
-
-        CurrentCoroutine = null;
     }
 
     private Vector3 GetOffset(IMaestroHand hand)
