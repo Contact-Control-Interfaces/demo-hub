@@ -41,7 +41,7 @@ public class Apple : MonoBehaviour
     public HapticEffect DropEffect = new HapticEffect(){Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100){OneShot = true}};
     public float DropEffectDuration = 500; //ms
 
-    private TextType textType;
+    [SerializeField]private TextType textType;
 
     private Rigidbody rb;
     private Quaternion originalRotation;
@@ -56,7 +56,6 @@ public class Apple : MonoBehaviour
     private void Start()
     {
         panelDisplay.SetActive(false);
-        textType = FindObjectOfType<TextType>();
 
         rb = GetComponent<Rigidbody>();
 
