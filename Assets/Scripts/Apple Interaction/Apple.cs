@@ -126,7 +126,6 @@ public class Apple : MonoBehaviour
 
     void MaterialChange()
     {
-        //bloomEffect.intensity.value = 5f;
         GetComponent<Renderer>().material = glowOff;
     }
 
@@ -173,6 +172,7 @@ public class Apple : MonoBehaviour
 
         transform.position = resetPoint.position;
         transform.rotation = originalRotation;
+        this.GetComponent<MeshRenderer>().enabled = false;
 
         // Gross but easiest way to trigger another drop if the hand hasn't left the box
         AppleDrop drop = FindObjectOfType<AppleDrop>();
@@ -193,8 +193,7 @@ public class Apple : MonoBehaviour
 
         // Lock apple in place relative to camera
         transform.parent = Camera.main.transform;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
-        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = true;
 
         // Lerp the apple toward the mouth during bite
         StartCoroutine(LerpRoutine());

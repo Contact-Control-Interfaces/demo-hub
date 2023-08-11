@@ -26,9 +26,6 @@ public class AppleDrop : MonoBehaviour
     public Material promptFlickerOn;
     public Material promptFlickerOff;
 
-    //HandBool
-    //private bool hasHand = false;
-
     //Counter
     [Header("Countdown Components")]
     public TextType timeOnText;
@@ -44,8 +41,14 @@ public class AppleDrop : MonoBehaviour
     float elapsedTime;
     private float emptyNum = 0f;
     private float fullNum = 1f;
-
     public float fillNum = 0;
+
+    private string placeText = " Place your hand here";
+    private string timerOnText = " Please hold still...";
+
+    //Apple Animation
+    public Animator AppleAnimator;
+    private int AnimateApple;
 
     [Header("Haptics")]
     [Tooltip("Haptic effect when hand enters the trigger area")]
@@ -58,9 +61,9 @@ public class AppleDrop : MonoBehaviour
     
     private void Start()
     {
+        AnimateApple = Animator.StringToHash("Apple Grow");
         timeOnText = FindObjectOfType<TextType>();
-        //timeOnText.TextGen("Welcome");
-        timeOnText.TextGen("Put your hand here.");
+        timeOnText.TextGen(placeText);
         interactable = GetComponent<MaestroInteractable>();
         interactable.SendHapticsToWholeHand = true;
 
@@ -97,6 +100,8 @@ public class AppleDrop : MonoBehaviour
         interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
         TryStartTime();
+        AppleAnimator.SetBool(AnimateApple, true);
+
     }
 
     public void Deregister(FingerCollider fc)
@@ -106,6 +111,7 @@ public class AppleDrop : MonoBehaviour
 
         if (CurrentlyColliding <= 0) {
             StopTime();
+            AppleAnimator.SetBool(AnimateApple, false);
         }
     }
 
@@ -118,7 +124,6 @@ public class AppleDrop : MonoBehaviour
 
     #region Material Logic
 
-
     public void StartTime()
     {
         if (!dropObject.StillAttachedToTree)
@@ -127,12 +132,14 @@ public class AppleDrop : MonoBehaviour
         startTime = Time.time;
         OnEndCalled = false;
         fillNum = 0;
-
+        
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
         
         timeOn = true;
         remainingTime = baseTime;
-        timeOnText.TextGen("Please hold still...", true);
+        timeOnText.TextGen(timerOnText, true);
+        AppleAnimator.SetBool(AnimateApple, true);
+        dropObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void StopTime()
@@ -145,9 +152,10 @@ public class AppleDrop : MonoBehaviour
         progressBar.fillAmount = emptyNum;
         dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
         timeOn = false;
-        timeOnText.TextGen("Place your hand here", true);
+        timeOnText.TextGen(placeText, true);
 
         //timeOnText.BackText();
+        dropObject.GetComponent<MeshRenderer>().enabled = false;
         ResetDisplay();
     }
 
@@ -167,9 +175,11 @@ public class AppleDrop : MonoBehaviour
         if (dropObject == null || !dropObject.StillAttachedToTree)
             return;
 
+        dropObject.GetComponent<MeshRenderer>().enabled = true;
         dropObject.Pluck();
         interactable.ResetOverride();
         timeOn = false;
+        AppleAnimator.SetBool(AnimateApple, false);
 
         Vector3 leftOffset = GetOffset(leftHand);
         Vector3 rightOffset = GetOffset(rightHand);
@@ -187,6 +197,7 @@ public class AppleDrop : MonoBehaviour
 
         var rb = dropObject.GetComponent<Rigidbody>();
         rb.velocity += lateral / GetFallDuration(offset);
+
     }
 
     private Vector3 GetOffset(IMaestroHand hand)
