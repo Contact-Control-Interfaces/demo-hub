@@ -94,6 +94,7 @@ public class Apple : MonoBehaviour
         MaterialChange();
 
         gameObject.SetActive(false);
+
         Destroy(gameObject);
     }
 
