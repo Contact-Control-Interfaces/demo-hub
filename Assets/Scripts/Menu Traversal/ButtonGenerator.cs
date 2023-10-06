@@ -12,7 +12,7 @@ public class ButtonGenerator : MonoBehaviour
     public void GenerateButton(string sceneName, Sprite demoSprite, Material buttonMaterials)
     {
         currentButton = Instantiate(baseButton, this.transform).GetComponent<DemoPress>();
-        
+
         currentButton.name = currentButton.SceneName = sceneName;
         currentButton.demoSprite = demoSprite;
         currentButton.buttonMaterial = buttonMaterials;

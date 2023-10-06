@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,35 +13,53 @@ public class ConfigJSONHandler : MonoBehaviour
     public List<string> demoNamesAvalible;
     public List<Sprite> demoSprites;
     public List<Material> buttonMaterials;
-
     public ButtonGenerator buttonGen;
 
-    public DemoConfiguration demoTest;
+    Dictionary<string, DemoContext> context;
 
-    public string StartScene;
+    [SerializeField]
+    string configLocation = "./config.json";
+    public DemoConfiguration configData;
+
+    struct DemoContext 
+    {
+       public Sprite sprite;
+       public Material material;
+
+        public DemoContext(Sprite sprite, Material material)
+        {
+            this.sprite = sprite;
+            this.material = material;
+        }
+    }
+
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
 
+        context = new Dictionary<string, DemoContext>();
+
+        for (int i = 0; i < demoNamesAvalible.Count; i++)
+        {
+            context.Add(demoNamesAvalible[i], new DemoContext(demoSprites[i], buttonMaterials[i]));
+        }
+
         if (SceneManager.GetActiveScene().name == "Start Zone")
         {
             ReadConfig();
-            SceneManager.LoadScene(demoTest.StartScene);
+            SceneManager.LoadScene(configData.StartScene);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-
         buttonGen = FindObjectOfType<ButtonGenerator>(true);
-        if (buttonGen != null)
+
+        if (buttonGen != null && buttonGen.demoButtons.Count <= 0)
         {
-            if (buttonGen.demoButtons.Count <= 0)
-            {
-                GenerateDynamic();
-            }
+            GenerateDynamic();
         }
     }
 
@@ -51,27 +70,22 @@ public class ConfigJSONHandler : MonoBehaviour
 
     public void ReadConfig()
     {
-        if (File.Exists("./config.json"))
+        if (File.Exists(configLocation))
         {
-            demoTest = DemoConfiguration.CreateFromJSON(File.ReadAllText("./config.json"));
-            StartScene = demoTest.StartScene;
+            configData = DemoConfiguration.CreateFromJSON(File.ReadAllText(configLocation));
         }
     }
 
     public void GenerateDynamic()
     {
-        foreach (string sceneName in demoTest.Scenes)
+        var avaliableDemo = context.Keys.Intersect(demoNamesAvalible).ToDictionary(x => x, x => context[x]);
+
+        foreach (var demo in avaliableDemo )
         {
-            for (int i = 0; i < demoNamesAvalible.Count; i++)
-            {
-                if (sceneName.Equals(demoNamesAvalible[i]))
-                {
-                    buttonGen.GenerateButton(sceneName, demoSprites[i], buttonMaterials[i]);
-                }
-            }
+            buttonGen.GenerateButton(demo.Key, demo.Value.sprite, demo.Value.material);
         }
 
-        if( buttonGen.demoButtons.Count == 0)
+        if ( buttonGen.demoButtons.Count == 0)
         {
             GenerateDefault();
         }
