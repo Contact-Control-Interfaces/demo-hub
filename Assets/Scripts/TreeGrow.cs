@@ -19,6 +19,11 @@ public class TreeGrow : MonoBehaviour
         AnimateHand = Animator.StringToHash("Animate Hand");
     }
 
+    public void Start()
+    {
+        GrowTree();
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.G))

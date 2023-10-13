@@ -8,6 +8,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DemoPress : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class DemoPress : MonoBehaviour
 
     [Header("Properties")]
 
-    public int assignedScene;
+    public string SceneName;
     public TextMeshProUGUI holdText;
+    public Sprite demoSprite;
+    public Image demoImageHolder;
     public Material buttonMaterial;
+    public GameObject pressButton;
 
     //value for the fill shader to not fill the button
     private float emptyNum = -.0012f;
@@ -39,6 +43,8 @@ public class DemoPress : MonoBehaviour
 
     void Start()
     {
+        demoImageHolder.sprite = demoSprite;
+        pressButton.GetComponent<Renderer>().material = buttonMaterial;
         buttonMaterial.SetFloat("FillRate", emptyNum);
     }
 
@@ -149,13 +155,13 @@ public class DemoPress : MonoBehaviour
         }
         while (elapsedTime < pressLength);
        
-        SceneManager.LoadScene(assignedScene);
+        SceneManager.LoadScene(SceneName);
     }
 
     public void OnEnd()
     {
         buttonMaterial.SetFloat("FillRate", emptyNum);
-        SceneManager.LoadScene(assignedScene);
+        SceneManager.LoadScene(SceneName);
         holdText.gameObject.SetActive(true);
         holdText.text = "Done";
     }
