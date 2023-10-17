@@ -41,7 +41,7 @@ public class VibrationURP : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision collision) {
+    public void OnTriggerEnter(Collider collider) {
             meshRender.material.SetFloat("_Speed", speed);
             displacementAmount = maxDisplacementAmount;
     }
