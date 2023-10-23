@@ -78,21 +78,27 @@ public class ConfigJSONHandler : MonoBehaviour
 
     public void GenerateDynamic()
     {
-        var avaliableDemo = context.Keys.Intersect(demoNamesAvalible).ToDictionary(x => x, x => context[x]);
+        
+        var avaliableDemo = context.Keys.Intersect(configData.Scenes).ToDictionary(x => x, x => context[x]);
 
         foreach (var demo in avaliableDemo )
         {
+            Debug.Log(demo.Key);
+
             buttonGen.GenerateButton(demo.Key, demo.Value.sprite, demo.Value.material);
         }
 
         if ( buttonGen.demoButtons.Count == 0)
         {
+            Debug.Log(buttonGen.demoButtons.Count == 0);
             GenerateDefault();
         }
     }
 
     public void GenerateDefault()
     {
+        Debug.Log("Generate Default");
+
         for (int i = 0; i < demoNamesAvalible.Count; i++)
         {
             buttonGen.GenerateButton(demoNamesAvalible[i], demoSprites[i], buttonMaterials[i]);
