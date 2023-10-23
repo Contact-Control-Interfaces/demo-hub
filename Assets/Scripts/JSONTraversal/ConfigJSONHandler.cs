@@ -67,7 +67,6 @@ public class ConfigJSONHandler : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
     public void ReadConfig()
     {
         if (File.Exists(configLocation))
@@ -83,22 +82,17 @@ public class ConfigJSONHandler : MonoBehaviour
 
         foreach (var demo in avaliableDemo )
         {
-            Debug.Log(demo.Key);
-
             buttonGen.GenerateButton(demo.Key, demo.Value.sprite, demo.Value.material);
         }
 
         if ( buttonGen.demoButtons.Count == 0)
         {
-            Debug.Log(buttonGen.demoButtons.Count == 0);
             GenerateDefault();
         }
     }
 
     public void GenerateDefault()
     {
-        Debug.Log("Generate Default");
-
         for (int i = 0; i < demoNamesAvalible.Count; i++)
         {
             buttonGen.GenerateButton(demoNamesAvalible[i], demoSprites[i], buttonMaterials[i]);
