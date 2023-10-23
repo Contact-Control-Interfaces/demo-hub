@@ -67,7 +67,6 @@ public class ConfigJSONHandler : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
     public void ReadConfig()
     {
         if (File.Exists(configLocation))
@@ -78,7 +77,8 @@ public class ConfigJSONHandler : MonoBehaviour
 
     public void GenerateDynamic()
     {
-        var avaliableDemo = context.Keys.Intersect(demoNamesAvalible).ToDictionary(x => x, x => context[x]);
+        
+        var avaliableDemo = context.Keys.Intersect(configData.Scenes).ToDictionary(x => x, x => context[x]);
 
         foreach (var demo in avaliableDemo )
         {
