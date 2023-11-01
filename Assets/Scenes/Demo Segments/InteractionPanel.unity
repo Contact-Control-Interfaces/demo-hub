@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.017920654, g: 0.008022148, b: 0.016643394, a: 1}
+  m_IndirectSpecularColor: {r: 0.018079977, g: 0.008099659, b: 0.016791552, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4596,7 +4596,7 @@ PrefabInstance:
         type: 3}
       propertyPath: LeftHand
       value: 
-      objectReference: {fileID: 1113532087}
+      objectReference: {fileID: 423052626}
     - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: grabType
@@ -4606,7 +4606,7 @@ PrefabInstance:
         type: 3}
       propertyPath: RightHand
       value: 
-      objectReference: {fileID: 1113532086}
+      objectReference: {fileID: 771714203}
     - target: {fileID: 5120305089791988621, guid: e3952388617c98147b066982f1051e3c,
         type: 3}
       propertyPath: handSize.TipSize
@@ -7689,6 +7689,102 @@ Transform:
   m_Father: {fileID: 1543295263}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &423052625 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8018561890094512926, guid: d867fcf7bc8270d4a9e4f8f313970105,
+    type: 3}
+  m_PrefabInstance: {fileID: 1113532085}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &423052626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423052625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf8d0e437b9cd349bdbb7cbc64008da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whichHand: 1
+  PendingImpacts: []
+  ShowOnlyWhileTouching: 1
+  transforms:
+    ThumbTip: {fileID: 0}
+    IndexTip: {fileID: 0}
+    MiddleTip: {fileID: 0}
+    RingTip: {fileID: 0}
+    LittleTip: {fileID: 0}
+    IndexDistal: {fileID: 0}
+    MiddleDistal: {fileID: 0}
+    RingDistal: {fileID: 0}
+    LittleDistal: {fileID: 0}
+    ThumbMiddle: {fileID: 0}
+    IndexMiddle: {fileID: 0}
+    MiddleMiddle: {fileID: 0}
+    RingMiddle: {fileID: 0}
+    LittleMiddle: {fileID: 0}
+    ThumbKnuckle: {fileID: 0}
+    IndexKnuckle: {fileID: 0}
+    MiddleKnuckle: {fileID: 0}
+    RingKnuckle: {fileID: 0}
+    LittleKnuckle: {fileID: 0}
+    PalmBaseThumb: {fileID: 0}
+    PalmBaseLittle: {fileID: 0}
+    BetweenIndexMiddle: {fileID: 0}
+    BetweenRingLittle: {fileID: 0}
+    PalmCreaseThumb: {fileID: 0}
+    PalmCreaseMiddle: {fileID: 0}
+    PalmCreaseLittle: {fileID: 0}
+    Wrist: {fileID: 0}
+  manager: {fileID: 186820490}
+  settingsOverride: 0
+  handSizeOverride:
+    TipSize: 0
+    MiddleSize: 0
+    KnuckleSize: 0
+  interactablesOnlyOverride: 0
+  defaultEffectOverride:
+    Amplitude: 115
+    Vibration:
+      rid: 843833975091232778
+  flatnessCheckerOverride: {fileID: 0}
+  objectLayerOverride:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWaitOverride: 0.1
+  tooCloseOverride: 0.1
+  tooFastOverride: 0.2
+  otherHandOverride: {fileID: 0}
+  grabTypeOverride: 0
+  physicsProvider: {fileID: 0}
+  inflatePalm: 0
+  twoHandGrabbing: 0
+  timeSinceTwoHandGrabbing: 1
+  DestroyRenderersOnSpawn: 0
+  RenderOnTop: 0
+  ShowCollidersWhileTouching: 1
+  mc: {fileID: 0}
+  handPhysicMaterial: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 843833975091232778
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 5
+        options:
+          rid: 843833975091232779
+    - rid: 843833975091232779
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &473327169
 GameObject:
   m_ObjectHideFlags: 0
@@ -10224,6 +10320,102 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cd0918d85ef4d54d8831236194c4c7f, type: 3}
+--- !u!1 &771714202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3002331764940186613, guid: d867fcf7bc8270d4a9e4f8f313970105,
+    type: 3}
+  m_PrefabInstance: {fileID: 1113532085}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &771714203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771714202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf8d0e437b9cd349bdbb7cbc64008da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whichHand: 0
+  PendingImpacts: []
+  ShowOnlyWhileTouching: 1
+  transforms:
+    ThumbTip: {fileID: 0}
+    IndexTip: {fileID: 0}
+    MiddleTip: {fileID: 0}
+    RingTip: {fileID: 0}
+    LittleTip: {fileID: 0}
+    IndexDistal: {fileID: 0}
+    MiddleDistal: {fileID: 0}
+    RingDistal: {fileID: 0}
+    LittleDistal: {fileID: 0}
+    ThumbMiddle: {fileID: 0}
+    IndexMiddle: {fileID: 0}
+    MiddleMiddle: {fileID: 0}
+    RingMiddle: {fileID: 0}
+    LittleMiddle: {fileID: 0}
+    ThumbKnuckle: {fileID: 0}
+    IndexKnuckle: {fileID: 0}
+    MiddleKnuckle: {fileID: 0}
+    RingKnuckle: {fileID: 0}
+    LittleKnuckle: {fileID: 0}
+    PalmBaseThumb: {fileID: 0}
+    PalmBaseLittle: {fileID: 0}
+    BetweenIndexMiddle: {fileID: 0}
+    BetweenRingLittle: {fileID: 0}
+    PalmCreaseThumb: {fileID: 0}
+    PalmCreaseMiddle: {fileID: 0}
+    PalmCreaseLittle: {fileID: 0}
+    Wrist: {fileID: 0}
+  manager: {fileID: 186820490}
+  settingsOverride: 0
+  handSizeOverride:
+    TipSize: 0
+    MiddleSize: 0
+    KnuckleSize: 0
+  interactablesOnlyOverride: 0
+  defaultEffectOverride:
+    Amplitude: 115
+    Vibration:
+      rid: 843833975091232776
+  flatnessCheckerOverride: {fileID: 0}
+  objectLayerOverride:
+    serializedVersion: 2
+    m_Bits: 0
+  palmMeshWaitOverride: 0.1
+  tooCloseOverride: 0.1
+  tooFastOverride: 0.2
+  otherHandOverride: {fileID: 0}
+  grabTypeOverride: 0
+  physicsProvider: {fileID: 0}
+  inflatePalm: 0
+  twoHandGrabbing: 0
+  timeSinceTwoHandGrabbing: 1
+  DestroyRenderersOnSpawn: 0
+  RenderOnTop: 0
+  ShowCollidersWhileTouching: 1
+  mc: {fileID: 0}
+  handPhysicMaterial: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 843833975091232776
+      type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 5
+        options:
+          rid: 843833975091232777
+    - rid: 843833975091232777
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &777905275
 GameObject:
   m_ObjectHideFlags: 0
@@ -12845,7 +13037,7 @@ PrefabInstance:
     - target: {fileID: 3002331764940488611, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8984087
+      value: 0.89840865
       objectReference: {fileID: 0}
     - target: {fileID: 3002331764940488611, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
@@ -13211,7 +13403,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherHandOverride
       value: 
-      objectReference: {fileID: 1113532087}
+      objectReference: {fileID: 0}
     - target: {fileID: 4970092730656820206, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
       propertyPath: handSizeOverride.TipSize
@@ -13246,7 +13438,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherHandOverride
       value: 
-      objectReference: {fileID: 1113532086}
+      objectReference: {fileID: 0}
     - target: {fileID: 7989985975800709456, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
       propertyPath: handSizeOverride.TipSize
@@ -13365,7 +13557,7 @@ PrefabInstance:
     - target: {fileID: 8018561890094868296, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8984087
+      value: 0.89840865
       objectReference: {fileID: 0}
     - target: {fileID: 8018561890094868296, guid: d867fcf7bc8270d4a9e4f8f313970105,
         type: 3}
@@ -13777,32 +13969,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.39487806
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4970092730656820206, guid: d867fcf7bc8270d4a9e4f8f313970105, type: 3}
+    - {fileID: 7989985975800709456, guid: d867fcf7bc8270d4a9e4f8f313970105, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d867fcf7bc8270d4a9e4f8f313970105, type: 3}
---- !u!114 &1113532086 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4970092730656820206, guid: d867fcf7bc8270d4a9e4f8f313970105,
-    type: 3}
-  m_PrefabInstance: {fileID: 1113532085}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf77a0f76a9cdbd46aa0093c37a9fdef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1113532087 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7989985975800709456, guid: d867fcf7bc8270d4a9e4f8f313970105,
-    type: 3}
-  m_PrefabInstance: {fileID: 1113532085}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf77a0f76a9cdbd46aa0093c37a9fdef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1131103828
 GameObject:
   m_ObjectHideFlags: 0
