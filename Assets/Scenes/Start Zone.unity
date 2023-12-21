@@ -267,10 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe51de13d2b588498834e5cfd58fb4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demoTest:
-    Scenes: []
-    StartScene: 
-  buttonGen: {fileID: 0}
   demoNamesAvalible:
   - InteractionPanel
   - Paint
@@ -289,8 +285,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 486dd137cb8d6ed408f58821f4b23511, type: 2}
   - {fileID: 2100000, guid: 2d165781018b4264bab774dd0e405f9a, type: 2}
   - {fileID: 2100000, guid: 82ea369517d6fb346a44e8b9dc21bdf5, type: 2}
-  StartScene: 
-  noMatchCount: 0
+  buttonGen: {fileID: 0}
+  configLocation: ./config.json
+  configData:
+    Scenes: []
+    StartScene: 
 --- !u!4 &1409980973
 Transform:
   m_ObjectHideFlags: 0

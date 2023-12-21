@@ -37,11 +37,11 @@ public class Apple : MonoBehaviour
     public float eachBiteDuration = 0.1f;
 
     private float BiteDuration => secondBite + eachBiteDuration;
-    
-    public HapticEffect DropEffect = new HapticEffect(){Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100){OneShot = true}};
+
+    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100) { OneShot = true } };
     public float DropEffectDuration = 500; //ms
 
-    [SerializeField]private TextType textType;
+    [SerializeField] private TextType textType;
 
     private Rigidbody rb;
     private Quaternion originalRotation;
@@ -62,10 +62,12 @@ public class Apple : MonoBehaviour
         originalRotation = transform.rotation;
 
         var sources = GetComponents<AudioSource>().AsEnumerable().GetEnumerator();
-        if (biteSound == null && sources.MoveNext()) {
+        if (biteSound == null && sources.MoveNext())
+        {
             biteSound = sources.Current;
         }
-        if (pluckSound == null && sources.MoveNext()) {
+        if (pluckSound == null && sources.MoveNext())
+        {
             pluckSound = sources.Current;
         }
     }
@@ -100,7 +102,8 @@ public class Apple : MonoBehaviour
 
     private void OnDisable()
     {
-        if (biteCouroutine != null) {
+        if (biteCouroutine != null)
+        {
             StopCoroutine(biteCouroutine);
             biteCouroutine = null;
         }
@@ -114,7 +117,8 @@ public class Apple : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (dropCoroutine == null) {
+        if (dropCoroutine == null)
+        {
             dropCoroutine = StartCoroutine(DropHaptics());
         }
 
@@ -142,7 +146,8 @@ public class Apple : MonoBehaviour
 
     public void Pluck()
     {
-        if (StillAttachedToTree) {
+        if (StillAttachedToTree)
+        {
             rb.useGravity = true;
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints.None;
@@ -209,11 +214,12 @@ public class Apple : MonoBehaviour
 
         Vector3 startPosition = transform.position;
 
-        while (elapsed < totalWait) {
+        while (elapsed < totalWait)
+        {
             elapsed += Time.fixedDeltaTime;
 
             transform.position = Vector3.Lerp(startPosition, mouthTransform.position, elapsed / totalWait);
-            
+
             yield return new WaitForFixedUpdate();
         }
     }

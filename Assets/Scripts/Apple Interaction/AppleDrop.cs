@@ -100,7 +100,7 @@ public class AppleDrop : MonoBehaviour
         interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
         TryStartTime();
-        AppleAnimator.SetBool(AnimateApple, true);
+        
 
     }
 
