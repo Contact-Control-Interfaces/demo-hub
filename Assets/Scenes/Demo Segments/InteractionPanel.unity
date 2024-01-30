@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.016966088, g: 0.0075758905, b: 0.015771696, a: 1}
+  m_IndirectSpecularColor: {r: 0.016802287, g: 0.0075019943, b: 0.015623411, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7907,6 +7907,8 @@ GameObject:
   - component: {fileID: 474985386}
   - component: {fileID: 476917099}
   - component: {fileID: 476917100}
+  - component: {fileID: 476917102}
+  - component: {fileID: 476917101}
   m_Layer: 0
   m_Name: mesh
   m_TagString: Untagged
@@ -7944,6 +7946,136 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &476917101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476917098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4944f81bb4d21de4d95fbd1e0a129354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionEffect:
+    Amplitude: 0
+    Vibration:
+      rid: 1523791554820440100
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1523791554820440100
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+--- !u!114 &476917102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476917098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477238c9c53e7bb46a000247a74d6ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  IgnoreTaps: 0
+  UseRenderCenter: 0
+  maintainOrientation: 0
+  maintainPosition: 0
+  stayInHand: 0
+  SendHapticsToWholeHand: 0
+  gripTransform: {fileID: 0}
+  gripCollider: {fileID: 0}
+  rb: {fileID: 0}
+  rend: {fileID: 0}
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  unTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  whileTriggerTouch:
+    m_PersistentCalls:
+      m_Calls: []
+  startHaptics:
+    Amplitude: 200
+    Vibration:
+      rid: 1523791554820440097
+  stayHaptics:
+    Amplitude: 200
+    Vibration:
+      rid: 1523791554820440098
+  exitHaptics:
+    Amplitude: 200
+    Vibration:
+      rid: 1523791554820440099
+  isPersistent: 0
+  persistenceDuration: 0
+  palmDiffusion: 0.75
+  ignorePalmVibration: 1
+  interactionPriority: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1523791554820440097
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 1523791554820440098
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
+    - rid: 1523791554820440099
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!4 &486576167
 Transform:
   m_ObjectHideFlags: 0
@@ -14206,6 +14338,7 @@ GameObject:
   - component: {fileID: 1182863382}
   - component: {fileID: 1182863383}
   - component: {fileID: 1182863384}
+  - component: {fileID: 1182863385}
   m_Layer: 0
   m_Name: Segment 1
   m_TagString: Untagged
@@ -14394,13 +14527,13 @@ MonoBehaviour:
     - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 14
+        WhichType: 0
         options:
-          rid: 4
+          rid: -2
     - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
@@ -14411,11 +14544,6 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 4
-      type: {class: SmoothHum/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 14
-        strength: 4
 --- !u!114 &1182863384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14432,6 +14560,37 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   heightPercentage: 50
+--- !u!114 &1182863385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182863377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4944f81bb4d21de4d95fbd1e0a129354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionEffect:
+    Amplitude: 0
+    Vibration:
+      rid: 1523791554820440096
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1523791554820440096
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1001 &1183641314
 PrefabInstance:
   m_ObjectHideFlags: 0
