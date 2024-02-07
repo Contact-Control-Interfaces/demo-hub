@@ -38,7 +38,7 @@ public class Apple : MonoBehaviour
 
     private float BiteDuration => secondBite + eachBiteDuration;
 
-    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100) { OneShot = true } };
+    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = new VibrationContext {Effect = new SoftBump(WideThreeOptions._100) { OneShot = true } } };
     public float DropEffectDuration = 500; //ms
 
     [SerializeField] private TextType textType;
@@ -231,16 +231,14 @@ public class Apple : MonoBehaviour
         interactable.SendHapticsToWholeHand = true;
 
         yield return new WaitForSeconds(firstBite);
-        interactable.stayHaptics.Vibration = new SharpTick(NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
+        interactable.stayHaptics.Vibration = new VibrationContext { Effect = new SharpTick(NarrowThreeOptions._100) { OneShot = true } };
         yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
+        interactable.stayHaptics.Vibration = MaestroHapticSingletons.None;
 
         yield return new WaitForSeconds(secondBite - (firstBite + eachBiteDuration));
-        interactable.stayHaptics.Vibration = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
+        interactable.stayHaptics.Vibration = new VibrationContext { Effect = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100) { OneShot = true } };
         yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
+        interactable.stayHaptics.Vibration = MaestroHapticSingletons.None;
 
         interactable.SendHapticsToWholeHand = false;
 

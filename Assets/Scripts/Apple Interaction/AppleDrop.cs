@@ -52,7 +52,7 @@ public class AppleDrop : MonoBehaviour
 
     [Header("Haptics")]
     [Tooltip("Haptic effect when hand enters the trigger area")]
-    public HapticEffect EnterHaptics = new HapticEffect{ Amplitude = 50, Vibration = new SoftBump(WideThreeOptions._30){OneShot = true} };
+    public HapticEffect EnterHaptics = new HapticEffect{ Amplitude = 50, Vibration = new VibrationContext { Effect = new SoftBump(WideThreeOptions._30) { OneShot = true } } };
     
     protected int CurrentlyColliding = 0;
 
