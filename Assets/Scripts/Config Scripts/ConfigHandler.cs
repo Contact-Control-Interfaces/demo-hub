@@ -22,8 +22,6 @@ namespace Maestro
         {
             if (ConfigSettings.configCompleted)
             {
-                //testText.text = "Left: " + BluetoothKeepAlive.IsLeftConnected() + "Right " + BluetoothKeepAlive.IsRightConnected();
-
                 if (tree != null && configPanel != null)
                 {
                     ConfigSettings.DemoCheck(tree);
