@@ -20,11 +20,11 @@ public class PianoKey : MonoBehaviour
 
     public void Press()
     {
-        interactable.stayHaptics.Amplitude = PressAmplitude;
+        interactable.StayHaptics.Amplitude = PressAmplitude;
     }
 
     public void UnPress()
     {
-        interactable.stayHaptics.Amplitude = UnpressedAmplitude;
+        interactable.StayHaptics.Amplitude = UnpressedAmplitude;
     }
 }
