@@ -9,6 +9,7 @@ public class TreeGrow : MonoBehaviour
 {
     public Animator treeAnimation;
     public Animator handAnimation;
+    public GameObject appleDropTriggerArea;
 
     private int Animate;
     private int AnimateHand;
@@ -46,5 +47,6 @@ public class TreeGrow : MonoBehaviour
     private void StartHand()
     {
         handAnimation.SetBool(AnimateHand, true);
+        appleDropTriggerArea.SetActive(true);
     }
 }

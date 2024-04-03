@@ -1,4 +1,3 @@
-using Leap.Unity.Interaction.PhysicsHands;
 using Maestro;
 using Maestro.Vibration;
 using System.Collections;
@@ -21,8 +20,8 @@ public class Apple : MonoBehaviour
     public GameObject panelDisplay;
     public GameObject tree;
     public GameObject touchTrigger;
-    public AudioSource biteSound;
-    public AudioSource pluckSound;
+    public AudioClipSettings biteSoundSettings;
+    public AudioClipSettings pluckSoundSettings;
 
     [Header("Lock Points")]
     public Transform resetPoint;
@@ -31,23 +30,15 @@ public class Apple : MonoBehaviour
     public Transform mouthTransform;
     public SphereCollider failsafeBubble;
 
-    [Header("Bite timing")]
-    public float firstBite = 0.15f;
-    public float secondBite = 0.8f;
-    public float eachBiteDuration = 0.1f;
+    [SerializeField]private TextType textType;
 
-    private float BiteDuration => secondBite + eachBiteDuration;
-
-    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100) { OneShot = true } };
-    public float DropEffectDuration = 500; //ms
-
-    [SerializeField] private TextType textType;
-
+    private AudioSource audioSource;
+    private AppleHapticsController appleHaptics;
     private Rigidbody rb;
+    private AppleDrop appleDrop;
+    public Renderer renderer { get; private set; }
     private Quaternion originalRotation;
-
-    private Coroutine biteCouroutine;
-    private Coroutine dropCoroutine;
+    private float originalMaxLinearVelocity;
 
     private bool bitten = false;
 
@@ -58,18 +49,13 @@ public class Apple : MonoBehaviour
         panelDisplay.SetActive(false);
 
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+        appleHaptics = GetComponent<AppleHapticsController>();
+        renderer = GetComponentInChildren<Renderer>();
+        appleDrop = FindObjectOfType<AppleDrop>(true);
 
         originalRotation = transform.rotation;
-
-        var sources = GetComponents<AudioSource>().AsEnumerable().GetEnumerator();
-        if (biteSound == null && sources.MoveNext())
-        {
-            biteSound = sources.Current;
-        }
-        if (pluckSound == null && sources.MoveNext())
-        {
-            pluckSound = sources.Current;
-        }
+        originalMaxLinearVelocity = rb.maxLinearVelocity;
     }
 
     void Update()
@@ -87,61 +73,44 @@ public class Apple : MonoBehaviour
 
     public void OnFullBloom()
     {
-        TreeDisable();
-        DisplayPanel();
+        panelDisplay.SetActive(true);
+        tree.SetActive(false);
     }
 
     public void OnBloomEnd()
     {
-        MaterialChange();
-
         gameObject.SetActive(false);
 
         Destroy(gameObject);
     }
 
-    private void OnDisable()
-    {
-        if (biteCouroutine != null)
-        {
-            StopCoroutine(biteCouroutine);
-            biteCouroutine = null;
-        }
-
-        if (dropCoroutine != null)
-        {
-            StopCoroutine(dropCoroutine);
-            dropCoroutine = null;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (dropCoroutine == null)
+        if (!appleHaptics.isDropping) 
         {
-            dropCoroutine = StartCoroutine(DropHaptics());
+            StartCoroutine(appleHaptics.DropHaptics());
+            StartCoroutine(ReduceVelocityOnContact());
         }
 
-        if (other.gameObject.tag == "MainCamera" && biteCouroutine == null && !StillAttachedToTree)
+        if (other.gameObject.tag == "MainCamera" && !appleHaptics.isBiting && !StillAttachedToTree)
         {
             Bite();
             touchTrigger.SetActive(false);
         }
     }
 
-    void MaterialChange()
+    private IEnumerator ReduceVelocityOnContact()
     {
-        GetComponent<Renderer>().material = glowOff;
+        rb.velocity = Vector3.zero;
+        rb.maxLinearVelocity = 0.05f;
+        yield return new WaitForSeconds(0.2f);
+        rb.velocity = Vector3.zero;
+        rb.maxLinearVelocity = originalMaxLinearVelocity;
     }
 
-    void DisplayPanel()
+    public void ResetLinearVelocity()
     {
-        panelDisplay.SetActive(true);
-    }
-
-    void TreeDisable()
-    {
-        tree.SetActive(false);
+        rb.maxLinearVelocity = originalMaxLinearVelocity;
     }
 
     public void Pluck()
@@ -152,15 +121,15 @@ public class Apple : MonoBehaviour
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints.None;
 
-            GetComponent<Renderer>().material = glowOn;
+            renderer.material = glowOn;
 
             var interactable = GetComponent<MaestroInteractable>();
             interactable.type = InteractionType.OneHandGrab;
 
-            if (pluckSound != null)
-                pluckSound.Play();
+            audioSource.PlayAudioClipWithCustomSettings(pluckSoundSettings);
 
             textType.TextGen("Take a bite.", true);
+            touchTrigger.SetActive(false);
         }
     }
 
@@ -169,20 +138,20 @@ public class Apple : MonoBehaviour
         transform.SetParent(null);
         GetComponent<ReturnToSpawn>().Poof();
 
-        GetComponent<Renderer>().material = hologramGlow;
-        rb.isKinematic = true;
+        renderer.material = hologramGlow;
         rb.drag = 0f;
+        rb.maxLinearVelocity = originalMaxLinearVelocity;
+        touchTrigger.SetActive(true);
 
         var inter = GetComponent<MaestroInteractable>();
         inter.type = InteractionType.Static;
 
         transform.position = resetPoint.position;
         transform.rotation = originalRotation;
-        this.GetComponent<MeshRenderer>().enabled = false;
 
         // Gross but easiest way to trigger another drop if the hand hasn't left the box
-        AppleDrop drop = FindObjectOfType<AppleDrop>();
-        drop.TryStartTime();
+        appleDrop.ResetAppleDrop();
+        appleDrop.TryStartTime();
     }
 
     public void Bite()
@@ -192,8 +161,8 @@ public class Apple : MonoBehaviour
         // Don't allow user to drop the apple at this point
         failsafeBubble.radius = 10f;
 
-        biteSound.Play();
-        biteCouroutine = StartCoroutine(BiteHaptics());
+        audioSource.PlayAudioClipWithCustomSettings(biteSoundSettings);
+        StartCoroutine(appleHaptics.BiteHaptics());
 
         bitten = true;
 
@@ -202,14 +171,14 @@ public class Apple : MonoBehaviour
         rb.isKinematic = true;
 
         // Lerp the apple toward the mouth during bite
-        StartCoroutine(LerpRoutine());
+        StartCoroutine(LerpAppleToMouthPosition());
 
         bloomManager.StartBloom();
     }
 
-    IEnumerator LerpRoutine()
+    IEnumerator LerpAppleToMouthPosition()
     {
-        float totalWait = BiteDuration;
+        float totalWait = appleHaptics.BiteDuration;
         float elapsed = 0f;
 
         Vector3 startPosition = transform.position;
@@ -222,42 +191,6 @@ public class Apple : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-    }
-
-    IEnumerator BiteHaptics()
-    {
-        MaestroInteractable interactable = GetComponent<MaestroInteractable>();
-
-        interactable.SendHapticsToWholeHand = true;
-
-        yield return new WaitForSeconds(firstBite);
-        interactable.stayHaptics.Vibration = new SharpTick(NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
-        yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
-
-        yield return new WaitForSeconds(secondBite - (firstBite + eachBiteDuration));
-        interactable.stayHaptics.Vibration = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
-        yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
-
-        interactable.SendHapticsToWholeHand = false;
-
-        // Stop showing apple after bite
-        var rend = GetComponent<Renderer>();
-        rend.enabled = false;
-    }
-
-    IEnumerator DropHaptics()
-    {
-        var interactable = GetComponent<MaestroInteractable>();
-        interactable.SendHapticsToWholeHand = true;
-        interactable.SetHapticOverride(DropEffect);
-        yield return new WaitForSeconds(DropEffectDuration / 1000f);
-
-        interactable.ResetOverride();
-        interactable.SendHapticsToWholeHand = false;
-        dropCoroutine = null;
+        renderer.enabled = false;
     }
 }

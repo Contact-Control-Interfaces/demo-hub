@@ -13,17 +13,18 @@ public class DragZone : MonoBehaviour
 
     public Collider appleCollider;
     public GameObject objectHolder;
+    float initialMaxLinearVelocity;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other == appleCollider) {
             insideThisZone = true;
-            objectHolder.SetActive(insideThisZone);
 
             Rigidbody r = other.GetComponent<Rigidbody>();
             if (r != null) {
                 if (InsideHowManyZones == 0) {
                     initialDrag = r.drag;
+                    initialMaxLinearVelocity = r.maxLinearVelocity;
                     ApplyDrag(r);
                 }
 
@@ -36,7 +37,6 @@ public class DragZone : MonoBehaviour
     {
         if (other == appleCollider) {
             insideThisZone = false;
-            objectHolder.SetActive(insideThisZone);
 
             Rigidbody r = other.GetComponent<Rigidbody>();
             if (r != null) {
@@ -52,10 +52,13 @@ public class DragZone : MonoBehaviour
     private void ApplyDrag(Rigidbody r)
     {
         r.drag = insideDrag;
+        r.maxLinearVelocity = 0.25f;
+        r.velocity = Vector3.zero;
     }
 
     private void UnapplyDrag(Rigidbody r)
     {
         r.drag = initialDrag;
+        r.maxLinearVelocity = initialMaxLinearVelocity;
     }
 }

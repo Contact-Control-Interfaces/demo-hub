@@ -1,6 +1,7 @@
 using Leap.Unity;
 using Leap.Unity.HandsModule;
-using Leap.Unity.Interaction.PhysicsHands;
+using Leap.Unity.PhysicalHands;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ public class MaestroGrabbable : MonoBehaviour
 {
     [SerializeField]
     private bool throwHelpersEnabled = true;
-    private PhysicsProvider PhysicsProvider;
     private Rigidbody rb;
-    private PhysicsHand graspedHand;
+    private PhysicalHandsManager physicalHandsManager;
+    private ContactHand graspedHand;
     private Transform palmTransform;
     private HandModelBase handModelBase;
     private bool isGrasped;
@@ -21,22 +22,43 @@ public class MaestroGrabbable : MonoBehaviour
     private float extraThrowForce = 2f;
     private float minVelocityForThrow = 1.4f;
     [SerializeField]
+    private UnityEvent OnRelease;
+    [SerializeField]
     private UnityEvent OnGrab;
 
     private void Start()
     {
-        PhysicsProvider = FindObjectOfType<PhysicsProvider>();
         rb = GetComponent<Rigidbody>();
-        PhysicsProvider.OnObjectStateChange += DetectGrabOrThrow;
+        physicalHandsManager = FindObjectOfType<PhysicalHandsManager>();
+        physicalHandsManager.onGrab.AddListener(OnObjectGrabbed);
+        physicalHandsManager.onGrabExit.AddListener(OnObjectReleased);
     }
 
-    private void OnDestroy() => PhysicsProvider.OnObjectStateChange -= DetectGrabOrThrow;
+    private void OnObjectReleased(ContactHand hand, Rigidbody rb)
+    {
+        if (rb == this.rb)
+        {
+            rb.isKinematic = false;
+            StartCoroutine(ThrowAveragedVelocity());
+            graspedHand = null;
+        }
+    }
+
+    private void OnObjectGrabbed(ContactHand hand, Rigidbody rb)
+    {
+        if (rb == this.rb)
+        {
+            graspedHand = hand;
+            palmTransform = graspedHand.GetComponentsInChildren<Transform>(true)[1];
+            OnGrab?.Invoke();
+        }
+    }
 
     private void Update()
     {
-        if (!throwHelpersEnabled) 
+        if (!throwHelpersEnabled)
             return;
-        if (handModelBase == null || isLocatingHand || !isGrasped || handModelBase.IsTracked)
+        if (graspedHand == null || isLocatingHand || !isGrasped || handModelBase.IsTracked)
             return;
         isLocatingHand = true;
         StartCoroutine(LocatingHand());
@@ -45,14 +67,14 @@ public class MaestroGrabbable : MonoBehaviour
     {
         Vector3 throwDirection = palmTransform.transform.forward;
 
-        while (!handModelBase.IsTracked)
+        while (graspedHand != null && !graspedHand.Tracked)
             yield return null;
 
         Vector3 newForwardDirection = palmTransform.transform.forward;
         yield return null;
         yield return null;
 
-        if (Vector3.Angle(throwDirection, newForwardDirection) > 50.0 && !PhysicsProvider.IsGraspingObject(rb))
+        if (Vector3.Angle(throwDirection, newForwardDirection) > 50.0 && graspedHand != null)
         {
             Throw(newForwardDirection * 2f);
         }
@@ -77,22 +99,4 @@ public class MaestroGrabbable : MonoBehaviour
     }
 
     private void Throw(Vector3 averageVelocity) => rb.AddForce(averageVelocity * extraThrowForce, ForceMode.Impulse);
-
-    private void DetectGrabOrThrow(Rigidbody arg1, PhysicsGraspHelper arg2)
-    {
-        if (isGrasped && !PhysicsProvider.IsGraspingObject(rb))
-        {
-            isGrasped = false;
-            rb.isKinematic = false;
-            StartCoroutine(ThrowAveragedVelocity());
-            graspedHand = null;
-        }
-        if (arg1 != rb || arg2.GraspState != PhysicsGraspHelper.State.Grasp)
-            return;
-        isGrasped = true;
-        graspedHand = PhysicsProvider.LeftHand.IsGrasping ? PhysicsProvider.LeftHand : PhysicsProvider.RightHand;
-        handModelBase = FindObjectsOfType<HandBinder>().First(o => o.Handedness == graspedHand.Handedness);
-        palmTransform = graspedHand.GetComponentsInChildren<Transform>(true)[1];
-        OnGrab?.Invoke();
-    }
 }
