@@ -1,25 +1,14 @@
-using Leap;
 using Maestro;
-using Maestro.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Threading;
 using Maestro.Vibration;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using System.Linq;
-using UnityEngine.Rendering.UI;
-using UnityEngine.XR.OpenXR.Input;
 
 public class AppleDrop : MonoBehaviour
 {
     [Header("Drop Components")]
     bool missed;
-    public Apple dropObject;
+    public Apple apple;
     public Transform dropOrigin;
 
     [Header("Drop Object Material")]
@@ -100,8 +89,7 @@ public class AppleDrop : MonoBehaviour
         interactable.SetHapticOverride(EnterHaptics);
         CurrentlyColliding++;
         TryStartTime();
-        
-
+        AppleAnimator.SetBool(AnimateApple, true);
     }
 
     public void Deregister(FingerCollider fc)
@@ -126,37 +114,40 @@ public class AppleDrop : MonoBehaviour
 
     public void StartTime()
     {
-        if (!dropObject.StillAttachedToTree)
+        if (!apple.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
 
         startTime = Time.time;
         OnEndCalled = false;
         fillNum = 0;
         
-        dropObject.GetComponent<MeshRenderer>().material = promptFlickerOn;
+        apple.renderer.material = promptFlickerOn;
         
         timeOn = true;
         remainingTime = baseTime;
         timeOnText.TextGen(timerOnText, true);
         AppleAnimator.SetBool(AnimateApple, true);
-        dropObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void StopTime()
     {
         interactable.ResetOverride();
         
-        if (!dropObject.StillAttachedToTree)
+        if (!apple.StillAttachedToTree)
             return; // Only change material, start timer when apple is on the tree
 
         progressBar.fillAmount = emptyNum;
-        dropObject.GetComponent<MeshRenderer>().material = promptFlickerOff;
+        apple.renderer.material = promptFlickerOff;
         timeOn = false;
         timeOnText.TextGen(placeText, true);
 
         //timeOnText.BackText();
-        dropObject.GetComponent<MeshRenderer>().enabled = false;
         ResetDisplay();
+    }
+
+    public void ResetAppleDrop()
+    {
+        CurrentlyColliding = 0;
     }
 
     #endregion
@@ -172,11 +163,10 @@ public class AppleDrop : MonoBehaviour
 
     private void OnEnd()
     {
-        if (dropObject == null || !dropObject.StillAttachedToTree)
+        if (apple == null || !apple.StillAttachedToTree)
             return;
 
-        dropObject.GetComponent<MeshRenderer>().enabled = true;
-        dropObject.Pluck();
+        apple.Pluck();
         interactable.ResetOverride();
         timeOn = false;
         AppleAnimator.SetBool(AnimateApple, false);
@@ -195,14 +185,14 @@ public class AppleDrop : MonoBehaviour
             lateral = rightLateral;
         }
 
-        var rb = dropObject.GetComponent<Rigidbody>();
+        var rb = apple.GetComponent<Rigidbody>();
         rb.velocity += lateral / GetFallDuration(offset);
 
     }
 
     private Vector3 GetOffset(IMaestroHand hand)
     {
-        return hand.transforms.MiddleMiddle.position - dropObject.transform.position;
+        return hand.transforms.MiddleMiddle.position - apple.transform.position;
     }
 
     private Vector3 GetLateralOffset(Vector3 offset)
