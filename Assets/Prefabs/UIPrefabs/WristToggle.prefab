@@ -57,7 +57,7 @@ MonoBehaviour:
   ignored: []
   Interactable: {fileID: 0}
   pressedHaptics:
-    Amplitude: 255
+    Amplitude: 200
     Vibration:
       rid: 1000
   castDirection: 4
@@ -74,7 +74,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3968000100619176724}
         m_TargetAssemblyTypeName: MenuToggle, Assembly-CSharp
-        m_MethodName: ToggleObject
+        m_MethodName: StartTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -86,7 +86,19 @@ MonoBehaviour:
         m_CallState: 2
   onUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3968000100619176724}
+        m_TargetAssemblyTypeName: MenuToggle, Assembly-CSharp
+        m_MethodName: StopTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   references:
     version: 2
     RefIds:
@@ -166,7 +178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79c21a5db1358a247bacbb18da2b20f2, type: 2}
+  - {fileID: 2100000, guid: e958e0355bccac642b99653fc08ef591, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -281,13 +293,15 @@ GameObject:
   m_Component:
   - component: {fileID: 3968000100619176747}
   - component: {fileID: 3968000100619176724}
-  m_Layer: 0
+  - component: {fileID: 1036427614}
+  - component: {fileID: 8631052934102306963}
+  m_Layer: 12
   m_Name: WristToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3968000100619176747
 Transform:
   m_ObjectHideFlags: 0
@@ -317,9 +331,124 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5260639d77e027e4684d420ab3e311af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pressLength: 1
   playerHead: {fileID: 0}
   demoMenu: {fileID: 4189087481247190781}
   spawnDistance: 0.5
+  materialGrabber: {fileID: 0}
+  buttonMaterial: {fileID: 2100000, guid: 25db95462d5394b4c814033dff8c9de0, type: 2}
+  buttonRender: {fileID: 3112113766061343961}
+  pressButton: {fileID: 4649444460638752651}
+  menuAudio: {fileID: 8631052934102306963}
+--- !u!114 &1036427614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968000100619176746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91473711d391e2444a733d6724bfa713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPresses: 0
+--- !u!82 &8631052934102306963
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968000100619176746}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ad4752de0666b1b419abddc03d4a15e5, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3968000100707683836
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +461,7 @@ GameObject:
   - component: {fileID: 3968000100707683832}
   - component: {fileID: 3968000100707683839}
   - component: {fileID: 3968000100707683838}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,15 +661,15 @@ MonoBehaviour:
   startHaptics:
     Amplitude: 200
     Vibration:
-      rid: 1000
+      rid: 0
   stayHaptics:
-    Amplitude: 200
+    Amplitude: 115
     Vibration:
-      rid: 1001
+      rid: 1
   exitHaptics:
     Amplitude: 200
     Vibration:
-      rid: 1002
+      rid: 2
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -551,7 +680,17 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1000
+    - rid: 0
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        TakesOptions: 1
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 1
+        options:
+          rid: 3
+    - rid: 1
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -561,26 +700,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1001
+    - rid: 2
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 15
         options:
-          rid: -2
-    - rid: 1002
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: 5
+    - rid: 3
+      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 0
-        options:
-          rid: -2
+        Type: 1
+        strength: 7
+    - rid: 5
+      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 15
+        strength: 2
 --- !u!1001 &3968000099384315242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -720,8 +859,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 951257670638240663, guid: 984dfd096ed445c4689ef77975240f92,
         type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 951257670638240663, guid: 984dfd096ed445c4689ef77975240f92,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839236520682142553, guid: 984dfd096ed445c4689ef77975240f92,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558162618823252653, guid: 984dfd096ed445c4689ef77975240f92,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349118053071077856, guid: 984dfd096ed445c4689ef77975240f92,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 984dfd096ed445c4689ef77975240f92, type: 3}
