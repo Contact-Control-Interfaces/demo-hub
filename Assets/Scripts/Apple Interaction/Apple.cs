@@ -18,6 +18,7 @@ public class Apple : MonoBehaviour
 
     [Header("Effected Objects")]
     public GameObject panelDisplay;
+    public GameObject wristDisplay;
     public GameObject tree;
     public GameObject touchTrigger;
     public AudioClipSettings biteSoundSettings;
@@ -73,6 +74,7 @@ public class Apple : MonoBehaviour
 
     public void OnFullBloom()
     {
+        wristDisplay.SetActive(true);
         panelDisplay.SetActive(true);
         tree.SetActive(false);
     }
@@ -110,6 +112,13 @@ public class Apple : MonoBehaviour
 
     public void ResetLinearVelocity()
     {
+        panelDisplay.SetActive(true);
+        wristDisplay.SetActive(true);
+    }
+
+    void TreeDisable()
+    {
+        tree.SetActive(false);
         rb.maxLinearVelocity = originalMaxLinearVelocity;
     }
 
