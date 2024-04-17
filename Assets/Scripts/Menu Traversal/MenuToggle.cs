@@ -1,5 +1,6 @@
 using Maestro;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class MenuToggle : MonoBehaviour
@@ -11,6 +12,11 @@ public class MenuToggle : MonoBehaviour
     public Transform playerHead;
     public GameObject demoMenu;
     public float spawnDistance;
+    public float menuSpeed = 0.1f;
+    [Range(0f, 1f)]
+    public float unlockDotProduct = 0.75f;
+    [Range(0f, 1f)]
+    public float relockDotProduct = 0.95f;
 
     public GrabMaterials materialGrabber;
 
@@ -37,21 +43,49 @@ public class MenuToggle : MonoBehaviour
     private MaestroInteractable interactable;
     private WristMaterialChange wristMaterialChange;
 
+    private bool menuLocked = true;
+    private Vector3 DefaultMenuPosition => playerHead.position + new Vector3(playerHead.forward.x, 0, playerHead.forward.z).normalized * spawnDistance;
+
     // Start is called before the first frame update
     void Start()
     {
+        demoMenu.transform.parent = null; // detach from hand
         demoMenu.SetActive(false);
         this.TryGetComponent<WristMaterialChange>(out wristMaterialChange);
     }
     private void Update()
     {
-        demoMenu.transform.position = playerHead.position + new Vector3(playerHead.forward.x, 0, playerHead.forward.z).normalized * spawnDistance;
+        float dot = GetMenuDotProduct();
+
+        Debug.Log(dot);
+
+        if (menuLocked) {
+            if (dot < unlockDotProduct)
+                menuLocked = false;
+        } else {
+            if (dot > relockDotProduct)
+                menuLocked = true;
+
+            UpdateMenuPosition(dot);
+        }
+    }
+
+    private float GetMenuDotProduct()
+    {
+        return Vector3.Dot(demoMenu.transform.forward, playerHead.forward);
+    }
+
+    private void UpdateMenuPosition(float dotProduct)
+    {
+        float speedScalar = (2 - (dotProduct + 1)) / 2f; // 0-1, 1 being maximally turned away
+        demoMenu.transform.position = Vector3.MoveTowards(demoMenu.transform.position, DefaultMenuPosition, Time.deltaTime * (speedScalar + 1) * menuSpeed);
         demoMenu.transform.LookAt(playerHead.position);
         demoMenu.transform.forward *= -1;
     }
 
     public void ToggleObject()
     {
+        demoMenu.transform.position = DefaultMenuPosition;
         demoMenu.SetActive(!demoMenu.activeSelf);
         menuAudio.Play();
 

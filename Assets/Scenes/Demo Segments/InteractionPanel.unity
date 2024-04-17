@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.017605059, g: 0.007871591, b: 0.016349453, a: 1}
+  m_IndirectSpecularColor: {r: 0.016666617, g: 0.0074376888, b: 0.015496008, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5616,9 +5616,19 @@ PrefabInstance:
       objectReference: {fileID: 1192825486}
     - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
         type: 3}
+      propertyPath: menuMaxSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
       propertyPath: materialGrabber
       value: 
       objectReference: {fileID: 1744644394}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: smoothingFrames
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3968000100619176746, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
         type: 3}
       propertyPath: m_Name
@@ -9699,8 +9709,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherCamera: {fileID: 607263567}
-  ghostShader: {fileID: 2100000, guid: 1bdadc654bae7b94db5e836640ddff8f, type: 2}
+  Interactables: []
   colliders: []
+  ghostShader: {fileID: 2100000, guid: 1bdadc654bae7b94db5e836640ddff8f, type: 2}
 --- !u!1 &1766933105
 GameObject:
   m_ObjectHideFlags: 0
