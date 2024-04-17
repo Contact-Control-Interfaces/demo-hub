@@ -37,7 +37,7 @@ public class GrabMaterials : MonoBehaviour
         if (child.TryGetComponent<Collider>(out Collider c))
             c.enabled = colliderState;
 
-        if (child.TryGetComponent<MeshRenderer>(out MeshRenderer mr))
+        if (childMaterial != null && child.TryGetComponent<MeshRenderer>(out MeshRenderer mr))
         {
             if (storeMaterials)
                 materialStorage[mr.gameObject] = mr.material;
@@ -48,8 +48,7 @@ public class GrabMaterials : MonoBehaviour
     public void ApplyGhostShader()
     {
         CameraToggle();
-        foreach (GameObject child in Interactables)
-        {
+        foreach (GameObject child in Interactables) {
             GhostShaderState(child, ghostShader, false, false, true);
         }
     }
@@ -57,10 +56,9 @@ public class GrabMaterials : MonoBehaviour
     public void RemoveGhostShader()
     {
         CameraToggle();
-        foreach (GameObject child in Interactables)
-        {
-            if (materialStorage.TryGetValue(child.gameObject, out Material material))
-                GhostShaderState(child, material, true, true);
+        foreach (GameObject child in Interactables) {
+            bool hasStoredMaterial = materialStorage.TryGetValue(child.gameObject, out Material material);
+            GhostShaderState(child, material, true, true); // this function checks for null in case the lookup fails
         }
         materialStorage.Clear();
     }
