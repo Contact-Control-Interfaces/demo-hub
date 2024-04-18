@@ -77,8 +77,9 @@ public class MenuToggle : MonoBehaviour
 
     private void UpdateMenuPosition(float dotProduct)
     {
-        float speedScalar = (2 - (dotProduct + 1)) / 2f; // 0-1, 1 being maximally turned away
-        demoMenu.transform.position = Vector3.MoveTowards(demoMenu.transform.position, DefaultMenuPosition, Time.deltaTime * (speedScalar + 1) * menuSpeed);
+        float dotDifference = Mathf.Max(unlockDotProduct - dotProduct, 0); // how turned away from the locked range we are
+        Vector3 newPosition = Vector3.MoveTowards(demoMenu.transform.position, DefaultMenuPosition, Time.deltaTime * Mathf.Pow(1 + dotDifference, 4) * menuSpeed);
+        demoMenu.transform.position = playerHead.position + spawnDistance * (newPosition - playerHead.position).normalized;
         demoMenu.transform.LookAt(playerHead.position);
         demoMenu.transform.forward *= -1;
     }

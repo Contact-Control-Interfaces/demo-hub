@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.016666617, g: 0.0074376888, b: 0.015496008, a: 1}
+  m_IndirectSpecularColor: {r: 0.016663855, g: 0.007436505, b: 0.01549387, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1896,15 +1896,15 @@ Transform:
   m_GameObject: {fileID: 476917096}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.021999892, y: 0.061399985, z: 0.016999064}
-  m_LocalScale: {x: 0.2625, y: 0.105, z: 0.2625}
+  m_LocalPosition: {x: 0, y: 0.06539383, z: 0}
+  m_LocalScale: {x: 0.2624999, y: 0.105, z: 0.2624999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 476754250}
   - {fileID: 810969814}
   - {fileID: 729375344}
   - {fileID: 1449192816}
-  m_Father: {fileID: 1196280903}
+  m_Father: {fileID: 1196280904}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &476754250
 Transform:
@@ -6199,18 +6199,33 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1155504
+      value: 1.3485503
       objectReference: {fileID: 0}
     - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.4465156
+      value: 7.4075155
       objectReference: {fileID: 0}
     - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.570492
+      value: 16.592491
       objectReference: {fileID: 0}
     - target: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
         type: 3}
@@ -6272,13 +6287,13 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: e1ff9642c4180a941b8379c44f814b28, type: 3}
 --- !u!4 &1196280903 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6366439871889568543, guid: e1ff9642c4180a941b8379c44f814b28,
+  m_CorrespondingSourceObject: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
     type: 3}
   m_PrefabInstance: {fileID: 1196280902}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1196280904 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1242066628815347176, guid: e1ff9642c4180a941b8379c44f814b28,
+  m_CorrespondingSourceObject: {fileID: 6366439871889568543, guid: e1ff9642c4180a941b8379c44f814b28,
     type: 3}
   m_PrefabInstance: {fileID: 1196280902}
   m_PrefabAsset: {fileID: 0}
@@ -8527,7 +8542,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0149949165, y: 54.135155, z: -0.09167194}
+  m_ConnectedAnchor: {x: 0.0002250681, y: 0.21320477, z: 0.009926439}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 1
@@ -9692,8 +9707,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1196280904}
   - {fileID: 819736509}
+  - {fileID: 1196280903}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1744644394
@@ -16857,7 +16872,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.01499889, y: 53.84686, z: 0.8324027}
+  m_ConnectedAnchor: {x: 0.0002250667, y: 0.211475, z: -0.0039346223}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
