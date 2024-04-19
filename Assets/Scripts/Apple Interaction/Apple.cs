@@ -1,3 +1,5 @@
+using Leap.Unity;
+using Leap.Unity.PhysicalHands;
 using Maestro;
 using Maestro.Vibration;
 using System.Collections;
@@ -6,6 +8,7 @@ using UnityEngine;
 
 public class Apple : MonoBehaviour
 {
+    //Assigned In Inspector
     [Header("Bloom Variables")]
     public BloomManager bloomManager;
     [Space(10)]
@@ -31,8 +34,13 @@ public class Apple : MonoBehaviour
     public Transform mouthTransform;
     public SphereCollider failsafeBubble;
 
-    [SerializeField]private TextType textType;
+    [Header("Ultraleap Hands")]
+    public HandModelBase leftHand;
+    public HandModelBase rightHand;
 
+    [SerializeField] private TextType textType;
+
+    //Variables
     private AudioSource audioSource;
     private AppleHapticsController appleHaptics;
     private Rigidbody rb;
@@ -42,6 +50,8 @@ public class Apple : MonoBehaviour
     private float originalMaxLinearVelocity;
 
     private bool bitten = false;
+    private Transform appleOwner;
+    public bool isGrabbed;
 
     public bool StillAttachedToTree => rb != null && rb.constraints == RigidbodyConstraints.FreezeAll;
 
@@ -88,10 +98,17 @@ public class Apple : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!appleHaptics.isDropping) 
+        if (!appleHaptics.isDropping)
         {
             StartCoroutine(appleHaptics.DropHaptics());
             StartCoroutine(ReduceVelocityOnContact());
+            //Check if we're colliding with the palm and set our owner to the palm if so
+            if (other.TryGetComponent(out HardContactBone contactBone)
+                && other.TryGetComponent(out BoxCollider palmCollider)
+                && !isGrabbed)
+            {
+                appleOwner = other.transform;
+            }
         }
 
         if (other.gameObject.tag == "MainCamera" && !appleHaptics.isBiting && !StillAttachedToTree)
@@ -101,6 +118,45 @@ public class Apple : MonoBehaviour
         }
     }
 
+    public void OnPhysicalHandContact(ContactHand hand, Rigidbody rb)
+    {
+        if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
+        if (!isGrabbed && appleOwner == null)
+        {
+            appleOwner = hand.transform;
+            Debug.Log("Hitting hand, with no owner assigned, assigning owner to: " + hand.transform.gameObject.name);
+            if (hand.Handedness == Chirality.Left)
+            {
+                leftHand.OnFinish += FreezeApple;
+                leftHand.OnBegin += UnfreezeApple;
+            }
+            else
+            {
+                rightHand.OnFinish += FreezeApple;
+                rightHand.OnBegin += UnfreezeApple;
+            }
+        }
+    }
+
+    public void OnPhysicalHandContactExit(ContactHand hand, Rigidbody rb)
+    {
+        if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
+        if (appleOwner == hand.transform)
+        {
+            Debug.Log("No longer hitting hand, removing owner");
+            appleOwner = null;
+            if (hand.Handedness == Chirality.Left)
+            {
+                leftHand.OnFinish -= FreezeApple;
+                leftHand.OnBegin -= UnfreezeApple;
+            }
+            else
+            {
+                rightHand.OnFinish -= FreezeApple;
+                rightHand.OnBegin -= UnfreezeApple;
+            }
+        }
+    }
     private IEnumerator ReduceVelocityOnContact()
     {
         rb.velocity = Vector3.zero;
@@ -110,6 +166,16 @@ public class Apple : MonoBehaviour
         rb.maxLinearVelocity = originalMaxLinearVelocity;
     }
 
+    public void FreezeApple()
+    {
+        Debug.Log("Freezing apple");
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+    public void UnfreezeApple()
+    {
+        Debug.Log("Unfreezing apple");
+        rb.constraints = RigidbodyConstraints.None;
+    }
     public void ResetLinearVelocity()
     {
         panelDisplay.SetActive(true);
