@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.017319579, g: 0.0077353213, b: 0.016088448, a: 1}
+  m_IndirectSpecularColor: {r: 0.017460348, g: 0.0078009134, b: 0.016215762, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -668,6 +668,7 @@ GameObject:
   - component: {fileID: 345578668}
   - component: {fileID: 345578667}
   - component: {fileID: 345578666}
+  - component: {fileID: 345578669}
   m_Layer: 8
   m_Name: WristPromptCanvas
   m_TagString: Untagged
@@ -758,6 +759,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &345578669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345578664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca0af6d222b76941aba32750daa52b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHead: {fileID: 0}
+  DistanceFromFace: 1
+  SpeedScalingPower: 4
+  MinSpeed: 1.5
+  UnlockDotProduct: 0.85
+  RelockDotProduct: 0.98
 --- !u!1 &412477368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,6 +1147,41 @@ PrefabInstance:
       propertyPath: playerHead
       value: 
       objectReference: {fileID: 1769815828}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 345578664}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968000100619176724, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: onMenuActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3968000100619176746, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
         type: 3}
       propertyPath: m_Name
@@ -8299,7 +8353,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823490808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15300012}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.037011676, y: 0.03701167, z: 0.037011676}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8307,7 +8361,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -549.0152, y: -310.90698}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &1823490810

@@ -29,11 +29,13 @@ public class FollowGaze : MonoBehaviour
     public void SetActive(bool active)
     {
         this.gameObject.SetActive(active);
-        if (active) {
-            this.transform.position = DefaultMenuPosition;
-            Locked = true;
-            OrientToFaceUser();
-        }
+    }
+
+    private void OnEnable()
+    {
+        this.transform.position = DefaultMenuPosition;
+        Locked = true;
+        OrientToFaceUser();
     }
 
     private void OrientToFaceUser()

@@ -2,6 +2,7 @@ using Maestro;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MenuToggle : MonoBehaviour
 {
@@ -37,15 +38,14 @@ public class MenuToggle : MonoBehaviour
     private MaestroInteractable interactable;
     private WristMaterialChange wristMaterialChange;
 
+    public UnityEvent onMenuActivate;
+
     // Start is called before the first frame update
     void Start()
     {
         demoMenu.transform.parent = null; // detach from hand
         demoMenu.SetActive(false);
         this.TryGetComponent<WristMaterialChange>(out wristMaterialChange);
-    }
-    private void Update()
-    {
     }
 
     public void ToggleObject()
@@ -57,6 +57,8 @@ public class MenuToggle : MonoBehaviour
             materialGrabber?.RemoveGhostShader();
         else
             materialGrabber?.ApplyGhostShader();
+
+        onMenuActivate?.Invoke();
     }
 
     public void Register(FingerCollider fc)
