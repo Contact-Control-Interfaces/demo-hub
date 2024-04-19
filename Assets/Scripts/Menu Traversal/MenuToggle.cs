@@ -36,7 +36,6 @@ public class MenuToggle : MonoBehaviour
     protected int CurrentlyColliding = 0;
 
     private MaestroInteractable interactable;
-    private WristMaterialChange wristMaterialChange;
 
     public UnityEvent onMenuActivate;
 
@@ -45,7 +44,6 @@ public class MenuToggle : MonoBehaviour
     {
         demoMenu.transform.parent = null; // detach from hand
         demoMenu.SetActive(false);
-        this.TryGetComponent<WristMaterialChange>(out wristMaterialChange);
     }
 
     public void ToggleObject()
@@ -106,11 +104,6 @@ public class MenuToggle : MonoBehaviour
         timePressed = Time.time;
         fillNum = emptyNum;
         timeOn = true;
-
-        if (wristMaterialChange != null)
-        {
-            wristMaterialChange.MaterialChange(buttonMaterial, buttonRender);
-        }
         if (CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);

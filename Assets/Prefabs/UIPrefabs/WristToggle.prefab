@@ -179,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e958e0355bccac642b99653fc08ef591, type: 2}
+  - {fileID: 2100000, guid: 25db95462d5394b4c814033dff8c9de0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -316,7 +316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3968000100619176747}
   - component: {fileID: 3968000100619176724}
-  - component: {fileID: 1036427614}
   - component: {fileID: 8631052934102306963}
   m_Layer: 12
   m_Name: WristToggle
@@ -324,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3968000100619176747
 Transform:
   m_ObjectHideFlags: 0
@@ -363,19 +362,21 @@ MonoBehaviour:
   buttonRender: {fileID: 3112113766061343961}
   pressButton: {fileID: 4649444460638752651}
   menuAudio: {fileID: 8631052934102306963}
---- !u!114 &1036427614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968000100619176746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91473711d391e2444a733d6724bfa713, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPresses: 0
+  onMenuActivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &8631052934102306963
 AudioSource:
   m_ObjectHideFlags: 0
