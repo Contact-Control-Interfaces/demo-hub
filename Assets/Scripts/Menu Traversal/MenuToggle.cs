@@ -10,13 +10,7 @@ public class MenuToggle : MonoBehaviour
 
     [Header("Menu Details")]
     public Transform playerHead;
-    public GameObject demoMenu;
-    public float spawnDistance;
-    public float menuSpeed = 0.1f;
-    [Range(0f, 1f)]
-    public float unlockDotProduct = 0.75f;
-    [Range(0f, 1f)]
-    public float relockDotProduct = 0.95f;
+    public FollowGaze demoMenu;
 
     public GrabMaterials materialGrabber;
 
@@ -43,9 +37,6 @@ public class MenuToggle : MonoBehaviour
     private MaestroInteractable interactable;
     private WristMaterialChange wristMaterialChange;
 
-    private bool menuLocked = true;
-    private Vector3 DefaultMenuPosition => playerHead.position + new Vector3(playerHead.forward.x, 0, playerHead.forward.z).normalized * spawnDistance;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -55,52 +46,17 @@ public class MenuToggle : MonoBehaviour
     }
     private void Update()
     {
-        float dot = GetMenuDotProduct();
-
-        Debug.Log(dot);
-
-        if (menuLocked) {
-            if (dot < unlockDotProduct)
-                menuLocked = false;
-        } else {
-            if (dot > relockDotProduct)
-                menuLocked = true;
-
-            UpdateMenuPosition(dot);
-        }
-    }
-
-    private float GetMenuDotProduct()
-    {
-        return Vector3.Dot(demoMenu.transform.forward, playerHead.forward);
-    }
-
-    private void UpdateMenuPosition(float dotProduct)
-    {
-        float dotDifference = Mathf.Max(unlockDotProduct - dotProduct, 0); // how turned away from the locked range we are
-        Vector3 newPosition = Vector3.MoveTowards(demoMenu.transform.position, DefaultMenuPosition, Time.deltaTime * Mathf.Pow(1 + dotDifference, 4) * menuSpeed);
-        demoMenu.transform.position = playerHead.position + spawnDistance * (newPosition - playerHead.position).normalized;
-        demoMenu.transform.LookAt(playerHead.position);
-        demoMenu.transform.forward *= -1;
     }
 
     public void ToggleObject()
     {
-        demoMenu.transform.position = DefaultMenuPosition;
-        demoMenu.SetActive(!demoMenu.activeSelf);
+        demoMenu.Toggle();
         menuAudio.Play();
 
-        if (materialGrabber != null)
-        {
-            if (!demoMenu.activeSelf)
-            {
-                materialGrabber.RemoveGhostShader();
-            }
-            else
-            {
-                materialGrabber.ApplyGhostShader();
-            }
-        }
+        if (!demoMenu.Active)
+            materialGrabber?.RemoveGhostShader();
+        else
+            materialGrabber?.ApplyGhostShader();
     }
 
     public void Register(FingerCollider fc)
