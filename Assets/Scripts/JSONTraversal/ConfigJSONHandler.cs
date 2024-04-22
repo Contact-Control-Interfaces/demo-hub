@@ -33,7 +33,6 @@ public class ConfigJSONHandler : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -48,7 +47,7 @@ public class ConfigJSONHandler : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Start Zone")
         {
             ReadConfig();
-            SceneManager.LoadScene(configData.StartScene);
+            SceneManager.LoadScene(configData.StartingScene);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
     }
@@ -73,12 +72,23 @@ public class ConfigJSONHandler : MonoBehaviour
         {
             configData = DemoConfiguration.CreateFromJSON(File.ReadAllText(configLocation));
         }
+        else
+        {
+            PopulateConfig();
+        }
+    }
+
+    public void PopulateConfig()
+    {
+        Debug.Log("No Config Found, Load Temp Values");
+        configData.StartingScene = "AppleTree";
+        configData.DemoScenes = new List<string> { "InteractionPanel", "Paint", "Shapes", "VibrationOrbs", "AppleTree" };
+        configData.IsSingleHand = false;
     }
 
     public void GenerateDynamic()
     {
-        
-        var avaliableDemo = context.Keys.Intersect(configData.Scenes).ToDictionary(x => x, x => context[x]);
+        var avaliableDemo = context.Keys.Intersect(configData.DemoScenes).ToDictionary(x => x, x => context[x]);
 
         foreach (var demo in avaliableDemo )
         {
