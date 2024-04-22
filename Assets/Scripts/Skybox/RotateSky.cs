@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class RotateSky : MonoBehaviour
