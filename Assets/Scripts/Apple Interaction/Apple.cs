@@ -45,6 +45,7 @@ public class Apple : MonoBehaviour
     private AppleHapticsController appleHaptics;
     private Rigidbody rb;
     private AppleDrop appleDrop;
+    private ReturnToSpawn returnToSpawn;
     public Renderer renderer { get; private set; }
     private Quaternion originalRotation;
     private float originalMaxLinearVelocity;
@@ -58,7 +59,8 @@ public class Apple : MonoBehaviour
     private void Start()
     {
         panelDisplay.SetActive(false);
-
+        returnToSpawn = GetComponent<ReturnToSpawn>();
+        returnToSpawn.OnColliderReset += ResetApple;
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         appleHaptics = GetComponent<AppleHapticsController>();
@@ -74,11 +76,6 @@ public class Apple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Pluck();
-        }
-
-        if (transform.position.y <= resetHeight && !bitten)
-        {
-            ResetApple();
         }
     }
 
@@ -210,8 +207,8 @@ public class Apple : MonoBehaviour
 
     public void ResetApple()
     {
+        if (bitten) return; //Don't reset the apple if its already bitten
         transform.SetParent(null);
-        GetComponent<ReturnToSpawn>().Poof();
 
         renderer.material = hologramGlow;
         rb.drag = 0f;
