@@ -117,6 +117,8 @@ public class Apple : MonoBehaviour
 
     public void OnPhysicalHandContact(ContactHand hand, Rigidbody rb)
     {
+        return;
+
         if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
         if (!isGrabbed && appleOwner == null)
         {
@@ -137,6 +139,8 @@ public class Apple : MonoBehaviour
 
     public void OnPhysicalHandContactExit(ContactHand hand, Rigidbody rb)
     {
+        return;
+
         if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
         if (appleOwner == hand.transform)
         {
