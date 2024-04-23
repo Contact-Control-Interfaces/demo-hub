@@ -7,8 +7,8 @@ using UnityEngine;
 public class DemoConfiguration
 {
     public bool? IsSingleHand;
-    public List<string> DemoScenes;
-    public string StartingScene;
+    public List<string> Scenes;
+    public string StartScene;
 
     public static DemoConfiguration CreateFromJSON(string configJson)
     {

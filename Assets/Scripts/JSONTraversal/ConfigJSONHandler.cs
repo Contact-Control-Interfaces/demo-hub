@@ -47,7 +47,7 @@ public class ConfigJSONHandler : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Start Zone")
         {
             ReadConfig();
-            SceneManager.LoadScene(configData.StartingScene);
+            SceneManager.LoadScene(configData.StartScene);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
     }
@@ -81,14 +81,14 @@ public class ConfigJSONHandler : MonoBehaviour
     public void PopulateConfig()
     {
         Debug.Log("No Config Found, Load Temp Values");
-        configData.StartingScene = "AppleTree";
-        configData.DemoScenes = new List<string> { "InteractionPanel", "Paint", "Shapes", "VibrationOrbs", "AppleTree" };
+        configData.StartScene = "AppleTree";
+        configData.Scenes = new List<string> { "InteractionPanel", "Paint", "Shapes", "VibrationOrbs", "AppleTree" };
         configData.IsSingleHand = false;
     }
 
     public void GenerateDynamic()
     {
-        var avaliableDemo = context.Keys.Intersect(configData.DemoScenes).ToDictionary(x => x, x => context[x]);
+        var avaliableDemo = context.Keys.Intersect(configData.Scenes).ToDictionary(x => x, x => context[x]);
 
         foreach (var demo in avaliableDemo )
         {
