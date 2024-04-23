@@ -55,14 +55,14 @@ namespace Maestro
             switch (demoMode)
             {
                 case DemoMode.OneGlove:
-                    if (MaestroGloveConnector.Instance.isLeftConnected() || MaestroGloveConnector.Instance.isRightConnected())
+                    if (MaestroSessionManager.Instance.IsLeftDeviceConnected() || MaestroSessionManager.Instance.IsRightDeviceConnected())
                     {
                         ActivateTree(tree);
                     }
                     break;
 
                 case DemoMode.TwoGlove:
-                    if (MaestroGloveConnector.Instance.isLeftConnected() && MaestroGloveConnector.Instance.isRightConnected())
+                    if (MaestroSessionManager.Instance.IsLeftDeviceConnected() && MaestroSessionManager.Instance.IsRightDeviceConnected())
                     {
                         ActivateTree(tree);
                     }
