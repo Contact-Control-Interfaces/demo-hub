@@ -39,13 +39,6 @@ public class MenuToggle : MonoBehaviour
 
     public UnityEvent onMenuActivate;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        demoMenu.transform.parent = null; // detach from hand
-        demoMenu.SetActive(false);
-    }
-
     public void ToggleObject()
     {
         demoMenu.Toggle();
