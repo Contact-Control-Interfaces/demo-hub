@@ -39,6 +39,11 @@ public class MenuToggle : MonoBehaviour
 
     public UnityEvent onMenuActivate;
 
+    private void Start()
+    {
+        demoMenu.transform.parent = null; // detach from hand
+    }
+
     public void ToggleObject()
     {
         demoMenu.Toggle();
