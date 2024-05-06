@@ -29,6 +29,12 @@ public class FollowGaze : MonoBehaviour
     public void SetActive(bool active)
     {
         this.gameObject.SetActive(active);
+        if (active)
+        {
+            transform.parent = null;
+            if (playerHead == null)
+                playerHead = Camera.main.transform;
+        }
     }
 
     private void OnEnable()

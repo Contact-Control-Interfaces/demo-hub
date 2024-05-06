@@ -21,7 +21,7 @@ public class Apple : MonoBehaviour
 
     [Header("Effected Objects")]
     public GameObject panelDisplay;
-    public GameObject wristDisplay;
+    public FollowGaze wristDisplay;
     public GameObject tree;
     public GameObject touchTrigger;
     public AudioClipSettings biteSoundSettings;
@@ -79,13 +79,15 @@ public class Apple : MonoBehaviour
         }
     }
 
+    //Called in BloomManager in events
     public void OnFullBloom()
     {
-        wristDisplay.SetActive(true);
+        wristDisplay.Toggle();
         panelDisplay.SetActive(true);
         tree.SetActive(false);
     }
 
+    //Called in BloomManager in events
     public void OnBloomEnd()
     {
         gameObject.SetActive(false);
@@ -115,49 +117,6 @@ public class Apple : MonoBehaviour
         }
     }
 
-    public void OnPhysicalHandContact(ContactHand hand, Rigidbody rb)
-    {
-        return;
-
-        if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
-        if (!isGrabbed && appleOwner == null)
-        {
-            appleOwner = hand.transform;
-            Debug.Log("Hitting hand, with no owner assigned, assigning owner to: " + hand.transform.gameObject.name);
-            if (hand.Handedness == Chirality.Left)
-            {
-                leftHand.OnFinish += FreezeApple;
-                leftHand.OnBegin += UnfreezeApple;
-            }
-            else
-            {
-                rightHand.OnFinish += FreezeApple;
-                rightHand.OnBegin += UnfreezeApple;
-            }
-        }
-    }
-
-    public void OnPhysicalHandContactExit(ContactHand hand, Rigidbody rb)
-    {
-        return;
-
-        if (rb != this.rb) return; //Exit if this is the wrong Rigidbody
-        if (appleOwner == hand.transform)
-        {
-            Debug.Log("No longer hitting hand, removing owner");
-            appleOwner = null;
-            if (hand.Handedness == Chirality.Left)
-            {
-                leftHand.OnFinish -= FreezeApple;
-                leftHand.OnBegin -= UnfreezeApple;
-            }
-            else
-            {
-                rightHand.OnFinish -= FreezeApple;
-                rightHand.OnBegin -= UnfreezeApple;
-            }
-        }
-    }
     private IEnumerator ReduceVelocityOnContact()
     {
         rb.velocity = Vector3.zero;
@@ -176,17 +135,6 @@ public class Apple : MonoBehaviour
     {
         Debug.Log("Unfreezing apple");
         rb.constraints = RigidbodyConstraints.None;
-    }
-    public void ResetLinearVelocity()
-    {
-        panelDisplay.SetActive(true);
-        wristDisplay.SetActive(true);
-    }
-
-    void TreeDisable()
-    {
-        tree.SetActive(false);
-        rb.maxLinearVelocity = originalMaxLinearVelocity;
     }
 
     public void Pluck()
