@@ -65,6 +65,7 @@ public class GrabMaterials : MonoBehaviour
 
     public void CameraToggle()
     {
-        otherCamera?.SetActive(!otherCamera.activeSelf);
+        if (otherCamera != null)
+            otherCamera.SetActive(!otherCamera.activeSelf);
     }
 }
