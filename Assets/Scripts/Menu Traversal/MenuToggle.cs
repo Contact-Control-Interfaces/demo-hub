@@ -1,6 +1,5 @@
 using Maestro;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,7 +28,6 @@ public class MenuToggle : MonoBehaviour
     private float fillNum = 0;
 
     protected Coroutine CurrentCoroutine = null;
-    private bool timeOn;
     private float timePressed;
     float elapsedTime;
 
@@ -38,6 +36,7 @@ public class MenuToggle : MonoBehaviour
     private MaestroInteractable interactable;
 
     public UnityEvent onMenuActivate;
+    public UnityEvent onMenuDeactivate;
 
     private void Start()
     {
@@ -46,7 +45,6 @@ public class MenuToggle : MonoBehaviour
 
     public void ToggleObject()
     {
-        demoMenu.Toggle();
         menuAudio.Play();
 
         if (!demoMenu.Active)
@@ -54,7 +52,10 @@ public class MenuToggle : MonoBehaviour
         else
             materialGrabber?.ApplyGhostShader();
 
-        onMenuActivate?.Invoke();
+        if (!demoMenu.Active)
+            onMenuActivate?.Invoke();
+        else
+            onMenuDeactivate?.Invoke();
     }
 
     public void Register(FingerCollider fc)
@@ -101,7 +102,6 @@ public class MenuToggle : MonoBehaviour
     {
         timePressed = Time.time;
         fillNum = emptyNum;
-        timeOn = true;
         if (CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);
@@ -115,7 +115,6 @@ public class MenuToggle : MonoBehaviour
     {
         fillNum = emptyNum;
         buttonMaterial.SetFloat("FillRate", emptyNum);
-        timeOn = false;
         if (CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);
