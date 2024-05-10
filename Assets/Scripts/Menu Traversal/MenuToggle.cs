@@ -48,9 +48,9 @@ public class MenuToggle : MonoBehaviour
         menuAudio.Play();
 
         if (!demoMenu.Active)
-            materialGrabber?.RemoveGhostShader();
-        else
             materialGrabber?.ApplyGhostShader();
+        else
+            materialGrabber?.RemoveGhostShader();
 
         if (!demoMenu.Active)
             onMenuActivate?.Invoke();
