@@ -1896,7 +1896,7 @@ Transform:
   m_GameObject: {fileID: 476917096}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.06539383, z: 0}
+  m_LocalPosition: {x: 0, y: 0.0621, z: 0}
   m_LocalScale: {x: 0.2624999, y: 0.105, z: 0.2624999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8334,7 +8334,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0002250681, y: 0.21320477, z: 0.009926439}
+  m_ConnectedAnchor: {x: 0.00022506728, y: 0.21320477, z: 0.0013761522}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 1
@@ -9425,7 +9425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59587788015a88c45a4db1522815bca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherCamera: {fileID: 1862660603}
+  otherCamera: {fileID: 0}
   Interactables: []
   colliders: []
   ghostShader: {fileID: 2100000, guid: 1bdadc654bae7b94db5e836640ddff8f, type: 2}
@@ -13017,6 +13017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3960838150950570148, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9739429
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960838150950570148, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.17725909
       objectReference: {fileID: 0}
@@ -13447,6 +13452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4595769933915641173, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595769933915641173, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.0000000026193447
       objectReference: {fileID: 0}
@@ -13582,6 +13592,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4595769933915641197, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7015485
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595769933915641197, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.28813463
       objectReference: {fileID: 0}
@@ -13664,6 +13679,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.0000000037252903
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595769933915641205, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4595769933915641205, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
@@ -13793,12 +13813,6 @@ Transform:
 --- !u!20 &1862660602 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4092569105294036984, guid: c70af90bcf1320e4991649fcd71a0c59,
-    type: 3}
-  m_PrefabInstance: {fileID: 1862660600}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1862660603 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5160679113516480790, guid: c70af90bcf1320e4991649fcd71a0c59,
     type: 3}
   m_PrefabInstance: {fileID: 1862660600}
   m_PrefabAsset: {fileID: 0}
@@ -16486,7 +16500,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0002250667, y: 0.211475, z: -0.0039346223}
+  m_ConnectedAnchor: {x: 0.0002250653, y: 0.211475, z: -0.012484791}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
