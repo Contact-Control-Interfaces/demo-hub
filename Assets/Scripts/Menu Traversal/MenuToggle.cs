@@ -1,5 +1,6 @@
 using Maestro;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ public class MenuToggle : MonoBehaviour
     [Header("Menu Details")]
     public Transform playerHead;
     public FollowGaze demoMenu;
+    public TextMeshPro holdText;
 
     public GrabMaterials materialGrabber;
 
@@ -119,6 +121,7 @@ public class MenuToggle : MonoBehaviour
         {
             StopCoroutine(CurrentCoroutine);
             CurrentCoroutine = null;
+            holdText.gameObject.SetActive(false);
         }
         ResetDisplay();
     }
@@ -136,6 +139,7 @@ public class MenuToggle : MonoBehaviour
         {
             ShaderValueUp();
             yield return new WaitForSeconds(.01f);
+            holdText.gameObject.SetActive(true);
         }
         while (elapsedTime < pressLength);
 
@@ -145,6 +149,7 @@ public class MenuToggle : MonoBehaviour
     public void OnEnd()
     {
         buttonMaterial.SetFloat("FillRate", emptyNum);
+        holdText.gameObject.SetActive(true);
         ToggleObject();
     }
 
