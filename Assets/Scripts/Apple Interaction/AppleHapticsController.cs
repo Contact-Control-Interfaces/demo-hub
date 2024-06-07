@@ -14,7 +14,7 @@ public class AppleHapticsController : MonoBehaviour
     public float BiteDuration { get => secondBiteDuration + eachBiteDuration; }
 
     [Header("Haptic Effects")]
-    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = new SoftBump(WideThreeOptions._100) { OneShot = true } };
+    public HapticEffect DropEffect = new HapticEffect() { Amplitude = 255, Vibration = {Effect = new SoftBump(WideThreeOptions._100) { OneShot = true } } };
     public float DropEffectDuration = 500; //ms
 
     public bool isDropping { get; private set; }
@@ -27,16 +27,16 @@ public class AppleHapticsController : MonoBehaviour
         interactable.SendHapticsToWholeHand = true;
 
         yield return new WaitForSeconds(firstBiteDuration);
-        interactable.stayHaptics.Vibration = new SharpTick(NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
+        interactable.StayHaptics.Vibration.Effect = new SharpTick(NarrowThreeOptions._100);
+        interactable.StayHaptics.Vibration.Effect.OneShot = true;
         yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
+        interactable.StayHaptics.Vibration.Effect = VibrationEffect.None;
 
         yield return new WaitForSeconds(secondBiteDuration - (firstBiteDuration + eachBiteDuration));
-        interactable.stayHaptics.Vibration = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
-        interactable.stayHaptics.Vibration.OneShot = true;
+        interactable.StayHaptics.Vibration.Effect = new DoubleSharpTick(TickDuration.Short, NarrowThreeOptions._100);
+        interactable.StayHaptics.Vibration.Effect.OneShot = true;
         yield return new WaitForSeconds(eachBiteDuration);
-        interactable.stayHaptics.Vibration = VibrationEffect.None;
+        interactable.StayHaptics.Vibration.Effect = VibrationEffect.None;
 
         interactable.SendHapticsToWholeHand = false;
         isBiting = false;

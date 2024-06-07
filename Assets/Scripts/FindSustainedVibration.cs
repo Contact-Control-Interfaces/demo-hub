@@ -25,6 +25,6 @@ public class FindSustainedVibration : MonoBehaviour
     private MaestroInteractable[] SearchScene()
     {
         MaestroInteractable[] interactables = GameObject.FindObjectsOfType<MaestroInteractable>();
-        return interactables.Where(x => x.stayHaptics.Vibration != null && x.stayHaptics.Vibration.Value != 0).ToArray();
+        return interactables.Where(x => x.StayHaptics.Vibration != null && x.StayHaptics.Vibration.Effect.Value != 0).ToArray();
     }
 }
