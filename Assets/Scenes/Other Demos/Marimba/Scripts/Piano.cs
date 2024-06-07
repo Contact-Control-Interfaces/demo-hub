@@ -31,8 +31,8 @@ public class Piano : MonoBehaviour
         source.clip = null;
 
         var interactable = toBreak.GetComponent<MaestroInteractable>();
-        HapticEffect nothing = new HapticEffect() { Amplitude = 0, Vibration = VibrationEffect.None };
-        interactable.startHaptics = nothing;
-        interactable.stayHaptics = nothing;
+        HapticEffect nothing = new HapticEffect() { Amplitude = 0, Vibration = {Effect = VibrationEffect.None } };
+        interactable.StartHaptics = nothing;
+        interactable.StayHaptics = nothing;
     }
 }
