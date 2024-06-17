@@ -60,7 +60,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 1000
+      effect:
+        rid: 1746260163119808517
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -103,7 +105,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1000
+    - rid: 1746260163119808517
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -112,8 +114,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 5
         options:
-          rid: 1001
-    - rid: 1001
+          rid: 1746260163119808518
+    - rid: 1746260163119808518
       type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 5
@@ -749,18 +751,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
+      effect:
+        rid: 1746260163119808514
+      amplitude: -1
+  StayHaptics:
     Amplitude: 115
     Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1746260163119808515
+      amplitude: -1
+  ExitHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260163119808516
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -771,7 +779,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260163119808514
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -780,8 +788,8 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 1
         options:
-          rid: 3
-    - rid: 1
+          rid: 1746260163119808535
+    - rid: 1746260163119808515
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -791,7 +799,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260163119808516
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 1
@@ -800,13 +808,13 @@ MonoBehaviour:
         RepeatDelay: 0
         WhichType: 15
         options:
-          rid: 5
-    - rid: 3
+          rid: 1746260163119808569
+    - rid: 1746260163119808535
       type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 1
         strength: 7
-    - rid: 5
+    - rid: 1746260163119808569
       type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         Type: 15
