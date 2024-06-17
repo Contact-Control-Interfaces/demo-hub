@@ -183,7 +183,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 255
     Vibration:
-      rid: 0
+      effect:
+        rid: 1746260162601287683
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -202,18 +204,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287683
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1746260162601287684
+    - rid: 1746260162601287684
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &114292503
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +278,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 102
     Vibration:
-      rid: 0
+      effect:
+        rid: 1746260162601287698
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -292,18 +299,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287698
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1746260162601287699
+    - rid: 1746260162601287699
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &117698368
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +948,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 204
     Vibration:
-      rid: 0
+      effect:
+        rid: 1746260162601287688
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -957,18 +969,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287688
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1746260162601287689
+    - rid: 1746260162601287689
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1001 &288529770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1179,18 +1194,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
-    Amplitude: 0
+  StartHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287680
+      amplitude: -1
+  StayHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 1
-  exitHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287681
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260162601287682
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -1201,7 +1222,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287680
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1211,7 +1232,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1
+    - rid: 1746260162601287681
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1221,7 +1242,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260162601287682
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1509,7 +1530,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 153
     Vibration:
-      rid: 0
+      effect:
+        rid: 1746260162601287693
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -1528,18 +1551,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287693
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1746260162601287694
+    - rid: 1746260162601287694
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!1 &514748769
 GameObject:
   m_ObjectHideFlags: 0
@@ -6442,18 +6468,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
-    Amplitude: 0
+  StartHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287690
+      amplitude: -1
+  StayHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 1
-  exitHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287691
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260162601287692
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -6464,7 +6496,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287690
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -6474,7 +6506,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1
+    - rid: 1746260162601287691
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -6484,7 +6516,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260162601287692
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -6729,18 +6761,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
-    Amplitude: 0
+  StartHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287685
+      amplitude: -1
+  StayHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 1
-  exitHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287686
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260162601287687
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -6751,7 +6789,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287685
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -6761,7 +6799,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1
+    - rid: 1746260162601287686
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -6771,7 +6809,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260162601287687
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -7082,18 +7120,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
-    Amplitude: 0
+  StartHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287695
+      amplitude: -1
+  StayHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 1
-  exitHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287696
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260162601287697
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -7104,7 +7148,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287695
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -7114,7 +7158,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1
+    - rid: 1746260162601287696
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -7124,7 +7168,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260162601287697
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -7999,135 +8043,6 @@ Transform:
   - {fileID: 202874456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1001 &1924098093
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1938174504}
-    m_Modifications:
-    - target: {fileID: 6595962176856495707, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_Name
-      value: Timer Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 459d02110c432bd4492d91707a3e4992, type: 3}
---- !u!224 &1924098094 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6595962176856495711, guid: 459d02110c432bd4492d91707a3e4992,
-    type: 3}
-  m_PrefabInstance: {fileID: 1924098093}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1934461680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8265,7 +8180,6 @@ Transform:
   - {fileID: 1934461681}
   - {fileID: 288529771}
   - {fileID: 1997513344}
-  - {fileID: 1924098094}
   - {fileID: 455827889400209489}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8765,7 +8679,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 0
     Vibration:
-      rid: 0
+      effect:
+        rid: 1746260162601287703
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -8784,18 +8700,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287703
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 0
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1746260162601287704
+    - rid: 1746260162601287704
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!4 &2929785896244510005
 Transform:
   m_ObjectHideFlags: 0
@@ -8946,18 +8865,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
-    Amplitude: 0
+  StartHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287700
+      amplitude: -1
+  StayHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 1
-  exitHaptics:
-    Amplitude: 0
+      effect:
+        rid: 1746260162601287701
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1746260162601287702
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -8968,7 +8893,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1746260162601287700
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -8978,7 +8903,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 1
+    - rid: 1746260162601287701
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -8988,7 +8913,7 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1746260162601287702
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
