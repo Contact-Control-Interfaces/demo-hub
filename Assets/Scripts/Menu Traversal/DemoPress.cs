@@ -16,6 +16,7 @@ public class DemoPress : MonoBehaviour
     public Image demoImageHolder;
     public Material buttonMaterial;
     public GameObject pressButton;
+    private Material currentMaterial;
 
     //value for the fill shader to not fill the button
     private float emptyNum = -.0012f;
@@ -38,7 +39,7 @@ public class DemoPress : MonoBehaviour
     {
         demoImageHolder.sprite = demoSprite;
         pressButton.GetComponent<Renderer>().material = buttonMaterial;
-        buttonMaterial.SetFloat("FillRate", emptyNum);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
         sceneFade = FindObjectOfType<SceneFade>();
     }
 
@@ -104,7 +105,6 @@ public class DemoPress : MonoBehaviour
     public void StartTime()
     {
         timePressed = Time.time;
-
         fillNum = emptyNum;
         timeOn = true;
         if (CurrentCoroutine != null)
@@ -120,7 +120,7 @@ public class DemoPress : MonoBehaviour
     public void StopTime()
     {
         fillNum = emptyNum;
-        buttonMaterial.SetFloat("FillRate", emptyNum);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
         timeOn = false;
         if (CurrentCoroutine != null)
         {
@@ -135,7 +135,7 @@ public class DemoPress : MonoBehaviour
     {
         elapsedTime = Time.time - timePressed;
         fillNum = Mathf.Lerp(emptyNum, fullNum, elapsedTime / pressLength);
-        buttonMaterial.SetFloat("FillRate", fillNum);
+        GrabButtonMaterial().SetFloat("FillRate", fillNum);
     }
 
     private IEnumerator UpdateTimer()
@@ -154,7 +154,7 @@ public class DemoPress : MonoBehaviour
 
     public void OnEnd()
     {
-        buttonMaterial.SetFloat("FillRate", emptyNum);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
         sceneFade.FadeToLevel(SceneName);
         holdText.gameObject.SetActive(true);
         holdText.text = "Done";
@@ -163,5 +163,10 @@ public class DemoPress : MonoBehaviour
     private void ResetDisplay()
     {
         fillNum = emptyNum;
+    }
+
+    private Material GrabButtonMaterial()
+    {
+        return pressButton.GetComponent<Renderer>().material;
     }
 }

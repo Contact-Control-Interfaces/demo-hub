@@ -23,8 +23,14 @@ public class DemoTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log("timer Here");
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         // Apple scene
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
         }
