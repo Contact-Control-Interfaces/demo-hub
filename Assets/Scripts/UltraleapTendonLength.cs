@@ -1,5 +1,5 @@
 using Leap.Unity;
-using Leap.Unity.Interaction.PhysicsHands;
+using Leap.Unity.PhysicalHands;
 using Maestro;
 using System;
 using System.Linq;
@@ -11,7 +11,7 @@ public class UltraleapTendonLength : TendonLength
     public float MaxRotationDegrees = 90f;
 
     private HandModelBase provider;
-    private PhysicsHand physicsHand;
+    private PhysicalHandsManager physicsHandManager;
 
     private Leap.Hand physicsLeapHand;
     private Leap.Hand realLeapHand;
@@ -65,8 +65,8 @@ public class UltraleapTendonLength : TendonLength
         if (provider == null)
             provider = this.GetComponentInParent<HandModelBase>();
 
-        if (provider != null && physicsHand == null)
-            physicsHand = FindObjectsOfType<PhysicsHand>().Where(x => x.Handedness == provider.Handedness).FirstOrDefault();
+        if (provider != null && physicsHandManager == null)
+            physicsHandManager = FindObjectOfType<PhysicalHandsManager>();
 
         if (provider == null) {
             Debug.LogError($"No LeapProvider found on object [{this.gameObject.name}]! Disabling...");
@@ -83,8 +83,8 @@ public class UltraleapTendonLength : TendonLength
 
     protected void UpdateHandData()
     {
-        physicsLeapHand = physicsHand.GetLeapHand();
-        realLeapHand = physicsHand.GetOriginalLeapHand();
+        physicsLeapHand = physicsHandManager.GetHand(provider.Handedness);
+        realLeapHand = provider.GetLeapHand();
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
