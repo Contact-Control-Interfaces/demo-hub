@@ -1,13 +1,7 @@
-using Leap.Unity;
 using Maestro;
-using Maestro.Vibration;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DemoPress : MonoBehaviour
@@ -16,13 +10,13 @@ public class DemoPress : MonoBehaviour
     public float pressLength;
 
     [Header("Properties")]
-
     public string SceneName;
     public TextMeshProUGUI holdText;
     public Sprite demoSprite;
     public Image demoImageHolder;
     public Material buttonMaterial;
     public GameObject pressButton;
+    private Material currentMaterial;
 
     //value for the fill shader to not fill the button
     private float emptyNum = -.0012f;
@@ -30,7 +24,6 @@ public class DemoPress : MonoBehaviour
 
     //value being manipulated and filling the button
     private float fillNum = 0;
-
 
     private float timePressed;
     float elapsedTime;
@@ -40,17 +33,19 @@ public class DemoPress : MonoBehaviour
     protected Coroutine CurrentCoroutine = null;
     private MaestroInteractable interactable;
 
+    private SceneFade sceneFade;
 
     void Start()
     {
         demoImageHolder.sprite = demoSprite;
         pressButton.GetComponent<Renderer>().material = buttonMaterial;
-        buttonMaterial.SetFloat("FillRate", emptyNum);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
+        sceneFade = FindObjectOfType<SceneFade>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             StartTime();
         }
@@ -110,7 +105,6 @@ public class DemoPress : MonoBehaviour
     public void StartTime()
     {
         timePressed = Time.time;
-
         fillNum = emptyNum;
         timeOn = true;
         if (CurrentCoroutine != null)
@@ -120,13 +114,13 @@ public class DemoPress : MonoBehaviour
         }
 
         if (this.gameObject.activeInHierarchy)
-            CurrentCoroutine = StartCoroutine(UpdateTimer());  
+            CurrentCoroutine = StartCoroutine(UpdateTimer());
     }
 
     public void StopTime()
     {
         fillNum = emptyNum;
-        buttonMaterial.SetFloat("FillRate", emptyNum);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
         timeOn = false;
         if (CurrentCoroutine != null)
         {
@@ -140,8 +134,8 @@ public class DemoPress : MonoBehaviour
     private void ShaderValueUp()
     {
         elapsedTime = Time.time - timePressed;
-        fillNum = Mathf.Lerp(emptyNum, fullNum, elapsedTime/pressLength);
-        buttonMaterial.SetFloat("FillRate", fillNum);
+        fillNum = Mathf.Lerp(emptyNum, fullNum, elapsedTime / pressLength);
+        GrabButtonMaterial().SetFloat("FillRate", fillNum);
     }
 
     private IEnumerator UpdateTimer()
@@ -154,14 +148,14 @@ public class DemoPress : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
         while (elapsedTime < pressLength);
-       
-        SceneManager.LoadScene(SceneName);
+
+        sceneFade.FadeToLevel(SceneName);
     }
 
     public void OnEnd()
     {
-        buttonMaterial.SetFloat("FillRate", emptyNum);
-        SceneManager.LoadScene(SceneName);
+        GrabButtonMaterial().SetFloat("FillRate", emptyNum);
+        sceneFade.FadeToLevel(SceneName);
         holdText.gameObject.SetActive(true);
         holdText.text = "Done";
     }
@@ -169,5 +163,10 @@ public class DemoPress : MonoBehaviour
     private void ResetDisplay()
     {
         fillNum = emptyNum;
+    }
+
+    private Material GrabButtonMaterial()
+    {
+        return pressButton.GetComponent<Renderer>().material;
     }
 }

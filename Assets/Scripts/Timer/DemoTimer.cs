@@ -23,34 +23,38 @@ public class DemoTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Apple scene
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
+            Application.Quit();
+        }
+        // Apple scene
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("AppleTree");
         }
 
         // Interaction panel scene
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene("Shapes");
         }
 
         // Paint scene
         if (Input.GetKeyDown(KeyCode.X))
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("Paint");
         }
 
         // Shapes scene
         if (Input.GetKeyDown(KeyCode.C))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("InteractionPanel");
         }
 
         // Vibration scene
         if (Input.GetKeyDown(KeyCode.V))
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene("VibrationOrbs");
         }
 
         //1 Minute Override
