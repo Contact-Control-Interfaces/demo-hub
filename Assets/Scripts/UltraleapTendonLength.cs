@@ -12,6 +12,7 @@ public class UltraleapTendonLength : TendonLength
 
     private HandModelBase provider;
     private PhysicalHandsManager physicsHandManager;
+    private LeapXRServiceProvider serviceProvider;
 
     private Leap.Hand physicsLeapHand;
     private Leap.Hand realLeapHand;
@@ -65,6 +66,9 @@ public class UltraleapTendonLength : TendonLength
         if (provider == null)
             provider = this.GetComponentInParent<HandModelBase>();
 
+        if (serviceProvider == null)
+            serviceProvider = FindObjectOfType<LeapXRServiceProvider>();
+
         if (provider != null && physicsHandManager == null)
             physicsHandManager = FindObjectOfType<PhysicalHandsManager>();
 
@@ -84,7 +88,7 @@ public class UltraleapTendonLength : TendonLength
     protected void UpdateHandData()
     {
         physicsLeapHand = physicsHandManager.GetHand(provider.Handedness);
-        realLeapHand = provider.GetLeapHand();
+        realLeapHand = serviceProvider.GetHand(provider.Handedness);
     }
 
     private Chirality HandednessToChirality(WhichHand handedness)
