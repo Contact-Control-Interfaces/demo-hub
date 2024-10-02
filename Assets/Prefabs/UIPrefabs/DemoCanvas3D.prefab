@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1641620813732764593}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -168,7 +167,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5834505163975066155}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -300,6 +298,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310030844577601183}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -307,7 +306,6 @@ Transform:
   m_Children:
   - {fileID: 6337422464213309223}
   m_Father: {fileID: 5682271856961239863}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6539643747253689407
 Rigidbody:
@@ -316,10 +314,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310030844577601183}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -333,9 +342,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310030844577601183}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.25, y: 0.15, z: 0.3}
   m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &7120047977091026283
@@ -385,18 +402,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 115
-    Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1000
+      amplitude: -1
+  StayHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1001
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
+    Vibration:
+      effect:
+        rid: 1002
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -407,17 +430,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 1
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 1
-        options:
-          rid: 3
-    - rid: 1
+    - rid: 1000
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -427,26 +440,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1001
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 15
+        WhichType: 0
         options:
-          rid: 5
-    - rid: 3
-      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: -2
+    - rid: 1002
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 1
-        strength: 7
-    - rid: 5
-      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 15
-        strength: 2
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1 &1011872362723904203
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +489,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -514,7 +526,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -551,7 +562,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Select a Demo
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a6446991ef31ced4190c53c206cf4b3e, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -9221056233183343877, guid: a6446991ef31ced4190c53c206cf4b3e,
     type: 2}
   m_fontSharedMaterials: []
@@ -651,7 +662,6 @@ RectTransform:
   m_Children:
   - {fileID: 1615952653451048594}
   m_Father: {fileID: 4054122490584021835}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -722,6 +732,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886655401561799704}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -729,7 +740,6 @@ Transform:
   m_Children:
   - {fileID: 641286700502069377}
   m_Father: {fileID: 7406828416570177491}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &197950439285880787
 Rigidbody:
@@ -738,10 +748,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886655401561799704}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -755,9 +776,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886655401561799704}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.25, y: 0.15, z: 0.3}
   m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &4901527515587945714
@@ -807,18 +836,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 115
-    Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1000
+      amplitude: -1
+  StayHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1001
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
+    Vibration:
+      effect:
+        rid: 1002
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -829,17 +864,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 1
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 1
-        options:
-          rid: 3
-    - rid: 1
+    - rid: 1000
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -849,26 +874,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1001
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 15
+        WhichType: 0
         options:
-          rid: 5
-    - rid: 3
-      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: -2
+    - rid: 1002
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 1
-        strength: 7
-    - rid: 5
-      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 15
-        strength: 2
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1 &2732546245501089278
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +919,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2732546245501089278}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: -0.00000040899042, z: 0.00000046242891, w: 0.70710677}
   m_LocalPosition: {x: 136.2, y: 9.3, z: 0}
   m_LocalScale: {x: 139.03242, y: 1488.352, z: 139.03317}
@@ -902,7 +928,6 @@ Transform:
   - {fileID: 8139687104436949354}
   - {fileID: 88552976113114704}
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &6006737469085875447
 MonoBehaviour:
@@ -929,7 +954,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
+      effect:
+        rid: 1000
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -972,18 +999,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1000
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1001
+    - rid: 1001
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1991653128283502847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1064,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 346773411334048166}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1165,13 +1194,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3317953216600984223}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000020489091, z: 0.000000038184215, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 100, y: 100.00017, z: 100.00016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5682271856961239863}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9016029308529998573
 MeshFilter:
@@ -1254,7 +1283,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1331,7 +1359,6 @@ RectTransform:
   m_Children:
   - {fileID: 251792568}
   m_Father: {fileID: 6337422464213309223}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1408,7 +1435,6 @@ RectTransform:
   m_Children:
   - {fileID: 395154257488984090}
   m_Father: {fileID: 3963703235307793361}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1484,7 +1510,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2250659131055867891}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1615,13 +1640,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4421515511793967279}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000020489091, z: 0.000000038184215, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 100, y: 100.00017, z: 100.00016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3146249692354932849}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6627837153809404814
 MeshFilter:
@@ -1698,6 +1723,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4495513540749901241}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: -0.00000040899042, z: 0.00000046242891, w: 0.70710677}
   m_LocalPosition: {x: -90, y: -112, z: 0}
   m_LocalScale: {x: 139.03242, y: 1488.352, z: 139.03317}
@@ -1706,7 +1732,6 @@ Transform:
   - {fileID: 3930007465265853930}
   - {fileID: 8104241848222749347}
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1735142834522306424
 MonoBehaviour:
@@ -1733,7 +1758,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
+      effect:
+        rid: 1000
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -1776,18 +1803,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1000
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1001
+    - rid: 1001
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &1018746422520478045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,6 +1863,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628508576385073551}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1840,7 +1871,6 @@ Transform:
   m_Children:
   - {fileID: 4054122490584021835}
   m_Father: {fileID: 9077288655727426949}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3753739990281805270
 Rigidbody:
@@ -1849,10 +1879,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628508576385073551}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1866,9 +1907,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4628508576385073551}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.25, y: 0.15, z: 0.3}
   m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &7580999110843067419
@@ -1918,18 +1967,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 115
-    Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1000
+      amplitude: -1
+  StayHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1001
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
+    Vibration:
+      effect:
+        rid: 1002
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -1940,17 +1995,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 1
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 1
-        options:
-          rid: 3
-    - rid: 1
+    - rid: 1000
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -1960,26 +2005,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1001
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 15
+        WhichType: 0
         options:
-          rid: 5
-    - rid: 3
-      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: -2
+    - rid: 1002
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 1
-        strength: 7
-    - rid: 5
-      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 15
-        strength: 2
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1 &4856672735185191712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,6 +2051,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4856672735185191712}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2013,7 +2059,6 @@ Transform:
   m_Children:
   - {fileID: 3963703235307793361}
   m_Father: {fileID: 2515928509423977403}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2903468495283349468
 Rigidbody:
@@ -2022,10 +2067,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4856672735185191712}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2039,9 +2095,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4856672735185191712}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.25, y: 0.15, z: 0.3}
   m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &7923282542882448667
@@ -2091,18 +2155,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 115
-    Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1000
+      amplitude: -1
+  StayHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1001
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
+    Vibration:
+      effect:
+        rid: 1002
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -2113,17 +2183,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 1
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 1
-        options:
-          rid: 3
-    - rid: 1
+    - rid: 1000
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -2133,26 +2193,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1001
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 15
+        WhichType: 0
         options:
-          rid: 5
-    - rid: 3
-      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: -2
+    - rid: 1002
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 1
-        strength: 7
-    - rid: 5
-      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 15
-        strength: 2
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1 &5173114793264509880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,13 +2238,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5173114793264509880}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000020489091, z: 0.000000038184215, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 100, y: 100.00017, z: 100.00016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9077288655727426949}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6163603409707755807
 MeshFilter:
@@ -2276,7 +2336,6 @@ RectTransform:
   - {fileID: 9077288655727426949}
   - {fileID: 5682271856961239863}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2300,7 +2359,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -2375,7 +2436,6 @@ RectTransform:
   m_Children:
   - {fileID: 2013375019}
   m_Father: {fileID: 266255405437647337}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2445,6 +2505,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5803394703982989362}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
@@ -2452,7 +2513,6 @@ Transform:
   m_Children:
   - {fileID: 1641620813732764593}
   m_Father: {fileID: 2351519035976876219}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &7886112837798744011
 MeshFilter:
@@ -2529,6 +2589,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5899810249651281759}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0.000000024383382, z: -0.000000014740165, w: 0.7071068}
   m_LocalPosition: {x: -14, y: 10, z: 9}
   m_LocalScale: {x: 140.72499, y: 1506.4725, z: 140.72575}
@@ -2537,7 +2598,6 @@ Transform:
   - {fileID: 9141239656518485399}
   - {fileID: 2438821034919914326}
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &2629294767633450206
 MonoBehaviour:
@@ -2564,7 +2624,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
+      effect:
+        rid: 1000
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -2607,18 +2669,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1000
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1001
+    - rid: 1001
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &8976092118466524962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,6 +2728,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6690212055020724431}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
@@ -2670,7 +2736,6 @@ Transform:
   m_Children:
   - {fileID: 406749368558098667}
   m_Father: {fileID: 8104241848222749347}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &1770715586384612916
 MeshFilter:
@@ -2747,6 +2812,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6691291161238577076}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
@@ -2754,7 +2820,6 @@ Transform:
   m_Children:
   - {fileID: 5834505163975066155}
   m_Father: {fileID: 2438821034919914326}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &5885258321547869565
 MeshFilter:
@@ -2831,6 +2896,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7255308800843807431}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0.000000024383382, z: -0.000000014740165, w: 0.7071068}
   m_LocalPosition: {x: -165, y: 10, z: 9}
   m_LocalScale: {x: 140.72499, y: 1506.4725, z: 140.72575}
@@ -2839,7 +2905,6 @@ Transform:
   - {fileID: 4682372173808137912}
   - {fileID: 2351519035976876219}
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &4308835911869432722
 MonoBehaviour:
@@ -2866,7 +2931,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
+      effect:
+        rid: 1000
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -2909,18 +2976,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1000
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1001
+    - rid: 1001
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &6324168431401138786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2966,6 +3036,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7363958115970128328}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2973,7 +3044,6 @@ Transform:
   m_Children:
   - {fileID: 266255405437647337}
   m_Father: {fileID: 3146249692354932849}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2820806434765756148
 Rigidbody:
@@ -2982,10 +3052,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7363958115970128328}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2999,9 +3080,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7363958115970128328}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.25, y: 0.15, z: 0.3}
   m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!114 &6558739027253870855
@@ -3051,18 +3140,24 @@ MonoBehaviour:
   whileTriggerTouch:
     m_PersistentCalls:
       m_Calls: []
-  startHaptics:
+  StartHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
-  stayHaptics:
-    Amplitude: 115
-    Vibration:
-      rid: 1
-  exitHaptics:
+      effect:
+        rid: 1000
+      amplitude: -1
+  StayHaptics:
     Amplitude: 200
     Vibration:
-      rid: 2
+      effect:
+        rid: 1001
+      amplitude: -1
+  ExitHaptics:
+    Amplitude: 200
+    Vibration:
+      effect:
+        rid: 1002
+      amplitude: -1
   isPersistent: 0
   persistenceDuration: 0
   palmDiffusion: 0.75
@@ -3073,17 +3168,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 0
-      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        TakesOptions: 1
-        Description: 
-        OneShot: 0
-        RepeatDelay: 0
-        WhichType: 1
-        options:
-          rid: 3
-    - rid: 1
+    - rid: 1000
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
         TakesOptions: 0
@@ -3093,26 +3178,26 @@ MonoBehaviour:
         WhichType: 0
         options:
           rid: -2
-    - rid: 2
+    - rid: 1001
       type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 1
+        TakesOptions: 0
         Description: 
         OneShot: 0
         RepeatDelay: 0
-        WhichType: 15
+        WhichType: 0
         options:
-          rid: 5
-    - rid: 3
-      type: {class: SharpTick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+          rid: -2
+    - rid: 1002
+      type: {class: None, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        Type: 1
-        strength: 7
-    - rid: 5
-      type: {class: SoftBump/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
-      data:
-        Type: 15
-        strength: 2
+        TakesOptions: 0
+        Description: 
+        OneShot: 0
+        RepeatDelay: 0
+        WhichType: 0
+        options:
+          rid: -2
 --- !u!1 &7815421318749449356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,6 +3223,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7815421318749449356}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: -0.00000040899042, z: 0.00000046242891, w: 0.70710677}
   m_LocalPosition: {x: 65, y: -112, z: 0}
   m_LocalScale: {x: 139.03242, y: 1488.352, z: 139.03317}
@@ -3146,7 +3232,6 @@ Transform:
   - {fileID: 7570180707810801000}
   - {fileID: 381350398173252626}
   m_Father: {fileID: 5628338682026594809}
-  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &2000888458066455947
 MonoBehaviour:
@@ -3173,7 +3258,9 @@ MonoBehaviour:
   pressedHaptics:
     Amplitude: 200
     Vibration:
-      rid: 0
+      effect:
+        rid: 1000
+      amplitude: -1
   castDirection: 4
   castDistance: 0.1
   useLayerMask: 0
@@ -3216,18 +3303,21 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 0
+    - rid: 1000
       type: {class: StrongClick, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
       data:
-        TakesOptions: 0
+        TakesOptions: 1
         Description: 
-        OneShot: 0
+        OneShot: 1
         RepeatDelay: 0
-        WhichType: 16
+        WhichType: 5
         options:
-          rid: -2
+          rid: 1001
+    - rid: 1001
+      type: {class: StrongClick/Options, ns: Maestro.Vibration, asm: com.contactci.unity.Runtime.Types}
+      data:
+        Type: 5
+        strength: 7
 --- !u!114 &2880483784033760530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3279,7 +3369,6 @@ RectTransform:
   m_Children:
   - {fileID: 6809559158653484936}
   m_Father: {fileID: 641286700502069377}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3355,7 +3444,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 406749368558098667}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3486,6 +3574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8583940614582715508}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
@@ -3493,7 +3582,6 @@ Transform:
   m_Children:
   - {fileID: 346773411334048166}
   m_Father: {fileID: 88552976113114704}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &5443316516542612841
 MeshFilter:
@@ -3570,6 +3658,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8749274781905572476}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 115.22212, y: 115.22225, z: 115.22224}
@@ -3577,7 +3666,6 @@ Transform:
   m_Children:
   - {fileID: 2250659131055867891}
   m_Father: {fileID: 381350398173252626}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &5456478716610618690
 MeshFilter:
@@ -3654,13 +3742,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8751564396687000942}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000020489091, z: 0.000000038184215, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 100, y: 100.00017, z: 100.00016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7406828416570177491}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5563503641613542056
 MeshFilter:
@@ -3737,13 +3825,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9051702525329017921}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000020489091, z: 0.000000038184215, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 100, y: 100.00017, z: 100.00016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2515928509423977403}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4505100587117550216
 MeshFilter:

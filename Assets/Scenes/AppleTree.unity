@@ -1390,6 +1390,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8157306573468735323, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+        type: 3}
+      propertyPath: persistenceDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1407,6 +1412,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 907081815}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &907081818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3160994794034479333, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+    type: 3}
+  m_PrefabInstance: {fileID: 907081815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907081817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b4a12a85f73fd48b5d4c9432dc4ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &907081819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1653016200420133139, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+    type: 3}
+  m_PrefabInstance: {fileID: 907081815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907081817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6565abb573d7e4a9b259356e831911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &964162409
 GameObject:
   m_ObjectHideFlags: 0
@@ -6857,6 +6886,26 @@ PrefabInstance:
       propertyPath: _interactableLayers.Array.data[2].layerIndex
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1508485268577363110, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: wristBand
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
+    - target: {fileID: 1508485268577363110, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: wristMenu
+      value: 
+      objectReference: {fileID: 907081819}
+    - target: {fileID: 1508485268577363110, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: fillHandler
+      value: 
+      objectReference: {fileID: 907081818}
+    - target: {fileID: 1508485268577363110, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: wristMenuObj
+      value: 
+      objectReference: {fileID: 907081817}
     - target: {fileID: 2307197657243049451, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
       propertyPath: LeapHand.Arm.Center.z
@@ -8024,6 +8073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3960838150950570160, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.28813452
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960838150950570160, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.70154864
       objectReference: {fileID: 0}
@@ -8051,6 +8105,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.02928418
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960838150950570162, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7650837
       objectReference: {fileID: 0}
     - target: {fileID: 3960838150950570162, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
@@ -8336,6 +8395,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.021531459
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595769933915641175, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9936847
       objectReference: {fileID: 0}
     - target: {fileID: 4595769933915641175, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
@@ -8702,6 +8766,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1769815838}
+    - targetCorrespondingSourceObject: {fileID: 6682640483777899767, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1769815839}
   m_SourcePrefab: {fileID: 100100000, guid: c70af90bcf1320e4991649fcd71a0c59, type: 3}
 --- !u!4 &1769815828 stripped
 Transform:
@@ -8754,6 +8822,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1769815839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849584913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85292ec07df12647b562e883d654aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHead: {fileID: 1769815828}
+  wristMenuObj: {fileID: 907081817}
+  wristMenu: {fileID: 907081819}
+  fillHandler: {fileID: 907081818}
+  wristBand: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
 --- !u!1 &1823490808
 GameObject:
   m_ObjectHideFlags: 0
@@ -10256,20 +10341,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 412477369}
     m_Modifications:
-    - target: {fileID: 2025811235, guid: 138cdea22dd142c4aa72a8d8e407ceae, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 148857006723840558, guid: 138cdea22dd142c4aa72a8d8e407ceae,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3813170399937526871, guid: 138cdea22dd142c4aa72a8d8e407ceae,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4656398796129455359, guid: 7de49888b07fc434788492b89fd3964d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10824,6 +10895,20 @@ PrefabInstance:
         type: 3}
       propertyPath: _interactableLayers.Array.data[2].layerIndex
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025811235, guid: 138cdea22dd142c4aa72a8d8e407ceae, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 148857006723840558, guid: 138cdea22dd142c4aa72a8d8e407ceae,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813170399937526871, guid: 138cdea22dd142c4aa72a8d8e407ceae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

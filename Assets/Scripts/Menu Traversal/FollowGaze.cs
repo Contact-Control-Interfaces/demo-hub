@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowGaze : MonoBehaviour
 {
     public Transform playerHead;
-    private MenuToggle wristMenu;
+    private WristMenu wristMenu;
 
     public float DistanceFromFace = 1.5f;
     public float SpeedScalingPower = 4;
@@ -103,7 +103,7 @@ public class FollowGaze : MonoBehaviour
         if (playerHead == null)
             playerHead = Camera.main.transform;
 
-        wristMenu = FindObjectOfType<MenuToggle>(true);
+        wristMenu = FindObjectOfType<WristMenu>(true);
     }
 
     private void Update()
@@ -136,7 +136,6 @@ public class FollowGaze : MonoBehaviour
             OrientToFaceUser();
             yield return new WaitForEndOfFrame();
         }
-
         ActiveCoroutine = null;
         onComplete();
     }
