@@ -11,12 +11,11 @@ public class SpawnPoint : MonoBehaviour
 
     public void Spawn()
     {
-
-        GameObject currentCube = Instantiate(SpawnedObject, spawnPoint);
+        GameObject spawnedObject = Instantiate(SpawnedObject, spawnPoint);
 
         foreach(GameObject go in pipeComponents)
         {
-            Physics.IgnoreCollision(currentCube.GetComponent<Collider>(), go.GetComponent<Collider>(), true);
+            Physics.IgnoreCollision(spawnedObject.GetComponent<Collider>(), go.GetComponent<Collider>(), true);
         }
         
     }
