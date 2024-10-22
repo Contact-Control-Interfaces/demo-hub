@@ -12,6 +12,9 @@ public class AttachPoint : MonoBehaviour
     [SerializeField]
     private Material dissolveEffect;
 
+    [SerializeField]
+    private bool leftGlove;
+
     private float timePressed;
     float elapsedTime;
     public float pressLength;
@@ -33,7 +36,7 @@ public class AttachPoint : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<ConveyorObject>())
+        if (collision.gameObject.GetComponent<ConveyorObject>() && collision.gameObject.GetComponent<ConveyorObject>().isWatch)
         {
             wristWatch.SetActive(true);
             StartCoroutine(DDissolveValue());

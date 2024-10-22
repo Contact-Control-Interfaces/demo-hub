@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class ConveyorObject : MonoBehaviour
 {
+
+    public bool isWatch;
+
     void Start()
     {
-        
+         
     }
 
     void Update()
