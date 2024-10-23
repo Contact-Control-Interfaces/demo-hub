@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
+using Leap.Unity;
 using Maestro;
 using UnityEngine;
 
@@ -16,8 +18,18 @@ public class Football : MonoBehaviour
 
     public CustomHapticSender sender;
 
+    private MaestroGrabbable grabbable;
+
+    private void Awake()
+    {
+        grabbable = GetComponent<MaestroGrabbable>();
+    }
+
     public void ThrowTimer()
     {
+        int whichHand =  grabbable.graspedHand.Handedness == Chirality.Right ? 0 : 1;
+        sender.wristHand = FindObjectsOfType<MaestroHand>().Where(hand => hand.whichHand == (WhichHand)whichHand)
+            .FirstOrDefault();
         if (currentRoutine == null)
         {
             currentRoutine = StartCoroutine(ThrowTick());

@@ -14,7 +14,7 @@ public class MaestroGrabbable : MonoBehaviour
     private bool throwHelpersEnabled = true;
     private Rigidbody rb;
     private PhysicalHandsManager physicalHandsManager;
-    private ContactHand graspedHand;
+    public ContactHand graspedHand { get; private set; }
     private Transform palmTransform;
     private HandModelBase handModelBase;
     private bool isGrasped;
