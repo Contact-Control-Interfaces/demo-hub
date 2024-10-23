@@ -96,6 +96,7 @@ public class MaestroGrabbable : MonoBehaviour
         averageVelocity /= velocitySamples.Count;
         if (averageVelocity.magnitude > minVelocityForThrow)
             Throw(averageVelocity);
+        OnRelease?.Invoke();
     }
 
     private void Throw(Vector3 averageVelocity) => rb.AddForce(averageVelocity * extraThrowForce, ForceMode.Impulse);

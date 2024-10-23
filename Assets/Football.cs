@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using Maestro;
 using UnityEngine;
 
 public class Football : MonoBehaviour
@@ -9,16 +10,18 @@ public class Football : MonoBehaviour
 
     private float throwTime = 3.5f;
 
-    public float elapsedTime;
+    private float elapsedTime;
 
     private Coroutine currentRoutine;
 
-    public CustomHapticSender customHaptic;
+    public CustomHapticSender sender;
 
     public void ThrowTimer()
     {
-        elapsedTime = 0;
-        currentRoutine = StartCoroutine(ThrowTick());
+        if (currentRoutine == null)
+        {
+            currentRoutine = StartCoroutine(ThrowTick());
+        }
     }
 
     public void StopTimer()
@@ -28,20 +31,19 @@ public class Football : MonoBehaviour
             StopCoroutine(currentRoutine);
             currentRoutine = null;
         }
+        sender.StopHaptics();
+        elapsedTime = 0;
+        Debug.Log("Stopping timer");
     }
 
     private IEnumerator ThrowTick()
     {
-       
-
-        do
+        while (elapsedTime < throwTime)
         {
             elapsedTime += Time.deltaTime;
-            yield return new WaitForSeconds(.01f);
+            yield return null;
         }
-        while (elapsedTime < throwTime);
         Debug.Log("Buzz");
-        customHaptic.StartHaptics();
-        StopTimer();
+        sender.StartHaptics();
     }
 }
