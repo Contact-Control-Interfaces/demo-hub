@@ -10,10 +10,18 @@ public class CustomHapticSender : MonoBehaviour
     public MaestroInteractable interactable;
     public HapticEffect WristHaptics = new HapticEffect { Amplitude = 200, Vibration = { Effect = new None() } };
     public MaestroHand wristHand;
+    public bool whichHand;
 
     public void Start()
     {
-        wristHand = FindObjectsOfType<MaestroHand>().Where(hand => hand.whichHand == WhichHand.LeftHand).FirstOrDefault();
+        if (whichHand)
+        {
+            wristHand = FindObjectsOfType<MaestroHand>().Where(hand => hand.whichHand == WhichHand.LeftHand).FirstOrDefault();
+        }
+        else
+        {
+            wristHand = FindObjectsOfType<MaestroHand>().Where(hand => hand.whichHand == WhichHand.RightHand).FirstOrDefault();
+        }
     }
     public void StartHaptics()
     {
