@@ -557,6 +557,7 @@ Transform:
   m_LocalScale: {x: 0.65017897, y: 0.65017897, z: 0.65017897}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1005059167}
   - {fileID: 563125898}
   - {fileID: 994492824}
   - {fileID: 1742581525}
@@ -1120,13 +1121,48 @@ PrefabInstance:
       objectReference: {fileID: 439216404}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: initialState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1727855060}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1727855060}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -1365,6 +1401,12 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &750690880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+    type: 3}
+  m_PrefabInstance: {fileID: 1742581524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &810120095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,13 +1939,48 @@ PrefabInstance:
       objectReference: {fileID: 994492825}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: initialState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1727855060}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1727855060}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -2097,6 +2174,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997254082}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1000509838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+    type: 3}
+  m_PrefabInstance: {fileID: 563125897}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1005059166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,13 +2205,13 @@ Transform:
   m_GameObject: {fileID: 1005059166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04970002, y: 0.5352465, z: -0.045318604}
-  m_LocalScale: {x: 1.1326, y: 1.1326, z: 1.1326}
+  m_LocalPosition: {x: 0.07644054, y: 0.4894751, z: -0.06970172}
+  m_LocalScale: {x: 1.7419819, y: 1.7419819, z: 1.7419819}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 978912904}
   - {fileID: 361235845}
-  m_Father: {fileID: 1727855059}
+  m_Father: {fileID: 227166309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1038542911
 GameObject:
@@ -6020,6 +6103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1496187865}
+  - component: {fileID: 1496187866}
   m_Layer: 0
   m_Name: Conveyor
   m_TagString: Untagged
@@ -6049,6 +6133,24 @@ Transform:
   - {fileID: 1817431834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1496187866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496187864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6eb0d693a68edf4ab0718843c362887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1532635365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+    type: 3}
+  m_PrefabInstance: {fileID: 994492823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1601346956
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -6268,6 +6370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1727855059}
+  - component: {fileID: 1727855060}
   m_Layer: 0
   m_Name: StartPanel
   m_TagString: Untagged
@@ -6293,9 +6396,27 @@ Transform:
   - {fileID: 1044706154}
   - {fileID: 227166309}
   - {fileID: 1900951738}
-  - {fileID: 1005059167}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1727855060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727855058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9d4b6fae726f34388bdb8443772f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelButtons:
+  - {fileID: 1000509838}
+  - {fileID: 1532635365}
+  - {fileID: 750690880}
+  - {fileID: 3840553795433393170}
+  active: 00000000
+  conveyorBelt: {fileID: 1496187866}
 --- !u!1001 &1736578490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6448,13 +6569,48 @@ PrefabInstance:
       objectReference: {fileID: 1742581526}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
+      propertyPath: initialState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1727855060}
     - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1727855060}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2603234123145832898, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ActivatePanel, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -8152,6 +8308,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1727855060}
+        m_TargetAssemblyTypeName: ActivatePanel, Assembly-CSharp
+        m_MethodName: ToggleCheck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onToggleOff:
     m_PersistentCalls:
       m_Calls:
@@ -8159,6 +8327,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Maestro.ScriptableLight, com.contactci.unity.Runtime.Core
         m_MethodName: SetLight
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1727855060}
+        m_TargetAssemblyTypeName: ActivatePanel, Assembly-CSharp
+        m_MethodName: ToggleCheck
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
