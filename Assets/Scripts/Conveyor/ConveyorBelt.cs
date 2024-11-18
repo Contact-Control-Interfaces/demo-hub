@@ -8,7 +8,7 @@ public class ConveyorBelt : MonoBehaviour
 {
     // Start is called before the first frame update
     
-    List<Belt> beltList = new List<Belt>();
+    public List<Belt> beltList = new List<Belt>();
 
     void Start()
     {

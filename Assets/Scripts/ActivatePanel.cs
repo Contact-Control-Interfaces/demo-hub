@@ -43,6 +43,9 @@ public class ActivatePanel : MonoBehaviour
     public void OnAllSwitchesToggled()
     {
         conveyorBelt.ActivateBelt();
+        SpawnPoint spawnPoint = FindAnyObjectByType<SpawnPoint>();
+        spawnPoint.Spawn();
+
     }
 
     public bool AllActiveCheckDebug()
@@ -57,6 +60,7 @@ public class ActivatePanel : MonoBehaviour
         if (active.All(currentBool => currentBool == true))
         {
             Debug.Log(resultString);
+            OnAllSwitchesToggled();
             return true;
         }
         else
@@ -64,6 +68,6 @@ public class ActivatePanel : MonoBehaviour
             Debug.Log(resultString);
             return false;
         }
-            //OnAllSwitchesToggled();
+            
     }
 }
