@@ -1491,6 +1491,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 563125897}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &577574526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1354059429092095154, guid: c70af90bcf1320e4991649fcd71a0c59,
+    type: 3}
+  m_PrefabInstance: {fileID: 1322400104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &577574530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577574526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845cb9548de7d48459bbf5acd44e9acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAttach: {fileID: 1684812808}
+  rightAttach: {fileID: 444839275}
+  spawnedWatch: {fileID: 0}
+  grabbingHand: {fileID: 0}
 --- !u!1 &626711560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,6 +2977,7 @@ MonoBehaviour:
   pipeComponents:
   - {fileID: 182073565}
   - {fileID: 1198349934}
+  attachHandler: {fileID: 577574530}
 --- !u!1 &1109977242
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,7 +6202,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 444839276}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1354059429092095154, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 577574530}
   m_SourcePrefab: {fileID: 100100000, guid: c70af90bcf1320e4991649fcd71a0c59, type: 3}
 --- !u!43 &1350894897
 Mesh:
@@ -6721,9 +6748,9 @@ MonoBehaviour:
   wristWatch: {fileID: 676561863}
   fakeWatchDissolve: {fileID: 2100000, guid: 398bf5a7bdab2f14c84ac1a699f346ef, type: 2}
   realWatchDissolve: {fileID: 2100000, guid: 68b97c2dae4cdcc4796fa1888f0d1d49, type: 2}
-  leftGlove: 1
+  leftGlove: 0
   pressLength: 2
-  waitLength: 5
+  waitLength: 0
 --- !u!1 &1688906211 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 121099504195588398, guid: 4e22ea96205eaef4387c69a59db4f784,

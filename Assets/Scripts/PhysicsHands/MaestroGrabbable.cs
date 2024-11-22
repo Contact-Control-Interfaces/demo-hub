@@ -22,9 +22,9 @@ public class MaestroGrabbable : MonoBehaviour
     private float extraThrowForce = 2f;
     private float minVelocityForThrow = 1.4f;
     [SerializeField]
-    private UnityEvent OnRelease;
+    public UnityEvent OnRelease;
     [SerializeField]
-    private UnityEvent OnGrab;
+    public UnityEvent OnGrab;
 
     private void Start()
     {
@@ -49,6 +49,7 @@ public class MaestroGrabbable : MonoBehaviour
         if (rb == this.rb)
         {
             graspedHand = hand;
+            GrabbedHand();
             palmTransform = graspedHand.GetComponentsInChildren<Transform>(true)[1];
             OnGrab?.Invoke();
         }
@@ -99,4 +100,9 @@ public class MaestroGrabbable : MonoBehaviour
     }
 
     private void Throw(Vector3 averageVelocity) => rb.AddForce(averageVelocity * extraThrowForce, ForceMode.Impulse);
+
+    public ContactHand GrabbedHand()
+    {
+        return graspedHand;
+    }
 }

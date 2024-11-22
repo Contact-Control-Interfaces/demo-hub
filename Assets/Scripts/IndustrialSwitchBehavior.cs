@@ -160,7 +160,7 @@ namespace Maestro
                 onToggleChanged.Invoke(IndustrialToggleState.Off);
         }
 
-        private void OnToggledNeutral()
+        public void OnToggledNeutral()
         {
             onToggleNeutral.Invoke();
             if (onToggleChanged != null)
