@@ -11,9 +11,9 @@ public class AttachPoint : MonoBehaviour
     private GameObject realWristWatch;
 
     [SerializeField]
-    private Material fakeWatchDissolve;
+    private Material  heldObjectDissolve;
     [SerializeField]
-    private Material realWatchDissolve;
+    private Material wristObjectDissolve;
 
     [SerializeField]
     private bool leftGlove;
@@ -28,49 +28,48 @@ public class AttachPoint : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             timePressed = Time.time;
-            StartCoroutine(DDissolveValue());
+            StartCoroutine(DownDissolveValue());
 
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             timePressed = Time.time;
-            StartCoroutine(DDissolveValue());
+            StartCoroutine(DownDissolveValue());
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<ConveyorObject>() && collision.gameObject.GetComponent<ConveyorObject>().isWatch)
         {
             wristWatch.SetActive(true);
-            StartCoroutine(DDissolveValue());
-            StartCoroutine(WaitForASecond());
-            StartCoroutine(UDissolveValue());
+            //StartCoroutine(DownDissolveValue());
+            //StartCoroutine(UDissolveValue());
         }
     }
     private void UpDissolve()
     {
         elapsedTime = Time.time - timePressed;
-        realWatchDissolve.SetFloat("dissolveAmount", 0);
+        wristObjectDissolve.SetFloat("dissolveAmount", 0);
         float lerpValue = Mathf.Lerp(0, 2, elapsedTime / pressLength);
-        realWatchDissolve.SetFloat("dissolveAmount", lerpValue);
+        wristObjectDissolve.SetFloat("dissolveAmount", lerpValue);
     }
 
     private void DownDissolve()
     {
         elapsedTime = Time.time - timePressed;
-        fakeWatchDissolve.SetFloat("dissolveAmount", 2);
+        wristObjectDissolve.SetFloat("dissolveAmount", 2);
         float lerpValue = Mathf.Lerp(2, 0, elapsedTime / pressLength);
-        fakeWatchDissolve.SetFloat("dissolveAmount", lerpValue);
+        wristObjectDissolve.SetFloat("dissolveAmount", lerpValue);
     }
 
-    private IEnumerator DDissolveValue()
+    private IEnumerator DownDissolveValue()
     {
         do
         {
-            DownDissolve();
-            UpDissolve();
+            //DownDissolve();
+            //UpDissolve();
             yield return new WaitForSeconds(.01f);
         }
         while (elapsedTime < pressLength);

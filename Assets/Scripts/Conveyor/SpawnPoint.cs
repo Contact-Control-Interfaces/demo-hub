@@ -4,26 +4,37 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-
-    public GameObject SpawnedObject;
+    public GameObject SwitchSpawnedObject;
+    public GameObject ButtonSpawnedObject;
     public Transform spawnPoint;
     public List<GameObject> pipeComponents;
     public AttachHandler attachHandler;
 
-    public void Spawn()
+    public void SwitchSpawn()
     {
-        GameObject spawnedObject = Instantiate(SpawnedObject, spawnPoint);
-        attachHandler.ListenToSpawner(spawnedObject.GetComponent<MaestroGrabbable>());
+        GameObject switchSpawnedObject = Instantiate(SwitchSpawnedObject, spawnPoint);
+        attachHandler.ListenToSpawner(switchSpawnedObject.GetComponent<MaestroGrabbable>());
 
         foreach(GameObject go in pipeComponents)
         {
+            Physics.IgnoreCollision(switchSpawnedObject.GetComponent<Collider>(), go.GetComponent<Collider>(), true);
+        }
+    }
+
+    public void ButtonSpawn()
+    {
+        GameObject spawnedObject = Instantiate(ButtonSpawnedObject, spawnPoint);
+
+        foreach (GameObject go in pipeComponents)
+        {
             Physics.IgnoreCollision(spawnedObject.GetComponent<Collider>(), go.GetComponent<Collider>(), true);
         }
-        
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S)) { Spawn(); }
+        if(Input.GetKeyDown(KeyCode.S)) { SwitchSpawn(); }
+        if (Input.GetKeyDown(KeyCode.B)) { ButtonSpawn(); }
+
     }
 }

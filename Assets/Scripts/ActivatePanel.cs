@@ -44,7 +44,7 @@ public class ActivatePanel : MonoBehaviour
     {
         conveyorBelt.ActivateBelt();
         SpawnPoint spawnPoint = FindAnyObjectByType<SpawnPoint>();
-        spawnPoint.Spawn();
+        spawnPoint.SwitchSpawn();
 
     }
 

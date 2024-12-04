@@ -41,6 +41,7 @@ public class MaestroGrabbable : MonoBehaviour
             rb.isKinematic = false;
             StartCoroutine(ThrowAveragedVelocity());
             graspedHand = null;
+            OnRelease?.Invoke();
         }
     }
 

@@ -13,8 +13,8 @@ public class AttachHandler : MonoBehaviour
 
     public void Update()
     {
-        if(spawnedWatch != null)
-        Debug.Log(spawnedWatch.name);
+        //if (spawnedWatch != null)
+            //Debug.Log(spawnedWatch.name);
     }
 
     public void ListenToSpawner(MaestroGrabbable grabbable)
@@ -41,6 +41,11 @@ public class AttachHandler : MonoBehaviour
 
     private void NotGrabbed()
     {
+
+        Debug.Log("Let go");
+        leftAttach.SetActive(true);
+        rightAttach.SetActive(true);
+
         if (grabbingHand.Handedness == Leap.Unity.Chirality.Left)
         {
             leftAttach.SetActive(true);
