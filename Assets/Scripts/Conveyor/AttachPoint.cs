@@ -10,6 +10,8 @@ public class AttachPoint : MonoBehaviour
     private GameObject wristWatch;
     private GameObject realWristWatch;
 
+    public WristGaze wristGazeInfo;
+
     [SerializeField]
     private Material  heldObjectDissolve;
     [SerializeField]
@@ -44,6 +46,10 @@ public class AttachPoint : MonoBehaviour
         if (collision.gameObject.GetComponent<ConveyorObject>() && collision.gameObject.GetComponent<ConveyorObject>().isWatch)
         {
             wristWatch.SetActive(true);
+            wristGazeInfo.wristMenu = wristWatch.gameObject.GetComponent<WristMenu>();
+            wristGazeInfo.wristMenuObj = wristWatch.gameObject;
+            wristGazeInfo.fillHandler = wristWatch.gameObject.GetComponent<ObjectFill>();
+
             //StartCoroutine(DownDissolveValue());
             //StartCoroutine(UDissolveValue());
         }
