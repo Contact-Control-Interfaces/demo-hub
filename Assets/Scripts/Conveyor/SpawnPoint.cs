@@ -24,6 +24,7 @@ public class SpawnPoint : MonoBehaviour
     public void ButtonSpawn()
     {
         GameObject spawnedObject = Instantiate(ButtonSpawnedObject, spawnPoint);
+        spawnedObject.transform.localScale = new Vector3(1, 1, 1);
 
         foreach (GameObject go in pipeComponents)
         {

@@ -50,6 +50,8 @@ public class AttachPoint : MonoBehaviour
             wristGazeInfo.wristMenuObj = wristWatch.gameObject;
             wristGazeInfo.fillHandler = wristWatch.gameObject.GetComponent<ObjectFill>();
 
+            Destroy(collision.gameObject);
+
             //StartCoroutine(DownDissolveValue());
             //StartCoroutine(UDissolveValue());
         }
