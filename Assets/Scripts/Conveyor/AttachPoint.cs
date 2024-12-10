@@ -8,55 +8,55 @@ public class AttachPoint : MonoBehaviour
 {
     [SerializeField]
     private GameObject wristWatch;
+    public WristMenu wristMenu;
+    public ObjectFill objectFill;
     private GameObject realWristWatch;
 
     public WristGaze wristGazeInfo;
 
     [SerializeField]
+    private bool leftGlove;
+
+/*    private float timePressed;
+    float elapsedTime;
+    public float pressLength;
+    public float waitLength;*/
+
+    /*
+    [SerializeField]
     private Material  heldObjectDissolve;
     [SerializeField]
     private Material wristObjectDissolve;
+    */
 
-    [SerializeField]
-    private bool leftGlove;
-
-    private float timePressed;
-    float elapsedTime;
-    public float pressLength;
-    public float waitLength;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            timePressed = Time.time;
-            StartCoroutine(DownDissolveValue());
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            timePressed = Time.time;
-            StartCoroutine(DownDissolveValue());
-        }
-    }
 
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<ConveyorObject>() && collision.gameObject.GetComponent<ConveyorObject>().isWatch)
         {
-            wristWatch.SetActive(true);
-            wristGazeInfo.wristMenu = wristWatch.gameObject.GetComponent<WristMenu>();
-            wristGazeInfo.wristMenuObj = wristWatch.gameObject;
-            wristGazeInfo.fillHandler = wristWatch.gameObject.GetComponent<ObjectFill>();
-
-            Destroy(collision.gameObject);
-
-            //StartCoroutine(DownDissolveValue());
-            //StartCoroutine(UDissolveValue());
+           EnableWrist(leftGlove);
+           FindAnyObjectByType<AttachHandler>().leftWatchOn = leftGlove;
+           Destroy(collision.gameObject);
         }
     }
-    private void UpDissolve()
+    
+    public void EnableWrist(bool isTheLeftHandAttaching)
+    {
+        FindAnyObjectByType<WristWatchSwapUI>().LightUpGraphic(!isTheLeftHandAttaching);
+        wristWatch.SetActive(true);
+        wristGazeInfo.wristMenuObj = wristWatch.gameObject;
+        wristGazeInfo.wristMenu = wristWatch.GetComponent<WristMenu>();
+        wristGazeInfo.fillHandler = wristWatch.GetComponent<ObjectFill>();
+
+        this.gameObject.SetActive(false);
+    }
+
+    public void DisableWrist()
+    {
+        wristWatch.SetActive(false);
+    }
+
+    /*private void UpDissolve()
     {
         elapsedTime = Time.time - timePressed;
         wristObjectDissolve.SetFloat("dissolveAmount", 0);
@@ -70,9 +70,9 @@ public class AttachPoint : MonoBehaviour
         wristObjectDissolve.SetFloat("dissolveAmount", 2);
         float lerpValue = Mathf.Lerp(2, 0, elapsedTime / pressLength);
         wristObjectDissolve.SetFloat("dissolveAmount", lerpValue);
-    }
+    }*/
 
-    private IEnumerator DownDissolveValue()
+/*    private IEnumerator DownDissolveValue()
     {
         do
         {
@@ -81,18 +81,9 @@ public class AttachPoint : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
         while (elapsedTime < pressLength);
-    }
+    }*/
 
-    private IEnumerator WaitForASecond()
-    {
-        do
-        {
-            yield return new WaitForSeconds(.01f);
-        }
-        while (elapsedTime < waitLength);
-    }
-
-    private IEnumerator UDissolveValue()
+/*    private IEnumerator UDissolveValue()
     {
         do
         {
@@ -100,5 +91,5 @@ public class AttachPoint : MonoBehaviour
             yield return new WaitForSeconds(.01f);
         }
         while (elapsedTime < pressLength);
-    }
+    }*/
 } 

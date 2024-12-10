@@ -11,10 +11,13 @@ public class AttachHandler : MonoBehaviour
     [SerializeField] MaestroGrabbable spawnedWatch;
     [SerializeField] ContactHand grabbingHand;
 
-    public void Update()
+    public bool leftWatchOn;
+    public WristWatchSwapUI swapPanel;
+
+    public void Start()
     {
-        //if (spawnedWatch != null)
-            //Debug.Log(spawnedWatch.name);
+        leftAttach.SetActive(false);
+        rightAttach.SetActive(false);
     }
 
     public void ListenToSpawner(MaestroGrabbable grabbable)
@@ -26,37 +29,52 @@ public class AttachHandler : MonoBehaviour
 
     private void HandleGrab()
     {
-        if (spawnedWatch != null)
+        if (spawnedWatch != null) 
             grabbingHand = spawnedWatch.GrabbedHand();
 
         if (grabbingHand != null && grabbingHand.Handedness == Leap.Unity.Chirality.Left)
         {
-            leftAttach.SetActive(false);
+            rightAttach.SetActive(true);
         }
         else
         {
-            rightAttach.SetActive(false);
+            leftAttach.SetActive(true);
         }
     }
 
     private void NotGrabbed()
     {
-
         Debug.Log("Let go");
-        leftAttach.SetActive(true);
-        rightAttach.SetActive(true);
 
         if (grabbingHand.Handedness == Leap.Unity.Chirality.Left)
         {
-            leftAttach.SetActive(true);
+            rightAttach.SetActive(false);
         }
         else
         {
-            rightAttach.SetActive(true);
+            leftAttach.SetActive(false);
         }
-
         grabbingHand = null;
     }
+
+    public void SwapPressed()
+    {
+        leftWatchOn = !leftWatchOn;
+        if(leftWatchOn)
+        {
+            rightAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
+            leftAttach.GetComponent<AttachPoint>().DisableWrist();
+        }                        
+        else
+        {
+            leftAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
+            rightAttach.GetComponent<AttachPoint>().DisableWrist();
+        }
+
+        swapPanel.LightUpGraphic(leftWatchOn);
+
+    }
+
 
 
 

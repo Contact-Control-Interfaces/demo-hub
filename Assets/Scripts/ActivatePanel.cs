@@ -4,17 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ActivatePanel : MonoBehaviour
 {
-
     public List<GameObject> panelButtons= new List<GameObject>();
     public List<bool> active = new List<bool>();
     public ConveyorBelt conveyorBelt;
 
+    public UnityEvent OnOff, OnAllOn;
+
     public void Start()
     {
         ToggleCheck();
+        OnOff.Invoke();
     }
 
     public void ToggleCheck()
@@ -26,7 +29,6 @@ public class ActivatePanel : MonoBehaviour
                 ToggleSwitchBehavior currentToggle = go.GetComponent<ToggleSwitchBehavior>();
                 int index = panelButtons.IndexOf(go);
                 active[index] = (currentToggle.state == ToggleState.On) ? true: false;
-
             }
 
             else if(go.GetComponent<IndustrialSwitchBehavior>() != null)
@@ -37,7 +39,16 @@ public class ActivatePanel : MonoBehaviour
             }
         }
 
-        Debug.Log( "All on?: " + AllActiveCheckDebug());
+        if (active.All(currentBool => currentBool == true))
+        {
+            OnAllSwitchesToggled();
+            OnAllOn.Invoke();
+        }
+        else
+        {
+            OnOff.Invoke();
+            Debug.Log("Red Light On");
+        }
     }
 
     public void OnAllSwitchesToggled()
@@ -46,28 +57,5 @@ public class ActivatePanel : MonoBehaviour
         SpawnPoint spawnPoint = FindAnyObjectByType<SpawnPoint>();
         spawnPoint.SwitchSpawn();
 
-    }
-
-    public bool AllActiveCheckDebug()
-    {
-        string resultString = "";
-
-        foreach (bool booleanVal in active)
-        {
-            resultString = resultString + " " + booleanVal;
-        }
-
-        if (active.All(currentBool => currentBool == true))
-        {
-            Debug.Log(resultString);
-            OnAllSwitchesToggled();
-            return true;
-        }
-        else
-        {
-            Debug.Log(resultString);
-            return false;
-        }
-            
     }
 }
