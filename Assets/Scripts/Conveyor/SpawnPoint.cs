@@ -13,9 +13,10 @@ public class SpawnPoint : MonoBehaviour
     public void SwitchSpawn()
     {
         GameObject switchSpawnedObject = Instantiate(SwitchSpawnedObject, spawnPoint);
+        SwitchSpawnedObject.transform.localScale = new Vector3(2, 2, 2);
         attachHandler.ListenToSpawner(switchSpawnedObject.GetComponent<MaestroGrabbable>());
 
-        foreach(GameObject go in pipeComponents)
+        foreach (GameObject go in pipeComponents)
         {
             Physics.IgnoreCollision(switchSpawnedObject.GetComponent<Collider>(), go.GetComponent<Collider>(), true);
         }
@@ -24,7 +25,7 @@ public class SpawnPoint : MonoBehaviour
     public void ButtonSpawn()
     {
         GameObject spawnedObject = Instantiate(ButtonSpawnedObject, spawnPoint);
-        spawnedObject.transform.localScale = new Vector3(1, 1, 1);
+        spawnedObject.transform.localScale = new Vector3(.25f, .25f, .25f);
 
         foreach (GameObject go in pipeComponents)
         {
