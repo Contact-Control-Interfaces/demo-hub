@@ -13,7 +13,7 @@ public class SpawnPoint : MonoBehaviour
     public void SwitchSpawn()
     {
         GameObject switchSpawnedObject = Instantiate(SwitchSpawnedObject, spawnPoint);
-        SwitchSpawnedObject.transform.localScale = new Vector3(2, 2, 2);
+        SwitchSpawnedObject.transform.localScale = new Vector3(1, 1, 1);
         attachHandler.ListenToSpawner(switchSpawnedObject.GetComponent<MaestroGrabbable>());
 
         foreach (GameObject go in pipeComponents)

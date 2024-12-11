@@ -36,7 +36,8 @@ public class AttachPoint : MonoBehaviour
         {
            EnableWrist(leftGlove);
            FindAnyObjectByType<AttachHandler>().leftWatchOn = leftGlove;
-           Destroy(collision.gameObject);
+            FindAnyObjectByType<AttachHandler>().wristAttachHappened = true;
+            Destroy(collision.gameObject);
         }
     }
     

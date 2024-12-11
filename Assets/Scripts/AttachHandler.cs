@@ -11,6 +11,8 @@ public class AttachHandler : MonoBehaviour
     [SerializeField] MaestroGrabbable spawnedWatch;
     [SerializeField] ContactHand grabbingHand;
 
+    public bool wristAttachHappened;
+
     public bool leftWatchOn;
     public WristWatchSwapUI swapPanel;
 
@@ -59,19 +61,26 @@ public class AttachHandler : MonoBehaviour
 
     public void SwapPressed()
     {
-        leftWatchOn = !leftWatchOn;
-        if(leftWatchOn)
+        if (wristAttachHappened) 
         {
-            rightAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
-            leftAttach.GetComponent<AttachPoint>().DisableWrist();
-        }                        
+            leftWatchOn = !leftWatchOn;
+            if(leftWatchOn)
+            {
+                rightAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
+                leftAttach.GetComponent<AttachPoint>().DisableWrist();
+            }                        
+            else
+            {
+                leftAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
+                rightAttach.GetComponent<AttachPoint>().DisableWrist();
+            }
+
+            swapPanel.LightUpGraphic(leftWatchOn);
+        }
         else
         {
-            leftAttach.GetComponent<AttachPoint>().EnableWrist(leftWatchOn);
-            rightAttach.GetComponent<AttachPoint>().DisableWrist();
+            Debug.Log("Watch needs to attach first");
         }
-
-        swapPanel.LightUpGraphic(leftWatchOn);
 
     }
 
