@@ -16,31 +16,32 @@ public class DemoArea : MonoBehaviour
 
 
 
-public void OnTriggerExit(Collider other)
-{
-   if(other.gameObject.GetComponent<MaestroManager>())
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<MaestroManager>())
+        {
+
+        }
+    }
+
+    public void outofBoundsAlert()
     {
 
     }
-}
 
-public void outofBoundsAlert()
-{
-
-}
-
-private IEnumerator AlertCountDown()
-{
-    do
+    private IEnumerator AlertCountDown()
     {
-        yield return new WaitForSeconds(.01f);
+        do
+        {
+            yield return new WaitForSeconds(.01f);
+        }
+        while (elapsedTime < waitLength);
+        resetLocation();
     }
-    while (elapsedTime < waitLength);
-    resetLocation();
+
+    public void resetLocation()
+    {
+
+    }
+
 }
-
-public void resetLocation()
-{
-
-}
-
