@@ -48,6 +48,7 @@ namespace Maestro
         private AudioSource source;
 
         public Rigidbody connectedObject;
+        public MaestroGrabbable grabPoint;
 
         protected override void Awake()
         {
@@ -89,11 +90,36 @@ namespace Maestro
             else if (LocalAngle <= angleMin)
             { 
                 state = IndustrialToggleState.On;
+                if(grabPoint.GrabbedHand() != null)
+                {
+
+                    Debug.Log("Trying to go too far down. Set to min angle");
+                }
+                else
+                {
+                    Debug.Log("Min - I'm not being grabbed");
+                }
+
+                
             }
             else if(LocalAngle >= angleMax)
             {
                 state = IndustrialToggleState.Off;
+                if(grabPoint.GrabbedHand()!= null)
+                {
+                   Debug.Log("too up down, set to max");
+                }
+                else
+                {
+                    //transform.localEulerAngles = new Vector3(0, angleMax, 0);
+                    //this.transform.rotation = Quaternion.Euler(new Vector3(0, angleMax, 0));
+                    Debug.Log("Max - I'm not being grabbed");
+                }
             }
+
+            //if angle is greater than max, set to max if not grabbed
+            //if angle is less than min, set to min if not grabbed
+
 
             base.FixedUpdate();
 

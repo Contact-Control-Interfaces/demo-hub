@@ -47,8 +47,12 @@ public class ActivatePanel : MonoBehaviour
         else
         {
             OnOff.Invoke();
-            Debug.Log("Red Light On");
         }
+    }
+
+    public void NetralHit()
+    {
+        Debug.Log("Neutral Hit");
     }
 
     public void OnAllSwitchesToggled()
