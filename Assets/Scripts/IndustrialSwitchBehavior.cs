@@ -50,6 +50,8 @@ namespace Maestro
         public Rigidbody connectedObject;
         public MaestroGrabbable grabPoint;
 
+        private Vector3 leverPosition;
+
         protected override void Awake()
         {
             base.Awake();
@@ -75,6 +77,7 @@ namespace Maestro
 
             // Move switch to initial position
             state = initialState;
+            leverPosition = this.transform.position;
             LocalAngle = TargetAngle;
 
             // Call event for initial state
@@ -87,39 +90,32 @@ namespace Maestro
             if (threeState && Mathf.Abs(LocalAngle) < innerExtent) {
                 state = IndustrialToggleState.Neutral;
             }
-            else if (LocalAngle <= angleMin)
-            { 
-                state = IndustrialToggleState.On;
-                if(grabPoint.GrabbedHand() != null)
-                {
 
-                    Debug.Log("Trying to go too far down. Set to min angle");
+            else if (LocalAngle <= angleMin)
+            {
+                state = IndustrialToggleState.On;
+                if (grabPoint.GrabbedHand() != null)
+                {
+                    
                 }
                 else
                 {
-                    Debug.Log("Min - I'm not being grabbed");
+                    Debug.Log("Not being touched, at min point");
                 }
-
-                
             }
+
             else if(LocalAngle >= angleMax)
             {
                 state = IndustrialToggleState.Off;
-                if(grabPoint.GrabbedHand()!= null)
+                if (grabPoint.GrabbedHand()!= null)
                 {
-                   Debug.Log("too up down, set to max");
+                   
                 }
                 else
                 {
-                    //transform.localEulerAngles = new Vector3(0, angleMax, 0);
-                    //this.transform.rotation = Quaternion.Euler(new Vector3(0, angleMax, 0));
-                    Debug.Log("Max - I'm not being grabbed");
+                    Debug.Log("Not being touched, at max point");
                 }
             }
-
-            //if angle is greater than max, set to max if not grabbed
-            //if angle is less than min, set to min if not grabbed
-
 
             base.FixedUpdate();
 

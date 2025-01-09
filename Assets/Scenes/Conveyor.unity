@@ -1788,6 +1788,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToggleSwitch
       objectReference: {fileID: 0}
+    - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7267977568506457776, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2118,12 +2123,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &750690880 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-    type: 3}
-  m_PrefabInstance: {fileID: 1742581524}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &758240038 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3968000100619176746, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
@@ -2502,7 +2501,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0048, y: -0, z: -0.0091}
-  m_LocalScale: {x: 0.071099006, y: 0.05, z: 0.007}
+  m_LocalScale: {x: 0.087437555, y: 0.06149, z: 0.0086086}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 222711083441507018}
@@ -3038,6 +3037,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToggleSwitch (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7267977568506457776, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3238,19 +3242,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb62231d7cc2164cbd68f93d20d0a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwHelpersEnabled: 1
+  throwHelpersEnabled: 0
   OnRelease:
     m_PersistentCalls:
       m_Calls: []
   OnGrab:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1000509838 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-    type: 3}
-  m_PrefabInstance: {fileID: 563125897}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1005059166
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,7 +7070,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7617,7 +7615,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7728,12 +7726,6 @@ MonoBehaviour:
   - {fileID: 1713769755}
   - {fileID: 9432870}
   - {fileID: 1459762333}
---- !u!1 &1532635365 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5299310985223911352, guid: f2cde2e0ee7cdf545a634fe732ba2247,
-    type: 3}
-  m_PrefabInstance: {fileID: 994492823}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1564783064
 GameObject:
   m_ObjectHideFlags: 0
@@ -8259,11 +8251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelButtons:
-  - {fileID: 1000509838}
-  - {fileID: 1532635365}
-  - {fileID: 750690880}
   - {fileID: 3840553795433393170}
-  active: 00000000
+  active: 00
   conveyorBelt: {fileID: 1496187866}
   OnOff:
     m_PersistentCalls:
@@ -8550,6 +8539,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ToggleSwitch (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299310985659114355, guid: f2cde2e0ee7cdf545a634fe732ba2247,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7267977568506457776, guid: f2cde2e0ee7cdf545a634fe732ba2247,
         type: 3}
@@ -10309,7 +10303,7 @@ Transform:
   m_GameObject: {fileID: 3840553794794698969}
   serializedVersion: 2
   m_LocalRotation: {x: -0.6845156, y: -0.68320054, z: -0.1773089, w: 0.18231021}
-  m_LocalPosition: {x: -0.004, y: 0.403, z: -0.176}
+  m_LocalPosition: {x: -0.0038, y: 0.4626, z: -0.1423}
   m_LocalScale: {x: 2.8296, y: 2.8296, z: 2.8296}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10346,7 +10340,6 @@ GameObject:
   - component: {fileID: 222711082802945537}
   - component: {fileID: 6405815988721627754}
   - component: {fileID: 5074868769341754344}
-  - component: {fileID: 6405815988721627753}
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
@@ -10673,33 +10666,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1688906216}
   m_SourcePrefab: {fileID: 100100000, guid: 4e22ea96205eaef4387c69a59db4f784, type: 3}
---- !u!54 &6405815988721627753
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3840553795433393170}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &6405815988721627754
 MonoBehaviour:
   m_ObjectHideFlags: 0
