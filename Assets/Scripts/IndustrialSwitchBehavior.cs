@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace Maestro
         public IndustrialToggleState state;
         private IndustrialToggleState lastState;
         public float extent = 27;
+        public float maxRampPoint;
 
         [Space]
         public bool threeState;
@@ -49,8 +51,6 @@ namespace Maestro
 
         public Rigidbody connectedObject;
         public MaestroGrabbable grabPoint;
-
-        private Vector3 leverPosition;
 
         protected override void Awake()
         {
@@ -77,15 +77,26 @@ namespace Maestro
 
             // Move switch to initial position
             state = initialState;
-            leverPosition = this.transform.position;
             LocalAngle = TargetAngle;
 
             // Call event for initial state
             CallToggleEvent(state);
+
+            //Grab mid point of turnAngle;
+            maxRampPoint = extent / 2;
         }
 
         protected override void FixedUpdate()
         {
+/*            if (grabPoint != null)
+            {
+                
+                //from 0-50% of angle it should ramp to 0-100% amplitude
+                //from 50% to end of angle it should go from 100% - 0% amplitude
+            }*/
+
+            updateAmplitude(LocalAngle);
+
             // Update state
             if (threeState && Mathf.Abs(LocalAngle) < innerExtent) {
                 state = IndustrialToggleState.Neutral;
@@ -94,27 +105,11 @@ namespace Maestro
             else if (LocalAngle <= angleMin)
             {
                 state = IndustrialToggleState.On;
-                if (grabPoint.GrabbedHand() != null)
-                {
-                    
-                }
-                else
-                {
-                    Debug.Log("Not being touched, at min point");
-                }
             }
 
             else if(LocalAngle >= angleMax)
             {
                 state = IndustrialToggleState.Off;
-                if (grabPoint.GrabbedHand()!= null)
-                {
-                   
-                }
-                else
-                {
-                    Debug.Log("Not being touched, at max point");
-                }
             }
 
             base.FixedUpdate();
@@ -173,6 +168,19 @@ namespace Maestro
             onToggleOn.Invoke();
             if (onToggleChanged != null)
                 onToggleChanged.Invoke(IndustrialToggleState.On);
+        }
+
+        private void updateAmplitude(float objectAngle)
+        {
+            float percentageOfAngle = Mathf.Abs(percentageOfAngle = (objectAngle / extent) * 100);
+
+            //amp according to percentage of Angle;
+
+            float ampValue = Mathf.Abs((percentageOfAngle / 100) * 255);
+
+
+            Debug.Log("Lever Angle %: " + percentageOfAngle);
+            Debug.Log("Amp Value: " + ampValue);
         }
 
         private void OnToggledOff()
