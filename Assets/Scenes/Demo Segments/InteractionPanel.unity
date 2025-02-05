@@ -1605,6 +1605,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -1719,6 +1720,125 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 523979090}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &344792149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 344792150}
+  - component: {fileID: 344792153}
+  - component: {fileID: 344792152}
+  - component: {fileID: 344792151}
+  - component: {fileID: 344792154}
+  m_Layer: 0
+  m_Name: WristTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &344792150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344792149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1194, y: 0, z: -0}
+  m_LocalScale: {x: 0.21231002, y: 0.21231002, z: 0.21231002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1862660605}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &344792151
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344792149}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &344792152
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344792149}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &344792153
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344792149}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &344792154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344792149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9037134a97b566b43bbd6f24e15386c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wristGaze: {fileID: 1862660604}
 --- !u!1 &421086926
 GameObject:
   m_ObjectHideFlags: 0
@@ -4503,6 +4623,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -5258,6 +5379,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -5775,6 +5897,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1128613937}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1128613942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 356002448712052427, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+    type: 3}
+  m_PrefabInstance: {fileID: 1128613937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1156392914
 Transform:
   m_ObjectHideFlags: 0
@@ -6096,6 +6224,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -6679,6 +6808,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -6934,6 +7064,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -9098,6 +9229,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -9347,6 +9479,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -9545,6 +9678,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -10143,6 +10277,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -14408,6 +14543,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1128613938}
+    - targetCorrespondingSourceObject: {fileID: 4595769933915641163, guid: c70af90bcf1320e4991649fcd71a0c59,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 344792150}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6682640483777899767, guid: c70af90bcf1320e4991649fcd71a0c59,
         type: 3}
@@ -14445,10 +14584,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHead: {fileID: 1192825486}
-  wristMenuObj: {fileID: 1128613941}
+  wristMenuObject: {fileID: 1128613941}
   wristMenu: {fileID: 1128613940}
   fillHandler: {fileID: 1128613939}
-  wristBand: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
+  wristBandObject: {fileID: 1128613942}
+  wristBandOn: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
+  wristBandOff: {fileID: 2100000, guid: f006b53612061904dbe7019ead9cbea2, type: 2}
+  interactableCount: 0
+  bufferLength: 2
+  wristReady: 1
+--- !u!4 &1862660605 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4595769933915641163, guid: c70af90bcf1320e4991649fcd71a0c59,
+    type: 3}
+  m_PrefabInstance: {fileID: 1862660600}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1938545557
 Transform:
   m_ObjectHideFlags: 0
@@ -14767,6 +14917,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -16596,6 +16747,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -16897,6 +17049,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -17126,6 +17279,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -17357,6 +17511,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -17752,6 +17907,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:

@@ -1,4 +1,5 @@
 using Leap.Unity;
+using Maestro;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,32 +7,45 @@ using UnityEngine;
 
 public class WristGaze : MonoBehaviour
 {
+    [Header("Gaze Objects")]
     public Transform playerHead;
-    public GameObject wristMenuObj;
+    public GameObject wristMenuObject;
     public WristMenu wristMenu;
     public ObjectFill fillHandler;
-    public Material wristBand;
 
+    [Header("Gaze Distance")]
     private float curDistance;
     private float wristThreshold = 0.80f;
     private float triggerDistance = .4f;
 
+    [Header("Wrist Band Objects")]
+    public GameObject wristBandObject;
+    public Material wristBandOn;
+    public Material wristBandOff;
+
+
+    [Header("Gaze Buffer")]
+    public int interactableCount;
+    public int bufferLength = 5;
+    public bool wristReady;
+    private Coroutine bufferCoroutine;
+
     void Start()
     {
+        wristReady = true;
         if (wristMenu == null)
         {
-             wristMenu = FindAnyObjectByType<WristMenu>();
+            wristMenu = FindAnyObjectByType<WristMenu>();
         }
     }
 
     public bool CheckWrist(Vector3 A, Vector3 B)
     {
-        curDistance = Vector3.Distance(wristMenuObj.transform.position, playerHead.transform.position);
+        curDistance = Vector3.Distance(wristMenuObject.transform.position, playerHead.transform.position);
         var lookPercentage = Vector3.Dot(A.normalized, B.normalized);
-
         ColorAdjust(lookPercentage);
 
-        if(lookPercentage > wristThreshold)
+        if (lookPercentage > wristThreshold)
         {
             return true;
         }
@@ -42,14 +56,14 @@ public class WristGaze : MonoBehaviour
     public void ColorAdjust(float colorValue)
     {
         float valueClamp = Mathf.Clamp01(colorValue);
-        wristBand.SetFloat("_DotProduct", valueClamp);
+        wristBandOn.SetFloat("_DotProduct", valueClamp);
     }
 
     private void Update()
     {
-        if (!wristMenu.menu.Active && wristMenuObj.activeSelf)
+        if (!wristMenu.menu.Active && wristMenuObject.activeSelf && wristReady)
         {
-            if (CheckWrist(this.transform.forward, wristMenuObj.transform.up) && curDistance <= triggerDistance)
+            if (CheckWrist(this.transform.forward, wristMenuObject.transform.up) && curDistance <= triggerDistance)
             {
                 fillHandler.Fill(false);
             }
@@ -59,5 +73,39 @@ public class WristGaze : MonoBehaviour
                 fillHandler.StopFill();
             }
         }
+    }
+
+
+    public void startBuffer()
+    {
+        if (bufferCoroutine == null)
+        {
+            bufferCoroutine = StartCoroutine(wristBufferTimer());
+        }
+    }
+
+    public void wristNotReady()
+    {
+        if (wristReady)
+        {
+            Debug.Log("Stop the wrist");
+            wristBandObject.GetComponent<Renderer>().material = wristBandOff;
+            wristReady = false;
+        }
+    }
+
+    private IEnumerator wristBufferTimer()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(bufferLength);
+
+        //After we have waited 5 seconds print the time again.
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        bufferCoroutine = null;
+        wristReady = true;
+        wristBandObject.GetComponent<Renderer>().material = wristBandOn;
     }
 }
