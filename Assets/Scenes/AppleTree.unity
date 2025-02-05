@@ -389,6 +389,7 @@ MonoBehaviour:
   palmDiffusion: 0.75
   ignorePalmVibration: 1
   interactionPriority: 0
+  fTest: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -1436,6 +1437,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e6565abb573d7e4a9b259356e831911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &907081820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 356002448712052427, guid: fbb00d0d72a15b54fb87e02c5b9c1f53,
+    type: 3}
+  m_PrefabInstance: {fileID: 907081815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &964162409
 GameObject:
   m_ObjectHideFlags: 0
@@ -8835,10 +8842,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHead: {fileID: 1769815828}
-  wristMenuObj: {fileID: 907081817}
+  wristMenuObject: {fileID: 907081817}
   wristMenu: {fileID: 907081819}
   fillHandler: {fileID: 907081818}
-  wristBand: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
+  wristBandObject: {fileID: 907081820}
+  wristBandOn: {fileID: 2100000, guid: 5a2bb0d7df6588e4b88097dc1915a61e, type: 2}
+  wristBandOff: {fileID: 2100000, guid: f006b53612061904dbe7019ead9cbea2, type: 2}
+  interactableCount: 0
+  bufferLength: 2
+  wristReady: 1
 --- !u!1 &1823490808
 GameObject:
   m_ObjectHideFlags: 0
@@ -10341,6 +10353,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 412477369}
     m_Modifications:
+    - target: {fileID: 2025811235, guid: 138cdea22dd142c4aa72a8d8e407ceae, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 148857006723840558, guid: 138cdea22dd142c4aa72a8d8e407ceae,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813170399937526871, guid: 138cdea22dd142c4aa72a8d8e407ceae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4656398796129455359, guid: 7de49888b07fc434788492b89fd3964d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10895,20 +10921,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _interactableLayers.Array.data[2].layerIndex
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025811235, guid: 138cdea22dd142c4aa72a8d8e407ceae, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 148857006723840558, guid: 138cdea22dd142c4aa72a8d8e407ceae,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3813170399937526871, guid: 138cdea22dd142c4aa72a8d8e407ceae,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
