@@ -26,7 +26,7 @@ public class WristGaze : MonoBehaviour
 
     [Header("Gaze Buffer")]
     public int interactableCount;
-    public int bufferLength = 5;
+    public int bufferLength = 2;
     public bool wristReady;
     private Coroutine bufferCoroutine;
 
