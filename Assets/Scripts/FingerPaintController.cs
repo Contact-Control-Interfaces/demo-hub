@@ -207,6 +207,7 @@ public class FingerPaintController : MonoBehaviour
         var rpos = tr.transform.position + rdir * tr.minVertexDistance;
         AddPoint(tr, rpos);
         tr.transform.position = rpos;
+        tr.tag = "Paint";
         BufferLine(tr);
         tr.emitting = false;
     }

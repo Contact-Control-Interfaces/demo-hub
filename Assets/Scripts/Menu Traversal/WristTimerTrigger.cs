@@ -10,7 +10,7 @@ public class WristTimerTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.GetComponent<FingerCollider>())
+        if (!other.gameObject.GetComponent<FingerCollider>() || other.gameObject.tag == "Paint")
         {
             wristGaze.interactableCount++;
             wristGaze.wristNotReady();
@@ -21,8 +21,6 @@ public class WristTimerTrigger : MonoBehaviour
     {
         if (!other.gameObject.GetComponent<FingerCollider>())
         {
-            Debug.Log(other.tag);
-            Debug.Log(other.gameObject.name);
             wristGaze.interactableCount--;
             if (wristGaze.interactableCount <= 0)
             {

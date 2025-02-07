@@ -9,7 +9,7 @@ public class WristGaze : MonoBehaviour
 {
     [Header("Gaze Objects")]
     public Transform playerHead;
-    public GameObject wristMenuObject;
+    public GameObject wristToggle;
     public WristMenu wristMenu;
     public ObjectFill fillHandler;
 
@@ -41,7 +41,7 @@ public class WristGaze : MonoBehaviour
 
     public bool CheckWrist(Vector3 A, Vector3 B)
     {
-        curDistance = Vector3.Distance(wristMenuObject.transform.position, playerHead.transform.position);
+        curDistance = Vector3.Distance(wristToggle.transform.position, playerHead.transform.position);
         var lookPercentage = Vector3.Dot(A.normalized, B.normalized);
         ColorAdjust(lookPercentage);
 
@@ -61,9 +61,9 @@ public class WristGaze : MonoBehaviour
 
     private void Update()
     {
-        if (!wristMenu.menu.Active && wristMenuObject.activeSelf && wristReady)
+        if (!wristMenu.menu.Active && wristToggle.activeSelf && wristReady)
         {
-            if (CheckWrist(this.transform.forward, wristMenuObject.transform.up) && curDistance <= triggerDistance)
+            if (CheckWrist(this.transform.forward, wristToggle.transform.up) && curDistance <= triggerDistance)
             {
                 fillHandler.Fill(false);
             }
