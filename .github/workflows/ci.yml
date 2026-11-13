@@ -290,14 +290,22 @@ jobs:
           name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
           path: dist
 
-      # Informational: a failed SBOM never blocks a release.
+      # Informational: a failed SBOM never blocks a release. Syft writes outside
+      # dist/, and the result moves in only when it is valid JSON, so a failed
+      # run can't upload (or, on a re-run, --clobber over) a good SBOM with an
+      # empty or partial one.
       - name: SBOM (Syft)
         continue-on-error: true
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
         run: |
-          mkdir -p player sbom
-          unzip -q dist/*.zip -d player
-          docker run --rm -v "$PWD:/work" anchore/syft:v1.54.1@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa \
-            dir:/work/player -o cyclonedx-json > "dist/$BUILD_NAME-${{ needs.version.outputs.version }}.cdx.json"
+          work="$RUNNER_TEMP/sbom"
+          mkdir -p "$work/player"
+          unzip -q dist/*.zip -d "$work/player"
+          docker run --rm -v "$work:/work" anchore/syft:v1.54.1@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa \
+            dir:/work/player -o cyclonedx-json > "$work/bom.json"
+          jq -e '.components' "$work/bom.json" > /dev/null
+          mv "$work/bom.json" "dist/$BUILD_NAME-$VERSION.cdx.json"
 
       # The tag was pushed by a person (--verify-tag); CI never creates one. A
       # re-run of a partly failed release finishes it rather than failing on the

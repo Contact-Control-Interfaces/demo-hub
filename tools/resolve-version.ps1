@@ -119,11 +119,18 @@ $declared = Get-DeclaredVersion
 # is built. The tag being built is left out, or a release tag would fail its
 # own check; prereleases are left out, or an rc of the next version would hide
 # a stale declared version.
+#
+# This applies to tags and to staging, whose beta builds head towards the next
+# release. Other branches only warn: main keeps the released version until the
+# next release reaches it (the bump happens on staging), and ci builds are never
+# published, so their ordering doesn't matter.
 $currentTag  = if ($Ref -match '^refs/tags/(.+)$') { $Matches[1] } else { $null }
 $lastRelease = Get-HighestReleaseTag -Exclude $currentTag
 if ($lastRelease -and (Compare-SemVer $declared $lastRelease) -le 0) {
-    throw ("bundleVersion says $($declared.Text) but $($lastRelease.Text) is already released. " +
-           "Bump Player Settings > Version on staging to the next version.")
+    $message = "bundleVersion says $($declared.Text) but $($lastRelease.Text) is already released. " +
+               "Bump Player Settings > Version on staging to the next version."
+    if ($currentTag -or $Ref -eq 'refs/heads/staging') { throw $message }
+    Write-Warning $message
 }
 
 $requiredBranch = ''
