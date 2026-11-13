@@ -1,0 +1,325 @@
+# =============================================================================
+# demo-hub - GitHub Actions
+#
+# Versions (tools/resolve-version.ps1; dev-handbook releases/versioning.md):
+#   pull request, main, other branch  X.Y.Z-ci.N     workflow artifacts only
+#   push to staging                   X.Y.Z-beta.N   workflow artifacts only
+#   tag vX.Y.Z-rc.N on staging        X.Y.Z-rc.N     GitHub prerelease
+#   tag vX.Y.Z on main                X.Y.Z          GitHub release, marked Latest
+# X.Y.Z is bundleVersion (Player Settings > Version) in
+# ProjectSettings/ProjectSettings.asset; a tag must match it. N is the workflow
+# run number. Only a person creates tags. A release fast-forwards main to the rc
+# commit and tags the same commit (README.md, "Releases"). Nothing consumes
+# demo-hub as a package, so beta builds go to no feed.
+#
+# The player is a Windows x64 build. It carries its full version, commit and
+# build id (versioning rule 12; Assets/Editor/BuildInfoWriter.cs) and logs
+# them at startup.
+#
+# Jobs:
+#   version ── build ── release (tags only: GitHub Release with the zip,
+#                                SHA256SUMS and an SBOM)
+#
+# Repository settings this reads:
+#   vars.SUBMODULE_APP_ID and secrets.SUBMODULE_APP_PRIVATE_KEY
+#                         GitHub App that can read the private
+#                         com.contactci.unity and ultraleap-fork submodules
+#                         (set at org level)
+#   secrets.SUBMODULE_TOKEN
+#                         PAT fallback for the submodules when no App is set
+#   secrets.UNITY_LICENSE, or secrets.UNITY_SERIAL
+#                         Unity license for the player build: the contents of
+#                         a Personal .ulf file, or a Pro serial. Either also
+#                         needs secrets.UNITY_EMAIL and secrets.UNITY_PASSWORD.
+#                         Without a license the build job is skipped, and a
+#                         release tag fails rather than publish nothing.
+# =============================================================================
+name: ci
+
+# Feature branches get their pipeline from their pull request, so pushes to
+# them do not start a second, identical run.
+on:
+  push:
+    branches: [main, staging]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  UNITY_TARGET: StandaloneWindows64
+  BUILD_NAME: DemoHub
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Versioning rules 3 and 4: the declared version, the tag format and the
+  # branch a tag must be on, before anything is built. Also checks that the
+  # private submodules can be cloned, which needs no Unity license.
+  # ---------------------------------------------------------------------------
+  version:
+    name: Resolve the version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      kind: ${{ steps.version.outputs.kind }}
+      prev_stable: ${{ steps.notes.outputs.prev_stable }}
+      commit: ${{ steps.commit.outputs.commit }}
+      unity: ${{ steps.unity.outputs.configured }}
+    steps:
+      # Job-level `if:` can't read secrets, so whether a license is set is
+      # worked out here and handed to the build job. Only "is it set" leaves
+      # this step, never the secret.
+      - name: Detect the Unity license
+        id: unity
+        env:
+          HAS_LICENSE: ${{ secrets.UNITY_LICENSE != '' || secrets.UNITY_SERIAL != '' }}
+        run: |
+          echo "configured=$HAS_LICENSE" >> "$GITHUB_OUTPUT"
+          if [ "$HAS_LICENSE" != true ]; then
+            echo "::notice::No UNITY_LICENSE or UNITY_SERIAL secret, so the player build is skipped."
+          fi
+
+      - name: Submodule token
+        id: app-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+            com.contactci.unity
+            ultraleap-fork
+
+      # On a pull request, build the PR's head commit rather than the
+      # temporary merge commit, so the recorded commit exists (rule 12).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          submodules: recursive
+          token: ${{ steps.app-token.outputs.token || secrets.SUBMODULE_TOKEN || github.token }}
+          fetch-depth: 0 # every branch and tag, for the version and the branch check
+          persist-credentials: false
+
+      - name: Verify the submodules
+        run: |
+          missing=0
+          for f in Packages/com.contactci.unity/package.json Packages/ultraleap/Packages/Tracking/package.json; do
+            if [ ! -f "$f" ]; then
+              echo "::error::$f is missing."
+              missing=1
+            fi
+          done
+          if [ "$missing" = 1 ]; then
+            echo "com.contactci.unity and ultraleap-fork are private. Set the SUBMODULE_APP_ID variable and"
+            echo "SUBMODULE_APP_PRIVATE_KEY secret (a GitHub App installed on all three repositories), or a"
+            echo "SUBMODULE_TOKEN PAT. Pull requests from forks get neither and cannot build."
+            exit 1
+          fi
+          git submodule status
+
+      - name: Resolve the version
+        id: version
+        shell: pwsh
+        run: |
+          $lines = ./tools/resolve-version.ps1 -Ref $env:GITHUB_REF -RunNumber $env:GITHUB_RUN_NUMBER
+          $lines
+          $lines | Out-File $env:GITHUB_OUTPUT -Append
+
+      # A release candidate comes from staging; a release only from what has
+      # been fast-forwarded to main (versioning rule 4). A tag anywhere else
+      # stops here, before anything is built or published.
+      - name: Check the tag is on its branch
+        if: steps.version.outputs.kind == 'release'
+        env:
+          BRANCH: ${{ steps.version.outputs.required_branch }}
+        run: |
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" "origin/$BRANCH"; then
+            if [ "$BRANCH" = main ]; then hint="Fast-forward main to the rc commit and tag there"; else hint="Tag a commit on staging"; fi
+            echo "::error::$GITHUB_REF_NAME is not on $BRANCH. $hint (README.md, \"Releases\"). Nothing was published."
+            exit 1
+          fi
+
+      - name: Require a build for a release
+        if: steps.version.outputs.kind == 'release' && steps.unity.outputs.configured != 'true'
+        run: |
+          echo "::error::$GITHUB_REF_NAME needs a player build, but no Unity license is set (UNITY_LICENSE or UNITY_SERIAL). Nothing was published."
+          exit 1
+
+      # Release notes cover everything since the previous stable release: the
+      # highest vX.Y.Z below this version.
+      - name: Find the previous release
+        id: notes
+        if: steps.version.outputs.kind == 'release'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          core="${VERSION%%-*}"
+          prev="$( { git tag --list 'v[0-9]*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$'; echo "v$core"; } \
+                   | sort -uV | sed -n "/^v${core//./\\.}\$/q;p" | tail -n 1 || true)"
+          echo "Previous release: ${prev:-none}"
+          echo "prev_stable=$prev" >> "$GITHUB_OUTPUT"
+
+      - name: Record the commit
+        id: commit
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  # ---------------------------------------------------------------------------
+  # The Windows player, built in game-ci's Unity container. Needs a license.
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build the player (${{ needs.version.outputs.version }})
+    runs-on: ubuntu-latest
+    needs: version
+    if: needs.version.outputs.unity == 'true'
+    steps:
+      # The Unity image plus an HDRP project and its Library don't fit in a
+      # runner's default free space.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Submodule token
+        id: app-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+            com.contactci.unity
+            ultraleap-fork
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.version.outputs.commit }}
+          submodules: recursive
+          lfs: true # real models, textures and audio, not LFS pointers
+          token: ${{ steps.app-token.outputs.token || secrets.SUBMODULE_TOKEN || github.token }}
+          persist-credentials: false
+
+      # Rule 12's dirty flag, taken before Unity runs: the editor rewrites some
+      # tracked settings files while it builds.
+      - name: Check the tree is clean
+        id: tree
+        run: |
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+            echo "dirty=true" >> "$GITHUB_OUTPUT"
+            git status --short --untracked-files=no
+          else
+            echo "dirty=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Cache the Library folder
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: Library-${{ env.UNITY_TARGET }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            Library-${{ env.UNITY_TARGET }}-
+
+      # versioning: Custom sets Player Settings > Version inside the build only,
+      # so Application.version is the full version; the repo's file is not
+      # changed. The -buildInfo* arguments are read by BuildInfoWriter.
+      - name: Build
+        uses: game-ci/unity-builder@adaf7cd8f42fd48fbbf2d4f5f67ca30d87f819f1 # v5.0.1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ env.UNITY_TARGET }}
+          buildName: ${{ env.BUILD_NAME }}
+          versioning: Custom
+          version: ${{ needs.version.outputs.version }}
+          customParameters: >-
+            -buildInfoVersion ${{ needs.version.outputs.version }}
+            -buildInfoCommit ${{ needs.version.outputs.commit }}
+            -buildInfoDirty ${{ steps.tree.outputs.dirty }}
+            -buildInfoBuildId ${{ github.run_id }}
+
+      # Burst's debug information is for crash analysis on the build machine,
+      # and Unity names it "DoNotShip".
+      - name: Package
+        id: package
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          zip_name="$BUILD_NAME-$VERSION-win64.zip"
+          sudo chown -R "$(id -u):$(id -g)" build
+          mkdir -p dist
+          (cd "build/$UNITY_TARGET" && zip -qr "$GITHUB_WORKSPACE/dist/$zip_name" . -x '*_BurstDebugInformation_DoNotShip/*')
+          (cd dist && sha256sum "$zip_name" > SHA256SUMS)
+          ls -l dist
+          echo "zip=$zip_name" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
+          path: dist/
+          # A ci or beta build's only home is this artifact; a release's is the
+          # GitHub Release.
+          retention-days: ${{ needs.version.outputs.kind == 'beta' && 30 || needs.version.outputs.kind == 'ci' && 14 || 7 }}
+
+  # ---------------------------------------------------------------------------
+  # Tags only (rule 9): a GitHub prerelease for vX.Y.Z-rc.N, a release for
+  # vX.Y.Z (rule 8).
+  # ---------------------------------------------------------------------------
+  release:
+    name: Publish the GitHub Release
+    runs-on: ubuntu-latest
+    needs: [version, build]
+    if: needs.version.outputs.kind == 'release'
+    permissions:
+      contents: write # create the release, upload assets
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
+          path: dist
+
+      # Informational: a failed SBOM never blocks a release.
+      - name: SBOM (Syft)
+        continue-on-error: true
+        run: |
+          mkdir -p player sbom
+          unzip -q dist/*.zip -d player
+          docker run --rm -v "$PWD:/work" anchore/syft:v1.54.1@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa \
+            dir:/work/player -o cyclonedx-json > "dist/$BUILD_NAME-${{ needs.version.outputs.version }}.cdx.json"
+
+      # The tag was pushed by a person (--verify-tag); CI never creates one. A
+      # re-run of a partly failed release finishes it rather than failing on the
+      # half that worked.
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+          PRERELEASE: ${{ needs.version.outputs.prerelease }}
+          PREV_STABLE: ${{ needs.version.outputs.prev_stable }}
+        run: |
+          ARGS=(--title "Demo Hub $VERSION" --generate-notes --verify-tag)
+          if [ "$PRERELEASE" = true ]; then
+            ARGS+=(--prerelease)
+          else
+            ARGS+=(--latest)
+          fi
+          [ -n "$PREV_STABLE" ] && ARGS+=(--notes-start-tag "$PREV_STABLE")
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists; uploading any missing assets."
+            gh release upload "$GITHUB_REF_NAME" dist/* --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
+          fi
