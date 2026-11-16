@@ -472,11 +472,16 @@ jobs:
           ARGS=(--title "Demo Hub $VERSION" --generate-notes --verify-tag --draft)
           [ "$PRERELEASE" = true ] && ARGS+=(--prerelease)
           [ -n "$PREV_STABLE" ] && ARGS+=(--notes-start-tag "$PREV_STABLE")
-          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
+          # Every run that leaves a finished draft links it, including a re-run
+          # that completed one.
+          announce_draft() {
             url="$(gh release view "$GITHUB_REF_NAME" --json url --jq .url)"
             echo "::notice::Draft release $GITHUB_REF_NAME is ready for review: $url. Publish it there when it has been checked."
             echo "Draft release [$GITHUB_REF_NAME]($url) is ready for review. A person publishes it from the Releases page." >> "$GITHUB_STEP_SUMMARY"
+          }
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
+            announce_draft
             exit 0
           fi
           existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
@@ -497,3 +502,4 @@ jobs:
           fi
           echo "Draft release $GITHUB_REF_NAME already exists; uploading any missing assets."
           for f in "${missing[@]}"; do gh release upload "$GITHUB_REF_NAME" "$f"; done
+          announce_draft
