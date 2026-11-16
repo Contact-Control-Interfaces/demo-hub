@@ -66,6 +66,13 @@ from the same folder. Which release ships is pinned in
 `DemoLauncher.exe` itself (not of the zip it comes in). To ship a new launcher, change
 both lines. A build fails if the downloaded exe doesn't match the pin.
 
+### The EULA
+
+What the player zip ships is licensed under the Contact CI SDK EULA, so the zip carries
+[`EULA.md`](EULA.md) at its top, as the dev-handbook's licensing standard asks of
+release archives. It's the handbook's `licensing/templates/sdk-eula.md`, copied
+unchanged; when the template changes, copy it again.
+
 ### CI settings
 
 - **Submodules:** the org GitHub App (`SUBMODULE_APP_ID` variable and
