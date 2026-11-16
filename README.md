@@ -24,7 +24,15 @@ details.
 - **Branches.** Feature branches merge into `staging` through pull requests. `staging`
   is promoted to `main` only by a fast-forward to a release candidate.
 
-Only a person creates tags. To cut a release candidate, tag a commit on `staging`:
+Only a person creates tags, and only a person publishes a release. For each rc or
+release tag, CI creates a draft GitHub prerelease or release, published by a person:
+the draft goes on the
+[Releases page](https://github.com/Contact-Control-Interfaces/demo-hub/releases) with
+the zip, `SHA256SUMS`, an SBOM and generated notes, and the run summary links it.
+Drafts are visible only to people with write access to this repository. A person
+checks the draft and publishes it. CI never changes a release once it is published.
+
+To cut a release candidate, tag a commit on `staging`:
 
 ```
 git fetch origin
@@ -33,8 +41,10 @@ git push origin v3.1.0-rc.1
 ```
 
 CI checks that the tag's `X.Y.Z` matches the declared version and that the commit is
-on `staging`, builds the player and publishes a GitHub prerelease. A broken rc is
-fixed with `rc.2`, never by moving the tag.
+on `staging`, builds the player and creates a draft prerelease. Download the zip
+from the draft and test it, then publish the draft from the Releases page with "Set
+as a pre-release" left ticked. A broken rc is fixed with `rc.2`, never by moving the
+tag.
 
 To release, fast-forward `main` to the tested rc commit and tag that same commit:
 
@@ -46,6 +56,10 @@ git push origin main
 git tag -a v3.1.0 -m "3.1.0" v3.1.0-rc.1
 git push origin v3.1.0
 ```
+
+CI creates a draft release with notes since the previous release. Check it, then
+publish it from the Releases page with "Set as the latest release" ticked. A draft
+can't be marked Latest, so CI can't do this for you.
 
 Then bump Player Settings > Version on `staging` to the next version (e.g. `3.1.1`),
 so later builds head towards it. Tags and released versions are permanent.

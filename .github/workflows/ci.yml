@@ -4,13 +4,14 @@
 # Versions (tools/resolve-version.ps1; dev-handbook releases/versioning.md):
 #   pull request, main, other branch  X.Y.Z-ci.N     workflow artifacts only
 #   push to staging                   X.Y.Z-beta.N   workflow artifacts only
-#   tag vX.Y.Z-rc.N on staging        X.Y.Z-rc.N     GitHub prerelease
-#   tag vX.Y.Z on main                X.Y.Z          GitHub release, marked Latest
+#   tag vX.Y.Z-rc.N on staging        X.Y.Z-rc.N     draft GitHub prerelease
+#   tag vX.Y.Z on main                X.Y.Z          draft GitHub release
 # X.Y.Z is bundleVersion (Player Settings > Version) in
 # ProjectSettings/ProjectSettings.asset; a tag must match it. N is the workflow
-# run number. Only a person creates tags. A release fast-forwards main to the rc
-# commit and tags the same commit (README.md, "Releases"). Nothing consumes
-# demo-hub as a package, so beta builds go to no feed.
+# run number. Only a person creates tags, and only a person publishes a
+# release: CI leaves each one as a draft for review. A release fast-forwards
+# main to the rc commit and tags the same commit (README.md, "Releases").
+# Nothing consumes demo-hub as a package, so beta builds go to no feed.
 #
 # The player is a Windows x64 build. It carries its full version, commit and
 # build id (versioning rule 12; Assets/Editor/BuildInfoWriter.cs) and logs
@@ -20,8 +21,8 @@
 # THIRD-PARTY-NOTICES.md for the third-party parts.
 #
 # Jobs:
-#   version ── build ── release (tags only: GitHub Release with the zip,
-#                                SHA256SUMS and an SBOM)
+#   version ── build ── release (tags only: a draft GitHub Release with the
+#                                zip, SHA256SUMS and an SBOM)
 #
 # Repository settings this reads:
 #   vars.SUBMODULE_APP_ID and secrets.SUBMODULE_APP_PRIVATE_KEY
@@ -371,11 +372,12 @@ jobs:
           retention-days: ${{ needs.version.outputs.kind == 'beta' && 30 || needs.version.outputs.kind == 'ci' && 14 || 7 }}
 
   # ---------------------------------------------------------------------------
-  # Tags only (rule 9): a GitHub prerelease for vX.Y.Z-rc.N, a release for
-  # vX.Y.Z (rule 8).
+  # Tags only (rule 9): a draft GitHub prerelease for vX.Y.Z-rc.N, a draft
+  # release for vX.Y.Z (rule 8). A person reviews the draft and publishes it;
+  # CI never publishes a release, and never changes one that is published.
   # ---------------------------------------------------------------------------
   release:
-    name: Publish the GitHub Release
+    name: Draft the GitHub Release
     runs-on: ubuntu-latest
     needs: [version, build]
     if: needs.version.outputs.kind == 'release'
@@ -387,41 +389,42 @@ jobs:
           name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
           path: dist
 
-      # A re-run of a release that is already partly published must finish it
-      # with the files it already has. Re-running all jobs rebuilds the player,
-      # and a rebuilt zip doesn't hash the same (ZIP timestamps alone change
-      # it), so a published zip and a SHA256SUMS from the rebuild could
-      # disagree. The published zip and SHA256SUMS replace this run's copies in
-      # dist/ (the local files, not the release's), a missing SHA256SUMS is
-      # written from the published zip, and the SBOM below then describes the
-      # zip that is actually published. If this build's zip has to be uploaded
-      # but doesn't match the published SHA256SUMS, nothing is uploaded.
-      - name: Reuse the published assets
+      # A re-run of a release that already has some of its assets (draft or
+      # published) must finish it with the files it already has. Re-running all
+      # jobs rebuilds the player, and a rebuilt zip doesn't hash the same (ZIP
+      # timestamps alone change it), so a zip already on the release and a
+      # SHA256SUMS from the rebuild could disagree. The zip and SHA256SUMS
+      # already on the release replace this run's copies in dist/ (the local
+      # files, not the release's), a missing SHA256SUMS is written from the zip
+      # on the release, and the SBOM below then describes that zip. If this
+      # build's zip has to be uploaded but doesn't match the SHA256SUMS already
+      # on the release, nothing is uploaded.
+      - name: Reuse the assets already on the release
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           VERSION: ${{ needs.version.outputs.version }}
         run: |
           if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            echo "$GITHUB_REF_NAME has no release yet; publishing this build."
+            echo "$GITHUB_REF_NAME has no release yet; this build becomes its draft."
             exit 0
           fi
           zip="$BUILD_NAME-$VERSION-win64.zip"
           existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
-          published() { grep -qxF "$1" <<< "$existing"; }
-          if published "$zip"; then
-            echo "Using the published $zip."
+          on_release() { grep -qxF "$1" <<< "$existing"; }
+          if on_release "$zip"; then
+            echo "Using the $zip already on the release."
             gh release download "$GITHUB_REF_NAME" --pattern "$zip" --dir dist --clobber
-            if ! published SHA256SUMS; then
+            if ! on_release SHA256SUMS; then
               (cd dist && sha256sum "$zip" > SHA256SUMS)
             fi
           fi
-          if published SHA256SUMS; then
-            echo "Using the published SHA256SUMS."
+          if on_release SHA256SUMS; then
+            echo "Using the SHA256SUMS already on the release."
             gh release download "$GITHUB_REF_NAME" --pattern SHA256SUMS --dir dist --clobber
           fi
           if ! (cd dist && sha256sum -c SHA256SUMS); then
-            echo "::error::$zip from this run doesn't match the SHA256SUMS already published on $GITHUB_REF_NAME, so it is from a different build. Re-run only the failed jobs, which reuses the original build's artifact (kept 7 days). Nothing was uploaded."
+            echo "::error::$zip from this run doesn't match the SHA256SUMS already on the $GITHUB_REF_NAME release, so it is from a different build. Re-run only the failed jobs, which reuses the original build's artifact (kept 7 days). Nothing was uploaded."
             exit 1
           fi
 
@@ -447,11 +450,18 @@ jobs:
         if: steps.sbom.outcome != 'success'
         run: echo "::warning::No SBOM was produced, so $GITHUB_REF_NAME ships without one (versioning rule 8). See the SBOM step's log."
 
-      # The tag was pushed by a person (--verify-tag); CI never creates one. A
-      # re-run of a partly failed release finishes it rather than failing on the
-      # half that worked, and uploads only the assets it lacks: an asset that is
-      # already published is never replaced (rule 6).
-      - name: Create the release
+      # The tag was pushed by a person (--verify-tag); CI never creates one, and
+      # never publishes the release: it is created as a draft (a prerelease
+      # draft for an rc), and a person publishes it from the Releases page. A
+      # draft can't be marked Latest, so whoever publishes a vX.Y.Z ticks "Set
+      # as the latest release".
+      #
+      # A re-run of a partly failed run finishes the draft rather than failing
+      # on the half that worked, and uploads only the assets it lacks: an asset
+      # already on the release is never replaced (rule 6), and the step above
+      # has made the rest agree with it. A release a person has published is
+      # never changed; missing assets are only reported.
+      - name: Create the draft release
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -459,24 +469,31 @@ jobs:
           PRERELEASE: ${{ needs.version.outputs.prerelease }}
           PREV_STABLE: ${{ needs.version.outputs.prev_stable }}
         run: |
-          ARGS=(--title "Demo Hub $VERSION" --generate-notes --verify-tag)
-          if [ "$PRERELEASE" = true ]; then
-            ARGS+=(--prerelease)
-          else
-            ARGS+=(--latest)
-          fi
+          ARGS=(--title "Demo Hub $VERSION" --generate-notes --verify-tag --draft)
+          [ "$PRERELEASE" = true ] && ARGS+=(--prerelease)
           [ -n "$PREV_STABLE" ] && ARGS+=(--notes-start-tag "$PREV_STABLE")
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            echo "Release $GITHUB_REF_NAME already exists; uploading any missing assets."
-            existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
-            for f in dist/*; do
-              name="$(basename "$f")"
-              if grep -qxF "$name" <<< "$existing"; then
-                echo "  $name is already published; keeping it."
-              else
-                gh release upload "$GITHUB_REF_NAME" "$f"
-              fi
-            done
-          else
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
+            url="$(gh release view "$GITHUB_REF_NAME" --json url --jq .url)"
+            echo "::notice::Draft release $GITHUB_REF_NAME is ready for review: $url. Publish it there when it has been checked."
+            echo "Draft release [$GITHUB_REF_NAME]($url) is ready for review. A person publishes it from the Releases page." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
+          existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
+          draft="$(gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft)"
+          missing=()
+          for f in dist/*; do
+            name="$(basename "$f")"
+            if grep -qxF "$name" <<< "$existing"; then
+              echo "  $name is already on the release; keeping it."
+            else
+              missing+=("$f")
+            fi
+          done
+          if [ "$draft" != true ]; then
+            echo "Release $GITHUB_REF_NAME has already been published by a person; leaving it unchanged."
+            [ ${#missing[@]} -gt 0 ] && echo "::warning::Published release $GITHUB_REF_NAME lacks: $(basename -a "${missing[@]}" | paste -sd ' '). CI doesn't change a published release; upload them by hand if they belong there."
+            exit 0
+          fi
+          echo "Draft release $GITHUB_REF_NAME already exists; uploading any missing assets."
+          for f in "${missing[@]}"; do gh release upload "$GITHUB_REF_NAME" "$f"; done
