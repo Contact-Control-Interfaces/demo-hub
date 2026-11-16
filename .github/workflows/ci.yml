@@ -16,7 +16,8 @@
 # build id (versioning rule 12; Assets/Editor/BuildInfoWriter.cs) and logs
 # them at startup. The zip also holds DemoLauncher.exe beside DemoHub.exe,
 # from the demo-launcher release pinned in tools/demo-launcher.env, and
-# EULA.md, the SDK EULA that what we ship is licensed under.
+# EULA.md, the SDK EULA that what we ship is licensed under, with
+# THIRD-PARTY-NOTICES.md for the third-party parts.
 #
 # Jobs:
 #   version ── build ── release (tags only: GitHub Release with the zip,
@@ -342,7 +343,7 @@ jobs:
       # Burst's debug information is for crash analysis on the build machine,
       # and Unity names it "DoNotShip". The launcher goes in beside DemoHub.exe,
       # and EULA.md (the SDK EULA, dev-handbook licensing/licenses.md rule 2)
-      # at the top of the zip.
+      # and THIRD-PARTY-NOTICES.md (rule 4) at the top of the zip.
       - name: Package
         id: package
         env:
@@ -354,7 +355,7 @@ jobs:
             echo "::error::The build has no $BUILD_NAME.exe, which DemoLauncher.exe starts."
             exit 1
           fi
-          cp "$RUNNER_TEMP/launcher/DemoLauncher.exe" EULA.md "build/$UNITY_TARGET/"
+          cp "$RUNNER_TEMP/launcher/DemoLauncher.exe" EULA.md THIRD-PARTY-NOTICES.md "build/$UNITY_TARGET/"
           mkdir -p dist
           (cd "build/$UNITY_TARGET" && zip -qr "$GITHUB_WORKSPACE/dist/$zip_name" . -x '*_BurstDebugInformation_DoNotShip/*')
           (cd dist && sha256sum "$zip_name" > SHA256SUMS)

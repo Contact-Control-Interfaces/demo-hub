@@ -73,6 +73,13 @@ What the player zip ships is licensed under the Contact CI SDK EULA, so the zip 
 release archives. It's the handbook's `licensing/templates/sdk-eula.md`, copied
 unchanged; when the template changes, copy it again.
 
+Beside it, [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) carries the notices and
+license texts the player's third-party parts require (the Ultraleap plugin, protobuf
+and mingw-w64 in `libcci.dll`, the Meta SDK, fonts, sounds and the rest). When you add
+or upgrade a package, plugin, font, sound or model, update it. Freesound sounds and
+other assets need their license recorded too, as `Assets/Sounds/SoundCredits.txt`
+does.
+
 ### CI settings
 
 - **Submodules:** the org GitHub App (`SUBMODULE_APP_ID` variable and
