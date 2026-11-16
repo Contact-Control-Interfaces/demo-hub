@@ -154,6 +154,19 @@ jobs:
           echo "::error::$GITHUB_REF_NAME needs a player build, but no Unity license is set (UNITY_LICENSE or UNITY_SERIAL). Nothing was published."
           exit 1
 
+      # Rule 4: a release's commit should already carry an rc tag for the same
+      # version, i.e. main was fast-forwarded to a tested rc. A "should", so it
+      # warns rather than fails.
+      - name: Check the release was an rc
+        if: steps.version.outputs.kind == 'release' && steps.version.outputs.prerelease == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if ! git tag --points-at "$GITHUB_SHA" | awk -v p="v$VERSION-rc." \
+               'index($0, p) == 1 && substr($0, length(p) + 1) ~ /^[1-9][0-9]*$/ { found = 1 } END { exit !found }'; then
+            echo "::warning::$GITHUB_REF_NAME's commit has no v$VERSION-rc.N tag, so this release was not promoted from a tested release candidate (README.md, \"Releases\")."
+          fi
+
       # Release notes cover everything since the previous stable release: the
       # highest vX.Y.Z below this version.
       - name: Find the previous release
@@ -290,11 +303,12 @@ jobs:
           name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
           path: dist
 
-      # Informational: a failed SBOM never blocks a release. Syft writes outside
-      # dist/, and the result moves in only when it is valid JSON, so a failed
-      # run can't upload (or, on a re-run, --clobber over) a good SBOM with an
-      # empty or partial one.
+      # A failed SBOM doesn't block a release, but it is flagged on the run: rule
+      # 8 wants one on every release. Syft writes outside dist/, and the result
+      # moves in only when it lists components, so a failed run can't upload an
+      # empty or partial SBOM.
       - name: SBOM (Syft)
+        id: sbom
         continue-on-error: true
         env:
           VERSION: ${{ needs.version.outputs.version }}
@@ -304,12 +318,17 @@ jobs:
           unzip -q dist/*.zip -d "$work/player"
           docker run --rm -v "$work:/work" anchore/syft:v1.54.1@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa \
             dir:/work/player -o cyclonedx-json > "$work/bom.json"
-          jq -e '.components' "$work/bom.json" > /dev/null
+          jq -e '(.components // []) | length > 0' "$work/bom.json" > /dev/null
           mv "$work/bom.json" "dist/$BUILD_NAME-$VERSION.cdx.json"
+
+      - name: Flag a missing SBOM
+        if: steps.sbom.outcome != 'success'
+        run: echo "::warning::No SBOM was produced, so $GITHUB_REF_NAME ships without one (versioning rule 8). See the SBOM step's log."
 
       # The tag was pushed by a person (--verify-tag); CI never creates one. A
       # re-run of a partly failed release finishes it rather than failing on the
-      # half that worked.
+      # half that worked, and uploads only the assets it lacks: an asset that is
+      # already published is never replaced (rule 6).
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -327,7 +346,15 @@ jobs:
           [ -n "$PREV_STABLE" ] && ARGS+=(--notes-start-tag "$PREV_STABLE")
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
             echo "Release $GITHUB_REF_NAME already exists; uploading any missing assets."
-            gh release upload "$GITHUB_REF_NAME" dist/* --clobber
+            existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
+            for f in dist/*; do
+              name="$(basename "$f")"
+              if grep -qxF "$name" <<< "$existing"; then
+                echo "  $name is already published; keeping it."
+              else
+                gh release upload "$GITHUB_REF_NAME" "$f"
+              fi
+            done
           else
             gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
           fi
