@@ -14,7 +14,8 @@
 #
 # The player is a Windows x64 build. It carries its full version, commit and
 # build id (versioning rule 12; Assets/Editor/BuildInfoWriter.cs) and logs
-# them at startup.
+# them at startup. The zip also holds DemoLauncher.exe beside DemoHub.exe,
+# from the demo-launcher release pinned in tools/demo-launcher.env.
 #
 # Jobs:
 #   version ── build ── release (tags only: GitHub Release with the zip,
@@ -24,9 +25,10 @@
 #   vars.SUBMODULE_APP_ID and secrets.SUBMODULE_APP_PRIVATE_KEY
 #                         GitHub App that can read the private
 #                         com.contactci.unity and ultraleap-fork submodules
-#                         (set at org level)
+#                         and demo-launcher's releases (set at org level)
 #   secrets.SUBMODULE_TOKEN
-#                         PAT fallback for the submodules when no App is set
+#                         PAT fallback for the submodules and the launcher
+#                         when no App is set
 #   secrets.UNITY_LICENSE, or secrets.UNITY_SERIAL
 #                         Unity license for the player build: the contents of
 #                         a Personal .ulf file, or a Pro serial. Either also
@@ -214,6 +216,19 @@ jobs:
             com.contactci.unity
             ultraleap-fork
 
+      # A separate token, so that an App not installed on demo-launcher fails
+      # this step by name instead of the submodule checkout.
+      - name: Launcher token
+        id: launcher-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: demo-launcher
+          permission-contents: read
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.version.outputs.commit }}
@@ -233,6 +248,48 @@ jobs:
           else
             echo "dirty=false" >> "$GITHUB_OUTPUT"
           fi
+
+      # DemoLauncher.exe ships beside DemoHub.exe: it writes config.json next
+      # to itself and starts DemoHub.exe from the same folder. The release is
+      # pinned in tools/demo-launcher.env, with the exe's SHA-256, so a rebuild
+      # of a commit ships the same launcher. Fetched before Unity runs, so a
+      # bad pin fails in seconds. demo-launcher is private: the default token
+      # can't read it.
+      - name: Get the launcher
+        env:
+          GH_TOKEN: ${{ steps.launcher-token.outputs.token || secrets.SUBMODULE_TOKEN }}
+          LAUNCHER_REPO: ${{ github.repository_owner }}/demo-launcher
+        run: |
+          tag="$(sed -n 's/^DEMO_LAUNCHER_TAG=//p' tools/demo-launcher.env | tr -d '[:space:]')"
+          want="$(sed -n 's/^DEMO_LAUNCHER_SHA256=//p' tools/demo-launcher.env | tr -d '[:space:]')"
+          if [ -z "$tag" ] || [ -z "$want" ]; then
+            echo "::error::tools/demo-launcher.env needs DEMO_LAUNCHER_TAG and DEMO_LAUNCHER_SHA256."
+            exit 1
+          fi
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Can't read $LAUNCHER_REPO's releases: install the SUBMODULE_APP_ID GitHub App on demo-launcher, or give SUBMODULE_TOKEN access to it."
+            exit 1
+          fi
+          dir="$RUNNER_TEMP/launcher"
+          mkdir -p "$dir/download"
+          assets="$(gh release view "$tag" -R "$LAUNCHER_REPO" --json assets --jq '.assets[].name')"
+          zip="DemoLauncher-${tag#v}-win-x64.zip"
+          if grep -qxF "$zip" <<< "$assets"; then
+            gh release download "$tag" -R "$LAUNCHER_REPO" --pattern "$zip" --dir "$dir/download"
+            unzip -q "$dir/download/$zip" DemoLauncher.exe -d "$dir"
+          elif grep -qxF DemoLauncher.exe <<< "$assets"; then
+            # Releases from before demo-launcher had CI publish the bare exe.
+            gh release download "$tag" -R "$LAUNCHER_REPO" --pattern DemoLauncher.exe --dir "$dir"
+          else
+            echo "::error::$LAUNCHER_REPO release $tag has neither $zip nor DemoLauncher.exe."
+            exit 1
+          fi
+          got="$(sha256sum "$dir/DemoLauncher.exe" | cut -d ' ' -f 1)"
+          if [ "$got" != "$want" ]; then
+            echo "::error::DemoLauncher.exe from $LAUNCHER_REPO $tag has SHA-256 $got, but tools/demo-launcher.env pins $want."
+            exit 1
+          fi
+          echo "DemoLauncher.exe from $LAUNCHER_REPO $tag, SHA-256 $got."
 
       - name: Cache the Library folder
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
@@ -264,7 +321,7 @@ jobs:
             -buildInfoBuildId ${{ github.run_id }}
 
       # Burst's debug information is for crash analysis on the build machine,
-      # and Unity names it "DoNotShip".
+      # and Unity names it "DoNotShip". The launcher goes in beside DemoHub.exe.
       - name: Package
         id: package
         env:
@@ -272,6 +329,11 @@ jobs:
         run: |
           zip_name="$BUILD_NAME-$VERSION-win64.zip"
           sudo chown -R "$(id -u):$(id -g)" build
+          if [ ! -f "build/$UNITY_TARGET/$BUILD_NAME.exe" ]; then
+            echo "::error::The build has no $BUILD_NAME.exe, which DemoLauncher.exe starts."
+            exit 1
+          fi
+          cp "$RUNNER_TEMP/launcher/DemoLauncher.exe" "build/$UNITY_TARGET/"
           mkdir -p dist
           (cd "build/$UNITY_TARGET" && zip -qr "$GITHUB_WORKSPACE/dist/$zip_name" . -x '*_BurstDebugInformation_DoNotShip/*')
           (cd dist && sha256sum "$zip_name" > SHA256SUMS)

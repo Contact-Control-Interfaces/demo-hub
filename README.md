@@ -56,11 +56,22 @@ You can check the version rules locally:
 ./tools/resolve-version.ps1 -Ref refs/tags/v3.1.0-rc.1
 ```
 
+### The launcher
+
+The player zip also holds `DemoLauncher.exe` from
+[demo-launcher](https://github.com/Contact-Control-Interfaces/demo-launcher), beside
+`DemoHub.exe`. The launcher writes `config.json` next to itself and starts `DemoHub.exe`
+from the same folder. Which release ships is pinned in
+[`tools/demo-launcher.env`](tools/demo-launcher.env): the tag, and the SHA-256 of
+`DemoLauncher.exe` itself (not of the zip it comes in). To ship a new launcher, change
+both lines. A build fails if the downloaded exe doesn't match the pin.
+
 ### CI settings
 
 - **Submodules:** the org GitHub App (`SUBMODULE_APP_ID` variable and
   `SUBMODULE_APP_PRIVATE_KEY` secret, set at org level) reads the private
-  submodules.
+  submodules. It must also be installed on demo-launcher, whose releases the build
+  reads for the launcher. A `SUBMODULE_TOKEN` PAT is the fallback for both.
 - **Unity license:** the player build needs a Unity license in the repo's secrets.
   Set `UNITY_LICENSE` (contents of a Personal `.ulf` file) or `UNITY_SERIAL` (Pro),
   plus `UNITY_EMAIL` and `UNITY_PASSWORD`. Without them CI still checks versions and
