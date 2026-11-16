@@ -68,7 +68,8 @@ both lines. A build fails if the downloaded exe doesn't match the pin.
 
 ### The EULA
 
-What the player zip ships is licensed under the Contact CI SDK EULA, so the zip carries
+The source in this repository is proprietary ([`LICENSE.md`](LICENSE.md), the
+handbook's `licensing/templates/proprietary.md`). What the player zip ships is licensed under the Contact CI SDK EULA, so the zip carries
 [`EULA.md`](EULA.md) at its top, as the dev-handbook's licensing standard asks of
 release archives. It's the handbook's `licensing/templates/sdk-eula.md`, copied
 unchanged; when the template changes, copy it again.
