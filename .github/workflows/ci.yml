@@ -303,6 +303,44 @@ jobs:
           name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
           path: dist
 
+      # A re-run of a release that is already partly published must finish it
+      # with the files it already has. Re-running all jobs rebuilds the player,
+      # and a rebuilt zip doesn't hash the same (ZIP timestamps alone change
+      # it), so a published zip and a SHA256SUMS from the rebuild could
+      # disagree. The published zip and SHA256SUMS replace this run's copies in
+      # dist/ (the local files, not the release's), a missing SHA256SUMS is
+      # written from the published zip, and the SBOM below then describes the
+      # zip that is actually published. If this build's zip has to be uploaded
+      # but doesn't match the published SHA256SUMS, nothing is uploaded.
+      - name: Reuse the published assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "$GITHUB_REF_NAME has no release yet; publishing this build."
+            exit 0
+          fi
+          zip="$BUILD_NAME-$VERSION-win64.zip"
+          existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
+          published() { grep -qxF "$1" <<< "$existing"; }
+          if published "$zip"; then
+            echo "Using the published $zip."
+            gh release download "$GITHUB_REF_NAME" --pattern "$zip" --dir dist --clobber
+            if ! published SHA256SUMS; then
+              (cd dist && sha256sum "$zip" > SHA256SUMS)
+            fi
+          fi
+          if published SHA256SUMS; then
+            echo "Using the published SHA256SUMS."
+            gh release download "$GITHUB_REF_NAME" --pattern SHA256SUMS --dir dist --clobber
+          fi
+          if ! (cd dist && sha256sum -c SHA256SUMS); then
+            echo "::error::$zip from this run doesn't match the SHA256SUMS already published on $GITHUB_REF_NAME, so it is from a different build. Re-run only the failed jobs, which reuses the original build's artifact (kept 7 days). Nothing was uploaded."
+            exit 1
+          fi
+
       # A failed SBOM doesn't block a release, but it is flagged on the run: rule
       # 8 wants one on every release. Syft writes outside dist/, and the result
       # moves in only when it lists components, so a failed run can't upload an
