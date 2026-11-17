@@ -101,7 +101,9 @@ does.
   `SUBMODULE_APP_PRIVATE_KEY` secret, set at org level) reads the private
   submodules. It must also be installed on demo-launcher, whose releases the build
   reads for the launcher. A `SUBMODULE_TOKEN` PAT is the fallback for both.
-- **Unity license:** the player build needs a Unity license in the repo's secrets.
-  Set `UNITY_LICENSE` (contents of a Personal `.ulf` file) or `UNITY_SERIAL` (Pro),
-  plus `UNITY_EMAIL` and `UNITY_PASSWORD`. Without them CI still checks versions and
-  submodules but skips the build, and release tags fail.
+- **Unity license:** the player build takes a floating Unity Build Server license
+  from the company's Unity Licensing Server on AWS, through a WireGuard tunnel. It
+  needs the `UNITY_LICENSING_SERVER` variable and the `UNITY_LICENSING_WIREGUARD`
+  secret; [`docs/unity-licensing-server.md`](docs/unity-licensing-server.md) sets
+  up both, and the server. Without them CI still checks versions and submodules
+  but skips the build, and release tags fail. One player build runs at a time.

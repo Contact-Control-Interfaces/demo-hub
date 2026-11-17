@@ -32,12 +32,13 @@
 #   secrets.SUBMODULE_TOKEN
 #                         PAT fallback for the submodules and the launcher
 #                         when no App is set
-#   secrets.UNITY_LICENSE, or secrets.UNITY_SERIAL
-#                         Unity license for the player build: the contents of
-#                         a Personal .ulf file, or a Pro serial. Either also
-#                         needs secrets.UNITY_EMAIL and secrets.UNITY_PASSWORD.
-#                         Without a license the build job is skipped, and a
-#                         release tag fails rather than publish nothing.
+#   vars.UNITY_LICENSING_SERVER and secrets.UNITY_LICENSING_WIREGUARD
+#                         The Unity Licensing Server that lends the player
+#                         build a floating Unity Build Server license (its URL
+#                         inside the tunnel), and the WireGuard client config
+#                         that reaches it (docs/unity-licensing-server.md).
+#                         Without both the build job is skipped, and a release
+#                         tag fails rather than publish nothing.
 # =============================================================================
 name: ci
 
@@ -78,17 +79,17 @@ jobs:
       commit: ${{ steps.commit.outputs.commit }}
       unity: ${{ steps.unity.outputs.configured }}
     steps:
-      # Job-level `if:` can't read secrets, so whether a license is set is
-      # worked out here and handed to the build job. Only "is it set" leaves
-      # this step, never the secret.
+      # Job-level `if:` can't read secrets, so whether the licensing server is
+      # set up is worked out here and handed to the build job. Only "is it
+      # set" leaves this step, never the secret.
       - name: Detect the Unity license
         id: unity
         env:
-          HAS_LICENSE: ${{ secrets.UNITY_LICENSE != '' || secrets.UNITY_SERIAL != '' }}
+          HAS_LICENSE: ${{ vars.UNITY_LICENSING_SERVER != '' && secrets.UNITY_LICENSING_WIREGUARD != '' }}
         run: |
           echo "configured=$HAS_LICENSE" >> "$GITHUB_OUTPUT"
           if [ "$HAS_LICENSE" != true ]; then
-            echo "::notice::No UNITY_LICENSE or UNITY_SERIAL secret, so the player build is skipped."
+            echo "::notice::The UNITY_LICENSING_SERVER variable or the UNITY_LICENSING_WIREGUARD secret isn't set, so the player build is skipped."
           fi
 
       - name: Submodule token
@@ -156,7 +157,7 @@ jobs:
       - name: Require a build for a release
         if: steps.version.outputs.kind == 'release' && steps.unity.outputs.configured != 'true'
         run: |
-          echo "::error::$GITHUB_REF_NAME needs a player build, but no Unity license is set (UNITY_LICENSE or UNITY_SERIAL). Nothing was published."
+          echo "::error::$GITHUB_REF_NAME needs a player build, but the Unity Licensing Server isn't set up (UNITY_LICENSING_SERVER and UNITY_LICENSING_WIREGUARD). Nothing was published."
           exit 1
 
       # Rule 4: a release's commit should already carry an rc tag for the same
@@ -204,18 +205,26 @@ jobs:
             echo "**Version:** \`$VERSION\` ($KIND build of \`${COMMIT:0:12}\`)"
             if [ "$UNITY" != true ]; then
               echo
-              echo "No Unity license is set (UNITY_LICENSE or UNITY_SERIAL), so the player build was skipped."
+              echo "The Unity Licensing Server isn't set up (UNITY_LICENSING_SERVER and UNITY_LICENSING_WIREGUARD), so the player build was skipped."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
   # ---------------------------------------------------------------------------
-  # The Windows player, built in game-ci's Unity container. Needs a license.
+  # The Windows player, built in game-ci's Unity container with a floating
+  # Unity Build Server license from the Licensing Server.
   # ---------------------------------------------------------------------------
   build:
     name: Build the player
     runs-on: ubuntu-latest
     needs: version
     if: needs.version.outputs.unity == 'true'
+    # One build at a time: the WireGuard key works from one runner at a time,
+    # and each build holds a Build Server seat. A build waits while another
+    # runs, but GitHub keeps only one waiting: a newer build cancels it, and
+    # the cancelled one has to be re-run.
+    concurrency:
+      group: unity-build-server
+      cancel-in-progress: false
     steps:
       # The Unity image plus an HDRP project and its Library don't fit in a
       # runner's default free space.
@@ -320,6 +329,28 @@ jobs:
           restore-keys: |
             Library-${{ env.UNITY_TARGET }}-
 
+      # The Licensing Server is reachable only through WireGuard
+      # (docs/unity-licensing-server.md). The client config routes just the
+      # server's address through the tunnel; the Unity container reaches it
+      # through the runner.
+      - name: Connect to the licensing server
+        env:
+          WG_CONFIG: ${{ secrets.UNITY_LICENSING_WIREGUARD }}
+          SERVER: ${{ vars.UNITY_LICENSING_SERVER }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wireguard-tools > /dev/null
+          printf '%s\n' "$WG_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo chmod 600 /etc/wireguard/wg0.conf
+          sudo wg-quick up wg0
+          code="$(curl -sS -o /dev/null --max-time 15 -w '%{http_code}' "$SERVER/v1/status")" || code=000
+          if [ "$code" = 000 ]; then
+            echo "::error::Can't reach the Unity Licensing Server at $SERVER through WireGuard. Check that the server and its wg0 tunnel are up, and that UNITY_LICENSING_WIREGUARD's Endpoint is the server's Elastic IP."
+            sudo wg show wg0 | grep -v 'private key' || true
+            exit 1
+          fi
+          echo "Reached the Unity Licensing Server at $SERVER (HTTP $code)."
+
       # versioning: Custom sets Player Settings > Version inside the build only,
       # so Application.version is the full version; the repo's file is not
       # changed. The -buildInfo* arguments are read by BuildInfoWriter.
@@ -327,16 +358,16 @@ jobs:
       # build (exit code 139), so this step may fail and the next one decides:
       # CiBuild writes Unity's own build result to build/BuildResult.txt
       # before the editor exits.
+      # game-ci points the editor at the Licensing Server, takes a floating
+      # license before the build and returns it afterwards, even if the editor
+      # crashed. No serial or Unity account goes in: game-ci would use a serial
+      # in preference to the server.
       - name: Build
         id: build
         continue-on-error: true
         uses: game-ci/unity-builder@adaf7cd8f42fd48fbbf2d4f5f67ca30d87f819f1 # v5.0.1
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          unityLicensingServer: ${{ vars.UNITY_LICENSING_SERVER }}
           targetPlatform: ${{ env.UNITY_TARGET }}
           buildName: ${{ env.BUILD_NAME }}
           buildMethod: CiBuild.Build
