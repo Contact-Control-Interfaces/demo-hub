@@ -406,6 +406,24 @@ jobs:
             -buildInfoDirty ${{ steps.tree.outputs.dirty }}
             -buildInfoBuildId ${{ github.run_id }}
 
+      # game-ci reports only an exit code when the license can't be taken
+      # (13 is "Syncing entitlements failed"), and the reason is in the
+      # Licensing Client's own log. game-ci mounts $RUNNER_TEMP/_github_home as
+      # the container's /root, so the log is still there. This repository's
+      # logs are public, so only the warning and error lines are shown.
+      - name: Show the licensing client's errors
+        if: steps.build.outcome == 'failure'
+        run: |
+          dir="$RUNNER_TEMP/_github_home/.config/unity3d/Unity"
+          for log in Unity.Licensing.Client.log Unity.Entitlements.Audit.log; do
+            if sudo test -f "$dir/$log"; then
+              echo "--- $log: warnings and errors ---"
+              sudo grep -iE 'error|warn|fail|exception|timeout|timed out|refused|denied|unauthori' "$dir/$log" | tail -n 80 || true
+            else
+              echo "--- $log wasn't written ---"
+            fi
+          done
+
       # A crash on exit is accepted only with exit code 139 and a result file
       # that says Succeeded; anything else fails the job here.
       - name: Check the build
