@@ -31,7 +31,7 @@ starting with its [quick start](https://docs.unity.com/en-us/licensing-server/qu
   roles and security groups, and the AWS CLI with Session Manager plugin on
   your machine. You also need the Unity ID portal as an owner or manager of the
   organization, and admin on this GitHub repository.
-- **Cost.** About $20 a month on demand in us-east-1: a `t3.small` (about $15),
+- **Cost.** About $20 a month on demand in us-east-1 or us-east-2: a `t3.small` (about $15),
   20 GB of gp3 storage (about $2), and the Elastic IP's public IPv4 address
   (about $4).
 
@@ -54,11 +54,11 @@ In the EC2 console, **Launch instance**:
 | Setting | Value |
 |---|---|
 | Name | `unity-licensing-server` |
-| AMI | Ubuntu Server 24.04 LTS (x86_64) |
+| AMI | Click the **Ubuntu** tile, then **Ubuntu Server 24.04 LTS (HVM), SSD Volume Type**, 64-bit (x86). The wizard selects Amazon Linux by default, and this page's commands need Ubuntu |
 | Instance type | `t3.small` |
 | Key pair | None (you connect with Session Manager) |
-| Network | Any subnet with a route to an internet gateway, auto-assign public IP off |
-| Security group | New, `unity-licensing-server`: **inbound UDP 51820 from 0.0.0.0/0 only**, no SSH. Outbound: leave the default |
+| Network | The default VPC is fine, and so is subnet "No preference". **Auto-assign public IP: Enable** |
+| Security group | New (or select it if it already exists), `unity-licensing-server`: **inbound UDP 51820 from 0.0.0.0/0 only**, no SSH. Outbound: leave the default |
 | Storage | 20 GiB gp3, encrypted |
 | Advanced: IAM instance profile | A role with the `AmazonSSMManagedInstanceCore` policy |
 | Advanced: Metadata version | V2 only (token required) |
@@ -67,8 +67,14 @@ In the EC2 console, **Launch instance**:
 Then:
 
 1. **Elastic IPs** > **Allocate Elastic IP address**, then **Associate** it with
-   the instance. This is the WireGuard endpoint; without it the public IP
-   changes on every stop and start.
+   the instance. Leave the private IP address empty, and leave reassociation
+   unticked. This is the WireGuard endpoint; without it the public IP changes
+   on every stop and start.
+   - The Elastic IP replaces the automatically assigned public IP, so the
+     instance ends up with only the Elastic IP.
+   - Keep auto-assign on anyway. Without it the instance has no internet
+     until the Elastic IP is associated, and the SSM agent and first-boot
+     updates stall and may need a reboot to recover.
 2. Optionally, have **Data Lifecycle Manager** take a daily snapshot of the
    instance's volume.
 
@@ -76,11 +82,22 @@ Port 51820 is open to everyone, but WireGuard doesn't answer any packet that
 isn't signed by a known key, so it doesn't show up to a scan. Port 8080 is never
 open in the security group.
 
-Connect to the instance from your machine:
+Connect to the instance from your machine, giving the instance's region (its
+Availability Zone without the last letter, e.g. `us-east-2` for `us-east-2a`):
 
 ```bash
-aws ssm start-session --target <instance id>
+aws ssm start-session --region <region> --target <instance id>
 ```
+
+If it says the instance is not connected:
+
+- Check that the region is right.
+- Check that the instance has the IAM role (Details tab, **IAM Role**).
+- Wait a few minutes after launch, or reboot the instance. Rebooting doesn't
+  affect the machine binding.
+
+`aws ssm describe-instance-information --region <region>` lists the instances
+Session Manager can reach.
 
 ## 2. WireGuard on the server
 
@@ -258,7 +275,7 @@ To open the dashboard from your machine, forward the port through Session
 Manager:
 
 ```bash
-aws ssm start-session --target <instance id> \
+aws ssm start-session --region <region> --target <instance id> \
   --document-name AWS-StartPortForwardingSession \
   --parameters portNumber=8080,localPortNumber=8080
 ```
