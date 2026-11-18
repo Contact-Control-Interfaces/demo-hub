@@ -12,8 +12,8 @@ texts below are copied unchanged from each component's upstream source.
 |---|---|---|
 | Ultraleap Unity Plugin, `com.ultraleap.tracking` 6.15.0 (Contact CI's fork, `ultraleap-fork`), including `LeapC.dll` and `UltraleapOpenXRUnity.dll` | the player | Apache-2.0 |
 | Roboto Thin (Google) | font in `com.contactci.unity` | Apache-2.0 |
-| Protocol Buffers | compiled into `libcci.dll`; `libprotobufd.dll` | BSD-3-Clause |
-| mingw-w64 winpthreads | compiled into `libcci.dll` and `libccic.dll`; `libwinpthread-1.dll` | MIT AND BSD-3-Clause-Clear |
+| Protocol Buffers | compiled into `libcci.dll` | BSD-3-Clause |
+| mingw-w64 winpthreads | compiled into `libcci.dll` and `libccic.dll` | MIT AND BSD-3-Clause-Clear |
 | mingw-w64 runtime (CRT startup) | compiled into `libcci.dll` and `libccic.dll` | ZPL-2.1 and others, below |
 | GCC runtime (libstdc++, libgcc) | compiled into `libcci.dll` and `libccic.dll` | GPL-3.0-or-later WITH GCC-exception-3.1 |
 | Meta XR Core SDK, `com.meta.xr.sdk.core` 60.0.0 | the player | Meta Platform Technologies SDK License Agreement |
@@ -38,8 +38,7 @@ Licensed under the Apache License, Version 2.0; the text is at the end of this f
 
 ## Protocol Buffers
 
-<https://github.com/protocolbuffers/protobuf>, compiled into `libcci.dll`;
-`libprotobufd.dll` is a separate build of the same library.
+<https://github.com/protocolbuffers/protobuf>, compiled into `libcci.dll`.
 
 ```
 Copyright 2008 Google Inc.  All rights reserved.
@@ -78,8 +77,7 @@ support library is itself covered by the above license.
 
 ## mingw-w64 winpthreads
 
-<https://www.mingw-w64.org/>, compiled into `libcci.dll` and `libccic.dll`, and
-shipped as `libwinpthread-1.dll`.
+<https://www.mingw-w64.org/>, compiled into `libcci.dll` and `libccic.dll`.
 
 ```
 Copyright (c) 2011 mingw-w64 project
