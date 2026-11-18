@@ -1,0 +1,689 @@
+# =============================================================================
+# demo-hub - GitHub Actions
+#
+# Versions (tools/resolve-version.ps1; dev-handbook releases/versioning.md):
+#   pull request, main, other branch  X.Y.Z-ci.N     workflow artifacts only
+#   push to staging                   X.Y.Z-beta.N   workflow artifacts only
+#   tag vX.Y.Z-rc.N on staging        X.Y.Z-rc.N     draft GitHub prerelease
+#   tag vX.Y.Z on main                X.Y.Z          draft GitHub release
+# X.Y.Z is bundleVersion (Player Settings > Version) in
+# ProjectSettings/ProjectSettings.asset; a tag must match it. N is the workflow
+# run number. Only a person creates tags, and only a person publishes a
+# release: CI leaves each one as a draft for review. A release fast-forwards
+# main to the rc commit and tags the same commit (docs/internal.md,
+# "Releases").
+# Nothing consumes demo-hub as a package, so beta builds go to no feed.
+#
+# The player is a Windows x64 build. It carries its full version, commit and
+# build id (versioning rule 12; Assets/Editor/BuildInfoWriter.cs) and logs
+# them at startup. The zip also holds DemoLauncher.exe beside DemoHub.exe,
+# from the demo-launcher release pinned in tools/demo-launcher.env, and
+# EULA.md, the SDK EULA that what we ship is licensed under, with
+# THIRD-PARTY-NOTICES.md for the third-party parts.
+#
+# Jobs:
+#   version ── build ── release (tags only: a draft GitHub Release with the
+#                                zip, SHA256SUMS and an SBOM)
+#
+# Repository settings this reads:
+#   vars.SUBMODULE_APP_ID and secrets.SUBMODULE_APP_PRIVATE_KEY
+#                         GitHub App that can read the private
+#                         com.contactci.unity and ultraleap-fork submodules
+#                         and demo-launcher's releases (set at org level)
+#   secrets.SUBMODULE_TOKEN
+#                         PAT fallback for the submodules and the launcher
+#                         when no App is set
+#   vars.UNITY_LICENSING_SERVER and secrets.UNITY_LICENSING_WIREGUARD
+#                         The Unity Licensing Server that lends the player
+#                         build a floating Unity Build Server license (its URL
+#                         inside the tunnel), and the WireGuard client config
+#                         that reaches it (the Licensing Server runbook,
+#                         linked from docs/internal.md).
+#                         Without both the build job is skipped, and a release
+#                         tag fails rather than publish nothing.
+# =============================================================================
+name: ci
+
+# Feature branches get their pipeline from their pull request, so pushes to
+# them do not start a second, identical run.
+on:
+  push:
+    branches: [main, staging]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  UNITY_TARGET: StandaloneWindows64
+  BUILD_NAME: DemoHub
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Versioning rules 3 and 4: the declared version, the tag format and the
+  # branch a tag must be on, before anything is built. Also checks that the
+  # private submodules can be cloned, which needs no Unity license.
+  # ---------------------------------------------------------------------------
+  version:
+    name: Resolve the version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      kind: ${{ steps.version.outputs.kind }}
+      prev_stable: ${{ steps.notes.outputs.prev_stable }}
+      commit: ${{ steps.commit.outputs.commit }}
+      unity: ${{ steps.unity.outputs.configured }}
+    steps:
+      # Job-level `if:` can't read secrets, so whether the licensing server is
+      # set up is worked out here and handed to the build job. Only "is it
+      # set" leaves this step, never the secret. It also catches either setting
+      # created as the wrong kind, which otherwise looks like it isn't set.
+      - name: Detect the Unity license
+        id: unity
+        env:
+          HAS_SERVER: ${{ vars.UNITY_LICENSING_SERVER != '' }}
+          HAS_WIREGUARD: ${{ secrets.UNITY_LICENSING_WIREGUARD != '' }}
+          SERVER_AS_SECRET: ${{ secrets.UNITY_LICENSING_SERVER != '' }}
+          WIREGUARD_AS_VARIABLE: ${{ vars.UNITY_LICENSING_WIREGUARD != '' }}
+        run: |
+          missing=()
+          if [ "$HAS_SERVER" != true ]; then
+            if [ "$SERVER_AS_SECRET" = true ]; then
+              echo "::warning::UNITY_LICENSING_SERVER is set as a secret, but CI reads it only as a variable, so the secret is ignored. Create it under Variables instead, and delete the secret."
+            fi
+            missing+=("the UNITY_LICENSING_SERVER variable")
+          elif [ "$SERVER_AS_SECRET" = true ]; then
+            echo "::notice::UNITY_LICENSING_SERVER is set as a variable and also as a secret. CI uses the variable and ignores the secret, so delete the secret."
+          fi
+          if [ "$HAS_WIREGUARD" != true ]; then
+            if [ "$WIREGUARD_AS_VARIABLE" = true ]; then
+              echo "::warning::UNITY_LICENSING_WIREGUARD is set as a variable, but it holds a private key, so CI reads it only as a secret. Make it a secret, delete the variable, and rotate the CI key (the Licensing Server runbook, linked from docs/internal.md): variables aren't kept secret."
+            fi
+            missing+=("the UNITY_LICENSING_WIREGUARD secret")
+          fi
+
+          if [ ${#missing[@]} -eq 0 ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            if [ ${#missing[@]} -eq 2 ]; then
+              echo "::notice::${missing[0]^} and ${missing[1]} aren't set, so the player build is skipped."
+            else
+              echo "::notice::${missing[0]^} isn't set, so the player build is skipped."
+            fi
+          fi
+
+      - name: Submodule token
+        id: app-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+            com.contactci.unity
+            ultraleap-fork
+
+      # On a pull request, build the PR's head commit rather than the
+      # temporary merge commit, so the recorded commit exists (rule 12).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          submodules: recursive
+          token: ${{ steps.app-token.outputs.token || secrets.SUBMODULE_TOKEN || github.token }}
+          fetch-depth: 0 # every branch and tag, for the version and the branch check
+          persist-credentials: false
+
+      - name: Verify the submodules
+        run: |
+          missing=0
+          for f in Packages/com.contactci.unity/package.json Packages/ultraleap/Packages/Tracking/package.json; do
+            if [ ! -f "$f" ]; then
+              echo "::error::$f is missing."
+              missing=1
+            fi
+          done
+          if [ "$missing" = 1 ]; then
+            echo "com.contactci.unity and ultraleap-fork are private. Set the SUBMODULE_APP_ID variable and"
+            echo "SUBMODULE_APP_PRIVATE_KEY secret (a GitHub App installed on all three repositories), or a"
+            echo "SUBMODULE_TOKEN PAT. Pull requests from forks get neither and cannot build."
+            exit 1
+          fi
+          git submodule status
+
+      - name: Resolve the version
+        id: version
+        shell: pwsh
+        run: |
+          $lines = ./tools/resolve-version.ps1 -Ref $env:GITHUB_REF -RunNumber $env:GITHUB_RUN_NUMBER
+          $lines
+          $lines | Out-File $env:GITHUB_OUTPUT -Append
+
+      # A release candidate comes from staging; a release only from what has
+      # been fast-forwarded to main (versioning rule 4). A tag anywhere else
+      # stops here, before anything is built or published.
+      - name: Check the tag is on its branch
+        if: steps.version.outputs.kind == 'release'
+        env:
+          BRANCH: ${{ steps.version.outputs.required_branch }}
+        run: |
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" "origin/$BRANCH"; then
+            if [ "$BRANCH" = main ]; then hint="Fast-forward main to the rc commit and tag there"; else hint="Tag a commit on staging"; fi
+            echo "::error::$GITHUB_REF_NAME is not on $BRANCH. $hint (docs/internal.md, \"Releases\"). Nothing was published."
+            exit 1
+          fi
+
+      - name: Require a build for a release
+        if: steps.version.outputs.kind == 'release' && steps.unity.outputs.configured != 'true'
+        run: |
+          echo "::error::$GITHUB_REF_NAME needs a player build, but the Unity Licensing Server isn't set up (UNITY_LICENSING_SERVER and UNITY_LICENSING_WIREGUARD). Nothing was published."
+          exit 1
+
+      # Rule 4: a release's commit should already carry an rc tag for the same
+      # version, i.e. main was fast-forwarded to a tested rc. A "should", so it
+      # warns rather than fails.
+      - name: Check the release was an rc
+        if: steps.version.outputs.kind == 'release' && steps.version.outputs.prerelease == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if ! git tag --points-at "$GITHUB_SHA" | awk -v p="v$VERSION-rc." \
+               'index($0, p) == 1 && substr($0, length(p) + 1) ~ /^[1-9][0-9]*$/ { found = 1 } END { exit !found }'; then
+            echo "::warning::$GITHUB_REF_NAME's commit has no v$VERSION-rc.N tag, so this release was not promoted from a tested release candidate (docs/internal.md, \"Releases\")."
+          fi
+
+      # Release notes cover everything since the previous stable release: the
+      # highest vX.Y.Z below this version.
+      - name: Find the previous release
+        id: notes
+        if: steps.version.outputs.kind == 'release'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          core="${VERSION%%-*}"
+          prev="$( { git tag --list 'v[0-9]*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$'; echo "v$core"; } \
+                   | sort -uV | sed -n "/^v${core//./\\.}\$/q;p" | tail -n 1 || true)"
+          echo "Previous release: ${prev:-none}"
+          echo "prev_stable=$prev" >> "$GITHUB_OUTPUT"
+
+      - name: Record the commit
+        id: commit
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      # The build job's name can't carry the version: GitHub leaves a skipped
+      # job's name unevaluated, so the check showed the raw expression. The run
+      # summary shows it instead.
+      - name: Summarize
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          KIND: ${{ steps.version.outputs.kind }}
+          COMMIT: ${{ steps.commit.outputs.commit }}
+          UNITY: ${{ steps.unity.outputs.configured }}
+        run: |
+          {
+            echo "**Version:** \`$VERSION\` ($KIND build of \`${COMMIT:0:12}\`)"
+            if [ "$UNITY" != true ]; then
+              echo
+              echo "The Unity Licensing Server isn't set up (UNITY_LICENSING_SERVER and UNITY_LICENSING_WIREGUARD), so the player build was skipped."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # ---------------------------------------------------------------------------
+  # The Windows player, built in game-ci's Unity container with a floating
+  # Unity Build Server license from the Licensing Server.
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build the player
+    runs-on: ubuntu-latest
+    needs: version
+    if: needs.version.outputs.unity == 'true'
+    # One build at a time: the WireGuard key works from one runner at a time,
+    # and each build holds a Build Server seat. A build waits while another
+    # runs, but GitHub keeps only one waiting: a newer build cancels it, and
+    # the cancelled one has to be re-run.
+    concurrency:
+      group: unity-build-server
+      cancel-in-progress: false
+    steps:
+      # The Unity image plus an HDRP project and its Library don't fit in a
+      # runner's default free space.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Submodule token
+        id: app-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+            com.contactci.unity
+            ultraleap-fork
+
+      # A separate token, so that an App not installed on demo-launcher fails
+      # this step by name instead of the submodule checkout.
+      - name: Launcher token
+        id: launcher-token
+        if: vars.SUBMODULE_APP_ID != ''
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ vars.SUBMODULE_APP_ID }}
+          private-key: ${{ secrets.SUBMODULE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: demo-launcher
+          permission-contents: read
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.version.outputs.commit }}
+          submodules: recursive
+          lfs: true # real models, textures and audio, not LFS pointers
+          token: ${{ steps.app-token.outputs.token || secrets.SUBMODULE_TOKEN || github.token }}
+          persist-credentials: false
+
+      # Rule 12's dirty flag, taken before Unity runs: the editor rewrites some
+      # tracked settings files while it builds.
+      - name: Check the tree is clean
+        id: tree
+        run: |
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+            echo "dirty=true" >> "$GITHUB_OUTPUT"
+            git status --short --untracked-files=no
+          else
+            echo "dirty=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # DemoLauncher.exe ships beside DemoHub.exe: it writes config.json next
+      # to itself and starts DemoHub.exe from the same folder. The release is
+      # pinned in tools/demo-launcher.env, with the exe's SHA-256, so a rebuild
+      # of a commit ships the same launcher. Fetched before Unity runs, so a
+      # bad pin fails in seconds. demo-launcher is private: the default token
+      # can't read it.
+      - name: Get the launcher
+        env:
+          GH_TOKEN: ${{ steps.launcher-token.outputs.token || secrets.SUBMODULE_TOKEN }}
+          LAUNCHER_REPO: ${{ github.repository_owner }}/demo-launcher
+        run: |
+          tag="$(sed -n 's/^DEMO_LAUNCHER_TAG=//p' tools/demo-launcher.env | tr -d '[:space:]')"
+          want="$(sed -n 's/^DEMO_LAUNCHER_SHA256=//p' tools/demo-launcher.env | tr -d '[:space:]')"
+          if [ -z "$tag" ] || [ -z "$want" ]; then
+            echo "::error::tools/demo-launcher.env needs DEMO_LAUNCHER_TAG and DEMO_LAUNCHER_SHA256."
+            exit 1
+          fi
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Can't read $LAUNCHER_REPO's releases: install the SUBMODULE_APP_ID GitHub App on demo-launcher, or give SUBMODULE_TOKEN access to it."
+            exit 1
+          fi
+          dir="$RUNNER_TEMP/launcher"
+          mkdir -p "$dir/download"
+          assets="$(gh release view "$tag" -R "$LAUNCHER_REPO" --json assets --jq '.assets[].name')"
+          zip="DemoLauncher-${tag#v}-win-x64.zip"
+          if grep -qxF "$zip" <<< "$assets"; then
+            gh release download "$tag" -R "$LAUNCHER_REPO" --pattern "$zip" --dir "$dir/download"
+            unzip -q "$dir/download/$zip" DemoLauncher.exe -d "$dir"
+          elif grep -qxF DemoLauncher.exe <<< "$assets"; then
+            # Releases from before demo-launcher had CI publish the bare exe.
+            gh release download "$tag" -R "$LAUNCHER_REPO" --pattern DemoLauncher.exe --dir "$dir"
+          else
+            echo "::error::$LAUNCHER_REPO release $tag has neither $zip nor DemoLauncher.exe."
+            exit 1
+          fi
+          got="$(sha256sum "$dir/DemoLauncher.exe" | cut -d ' ' -f 1)"
+          if [ "$got" != "$want" ]; then
+            echo "::error::DemoLauncher.exe from $LAUNCHER_REPO $tag has SHA-256 $got, but tools/demo-launcher.env pins $want."
+            exit 1
+          fi
+          echo "DemoLauncher.exe from $LAUNCHER_REPO $tag, SHA-256 $got."
+
+      - name: Cache the Library folder
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: Library
+          key: Library-${{ env.UNITY_TARGET }}-${{ hashFiles('ProjectSettings/ProjectVersion.txt', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            Library-${{ env.UNITY_TARGET }}-
+
+      # The Licensing Server is reachable only through WireGuard (its runbook
+      # is linked from docs/internal.md). The client config routes just the
+      # server's address through the tunnel; the Unity container reaches it
+      # through the runner.
+      - name: Connect to the licensing server
+        id: connect
+        env:
+          WG_CONFIG: ${{ secrets.UNITY_LICENSING_WIREGUARD }}
+          SERVER: ${{ vars.UNITY_LICENSING_SERVER }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wireguard-tools > /dev/null
+          printf '%s\n' "$WG_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo chmod 600 /etc/wireguard/wg0.conf
+          sudo wg-quick up wg0
+          code="$(curl -sS -o /dev/null --max-time 15 -w '%{http_code}' "$SERVER/v1/status")" || code=000
+          if [ "$code" = 000 ]; then
+            echo "::error::Can't reach the Unity Licensing Server at $SERVER through WireGuard. Check that the server and its wg0 tunnel are up, and that UNITY_LICENSING_WIREGUARD's Endpoint is the server's Elastic IP."
+            sudo wg show wg0 | grep -v 'private key' || true
+            exit 1
+          fi
+          echo "Reached the Unity Licensing Server at $SERVER (HTTP $code)."
+
+      # versioning: Custom sets Player Settings > Version inside the build only,
+      # so Application.version is the full version; the repo's file is not
+      # changed. The -buildInfo* arguments are read by BuildInfoWriter.
+      # The Linux editor can crash while it shuts down after a successful
+      # build (exit code 139), so this step may fail and the next one decides:
+      # CiBuild writes Unity's own build result to build/BuildResult.txt
+      # before the editor exits.
+      # game-ci points the editor at the Licensing Server, takes a floating
+      # license before the build and returns it afterwards, even if the editor
+      # crashed. No serial or Unity account goes in: game-ci would use a serial
+      # in preference to the server.
+      - name: Build
+        id: build
+        continue-on-error: true
+        uses: game-ci/unity-builder@adaf7cd8f42fd48fbbf2d4f5f67ca30d87f819f1 # v5.0.1
+        with:
+          unityLicensingServer: ${{ vars.UNITY_LICENSING_SERVER }}
+          targetPlatform: ${{ env.UNITY_TARGET }}
+          buildName: ${{ env.BUILD_NAME }}
+          buildMethod: CiBuild.Build
+          versioning: Custom
+          version: ${{ needs.version.outputs.version }}
+          customParameters: >-
+            -ciBuildResultFile build/BuildResult.txt
+            -buildInfoVersion ${{ needs.version.outputs.version }}
+            -buildInfoCommit ${{ needs.version.outputs.commit }}
+            -buildInfoDirty ${{ steps.tree.outputs.dirty }}
+            -buildInfoBuildId ${{ github.run_id }}
+
+      # game-ci reports only an exit code when the license can't be taken
+      # (13 is "Syncing entitlements failed"), and the reason is in the
+      # Licensing Client's own log. game-ci mounts $RUNNER_TEMP/_github_home as
+      # the container's /root, so the log is still there. This repository's
+      # logs are public, so only the warning and error lines are shown. A build
+      # that wrote build/BuildResult.txt got its license, so it's skipped then,
+      # including when Unity crashes on exit.
+      - name: Show the licensing client's errors
+        if: steps.build.outcome == 'failure' && hashFiles('build/BuildResult.txt') == ''
+        run: |
+          dir="$RUNNER_TEMP/_github_home/.config/unity3d/Unity"
+          for log in Unity.Licensing.Client.log Unity.Entitlements.Audit.log; do
+            if sudo test -f "$dir/$log"; then
+              echo "--- $log: warnings and errors ---"
+              sudo grep -iE 'error|warn|fail|exception|timeout|timed out|refused|denied|unauthori' "$dir/$log" | tail -n 80 || true
+            else
+              echo "--- $log wasn't written ---"
+            fi
+          done
+
+      # game-ci returns the floating lease only if the build ran to the end.
+      # It skips the return when activation fails after the server granted
+      # the lease, and when the job is cancelled mid-build, which a new push
+      # to a pull request does. The seat would then stay taken until the lease
+      # expires, about 15 minutes after the client last renewed it (the
+      # timeout game-ci prints when it acquires one). This step runs even on
+      # failure and cancellation:
+      # - It stops any Unity container still running.
+      # - It finds the lease tokens this job took, in game-ci's license.txt
+      #   and the Licensing Client's log.
+      # - It returns each one with the same client game-ci uses, over the
+      #   tunnel.
+      # The client exits 0 for a lease game-ci already returned too, so exit
+      # code 0 means the lease is free either way. Any other exit code means
+      # the lease may still be held, and the step warns.
+      - name: Return the floating license
+        if: always() && steps.connect.outcome == 'success'
+        env:
+          SERVER: ${{ vars.UNITY_LICENSING_SERVER }}
+        run: |
+          image="$(docker image ls --format '{{.Repository}}:{{.Tag}}' unityci/editor | head -n 1)"
+          if [ -z "$image" ]; then
+            echo "game-ci never started Unity, so no lease was taken."
+            exit 0
+          fi
+
+          running="$(docker ps -q --filter "ancestor=$image")"
+          if [ -n "$running" ]; then
+            echo "Stopping the Unity container that's still running."
+            docker kill $running > /dev/null || true
+          fi
+
+          # Unity's own Licensing Client can outlive the editor in the build
+          # container. After game-ci returns the lease, it sometimes takes a
+          # new one, which is lost when the container is removed (lease 6 on
+          # 18 Nov 2026). It logs to the same mounted /root, so the step also
+          # returns every lease token the client's log mentions.
+          client_log="$RUNNER_TEMP/_github_home/.config/unity3d/Unity/Unity.Licensing.Client.log"
+          lease_lines="$(sudo grep -i 'lease' "$client_log" 2>/dev/null)" || true
+          if [ -n "$lease_lines" ]; then
+            echo "::group::The Licensing Client's lease lines"
+            printf '%s\n' "$lease_lines" | tail -n 60
+            echo "::endgroup::"
+          fi
+          uuid='[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}'
+          tokens="$(
+            {
+              # game-ci's own parse: the second quoted string in license.txt.
+              if [ -f license.txt ]; then
+                grep -oP '\".*?\"' < license.txt | tr -d '"' | sed -n 2p
+              fi
+              printf '%s\n' "$lease_lines" | grep -oE "$uuid" || true
+            } | grep -xE "$uuid" | tr 'A-F' 'a-f' | sort -u
+          )" || true
+          if [ -z "$tokens" ]; then
+            echo "No floating lease token was found, so there's nothing to return."
+            exit 0
+          fi
+
+          config="$RUNNER_TEMP/unity-licensing-config"
+          mkdir -p "$config"
+          jq -n --arg url "$SERVER" '{licensingServiceBaseUrl: $url, enableEntitlementLicensing: true, enableFloatingApi: true, clientConnectTimeoutSec: 5, clientHandshakeTimeoutSec: 10}' > "$config/services-config.json"
+
+          count=0
+          for token in $tokens; do
+            count=$((count + 1))
+            code=0
+            timeout 120 docker run --rm --network host \
+              --volume "$RUNNER_TEMP/_github_home:/root" \
+              --volume "$config:/usr/share/unity3d/config:ro" \
+              --entrypoint /opt/unity/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client \
+              "$image" --return-floating "$token" > /dev/null 2>&1 || code=$?
+            if [ "$code" = 0 ]; then
+              echo "Floating lease $count is returned."
+            else
+              echo "::warning::Couldn't return floating lease $count (exit code $code), so it may still hold a seat. If the Licensing Server's dashboard shows a seat in use with no build running, it frees when the lease expires."
+            fi
+          done
+
+      # A crash on exit is accepted only with exit code 139 and a result file
+      # that says Succeeded; anything else fails the job here.
+      - name: Check the build
+        env:
+          OUTCOME: ${{ steps.build.outcome }}
+          EXIT_CODE: ${{ steps.build.outputs.engineExitCode }}
+        run: |
+          result="$(cat build/BuildResult.txt 2>/dev/null | tr -d '[:space:]')" || true
+          if [ "$OUTCOME" = success ]; then
+            echo "The build succeeded (Unity's result: ${result:-not recorded})."
+          elif [ "$EXIT_CODE" = 139 ] && [ "$result" = Succeeded ]; then
+            echo "::warning::Unity crashed (exit code 139) while shutting down after a successful build; the player is complete, so the build continues."
+          else
+            echo "::error::The build failed (exit code ${EXIT_CODE:-unknown}, Unity's result: ${result:-not recorded}). See the Build step's log."
+            exit 1
+          fi
+
+      # Burst's debug information is for crash analysis on the build machine,
+      # and Unity names it "DoNotShip". The launcher goes in beside DemoHub.exe,
+      # and EULA.md (the SDK EULA, dev-handbook licensing/licenses.md rule 2)
+      # and THIRD-PARTY-NOTICES.md (rule 4) at the top of the zip.
+      - name: Package
+        id: package
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          zip_name="$BUILD_NAME-$VERSION-win64.zip"
+          sudo chown -R "$(id -u):$(id -g)" build
+          if [ ! -f "build/$UNITY_TARGET/$BUILD_NAME.exe" ]; then
+            echo "::error::The build has no $BUILD_NAME.exe, which DemoLauncher.exe starts."
+            exit 1
+          fi
+          cp "$RUNNER_TEMP/launcher/DemoLauncher.exe" EULA.md THIRD-PARTY-NOTICES.md "build/$UNITY_TARGET/"
+          mkdir -p dist
+          (cd "build/$UNITY_TARGET" && zip -qr "$GITHUB_WORKSPACE/dist/$zip_name" . -x '*_BurstDebugInformation_DoNotShip/*')
+          (cd dist && sha256sum "$zip_name" > SHA256SUMS)
+          ls -l dist
+          echo "zip=$zip_name" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
+          path: dist/
+          # A ci or beta build's only home is this artifact; a release's is the
+          # GitHub Release.
+          retention-days: ${{ needs.version.outputs.kind == 'beta' && 30 || needs.version.outputs.kind == 'ci' && 14 || 7 }}
+
+  # ---------------------------------------------------------------------------
+  # Tags only (rule 9): a draft GitHub prerelease for vX.Y.Z-rc.N, a draft
+  # release for vX.Y.Z (rule 8). A person reviews the draft and publishes it;
+  # CI never publishes a release, and never changes one that is published.
+  # ---------------------------------------------------------------------------
+  release:
+    name: Draft the GitHub Release
+    runs-on: ubuntu-latest
+    needs: [version, build]
+    if: needs.version.outputs.kind == 'release'
+    permissions:
+      contents: write # create the release, upload assets
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ env.BUILD_NAME }}-${{ needs.version.outputs.version }}
+          path: dist
+
+      # A re-run of a release that already has some of its assets (draft or
+      # published) must finish it with the files it already has. Re-running all
+      # jobs rebuilds the player, and a rebuilt zip doesn't hash the same (ZIP
+      # timestamps alone change it), so a zip already on the release and a
+      # SHA256SUMS from the rebuild could disagree. The zip and SHA256SUMS
+      # already on the release replace this run's copies in dist/ (the local
+      # files, not the release's), a missing SHA256SUMS is written from the zip
+      # on the release, and the SBOM below then describes that zip. If this
+      # build's zip has to be uploaded but doesn't match the SHA256SUMS already
+      # on the release, nothing is uploaded.
+      - name: Reuse the assets already on the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "$GITHUB_REF_NAME has no release yet; this build becomes its draft."
+            exit 0
+          fi
+          zip="$BUILD_NAME-$VERSION-win64.zip"
+          existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
+          on_release() { grep -qxF "$1" <<< "$existing"; }
+          if on_release "$zip"; then
+            echo "Using the $zip already on the release."
+            gh release download "$GITHUB_REF_NAME" --pattern "$zip" --dir dist --clobber
+            if ! on_release SHA256SUMS; then
+              (cd dist && sha256sum "$zip" > SHA256SUMS)
+            fi
+          fi
+          if on_release SHA256SUMS; then
+            echo "Using the SHA256SUMS already on the release."
+            gh release download "$GITHUB_REF_NAME" --pattern SHA256SUMS --dir dist --clobber
+          fi
+          if ! (cd dist && sha256sum -c SHA256SUMS); then
+            echo "::error::$zip from this run doesn't match the SHA256SUMS already on the $GITHUB_REF_NAME release, so it is from a different build. Re-run only the failed jobs, which reuses the original build's artifact (kept 7 days). Nothing was uploaded."
+            exit 1
+          fi
+
+      # A failed SBOM doesn't block a release, but it is flagged on the run: rule
+      # 8 wants one on every release. Syft writes outside dist/, and the result
+      # moves in only when it lists components, so a failed run can't upload an
+      # empty or partial SBOM.
+      - name: SBOM (Syft)
+        id: sbom
+        continue-on-error: true
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          work="$RUNNER_TEMP/sbom"
+          mkdir -p "$work/player"
+          unzip -q dist/*.zip -d "$work/player"
+          docker run --rm -v "$work:/work" anchore/syft:v1.54.1@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa \
+            dir:/work/player -o cyclonedx-json > "$work/bom.json"
+          jq -e '(.components // []) | length > 0' "$work/bom.json" > /dev/null
+          mv "$work/bom.json" "dist/$BUILD_NAME-$VERSION.cdx.json"
+
+      - name: Flag a missing SBOM
+        if: steps.sbom.outcome != 'success'
+        run: echo "::warning::No SBOM was produced, so $GITHUB_REF_NAME ships without one (versioning rule 8). See the SBOM step's log."
+
+      # The tag was pushed by a person (--verify-tag); CI never creates one, and
+      # never publishes the release: it is created as a draft (a prerelease
+      # draft for an rc), and a person publishes it from the Releases page. A
+      # draft can't be marked Latest, so whoever publishes a vX.Y.Z ticks "Set
+      # as the latest release".
+      #
+      # A re-run of a partly failed run finishes the draft rather than failing
+      # on the half that worked, and uploads only the assets it lacks: an asset
+      # already on the release is never replaced (rule 6), and the step above
+      # has made the rest agree with it. A release a person has published is
+      # never changed; missing assets are only reported.
+      - name: Create the draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+          PRERELEASE: ${{ needs.version.outputs.prerelease }}
+          PREV_STABLE: ${{ needs.version.outputs.prev_stable }}
+        run: |
+          ARGS=(--title "Demo Hub $VERSION" --generate-notes --verify-tag --draft)
+          [ "$PRERELEASE" = true ] && ARGS+=(--prerelease)
+          [ -n "$PREV_STABLE" ] && ARGS+=(--notes-start-tag "$PREV_STABLE")
+          # Every run that leaves a finished draft links it, including a re-run
+          # that completed one.
+          announce_draft() {
+            url="$(gh release view "$GITHUB_REF_NAME" --json url --jq .url)"
+            echo "::notice::Draft release $GITHUB_REF_NAME is ready for review: $url. Publish it there when it has been checked."
+            echo "Draft release [$GITHUB_REF_NAME]($url) is ready for review. A person publishes it from the Releases page." >> "$GITHUB_STEP_SUMMARY"
+          }
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" dist/* "${ARGS[@]}"
+            announce_draft
+            exit 0
+          fi
+          existing="$(gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name')"
+          draft="$(gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft)"
+          missing=()
+          for f in dist/*; do
+            name="$(basename "$f")"
+            if grep -qxF "$name" <<< "$existing"; then
+              echo "  $name is already on the release; keeping it."
+            else
+              missing+=("$f")
+            fi
+          done
+          if [ "$draft" != true ]; then
+            echo "Release $GITHUB_REF_NAME has already been published by a person; leaving it unchanged."
+            [ ${#missing[@]} -gt 0 ] && echo "::warning::Published release $GITHUB_REF_NAME lacks: $(basename -a "${missing[@]}" | paste -sd ' '). CI doesn't change a published release; upload them by hand if they belong there."
+            exit 0
+          fi
+          echo "Draft release $GITHUB_REF_NAME already exists; uploading any missing assets."
+          for f in "${missing[@]}"; do gh release upload "$GITHUB_REF_NAME" "$f"; done
+          announce_draft
