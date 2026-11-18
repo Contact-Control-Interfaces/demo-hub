@@ -172,8 +172,12 @@ PersistentKeepalive = 25
 
 - `AllowedIPs` sends only the server's two addresses through the tunnel, so
   the runner's other traffic is untouched. The private IP is where the
-  Licensing Server listens. `10.66.0.1` is the server's tunnel address, which
-  you can ping from a peer to test the tunnel.
+  Licensing Server listens. `10.66.0.1` is the server's tunnel address. CI
+  doesn't use it, and it doesn't answer ping, because `wg0.conf`'s firewall
+  rules allow only TCP port 8080 over the tunnel.
+- To test the tunnel by hand from a peer, run
+  `curl http://<private IP>:8080/v1/status`, as CI's "Connect to the
+  licensing server" step does. Any HTTP status means the tunnel works.
 - Leave out any `DNS =` line: CI uses the server's IP, and the runner has no
   `resolvconf` for wg-quick.
 
