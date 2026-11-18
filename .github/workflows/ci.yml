@@ -360,6 +360,7 @@ jobs:
       # server's address through the tunnel; the Unity container reaches it
       # through the runner.
       - name: Connect to the licensing server
+        id: connect
         env:
           WG_CONFIG: ${{ secrets.UNITY_LICENSING_WIREGUARD }}
           SERVER: ${{ vars.UNITY_LICENSING_SERVER }}
@@ -421,6 +422,74 @@ jobs:
               sudo grep -iE 'error|warn|fail|exception|timeout|timed out|refused|denied|unauthori' "$dir/$log" | tail -n 80 || true
             else
               echo "--- $log wasn't written ---"
+            fi
+          done
+
+      # game-ci returns the floating lease only if the build ran to the end.
+      # It skips the return when activation fails after the server granted
+      # the lease, and when the job is cancelled mid-build, which a new push
+      # to a pull request does. The seat would then stay taken until the lease
+      # expires (8 hours by default). This step runs even on failure and
+      # cancellation:
+      # - It stops any Unity container still running.
+      # - It finds the lease tokens this job took, in game-ci's license.txt
+      #   and the Licensing Client's log.
+      # - It returns each one with the same client game-ci uses, over the
+      #   tunnel.
+      # Returning a lease game-ci already returned fails harmlessly. game-ci
+      # returns it whenever the build ran to the end, and CiBuild then writes
+      # build/BuildResult.txt, so that file tells the two cases apart.
+      - name: Return the floating license
+        if: always() && steps.connect.outcome == 'success'
+        env:
+          SERVER: ${{ vars.UNITY_LICENSING_SERVER }}
+        run: |
+          image="$(docker image ls --format '{{.Repository}}:{{.Tag}}' unityci/editor | head -n 1)"
+          if [ -z "$image" ]; then
+            echo "game-ci never started Unity, so no lease was taken."
+            exit 0
+          fi
+
+          running="$(docker ps -q --filter "ancestor=$image")"
+          if [ -n "$running" ]; then
+            echo "Stopping the Unity container that's still running."
+            docker kill $running > /dev/null || true
+          fi
+
+          tokens="$(
+            {
+              # game-ci's own parse: the second quoted string in license.txt.
+              if [ -f license.txt ]; then
+                grep -oP '\".*?\"' < license.txt | tr -d '"' | sed -n 2p
+              fi
+              sudo cat "$RUNNER_TEMP/_github_home/.config/unity3d/Unity/Unity.Licensing.Client.log" 2>/dev/null \
+                | grep -ioP '"token"\s*:\s*"\K[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}' || true
+            } | grep -E '^[0-9a-fA-F-]{36}$' | sort -u
+          )" || true
+          if [ -z "$tokens" ]; then
+            echo "No floating lease token was found, so there's nothing to return."
+            exit 0
+          fi
+
+          config="$RUNNER_TEMP/unity-licensing-config"
+          mkdir -p "$config"
+          jq -n --arg url "$SERVER" '{licensingServiceBaseUrl: $url, enableEntitlementLicensing: true, enableFloatingApi: true, clientConnectTimeoutSec: 5, clientHandshakeTimeoutSec: 10}' > "$config/services-config.json"
+
+          count=0
+          for token in $tokens; do
+            count=$((count + 1))
+            code=0
+            timeout 120 docker run --rm --network host \
+              --volume "$RUNNER_TEMP/_github_home:/root" \
+              --volume "$config:/usr/share/unity3d/config:ro" \
+              --entrypoint /opt/unity/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client \
+              "$image" --return-floating "$token" > /dev/null 2>&1 || code=$?
+            if [ "$code" = 0 ]; then
+              echo "Returned floating lease $count, which game-ci hadn't returned."
+            elif [ -f build/BuildResult.txt ]; then
+              echo "Floating lease $count was already returned by game-ci after the build."
+            else
+              echo "::warning::Couldn't return floating lease $count (exit code $code). If the Licensing Server's dashboard still shows a seat in use with no build running, it frees when the lease expires."
             fi
           done
 

@@ -364,10 +364,12 @@ add the private IP to `adminIpAllowlist` in the server's configuration.
   build's requests arrived.
 - **If the Build step fails with exit code 19** and "Show the licensing
   client's errors" shows `429 | Too Many Requests` and `No remaining license`,
-  every seat is held by a lease. Usually that's a build that took a lease and
-  then failed before returning it.
-  - The seat comes back when that lease expires, which the server's
-    `licensing-server-config.json` controls.
+  every seat is held by a lease.
+  - CI's "Return the floating license" step returns the lease even when a
+    build fails or is cancelled. A lease can still be left behind if the
+    runner itself is lost, or if the step warns that it couldn't return one.
+  - Such a seat comes back when the lease expires, which the server's
+    `licensing-server-config.json` controls (8 hours by default).
   - Check the dashboard (step 6) for the open leases, then re-run the failed
     job once a seat is free.
 
