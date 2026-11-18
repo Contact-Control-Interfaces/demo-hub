@@ -18,9 +18,28 @@ The demos:
 - **A Windows 10 or 11 PC (64-bit)** that can run PC VR.
 - **A PC VR headset** connected to that PC, with its OpenXR runtime active. The
   Demo Hub is a Windows app, not a standalone headset app.
-- **One or two Maestro gloves**, set up and connected to the PC.
+- **One or two Maestro gloves**, connected to the PC.
+- **The Contact CI Windows Service**, which connects to the gloves and sends
+  them haptics. See below.
 - **The .NET 8 Desktop Runtime**, for the launcher. If it's missing, the
   launcher offers to download it when you start it.
+
+## Install the Contact CI software
+
+The Demo Hub talks to the gloves through the Contact CI Windows Service. Install
+it once, before the first run:
+
+1. Download `ContactCiInstaller.exe` from the latest release of
+   [windows-installer](https://github.com/Contact-Control-Interfaces/windows-installer/releases/latest)
+   ([direct link](https://github.com/Contact-Control-Interfaces/windows-installer/releases/latest/download/ContactCiInstaller.exe)).
+2. Run it and follow its steps. Windows asks for administrator permission,
+   since it installs a service.
+
+The installer also installs the .NET Framework 4.8 if your PC needs it, and the
+**Contact CI Manager**. The Manager doesn't need to be running for the gloves
+to work: the service runs on its own. It's a useful front end for the service,
+though. It shows the connected gloves and the service's logs, and lets you view
+and control haptics on the gloves directly.
 
 ## Install and run
 
@@ -36,7 +55,8 @@ The demos:
 
 3. Unzip it to a folder of its own. Keep the files together: the launcher
    starts the Demo Hub from the same folder.
-4. Start your headset's PC VR mode and connect the gloves.
+4. Start your headset's PC VR mode and connect the gloves. The Contact CI
+   Manager shows when the service sees them.
 5. Run `DemoLauncher.exe`, then:
    - **Scenes:** pick which demos appear in the Demo Hub's menu.
    - **Start Scene:** pick the demo the Demo Hub opens first. If Apple Tree is
@@ -48,6 +68,10 @@ The demos:
    without starting.
 
 ## If something goes wrong
+
+If the gloves don't respond, open the Contact CI Manager. It shows whether the
+service sees each glove, and its logs show why one isn't connecting. You can
+also try haptics on a glove from there, without the Demo Hub.
 
 The Demo Hub writes a log at:
 
