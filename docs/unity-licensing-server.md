@@ -383,6 +383,13 @@ add the private IP to `adminIpAllowlist` in the server's configuration.
   - GitHub keeps only one build waiting. A third cancels the waiting one, which
     then needs a re-run. That matters most for an rc or release tag, so check
     its run finished.
+- **A seat can stay in use for up to 15 minutes after a build.** Unity's own
+  Licensing Client can outlive the editor in the build container, and it
+  sometimes takes a new lease right after game-ci returns the build's lease.
+  CI's "Return the floating license" step returns those too. When it
+  can't, the lease expires about 15 minutes after it was taken, and a
+  build that starts before then fails with "No remaining license" and needs
+  a re-run.
 - **More seats need more keys.** Running builds in parallel needs another
   WireGuard peer (key and tunnel address) for each parallel build, and the
   workflow changed to give each build its own key.
