@@ -1,109 +1,72 @@
-# demo-hub
+# Contact CI Demo Hub
 
-The Contact CI demo hub: a Unity 2022.3 (HDRP) VR project with the Maestro glove
-demos. It uses two private submodules, `Packages/com.contactci.unity` and
-`Packages/ultraleap` (ultraleap-fork), so clone with:
+The Demo Hub is a VR showcase for [Contact CI](https://contact.ci)'s Maestro
+haptic gloves. Put on a headset and the gloves, and try a set of short demos
+that show off the gloves' hand tracking, vibration and force feedback.
 
-```
-git clone --recurse-submodules https://github.com/Contact-Control-Interfaces/demo-hub.git
-```
+The demos:
 
-## Versions and releases
+- Interaction Panel
+- Paint
+- Shapes
+- Vibration Orbs
+- Force Feedback
+- Apple Tree
 
-Versioning follows the dev-handbook's
-[versioning standard](https://github.com/Contact-Control-Interfaces/dev-handbook/blob/main/releases/versioning.md).
-The table at the top of [`.github/workflows/ci.yml`](.github/workflows/ci.yml) has the
-details.
+## What you need
 
-- **The declared version** is Player Settings > Version (`bundleVersion` in
-  `ProjectSettings/ProjectSettings.asset`): the plain `X.Y.Z` that `staging` is working
-  towards. CI adds the suffix (`-ci.N`, `-beta.N`, `-rc.N`) and never writes the file.
-- **Every build records itself.** The player logs its full version, commit, build id
-  and Unity version at startup (`BuildInfo` in the log). A local build reports
-  `X.Y.Z-dev+<sha>`, with `.dirty` if tracked files had uncommitted changes.
-- **Branches.** Feature branches merge into `staging` through pull requests. `staging`
-  is promoted to `main` only by a fast-forward to a release candidate.
+- **A Windows 10 or 11 PC (64-bit)** that can run PC VR.
+- **A PC VR headset** connected to that PC, with its OpenXR runtime active. The
+  Demo Hub is a Windows app, not a standalone headset app.
+- **One or two Maestro gloves**, set up and connected to the PC.
+- **The .NET 8 Desktop Runtime**, for the launcher. If it's missing, the
+  launcher offers to download it when you start it.
 
-Only a person creates tags, and only a person publishes a release. For each rc or
-release tag, CI creates a draft GitHub prerelease or release, published by a person:
-the draft goes on the
-[Releases page](https://github.com/Contact-Control-Interfaces/demo-hub/releases) with
-the zip, `SHA256SUMS`, an SBOM and generated notes, and the run summary links it.
-Drafts are visible only to people with write access to this repository. A person
-checks the draft and publishes it. CI never changes a release once it is published.
+## Install and run
 
-To cut a release candidate, tag a commit on `staging`:
+1. Download the latest release from the
+   [Releases page](https://github.com/Contact-Control-Interfaces/demo-hub/releases).
+   The zip is `DemoHub-<version>-win64.zip` (`DemoHub.zip` for 3.0.0 and
+   earlier).
+2. Optionally, check the download against the release's `SHA256SUMS`:
 
-```
-git fetch origin
-git tag -a v3.1.0-rc.1 -m "3.1.0-rc.1" origin/staging
-git push origin v3.1.0-rc.1
-```
+   ```powershell
+   Get-FileHash .\DemoHub-<version>-win64.zip -Algorithm SHA256
+   ```
 
-CI checks that the tag's `X.Y.Z` matches the declared version and that the commit is
-on `staging`, builds the player and creates a draft prerelease. Download the zip
-from the draft and test it, then publish the draft from the Releases page with "Set
-as a pre-release" left ticked. A broken rc is fixed with `rc.2`, never by moving the
-tag.
+3. Unzip it to a folder of its own. Keep the files together: the launcher
+   starts the Demo Hub from the same folder.
+4. Start your headset's PC VR mode and connect the gloves.
+5. Run `DemoLauncher.exe`, then:
+   - **Scenes:** pick which demos appear in the Demo Hub's menu.
+   - **Start Scene:** pick the demo the Demo Hub opens first. If Apple Tree is
+     one of the scenes, the Demo Hub always starts there.
+   - **One/Two hands:** for Apple Tree, pick how many gloves must be connected
+     before the tree appears.
+6. Click **Save & Launch**. The launcher saves your choices to `config.json`
+   beside it, starts `DemoHub.exe` and closes. **Save Configuration** saves
+   without starting.
 
-To release, fast-forward `main` to the tested rc commit and tag that same commit:
+## If something goes wrong
 
-```
-git fetch origin
-git checkout main
-git merge --ff-only v3.1.0-rc.1
-git push origin main
-git tag -a v3.1.0 -m "3.1.0" v3.1.0-rc.1
-git push origin v3.1.0
-```
-
-CI creates a draft release with notes since the previous release. Check it, then
-publish it from the Releases page with "Set as the latest release" ticked. A draft
-can't be marked Latest, so CI can't do this for you.
-
-Then bump Player Settings > Version on `staging` to the next version (e.g. `3.1.1`),
-so later builds head towards it. Tags and released versions are permanent.
-
-You can check the version rules locally:
+The Demo Hub writes a log at:
 
 ```
-./tools/resolve-version.ps1 -Ref refs/tags/v3.1.0-rc.1
+%USERPROFILE%\AppData\LocalLow\ContactCI\Demo Hub\Player.log
 ```
 
-### The launcher
+Near the top, a `BuildInfo` line gives the exact version and build, for
+example `Demo Hub 3.1.0 (commit …, build …, Unity 2022.3.15f1, Mono2x)`.
+When you contact [support@contact.ci](mailto:support@contact.ci), include that
+line, and the log if you can.
 
-The player zip also holds `DemoLauncher.exe` from
-[demo-launcher](https://github.com/Contact-Control-Interfaces/demo-launcher), beside
-`DemoHub.exe`. The launcher writes `config.json` next to itself and starts `DemoHub.exe`
-from the same folder. Which release ships is pinned in
-[`tools/demo-launcher.env`](tools/demo-launcher.env): the tag, and the SHA-256 of
-`DemoLauncher.exe` itself (not of the zip it comes in). To ship a new launcher, change
-both lines. A build fails if the downloaded exe doesn't match the pin.
+## License
 
-### The EULA
+Your use of the Demo Hub is governed by the Contact CI SDK EULA
+([`EULA.md`](EULA.md), also at the top of every release zip). The third-party
+components it includes, and their licenses, are listed in
+[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). The source code in this
+repository is proprietary ([`LICENSE.md`](LICENSE.md)).
 
-The source in this repository is proprietary ([`LICENSE.md`](LICENSE.md), the
-handbook's `licensing/templates/proprietary.md`). What the player zip ships is licensed under the Contact CI SDK EULA, so the zip carries
-[`EULA.md`](EULA.md) at its top, as the dev-handbook's licensing standard asks of
-release archives. It's the handbook's `licensing/templates/sdk-eula.md`, copied
-unchanged; when the template changes, copy it again.
-
-Beside it, [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) carries the notices and
-license texts the player's third-party parts require (the Ultraleap plugin, protobuf
-and mingw-w64 in `libcci.dll`, the Meta SDK, fonts, sounds and the rest). When you add
-or upgrade a package, plugin, font, sound or model, update it. Freesound sounds and
-other assets need their license recorded too, as `Assets/Sounds/SoundCredits.txt`
-does.
-
-### CI settings
-
-- **Submodules:** the org GitHub App (`SUBMODULE_APP_ID` variable and
-  `SUBMODULE_APP_PRIVATE_KEY` secret, set at org level) reads the private
-  submodules. It must also be installed on demo-launcher, whose releases the build
-  reads for the launcher. A `SUBMODULE_TOKEN` PAT is the fallback for both.
-- **Unity license:** the player build takes a floating Unity Build Server license
-  from the company's Unity Licensing Server on AWS, through a WireGuard tunnel. It
-  needs the `UNITY_LICENSING_SERVER` variable and the `UNITY_LICENSING_WIREGUARD`
-  secret; [`docs/unity-licensing-server.md`](docs/unity-licensing-server.md) sets
-  up both, and the server. Without them CI still checks versions and submodules
-  but skips the build, and release tags fail. One player build runs at a time.
+Contact CI developers: see [`docs/internal.md`](docs/internal.md) for
+building, versions, releases and CI.

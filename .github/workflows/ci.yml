@@ -10,7 +10,8 @@
 # ProjectSettings/ProjectSettings.asset; a tag must match it. N is the workflow
 # run number. Only a person creates tags, and only a person publishes a
 # release: CI leaves each one as a draft for review. A release fast-forwards
-# main to the rc commit and tags the same commit (README.md, "Releases").
+# main to the rc commit and tags the same commit (docs/internal.md,
+# "Releases").
 # Nothing consumes demo-hub as a package, so beta builds go to no feed.
 #
 # The player is a Windows x64 build. It carries its full version, commit and
@@ -36,7 +37,8 @@
 #                         The Unity Licensing Server that lends the player
 #                         build a floating Unity Build Server license (its URL
 #                         inside the tunnel), and the WireGuard client config
-#                         that reaches it (docs/unity-licensing-server.md).
+#                         that reaches it (the Licensing Server runbook,
+#                         linked from docs/internal.md).
 #                         Without both the build job is skipped, and a release
 #                         tag fails rather than publish nothing.
 # =============================================================================
@@ -102,7 +104,7 @@ jobs:
           fi
           if [ "$HAS_WIREGUARD" != true ]; then
             if [ "$WIREGUARD_AS_VARIABLE" = true ]; then
-              echo "::warning::UNITY_LICENSING_WIREGUARD is set as a variable, but it holds a private key, so CI reads it only as a secret. Make it a secret, delete the variable, and rotate the CI key (docs/unity-licensing-server.md, Running it): variables aren't kept secret."
+              echo "::warning::UNITY_LICENSING_WIREGUARD is set as a variable, but it holds a private key, so CI reads it only as a secret. Make it a secret, delete the variable, and rotate the CI key (the Licensing Server runbook, linked from docs/internal.md): variables aren't kept secret."
             fi
             missing+=("the UNITY_LICENSING_WIREGUARD secret")
           fi
@@ -176,7 +178,7 @@ jobs:
         run: |
           if ! git merge-base --is-ancestor "$GITHUB_SHA" "origin/$BRANCH"; then
             if [ "$BRANCH" = main ]; then hint="Fast-forward main to the rc commit and tag there"; else hint="Tag a commit on staging"; fi
-            echo "::error::$GITHUB_REF_NAME is not on $BRANCH. $hint (README.md, \"Releases\"). Nothing was published."
+            echo "::error::$GITHUB_REF_NAME is not on $BRANCH. $hint (docs/internal.md, \"Releases\"). Nothing was published."
             exit 1
           fi
 
@@ -196,7 +198,7 @@ jobs:
         run: |
           if ! git tag --points-at "$GITHUB_SHA" | awk -v p="v$VERSION-rc." \
                'index($0, p) == 1 && substr($0, length(p) + 1) ~ /^[1-9][0-9]*$/ { found = 1 } END { exit !found }'; then
-            echo "::warning::$GITHUB_REF_NAME's commit has no v$VERSION-rc.N tag, so this release was not promoted from a tested release candidate (README.md, \"Releases\")."
+            echo "::warning::$GITHUB_REF_NAME's commit has no v$VERSION-rc.N tag, so this release was not promoted from a tested release candidate (docs/internal.md, \"Releases\")."
           fi
 
       # Release notes cover everything since the previous stable release: the
@@ -355,8 +357,8 @@ jobs:
           restore-keys: |
             Library-${{ env.UNITY_TARGET }}-
 
-      # The Licensing Server is reachable only through WireGuard
-      # (docs/unity-licensing-server.md). The client config routes just the
+      # The Licensing Server is reachable only through WireGuard (its runbook
+      # is linked from docs/internal.md). The client config routes just the
       # server's address through the tunnel; the Unity container reaches it
       # through the runner.
       - name: Connect to the licensing server
