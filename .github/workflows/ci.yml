@@ -431,8 +431,9 @@ jobs:
       # It skips the return when activation fails after the server granted
       # the lease, and when the job is cancelled mid-build, which a new push
       # to a pull request does. The seat would then stay taken until the lease
-      # expires (8 hours by default). This step runs even on failure and
-      # cancellation:
+      # expires, about 15 minutes after the client last renewed it (the
+      # timeout game-ci prints when it acquires one). This step runs even on
+      # failure and cancellation:
       # - It stops any Unity container still running.
       # - It finds the lease tokens this job took, in game-ci's license.txt
       #   and the Licensing Client's log.

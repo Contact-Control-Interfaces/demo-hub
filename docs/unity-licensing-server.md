@@ -368,8 +368,10 @@ add the private IP to `adminIpAllowlist` in the server's configuration.
   - CI's "Return the floating license" step returns the lease even when a
     build fails or is cancelled. A lease can still be left behind if the
     runner itself is lost, or if the step warns that it couldn't return one.
-  - Such a seat comes back when the lease expires, which the server's
-    `licensing-server-config.json` controls (8 hours by default).
+  - Such a seat comes back when the lease expires. The client renews a lease
+    while Unity runs, and each lease times out about 15 minutes after its
+    last renewal: game-ci's "Acquired floating license" line prints the
+    timeout.
   - Check the dashboard (step 6) for the open leases, then re-run the failed
     job once a seat is free.
 
