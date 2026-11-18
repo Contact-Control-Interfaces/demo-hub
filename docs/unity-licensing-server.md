@@ -362,6 +362,14 @@ add the private IP to `adminIpAllowlist` in the server's configuration.
   `ip link show wg0` on the server shows `mtu 1420` (see step 2). The server's
   journal (`journalctl -u unity.licensing.server.service`) shows whether the
   build's requests arrived.
+- **If the Build step fails with exit code 19** and "Show the licensing
+  client's errors" shows `429 | Too Many Requests` and `No remaining license`,
+  every seat is held by a lease. Usually that's a build that took a lease and
+  then failed before returning it.
+  - The seat comes back when that lease expires, which the server's
+    `licensing-server-config.json` controls.
+  - Check the dashboard (step 6) for the open leases, then re-run the failed
+    job once a seat is free.
 
 ## Limits
 
