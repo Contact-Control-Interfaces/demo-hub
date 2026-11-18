@@ -81,15 +81,41 @@ jobs:
     steps:
       # Job-level `if:` can't read secrets, so whether the licensing server is
       # set up is worked out here and handed to the build job. Only "is it
-      # set" leaves this step, never the secret.
+      # set" leaves this step, never the secret. It also catches either setting
+      # created as the wrong kind, which otherwise looks like it isn't set.
       - name: Detect the Unity license
         id: unity
         env:
-          HAS_LICENSE: ${{ vars.UNITY_LICENSING_SERVER != '' && secrets.UNITY_LICENSING_WIREGUARD != '' }}
+          HAS_SERVER: ${{ vars.UNITY_LICENSING_SERVER != '' }}
+          HAS_WIREGUARD: ${{ secrets.UNITY_LICENSING_WIREGUARD != '' }}
+          SERVER_AS_SECRET: ${{ secrets.UNITY_LICENSING_SERVER != '' }}
+          WIREGUARD_AS_VARIABLE: ${{ vars.UNITY_LICENSING_WIREGUARD != '' }}
         run: |
-          echo "configured=$HAS_LICENSE" >> "$GITHUB_OUTPUT"
-          if [ "$HAS_LICENSE" != true ]; then
-            echo "::notice::The UNITY_LICENSING_SERVER variable or the UNITY_LICENSING_WIREGUARD secret isn't set, so the player build is skipped."
+          missing=()
+          if [ "$HAS_SERVER" != true ]; then
+            if [ "$SERVER_AS_SECRET" = true ]; then
+              echo "::warning::UNITY_LICENSING_SERVER is set as a secret, but CI reads it only as a variable, so the secret is ignored. Create it under Variables instead, and delete the secret."
+            fi
+            missing+=("the UNITY_LICENSING_SERVER variable")
+          elif [ "$SERVER_AS_SECRET" = true ]; then
+            echo "::notice::UNITY_LICENSING_SERVER is set as a variable and also as a secret. CI uses the variable and ignores the secret, so delete the secret."
+          fi
+          if [ "$HAS_WIREGUARD" != true ]; then
+            if [ "$WIREGUARD_AS_VARIABLE" = true ]; then
+              echo "::warning::UNITY_LICENSING_WIREGUARD is set as a variable, but it holds a private key, so CI reads it only as a secret. Make it a secret, delete the variable, and rotate the CI key (docs/unity-licensing-server.md, Running it): variables aren't kept secret."
+            fi
+            missing+=("the UNITY_LICENSING_WIREGUARD secret")
+          fi
+
+          if [ ${#missing[@]} -eq 0 ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            if [ ${#missing[@]} -eq 2 ]; then
+              echo "::notice::${missing[0]^} and ${missing[1]} aren't set, so the player build is skipped."
+            else
+              echo "::notice::${missing[0]^} isn't set, so the player build is skipped."
+            fi
           fi
 
       - name: Submodule token

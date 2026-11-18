@@ -282,6 +282,11 @@ In this repository, under **Settings** > **Secrets and variables** > **Actions**
 | Variable | `UNITY_LICENSING_SERVER` | `http://<private IP>:8080` |
 | Secret | `UNITY_LICENSING_WIREGUARD` | The whole client config from step 2 |
 
+Create each as the kind shown. CI reads `UNITY_LICENSING_SERVER` only as a
+variable and `UNITY_LICENSING_WIREGUARD` only as a secret. A setting of the
+wrong kind is ignored, the build is skipped, and the "Detect the Unity
+license" step warns about it.
+
 If more Unity repositories will build this way, these can be set at the
 organization level instead. They'd share the one CI key, though, so only one
 build across all of them could run at a time (see [Limits](#limits)).
