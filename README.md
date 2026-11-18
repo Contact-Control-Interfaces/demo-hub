@@ -10,7 +10,6 @@ The demos:
 - Paint
 - Shapes
 - Vibration Orbs
-- Force Feedback
 - Apple Tree
 
 ## What you need
@@ -61,11 +60,20 @@ and control haptics on the gloves directly.
    - **Scenes:** pick which demos appear in the Demo Hub's menu.
    - **Start Scene:** pick the demo the Demo Hub opens first. If Apple Tree is
      one of the scenes, the Demo Hub always starts there.
-   - **One/Two hands:** for Apple Tree, pick how many gloves must be connected
-     before the tree appears.
+   - **One/Two hands:** leave this as it is. The Demo Hub doesn't use it yet;
+     Apple Tree asks inside the demo instead (see below).
 6. Click **Save & Launch**. The launcher saves your choices to `config.json`
    beside it, starts `DemoHub.exe` and closes. **Save Configuration** saves
    without starting.
+
+Inside the Demo Hub, press and hold the button on your wrist to open the menu
+of demos.
+
+**Apple Tree** opens with a **CONFIG** panel the first time each run. Under
+**# of Gloves**, choose **One Glove** or **Two Gloves**, then **Close**. The
+tree grows once that many gloves are connected. Choose before closing: if you
+close the panel without choosing, the tree doesn't appear until you restart
+the Demo Hub.
 
 ## If something goes wrong
 
