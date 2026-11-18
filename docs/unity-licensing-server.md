@@ -8,9 +8,16 @@ the build job only.
 
 ```
 GitHub runner ── WireGuard (UDP 51820) ──> EC2: wg0 10.66.0.1
-  └ game-ci Unity container                    └ Unity Licensing Server :8080
-      takes a floating license, builds, returns it
+  └ game-ci Unity container                    └ Unity Licensing Server
+      takes a floating license,                    on the private IP, :8080
+      builds, returns it
 ```
+
+The Licensing Server listens on the instance's private IP (in the default VPC,
+`172.31.x.y`), and the tunnel carries the runner's traffic to that address.
+This page writes it as `<private IP>`. It's on the instance's **Details** tab,
+under **Private IPv4 addresses**, and it stays the same across stops and
+starts.
 
 This page sets that up once. The CI side is already in
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) ("Connect to the
@@ -149,7 +156,7 @@ wg show wg0
 ```
 
 Then print the client config that CI will use, filling in `ci.key`,
-`server.pub` and the Elastic IP:
+`server.pub`, the Elastic IP and the private IP:
 
 ```ini
 [Interface]
@@ -159,12 +166,14 @@ Address = 10.66.0.2/32
 [Peer]
 PublicKey = <contents of server.pub>
 Endpoint = <Elastic IP>:51820
-AllowedIPs = 10.66.0.1/32
+AllowedIPs = 10.66.0.1/32, <private IP>/32
 PersistentKeepalive = 25
 ```
 
-- `AllowedIPs = 10.66.0.1/32` sends only the server's address through the
-  tunnel, so the runner's other traffic is untouched.
+- `AllowedIPs` sends only the server's two addresses through the tunnel, so
+  the runner's other traffic is untouched. The private IP is where the
+  Licensing Server listens. `10.66.0.1` is the server's tunnel address, which
+  you can ping from a peer to test the tunnel.
 - Leave out any `DNS =` line: CI uses the server's IP, and the runner has no
   `resolvconf` for wg-quick.
 
@@ -205,11 +214,14 @@ exit
    - **Server name:** for example `contactci-build-server`.
    - **HTTPS:** no. The tunnel already encrypts the traffic, and the port is
      reachable only through it.
-   - **Network interface:** `wg0` (`10.66.0.1`), port `8080`. If setup doesn't
-     list `wg0`, pick the instance's own interface (`ens5`). Then use its
-     private IP wherever this page says `10.66.0.1` in a URL, and add
-     `<private IP>/32` to the client config's `AllowedIPs`. The server accepts
-     tunnel traffic for its private IP too.
+   - **Network interface:** the instance's own interface (`ens5`, with the
+     private IP), port `8080`. Setup doesn't list `wg0`.
+     - Tunnel traffic still reaches it: the server accepts packets for its
+       private IP on any interface, and `wg0.conf`'s firewall rules match the
+       interface traffic arrives on, so port 8080 is still the only one open
+       over the tunnel.
+     - The security group keeps 8080 closed to the rest of the VPC and the
+       internet.
    - **Administrator access:** set the admin password, and keep it in your
      password manager.
 
@@ -258,7 +270,7 @@ In this repository, under **Settings** > **Secrets and variables** > **Actions**
 
 | Kind | Name | Value |
 |---|---|---|
-| Variable | `UNITY_LICENSING_SERVER` | `http://10.66.0.1:8080` |
+| Variable | `UNITY_LICENSING_SERVER` | `http://<private IP>:8080` |
 | Secret | `UNITY_LICENSING_WIREGUARD` | The whole client config from step 2 |
 
 If more Unity repositories will build this way, these can be set at the
@@ -276,7 +288,7 @@ Re-run the latest CI run on a branch with this workflow. In the **Build the
 player** job:
 
 - "Connect to the licensing server" should print `Reached the Unity Licensing
-  Server at http://10.66.0.1:8080`.
+  Server at http://<private IP>:8080`.
 - The Build step's log should show `Acquired floating license` near the start
   and `Returning floating license` at the end.
 - The ULS dashboard should show the seat in use during the build, and free
@@ -287,12 +299,14 @@ Manager (in Git Bash, with `winpty` in front):
 
 ```bash
 aws ssm start-session --region <region> --target <instance id> \
-  --document-name AWS-StartPortForwardingSession \
-  --parameters portNumber=8080,localPortNumber=8080
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters host=<private IP>,portNumber=8080,localPortNumber=8080
 ```
 
 Then open `http://localhost:8080`. The admin API only answers addresses in
-`adminIpAllowlist` (`127.0.0.1` is in it by default).
+`adminIpAllowlist`, which holds `127.0.0.1` by default. Forwarded requests
+come from the instance's private IP instead. If the dashboard refuses them,
+add the private IP to `adminIpAllowlist` in the server's configuration.
 
 ## Running it
 
