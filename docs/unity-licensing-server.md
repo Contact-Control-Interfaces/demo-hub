@@ -249,9 +249,18 @@ package is `libicu74`.
    That step runs on the instance, so the instance's role needs `s3:PutObject`
    on the bucket. Alternatively, print the file with `cat` and save it locally.
 2. **Import the archive.** Copy it to the instance through S3 as before. Then,
-   in a **new** Session Manager session (setup changes group membership), run:
+   in a **new** Session Manager session (setup changes group membership), run
+   the commands below.
+   - Only members of the `unity-licensing-server` group can import, and that
+     applies to root too. Setup adds the user who ran it (`ssm-user`) but not
+     root, and `sudo` runs the import as root. Without the first command, the
+     import fails with "You do not have the necessary permissions to import
+     licensing files".
+   - `sudo` reads root's groups fresh each time, but a `sudo -i` shell opened
+     before the `usermod` doesn't see the change. Exit it and open a new one.
 
    ```bash
+   sudo usermod -aG unity-licensing-server root
    cd /opt/UnityLicensingServer
    sudo -H ./Unity.Licensing.Server import /tmp/<license archive>.zip
    sudo -H ./Unity.Licensing.Server create-service
