@@ -66,8 +66,11 @@ and control haptics on the gloves directly.
    beside it, starts `DemoHub.exe` and closes. **Save Configuration** saves
    without starting.
 
-Inside the Demo Hub, press and hold the button on your wrist to open the menu
-of demos.
+Inside the Demo Hub, open the menu of demos with your wrist: raise it close to
+your face, turn its face toward you and look at it. A ring around it fills,
+and the glove vibrates while it does. Keep looking until the ring is full, and
+the menu opens. To close the menu, press and hold its close button with a
+finger until the button fills.
 
 **Apple Tree** opens with a **CONFIG** panel the first time each run. Under
 **# of Gloves**, choose **One Glove** or **Two Gloves**, then **Close**. The
