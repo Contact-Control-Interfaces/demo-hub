@@ -137,6 +137,8 @@ Write `/etc/wireguard/wg0.conf`, filling in the two keys:
 Address = 10.66.0.1/24
 ListenPort = 51820
 PrivateKey = <contents of server.key>
+# Size packets for the internet's 1500-byte MTU (see below).
+MTU = 1420
 # Over the tunnel, allow only the licensing server's port.
 PostUp = iptables -I INPUT 1 -i %i -j DROP; iptables -I INPUT 1 -i %i -p tcp --dport 8080 -j ACCEPT
 PostDown = iptables -D INPUT -i %i -p tcp --dport 8080 -j ACCEPT; iptables -D INPUT -i %i -j DROP
@@ -147,12 +149,22 @@ PublicKey = <contents of ci.pub>
 AllowedIPs = 10.66.0.2/32
 ```
 
-`10.66.0.0/24` is the tunnel's own range. It must not overlap the VPC's range
-(the default VPC is `172.31.0.0/16`). Start the tunnel now and at every boot:
+- `10.66.0.0/24` is the tunnel's own range. It must not overlap the VPC's
+  range (the default VPC is `172.31.0.0/16`).
+- **Don't leave out `MTU = 1420`.** Without it, wg-quick sizes the tunnel from
+  the instance's own interface. EC2 uses jumbo frames (9001 bytes) inside AWS,
+  so the tunnel gets an MTU of 8921. The server then sends packets too big for
+  the internet, which don't arrive at GitHub's runners. Small requests still
+  work, so CI's connect check passes, but the license sync's larger reply never
+  arrives. game-ci then fails after about 100 seconds with exit code 13
+  ("Syncing entitlements failed").
+
+Start the tunnel now and at every boot, and check that `wg0` has `mtu 1420`:
 
 ```bash
 systemctl enable --now wg-quick@wg0
 wg show wg0
+ip link show wg0
 ```
 
 Then print the client config that CI will use, filling in `ci.key`,
@@ -269,10 +281,13 @@ package is `libicu74`.
    sudo -H ./Unity.Licensing.Server import /tmp/<license archive>.zip
    sudo -H ./Unity.Licensing.Server create-service
    sudo -H systemctl status unity.licensing.server.service
-   ./Unity.Licensing.Server status
+   sudo -H ./Unity.Licensing.Server status
    ```
 
    Don't unzip the archive. `status` should report the server as `Healthy`.
+   Run it with `sudo -H` like the rest: as `ssm-user`, it can't write the
+   server's database, so it reports `Database: Unhealthy` even when the
+   server is fine.
 3. **Back up the server's configuration files** now, as Unity's
    [backup page](https://docs.unity.com/en-us/licensing-server/server-setup-bkup)
    describes. Then delete the zips and XML from `/tmp` and the S3 bucket.
@@ -343,6 +358,10 @@ add the private IP to `adminIpAllowlist` in the server's configuration.
   - The instance is running and the Elastic IP is still associated.
   - `wg show wg0` on the server shows a recent handshake.
   - `systemctl status unity.licensing.server.service` is active.
+- **If CI connects but the Build step fails with exit code 13,** check that
+  `ip link show wg0` on the server shows `mtu 1420` (see step 2). The server's
+  journal (`journalctl -u unity.licensing.server.service`) shows whether the
+  build's requests arrived.
 
 ## Limits
 
