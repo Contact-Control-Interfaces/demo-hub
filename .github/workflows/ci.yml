@@ -459,15 +459,27 @@ jobs:
             docker kill $running > /dev/null || true
           fi
 
+          # Unity's own Licensing Client can outlive the editor in the build
+          # container. After game-ci returns the lease, it sometimes takes a
+          # new one, which is lost when the container is removed (lease 6 on
+          # 18 Nov 2026). It logs to the same mounted /root, so the step also
+          # returns every lease token the client's log mentions.
+          client_log="$RUNNER_TEMP/_github_home/.config/unity3d/Unity/Unity.Licensing.Client.log"
+          lease_lines="$(sudo grep -i 'lease' "$client_log" 2>/dev/null)" || true
+          if [ -n "$lease_lines" ]; then
+            echo "::group::The Licensing Client's lease lines"
+            printf '%s\n' "$lease_lines" | tail -n 60
+            echo "::endgroup::"
+          fi
+          uuid='[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}'
           tokens="$(
             {
               # game-ci's own parse: the second quoted string in license.txt.
               if [ -f license.txt ]; then
                 grep -oP '\".*?\"' < license.txt | tr -d '"' | sed -n 2p
               fi
-              sudo cat "$RUNNER_TEMP/_github_home/.config/unity3d/Unity/Unity.Licensing.Client.log" 2>/dev/null \
-                | grep -ioP '"token"\s*:\s*"\K[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}' || true
-            } | grep -E '^[0-9a-fA-F-]{36}$' | sort -u
+              printf '%s\n' "$lease_lines" | grep -oE "$uuid" || true
+            } | grep -xE "$uuid" | tr 'A-F' 'a-f' | sort -u
           )" || true
           if [ -z "$tokens" ]; then
             echo "No floating lease token was found, so there's nothing to return."
