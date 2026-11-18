@@ -82,12 +82,23 @@ Port 51820 is open to everyone, but WireGuard doesn't answer any packet that
 isn't signed by a known key, so it doesn't show up to a scan. Port 8080 is never
 open in the security group.
 
-Connect to the instance from your machine, giving the instance's region (its
+To connect to the instance, the simplest way is the browser shell: in the EC2 console,
+select the instance, then **Connect** > **Session Manager** > **Connect**.
+
+- Paste with **Ctrl+Shift+V**.
+- The session closes after 20 minutes idle. Reconnect and run `sudo -i`
+  again; nothing is lost.
+
+Or connect from your machine's terminal, giving the instance's region (its
 Availability Zone without the last letter, e.g. `us-east-2` for `us-east-2a`):
 
 ```bash
 aws ssm start-session --region <region> --target <instance id>
 ```
+
+On Windows, run it from PowerShell or Windows Terminal, not Git Bash. In
+Git Bash the session opens but every command hangs, even `ls`. If you use
+Git Bash, put `winpty` in front of the command.
 
 If it says the instance is not connected:
 
@@ -272,7 +283,7 @@ player** job:
   afterwards.
 
 To open the dashboard from your machine, forward the port through Session
-Manager:
+Manager (in Git Bash, with `winpty` in front):
 
 ```bash
 aws ssm start-session --region <region> --target <instance id> \
