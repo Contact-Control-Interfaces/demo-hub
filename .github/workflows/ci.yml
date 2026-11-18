@@ -438,9 +438,9 @@ jobs:
       #   and the Licensing Client's log.
       # - It returns each one with the same client game-ci uses, over the
       #   tunnel.
-      # Returning a lease game-ci already returned fails harmlessly. game-ci
-      # returns it whenever the build ran to the end, and CiBuild then writes
-      # build/BuildResult.txt, so that file tells the two cases apart.
+      # The client exits 0 for a lease game-ci already returned too, so exit
+      # code 0 means the lease is free either way. Any other exit code means
+      # the lease may still be held, and the step warns.
       - name: Return the floating license
         if: always() && steps.connect.outcome == 'success'
         env:
@@ -486,15 +486,10 @@ jobs:
               --volume "$config:/usr/share/unity3d/config:ro" \
               --entrypoint /opt/unity/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client \
               "$image" --return-floating "$token" > /dev/null 2>&1 || code=$?
-            # The client also exits 0 for a lease that's already returned.
-            if [ "$code" = 0 ] && [ -f build/BuildResult.txt ]; then
-              echo "Floating lease $count is returned: game-ci returned it after the build, and returning it again confirmed it."
-            elif [ "$code" = 0 ]; then
-              echo "Returned floating lease $count, which game-ci hadn't returned."
-            elif [ -f build/BuildResult.txt ]; then
-              echo "Floating lease $count was already returned by game-ci after the build."
+            if [ "$code" = 0 ]; then
+              echo "Floating lease $count is returned."
             else
-              echo "::warning::Couldn't return floating lease $count (exit code $code). If the Licensing Server's dashboard still shows a seat in use with no build running, it frees when the lease expires."
+              echo "::warning::Couldn't return floating lease $count (exit code $code), so it may still hold a seat. If the Licensing Server's dashboard shows a seat in use with no build running, it frees when the lease expires."
             fi
           done
 
