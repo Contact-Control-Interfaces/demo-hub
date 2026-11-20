@@ -41,6 +41,17 @@
 #                         linked from docs/internal.md).
 #                         Without both the build job is skipped, and a release
 #                         tag fails rather than publish nothing.
+#   vars.UNITY_BUILD_LOCK_REPO, vars.UNITY_CI_LOCKS_APP_ID and
+#   secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY
+#                         The cross-repo build lock: one Unity build at a time
+#                         across every repository that uses the Licensing
+#                         Server (tools/ci/unity-build-lock.sh). The lock is a
+#                         branch in the unity-ci-locks repository. The script
+#                         gets its own tokens from the unity-ci-locks GitHub
+#                         App (Contents: write on that repository only) and
+#                         renews them; that repository's README has the setup.
+#                         Without UNITY_BUILD_LOCK_REPO the build runs without
+#                         the lock, with a warning.
 # =============================================================================
 name: ci
 
@@ -246,10 +257,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: version
     if: needs.version.outputs.unity == 'true'
+    # Up to 120 minutes waiting for the build lock (LOCK_WAIT_MINUTES), then
+    # the build (its own 90-minute limit).
+    timeout-minutes: 240
     # One build at a time: the WireGuard key works from one runner at a time,
     # and each build holds a Build Server seat. A build waits while another
     # runs, but GitHub keeps only one waiting: a newer build cancels it, and
-    # the cancelled one has to be re-run.
+    # the cancelled one has to be re-run. The group covers this repository
+    # only: across repositories (maestro-vr-teleop), the Unity build lock
+    # below does the same.
     concurrency:
       group: unity-build-server
       cancel-in-progress: false
@@ -357,6 +373,24 @@ jobs:
           restore-keys: |
             Library-${{ env.UNITY_TARGET }}-
 
+      # One Unity build at a time across the organization: the lock is held
+      # from here until the floating license is returned
+      # (tools/ci/unity-build-lock.sh). The script gets its own tokens from
+      # the unity-ci-locks App and renews them while it waits (each lasts an
+      # hour); the lease starts when the lock is taken.
+      - name: Wait for the Unity build lock
+        if: vars.UNITY_BUILD_LOCK_REPO != ''
+        env:
+          LOCK_REPO: ${{ github.repository_owner }}/${{ vars.UNITY_BUILD_LOCK_REPO }}
+          LOCK_APP_ID: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
+          LOCK_APP_PRIVATE_KEY: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
+          LOCK_WAIT_MINUTES: "120"
+        run: bash tools/ci/unity-build-lock.sh acquire
+
+      - name: No cross-repo build lock
+        if: vars.UNITY_BUILD_LOCK_REPO == ''
+        run: echo "::warning::UNITY_BUILD_LOCK_REPO isn't set, so this build doesn't wait for Unity builds in other repositories, and may fail if one runs at the same time (shared WireGuard key and Build Server seat)."
+
       # The Licensing Server is reachable only through WireGuard (its runbook
       # is linked from docs/internal.md). The client config routes just the
       # server's address through the tunnel; the Unity container reaches it
@@ -394,6 +428,7 @@ jobs:
       - name: Build
         id: build
         continue-on-error: true
+        timeout-minutes: 90 # well under the build lock's 120-minute lease
         uses: game-ci/unity-builder@adaf7cd8f42fd48fbbf2d4f5f67ca30d87f819f1 # v5.0.1
         with:
           unityLicensingServer: ${{ vars.UNITY_LICENSING_SERVER }}
@@ -507,6 +542,17 @@ jobs:
               echo "::warning::Couldn't return floating lease $count (exit code $code), so it may still hold a seat. If the Licensing Server's dashboard shows a seat in use with no build running, it frees when the lease expires."
             fi
           done
+
+      # Released only after the lease is returned, so the next build finds the
+      # seat and the WireGuard key free. Runs on failure, cancellation and
+      # timeout too; a lock left by a lost runner expires after its lease.
+      - name: Release the Unity build lock
+        if: always() && vars.UNITY_BUILD_LOCK_REPO != ''
+        env:
+          LOCK_REPO: ${{ github.repository_owner }}/${{ vars.UNITY_BUILD_LOCK_REPO }}
+          LOCK_APP_ID: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
+          LOCK_APP_PRIVATE_KEY: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
+        run: bash tools/ci/unity-build-lock.sh release
 
       # A crash on exit is accepted only with exit code 139 and a result file
       # that says Succeeded; anything else fails the job here.
