@@ -46,11 +46,12 @@
 #                         The cross-repo build lock: one Unity build at a time
 #                         across every repository that uses the Licensing
 #                         Server (tools/ci/unity-build-lock.sh). The lock is a
-#                         branch in the unity-ci-locks repository, taken with a
-#                         token from the unity-ci-locks GitHub App (Contents:
-#                         write on that repository only); its README has the
-#                         setup. Without UNITY_BUILD_LOCK_REPO the build runs
-#                         without the lock, with a warning.
+#                         branch in the unity-ci-locks repository. The script
+#                         gets its own tokens from the unity-ci-locks GitHub
+#                         App (Contents: write on that repository only) and
+#                         renews them; that repository's README has the setup.
+#                         Without UNITY_BUILD_LOCK_REPO the build runs without
+#                         the lock, with a warning.
 # =============================================================================
 name: ci
 
@@ -374,24 +375,15 @@ jobs:
 
       # One Unity build at a time across the organization: the lock is held
       # from here until the floating license is returned
-      # (tools/ci/unity-build-lock.sh). The App token lasts an hour, so
-      # release gets its own.
-      - name: Lock token
-        id: lock-token
-        if: vars.UNITY_BUILD_LOCK_REPO != ''
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
-        with:
-          app-id: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
-          private-key: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-          repositories: ${{ vars.UNITY_BUILD_LOCK_REPO }}
-          permission-contents: write
-
+      # (tools/ci/unity-build-lock.sh). The script gets its own tokens from
+      # the unity-ci-locks App and renews them while it waits (each lasts an
+      # hour); the lease starts when the lock is taken.
       - name: Wait for the Unity build lock
         if: vars.UNITY_BUILD_LOCK_REPO != ''
         env:
-          GH_TOKEN: ${{ steps.lock-token.outputs.token }}
           LOCK_REPO: ${{ github.repository_owner }}/${{ vars.UNITY_BUILD_LOCK_REPO }}
+          LOCK_APP_ID: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
+          LOCK_APP_PRIVATE_KEY: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
           LOCK_WAIT_MINUTES: "120"
         run: bash tools/ci/unity-build-lock.sh acquire
 
@@ -554,22 +546,12 @@ jobs:
       # Released only after the lease is returned, so the next build finds the
       # seat and the WireGuard key free. Runs on failure, cancellation and
       # timeout too; a lock left by a lost runner expires after its lease.
-      - name: Release token
-        id: release-token
-        if: always() && vars.UNITY_BUILD_LOCK_REPO != ''
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
-        with:
-          app-id: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
-          private-key: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-          repositories: ${{ vars.UNITY_BUILD_LOCK_REPO }}
-          permission-contents: write
-
       - name: Release the Unity build lock
         if: always() && vars.UNITY_BUILD_LOCK_REPO != ''
         env:
-          GH_TOKEN: ${{ steps.release-token.outputs.token }}
           LOCK_REPO: ${{ github.repository_owner }}/${{ vars.UNITY_BUILD_LOCK_REPO }}
+          LOCK_APP_ID: ${{ vars.UNITY_CI_LOCKS_APP_ID }}
+          LOCK_APP_PRIVATE_KEY: ${{ secrets.UNITY_CI_LOCKS_APP_PRIVATE_KEY }}
         run: bash tools/ci/unity-build-lock.sh release
 
       # A crash on exit is accepted only with exit code 139 and a result file
