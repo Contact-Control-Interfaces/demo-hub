@@ -127,3 +127,15 @@ as `Assets/Sounds/SoundCredits.txt` does.
   runbook in Linear (Unity SDK project). Without both settings, CI still checks
   versions and submodules but skips the build, and release tags fail. One
   player build runs at a time.
+- **Build lock:** other repositories (maestro-vr-teleop) build with the same
+  Licensing Server, WireGuard key and seat, and GitHub's `concurrency:` group
+  only covers this repository. So the build also takes a lock shared by every
+  repository, `tools/ci/unity-build-lock.sh`: the branch
+  `ci-locks/unity-build-server` in the private `unity-ci-locks` repository,
+  through the `unity-ci-locks` GitHub App. It needs the
+  `UNITY_BUILD_LOCK_REPO` and `UNITY_CI_LOCKS_APP_ID` variables and the
+  `UNITY_CI_LOCKS_APP_PRIVATE_KEY` secret, set at org level; without
+  `UNITY_BUILD_LOCK_REPO` the build runs without the lock and warns. A build
+  waits up to 120 minutes for the lock, and a lock older than its 120-minute
+  lease is taken over. Setup and troubleshooting are in that repository's
+  README. Keep the script the same as maestro-vr-teleop's copy.
